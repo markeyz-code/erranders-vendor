@@ -86,7 +86,7 @@
             </div>
             <div class="flex justify-between text-sm">
               <span class="text-gray-500">Payment</span>
-              <span class="font-bold text-gray-900 capitalize">{{ appointment.paymentStatus || 'Pending' }}</span>
+              <span class="font-bold text-gray-900 capitalize">{{ appointment.paymentStatus?.replace('_', ' ') || 'Pending' }}</span>
             </div>
             <div class="flex justify-between text-sm">
               <span class="text-gray-500">Reference</span>
@@ -96,8 +96,26 @@
         </div>
       </div>
 
+      <!-- Direct Transfer Verification -->
+      <div v-if="appointment.paymentStatus === 'pending_verification'" class="mt-4 p-4 bg-orange-50 rounded-lg border border-orange-100">
+        <h4 class="text-sm font-bold text-orange-800 mb-2">Direct Transfer - Action Required</h4>
+        <p class="text-xs text-orange-700 mb-3">
+          The client has indicated they paid via direct bank transfer. Please review their receipt and verify the payment to confirm the booking.
+        </p>
+        <div v-if="appointment.proofOfPayment" class="mb-4">
+          <span class="text-xs font-semibold text-orange-900 block mb-1">Receipt Uploaded:</span>
+          <a :href="appointment.proofOfPayment" target="_blank" class="text-xs font-bold text-blue-600 hover:underline flex items-center gap-1">
+            <Paperclip class="w-3 h-3" /> View Proof of Payment
+          </a>
+        </div>
+      </div>
+
       <!-- Bottom Actions -->
-      <div class="pt-6 mt-6 border-t border-gray-100 space-y-3">
+      <div class="pt-6 mt-6 border-t border-gray-100 space-y-3 relative">
+        <div v-if="loading" class="absolute inset-0 z-10 bg-white/50 backdrop-blur-[1px] flex items-center justify-center rounded-lg">
+          <div class="w-6 h-6 border-2 border-gray-200 border-t-gray-800 rounded-full animate-spin"></div>
+        </div>
+
         <div class="flex justify-between items-center mb-1">
           <span class="text-sm text-gray-500">Total Price</span>
           <span class="text-sm font-bold text-gray-900">₦{{ appointment.price?.toLocaleString() || 0 }}</span>
@@ -118,38 +136,60 @@
           </p>
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
+        <div class="flex flex-col gap-3">
+          <!-- Primary Actions -->
           <button 
-            v-if="appointment.status !== 'cancelled' && appointment.status !== 'completed'"
-            @click="handleUpdateStatus('cancelled')"
+            v-if="appointment.paymentStatus === 'pending_verification'"
+            @click="promptAction('verify')"
             :disabled="loading"
-            class="w-full py-2.5 bg-red-50 text-red-600 border border-red-100 rounded-md text-sm font-bold hover:bg-red-100 transition-colors disabled:opacity-50"
+            class="w-full py-3 bg-orange-600 text-white rounded-md text-sm font-bold hover:bg-orange-700 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
           >
-            Cancel Booking
+            Verify Payment & Confirm
           </button>
           
           <button 
-            v-if="appointment.status === 'pending'"
-            @click="handleUpdateStatus('confirmed')"
+            v-else-if="appointment.status === 'pending'"
+            @click="promptAction('status', 'confirmed')"
             :disabled="loading"
-            class="w-full py-2.5 bg-blue-50 text-blue-600 border border-blue-100 rounded-md text-sm font-bold hover:bg-blue-100 transition-colors disabled:opacity-50 col-span-2 sm:col-span-1"
+            class="w-full py-3 bg-blue-600 text-white rounded-md text-sm font-bold hover:bg-blue-700 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
           >
             Confirm Booking
           </button>
           
           <button 
-            v-if="appointment.status === 'confirmed' || appointment.status === 'pending'"
-            @click="handleUpdateStatus('completed')"
+            v-if="appointment.status === 'confirmed'"
+            @click="promptAction('status', 'completed')"
             :disabled="loading"
-            class="w-full py-2.5 bg-gray-900 text-white rounded-md text-sm font-bold hover:bg-black transition-colors disabled:opacity-50 col-span-2"
+            class="w-full py-3 bg-gray-900 text-white rounded-md text-sm font-bold hover:bg-black transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
           >
             Checkout (Complete)
+          </button>
+          
+          <!-- Secondary Action (Cancel) -->
+          <button 
+            v-if="appointment.status !== 'cancelled' && appointment.status !== 'completed'"
+            @click="promptAction('status', 'cancelled')"
+            :disabled="loading"
+            class="w-full py-2.5 bg-red-50 text-red-600 border border-red-100 rounded-md text-sm font-bold hover:bg-red-100 transition-colors disabled:opacity-50 mt-2"
+          >
+            Cancel Booking
           </button>
         </div>
       </div>
 
     </div>
   </UiSideDrawer>
+
+  <!-- Confirmation Modal -->
+  <UiConfirmModal
+    :is-open="confirmModal.isOpen"
+    :title="confirmModal.title"
+    :message="confirmModal.message"
+    :confirm-text="confirmModal.confirmText"
+    :variant="confirmModal.variant"
+    @cancel="confirmModal.isOpen = false"
+    @confirm="executeAction"
+  />
 
   <!-- Chat Modal -->
   <AppointmentChatModal 
@@ -165,8 +205,9 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { Calendar, MessageCircle, User, Info, Phone } from 'lucide-vue-next';
+import { Calendar, MessageCircle, User, Info, Phone, Paperclip } from 'lucide-vue-next';
 import UiSideDrawer from '@/components/ui/SideDrawer.vue';
+import UiConfirmModal from '@/components/ui/ConfirmModal.vue';
 import AppointmentChatModal from '@/components/core/AppointmentChatModal.vue';
 
 const showChatModal = ref(false);
@@ -177,7 +218,71 @@ const props = defineProps<{
   loading?: boolean;
 }>();
 
-const emit = defineEmits(['close', 'updateStatus']);
+const emit = defineEmits(['close', 'updateStatus', 'verifyPayment']);
+
+// Confirmation Modal State
+const confirmModal = ref({
+  isOpen: false,
+  title: '',
+  message: '',
+  confirmText: '',
+  variant: 'info' as 'info'|'warning'|'danger'|'success',
+});
+
+// Pending action to execute after confirmation
+const pendingAction = ref<{ type: 'status' | 'verify', value?: string } | null>(null);
+
+const promptAction = (type: 'status' | 'verify', statusValue?: string) => {
+  pendingAction.value = { type, value: statusValue };
+  
+  if (type === 'verify') {
+    confirmModal.value = {
+      isOpen: true,
+      title: 'Verify Payment',
+      message: 'Are you sure you have verified the direct transfer receipt and want to confirm this booking?',
+      confirmText: 'Yes, Verify & Confirm',
+      variant: 'success'
+    };
+  } else if (type === 'status' && statusValue === 'confirmed') {
+    confirmModal.value = {
+      isOpen: true,
+      title: 'Confirm Booking',
+      message: 'Are you sure you want to accept and confirm this booking?',
+      confirmText: 'Confirm',
+      variant: 'info'
+    };
+  } else if (type === 'status' && statusValue === 'completed') {
+    confirmModal.value = {
+      isOpen: true,
+      title: 'Complete Checkout',
+      message: 'Are you sure you want to mark this booking as completely finished?',
+      confirmText: 'Complete',
+      variant: 'success'
+    };
+  } else if (type === 'status' && statusValue === 'cancelled') {
+    confirmModal.value = {
+      isOpen: true,
+      title: 'Cancel Booking',
+      message: 'Are you absolutely sure you want to cancel this booking? This action cannot be undone.',
+      confirmText: 'Cancel Booking',
+      variant: 'danger'
+    };
+  }
+};
+
+const executeAction = () => {
+  confirmModal.value.isOpen = false;
+  
+  if (!pendingAction.value || !props.appointment) return;
+  
+  if (pendingAction.value.type === 'verify') {
+    emit('verifyPayment', props.appointment._id);
+  } else if (pendingAction.value.type === 'status' && pendingAction.value.value) {
+    emit('updateStatus', { id: props.appointment._id, status: pendingAction.value.value });
+  }
+  
+  pendingAction.value = null;
+};
 
 const clientInitials = computed(() => {
   if (!props.appointment?.user) return 'C';
@@ -208,12 +313,6 @@ const getStatusColor = (status: string) => {
       return { bg: 'bg-red-500', border: 'bg-red-500', badge: 'bg-red-100 text-red-800' };
     default: 
       return { bg: 'bg-gray-500', border: 'bg-gray-500', badge: 'bg-gray-100 text-gray-800' };
-  }
-};
-
-const handleUpdateStatus = (status: string) => {
-  if (props.appointment) {
-    emit('updateStatus', { id: props.appointment._id, status });
   }
 };
 </script>

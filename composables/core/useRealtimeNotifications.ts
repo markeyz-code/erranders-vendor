@@ -1,6 +1,8 @@
 import { onMounted, onBeforeUnmount } from 'vue'
+import { useRouter } from 'vue-router'
 import { useCustomToast } from '@/composables/core/useCustomToast'
 import { useRealtimeSocket } from '@/composables/core/useRealtimeSocket'
+import { useSocket } from '@/composables/useSocket'
 import { useNotifications } from '@/composables/modules/notifications/useNotifications'
 import { refreshNuxtData } from '#app'
 
@@ -18,6 +20,7 @@ const playNotificationSound = () => {
 export const useRealtimeNotifications = () => {
   const { showToast } = useCustomToast()
   const { socket, connectSocket } = useRealtimeSocket()
+  const { connect: connectChat, on: onChat, off: offChat } = useSocket('chat')
   const { addNotification } = useNotifications()
   const listenersAttached = useState<boolean>(LISTENERS_KEY, () => false)
 
@@ -91,6 +94,28 @@ export const useRealtimeNotifications = () => {
     socket.value.on('notification:new-order', handleNotification)
     socket.value.on('audit:log', handleAudit)
     socket.value.on('notification:order-status-update', handleOrderStatusUpdate)
+    
+    // Add global chat listener
+    const chatSocket = connectChat()
+    onChat('newMessageNotification', (payload: any) => {
+      // Don't toast if we're already on the chat page with this user open,
+      // but a global toast is usually fine and helpful.
+      playNotificationSound()
+      showToast({
+        title: `New Message from ${payload.sender?.firstName || 'Customer'}`,
+        message: payload.content || payload.message || 'You received a message',
+        toastType: 'info',
+        duration: 5000,
+        action: () => {
+          const router = useRouter()
+          if (router) {
+            router.push('/dashboard/chats')
+          } else {
+            window.location.href = '/dashboard/chats'
+          }
+        }
+      })
+    })
   })
 
   onBeforeUnmount(() => {
@@ -100,6 +125,8 @@ export const useRealtimeNotifications = () => {
     socket.value.off('notification:new-order', handleNotification)
     socket.value.off('audit:log', handleAudit)
     socket.value.off('notification:order-status-update', handleOrderStatusUpdate)
+    
+    offChat('newMessageNotification')
     listenersAttached.value = false
   })
 }

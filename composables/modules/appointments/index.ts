@@ -37,5 +37,28 @@ export const useVendorAppointments = () => {
     }
   };
 
-  return { appointmentsList, loading, fetchAppointments, updateStatus };
+  const verifyPayment = async (id: string) => {
+    startLoading('Verifying payment...');
+    try {
+      await appointments_api.verifyPayment(id);
+      showToast({
+        title: "Payment Verified",
+        message: "Payment successfully verified.",
+        toastType: "success",
+      });
+      await fetchAppointments();
+      return true;
+    } catch (e: any) {
+      showToast({
+        title: "Error",
+        message: e.response?.data?.message || "Failed to verify payment",
+        toastType: "error",
+      });
+      return false;
+    } finally {
+      stopLoading();
+    }
+  };
+
+  return { appointmentsList, loading, fetchAppointments, updateStatus, verifyPayment };
 };

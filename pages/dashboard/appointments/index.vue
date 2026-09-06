@@ -108,13 +108,13 @@
       :isOpen="isWaitlistOpen" 
       @close="isWaitlistOpen = false" 
     />
-    
     <AppointmentDrawer 
       :isOpen="isAppointmentDrawerOpen"
       :appointment="selectedAppointment"
       :loading="loading"
       @close="isAppointmentDrawerOpen = false"
       @updateStatus="handleStatusUpdate"
+      @verifyPayment="handleVerifyPayment"
     />
   </div>
 </template>
@@ -136,7 +136,7 @@ import AppointmentDrawer from '@/components/appointments/AppointmentDrawer.vue';
 definePageMeta({ layout: 'vendor' });
 useHead({ title: 'Appointments - Errander Vendor' });
 
-const { appointmentsList, loading, fetchAppointments, updateStatus } = useVendorAppointments();
+const { appointmentsList, loading, fetchAppointments, updateStatus, verifyPayment } = useVendorAppointments();
 const { socket, connectSocket } = useRealtimeSocket();
 
 // State
@@ -251,7 +251,14 @@ const openAppointmentDetails = (app: any) => {
 const handleStatusUpdate = async ({ id, status }: { id: string, status: string }) => {
   const success = await updateStatus(id, status);
   if (success && selectedAppointment.value && selectedAppointment.value._id === id) {
-    selectedAppointment.value = { ...selectedAppointment.value, status };
+    selectedAppointment.value = appointmentsList.value.find(a => a._id === id);
+  }
+};
+
+const handleVerifyPayment = async (id: string) => {
+  const success = await verifyPayment(id);
+  if (success && selectedAppointment.value && selectedAppointment.value._id === id) {
+    selectedAppointment.value = appointmentsList.value.find(a => a._id === id);
   }
 };
 

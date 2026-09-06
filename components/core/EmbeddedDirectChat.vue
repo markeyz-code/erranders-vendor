@@ -13,7 +13,8 @@
         <div class="flex-1 min-w-0">
           <h3 class="text-[16px] font-medium truncate leading-tight text-white">{{ receiverName || 'Direct Message' }}</h3>
           <p class="text-[13px] text-white/80 font-normal truncate">
-            <span v-if="isTyping" class="text-emerald-200 italic">typing...</span>
+            <span v-if="serviceName">Enquiry: {{ serviceName }}</span>
+            <span v-else-if="isTyping" class="text-emerald-200 italic">typing...</span>
             <span v-else>Direct Message</span>
           </p>
         </div>
@@ -99,6 +100,8 @@ const props = defineProps<{
   receiverId: string;
   receiverName: string;
   receiverAvatar?: string;
+  serviceId?: string;
+  serviceName?: string;
 }>();
 
 const emit = defineEmits(['close']);
@@ -144,15 +147,6 @@ const submitMessage = () => {
   if (!newMessage.value.trim() || !chatTracker) return;
   const text = newMessage.value.trim();
   
-  messages.value.push({
-    _id: Date.now().toString(),
-    senderId: currentUserId.value,
-    receiverId: props.receiverId,
-    message: text,
-    content: text,
-    createdAt: new Date().toISOString()
-  });
-
   chatTracker.sendMessage(text);
   newMessage.value = '';
   if (inputRef.value) inputRef.value.style.height = 'auto';
@@ -162,7 +156,7 @@ const submitMessage = () => {
 const initChat = async () => {
   if (!currentUserId.value || !props.receiverId) return;
   loading.value = true;
-  chatTracker = useDirectChat(currentUserId.value, props.receiverId);
+  chatTracker = useDirectChat(currentUserId.value, props.receiverId, props.serviceId);
   chatTracker.setupListeners();
   await chatTracker.fetchMessages();
   messages.value = chatTracker.messages.value;

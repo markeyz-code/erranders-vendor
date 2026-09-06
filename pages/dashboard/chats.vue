@@ -107,10 +107,10 @@
         <div v-else class="flex flex-col">
           <button
             v-for="conv in filteredDirectChats"
-            :key="conv.user._id"
+            :key="`${conv.user._id}_${conv.service?._id || 'general'}`"
             @click="selectDirectChat(conv)"
             class="w-full text-left flex items-center px-3 py-2 hover:bg-[#F5F6F6] transition-colors group"
-            :class="{ 'bg-[#F0F2F5]': activeChat?.id === `direct_${conv.user._id}` }"
+            :class="{ 'bg-[#F0F2F5]': activeChat?.id === `direct_${conv.user._id}_${conv.service?._id || 'general'}` }"
           >
             <div class="w-12 h-12 rounded-md bg-[#FFF0E8] flex items-center justify-center text-[#FF5C1A] font-bold text-lg flex-shrink-0 mr-3 overflow-hidden">
               <img v-if="conv.user.avatar" :src="conv.user.avatar" class="w-full h-full object-cover" />
@@ -127,6 +127,7 @@
               </div>
               <div class="flex items-center justify-between">
                 <p class="text-[14px] text-[#54656F] truncate">
+                  <span v-if="conv.service" class="font-medium text-[#00a884] mr-1">[{{ conv.service.name }}]</span>
                   {{ conv.lastMessage?.message || conv.lastMessage?.content || 'Start conversation' }}
                 </p>
                 <div v-if="conv.unreadCount > 0" class="w-5 h-5 rounded-md bg-[#25D366] text-white flex items-center justify-center text-[11px] font-bold">
@@ -183,6 +184,8 @@
         :receiver-id="activeChat.receiverId"
         :receiver-name="activeChat.receiverName"
         :receiver-avatar="activeChat.avatar"
+        :service-id="activeChat.serviceId"
+        :service-name="activeChat.serviceName"
         @close="activeChat = null"
       />
     </div>
@@ -324,11 +327,13 @@ const selectChat = (chat: any) => {
 
 const selectDirectChat = (conv: any) => {
   activeChat.value = {
-    id: `direct_${conv.user._id}`,
+    id: `direct_${conv.user._id}_${conv.service?._id || 'general'}`,
     chatType: 'direct',
     receiverId: conv.user._id,
     receiverName: `${conv.user.firstName || 'Student'} ${conv.user.lastName || ''}`.trim(),
-    avatar: conv.user.avatar || ''
+    avatar: conv.user.avatar || '',
+    serviceId: conv.service?._id,
+    serviceName: conv.service?.name
   }
   conv.unreadCount = 0
 }

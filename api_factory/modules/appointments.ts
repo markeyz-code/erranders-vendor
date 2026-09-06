@@ -6,5 +6,8 @@ export const appointments_api = {
   },
   updateStatus: (id: string, status: string) => {
     return GATEWAY_ENDPOINT_WITH_AUTH.put(`/appointments/${id}/status`, { status });
+  },
+  verifyPayment: (id: string) => {
+    return GATEWAY_ENDPOINT_WITH_AUTH.patch(`/appointments/${id}/verify-payment`);
   }
 };

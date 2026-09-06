@@ -1,5 +1,5 @@
 <template>
- <div v-if="isOpen" class="w-full h-full flex flex-col font-sans relative overflow-hidden bg-[#E5DDD5] min-h-0">
+ <div v-if="isOpen" class="w-full h-full flex flex-col font-sans relative overflow-hidden bg-[#FDFBF7] min-h-0">
  <!-- Chat Panel -->
  <div class="w-full h-full flex flex-col bg-[#FDFBF7] min-h-0">
  <!-- Branded Header -->
@@ -40,7 +40,7 @@
  </div>
 
  <div v-if="loading" class="flex flex-col items-center justify-center h-40 space-y-4">
- <div class="w-8 h-8 border-2 border-[#25D366]/20 border-t-[#25D366] rounded-md animate-spin" />
+ <div class="w-8 h-8 border-2 border-[#FF5C1A]/20 border-t-[#FF5C1A] rounded-md animate-spin" />
  </div>
  
  <div v-else-if="messages.length === 0" class="flex flex-col items-center justify-center p-10 text-center space-y-3 mt-10">
@@ -57,10 +57,9 @@
  
  <div class="flex group items-center max-w-full" :class="isMe(msg) ? 'flex-row-reverse' : 'flex-row'">
  <div :class="[ 'relative max-w-[85%] px-3.5 py-2 rounded-[18px] text-[14.5px] transition-all', isMe(msg) ? 'bg-[#FF5C1A] text-white ml-2' : 'bg-white border border-gray-100 text-[#111B21] mr-2 shadow-sm', shouldShowTail(msg, idx) ? (isMe(msg) ? 'rounded-br-sm' : 'rounded-bl-sm') : '' ]">
- <!-- Speech Bubble Tail removed for cleaner modern look -->
-
+ 
  <!-- Sender name for groups/receivers -->
- <p v-if="!isMe(msg) && shouldShowSender(msg, idx)" class="text-[12px] font-bold text-[#34B7F1] mb-0.5">
+ <p v-if="!isMe(msg) && shouldShowSender(msg, idx)" class="text-[12px] font-bold text-[#FF5C1A] mb-0.5">
  {{ msg.sender?.firstName || 'User' }}
  </p>
 
@@ -69,15 +68,15 @@
  <img :src="msg.attachment" class="rounded-lg max-w-full h-auto cursor-pointer hover:opacity-90 transition-opacity" @click="msg.attachment && openImage(msg.attachment)" />
  </div>
  <div v-if="msg.messageType === 'voice'" class="mb-1 min-w-[200px] flex items-center gap-3 py-2">
- <div class="w-10 h-10 rounded-md bg-[#00A884]/10 flex items-center justify-center shrink-0">
- <Mic class="w-5 h-5 text-[#00A884]" />
+ <div class="w-10 h-10 rounded-md bg-white/20 flex items-center justify-center shrink-0">
+ <Mic class="w-5 h-5" :class="isMe(msg) ? 'text-white' : 'text-[#FF5C1A]'" />
  </div>
  <audio :src="msg.attachment" controls class="h-8 w-full custom-audio" />
  </div>
 
  <!-- Replying To Preview inside bubble -->
- <div v-if="msg.replyTo" class="mb-1 p-2 bg-black/5 rounded-md border-l-4 border-[#00A884] text-[13px] flex flex-col cursor-pointer hover:bg-black/10 transition-colors" @click="scrollToMessage(msg.replyTo._id)">
- <span class="font-bold text-[#00A884]">{{ getSenderName(msg.replyTo) }}</span>
+ <div v-if="msg.replyTo" class="mb-1 p-2 bg-black/5 rounded-md border-l-4 border-[#FF5C1A] text-[13px] flex flex-col cursor-pointer hover:bg-black/10 transition-colors" @click="scrollToMessage(msg.replyTo._id)">
+ <span class="font-bold text-[#FF5C1A]">{{ getSenderName(msg.replyTo) }}</span>
  <div class="flex items-center gap-2 mt-0.5">
  <Mic v-if="msg.replyTo.messageType === 'voice'" class="w-4 h-4 text-gray-500" />
  <img v-if="msg.replyTo.messageType === 'image'" :src="msg.replyTo.attachment" class="w-8 h-8 rounded object-cover" />
@@ -101,7 +100,7 @@
  </div>
  <!-- Reply Action Button next to bubble -->
  <div class="opacity-0 group-hover:opacity-100 transition-opacity flex items-center shrink-0 mt-1 mx-2">
- <button @click="setReply(msg)" class="w-7 h-7 rounded-full bg-black/5 hover:bg-black/10 flex items-center justify-center text-gray-500 hover:text-[#00A884] transition-colors" title="Reply">
+ <button @click="setReply(msg)" class="w-7 h-7 rounded-full bg-black/5 hover:bg-black/10 flex items-center justify-center text-gray-500 hover:text-[#FF5C1A] transition-colors" title="Reply">
  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 17 4 12 9 7"></polyline><path d="M20 18v-2a4 4 0 0 0-4-4H4"></path></svg>
  </button>
  </div>
@@ -120,18 +119,18 @@
  </div>
 
  <!-- Media Preview if uploading -->
- <div v-if="uploadingMedia" class="flex flex-col items-center justify-center p-4 bg-white/50 backdrop-blur-sm rounded-md mx-10 animate-pulse border border-emerald-100">
- <div class="w-8 h-8 border-2 border-[#00A884]/20 border-t-[#00A884] rounded-md animate-spin mb-2" />
- <p class="text-sm font-bold text-emerald-600">Sending media...</p>
+ <div v-if="uploadingMedia" class="flex flex-col items-center justify-center p-4 bg-white/50 backdrop-blur-sm rounded-md mx-10 animate-pulse border border-[#FF5C1A]/10">
+ <div class="w-8 h-8 border-2 border-[#FF5C1A]/20 border-t-[#FF5C1A] rounded-md animate-spin mb-2" />
+ <p class="text-sm font-bold text-[#FF5C1A]">Sending media...</p>
  </div>
  </div>
 
- <!-- WhatsApp Input Bar -->
- <div class="px-2 py-3 bg-[#F0F2F5] flex flex-col gap-2 relative">
+ <!-- Input Bar -->
+ <div class="px-2 py-3 bg-white flex flex-col gap-2 relative border-t border-gray-100">
  <!-- Reply Preview Bar -->
- <div v-if="replyingTo" class="mx-2 mb-2 p-3 bg-white rounded-md shadow-sm border-l-4 border-[#00A884] flex items-start justify-between">
+ <div v-if="replyingTo" class="mx-2 mb-2 p-3 bg-white rounded-md shadow-sm border-l-4 border-[#FF5C1A] flex items-start justify-between">
  <div class="flex flex-col flex-1 min-w-0">
- <span class="text-sm font-bold text-[#00A884] mb-0.5">{{ getSenderName(replyingTo) }}</span>
+ <span class="text-sm font-bold text-[#FF5C1A] mb-0.5">{{ getSenderName(replyingTo) }}</span>
  <div class="flex items-center gap-2">
  <Mic v-if="replyingTo.messageType === 'voice'" class="w-4 h-4 text-gray-500 shrink-0" />
  <span class="text-sm text-gray-600 truncate">{{ replyingTo.messageType === 'image' ? 'Photo' : (replyingTo.messageType === 'voice' ? 'Voice Message' : replyingTo.message) }}</span>
@@ -144,12 +143,12 @@
  </div>
 
  <!-- Voice Recording UI -->
- <div v-if="isRecording" class="flex items-center gap-3 px-4 py-2 bg-emerald-50 rounded-md animate-pulse">
+ <div v-if="isRecording" class="flex items-center gap-3 px-4 py-2 bg-[#FFF0EA] rounded-md animate-pulse">
  <div class="flex items-center gap-2 flex-1">
  <div class="w-2 h-2 rounded-md bg-red-500 animate-ping" />
- <span class="text-sm font-bold text-emerald-700">{{ recordingDuration }}s</span>
- <div class="flex-1 h-1 bg-emerald-200 rounded-md overflow-hidden">
- <div class="h-full bg-emerald-500 animate-progress" />
+ <span class="text-sm font-bold text-[#FF5C1A]">{{ recordingDuration }}s</span>
+ <div class="flex-1 h-1 bg-[#FFD1BF] rounded-md overflow-hidden">
+ <div class="h-full bg-[#FF5C1A] animate-progress" />
  </div>
  </div>
  <button @click="cancelRecording" class="text-sm font-bold text-red-500">Cancel</button>
@@ -163,10 +162,10 @@
    @select="onSelectEmoji" 
    class="absolute bottom-12 left-0 z-50 shadow-2xl" 
  />
- <Smile @click="showEmojiPicker = !showEmojiPicker" class="w-6 h-6 text-[#54656F] cursor-pointer hover:text-[#008069] transition-colors" />
+ <Smile @click="showEmojiPicker = !showEmojiPicker" class="w-6 h-6 text-[#54656F] cursor-pointer hover:text-[#FF5C1A] transition-colors" />
  <label class="cursor-pointer">
  <input type="file" class="hidden" accept="image/*" @change="handleImageUpload" />
- <Paperclip class="w-6 h-6 text-[#54656F] -rotate-45 hover:text-[#008069] transition-colors" />
+ <Paperclip class="w-6 h-6 text-[#54656F] -rotate-45 hover:text-[#FF5C1A] transition-colors" />
  </label>
  </div>
  
@@ -183,7 +182,7 @@
 
  <button 
  @click="isRecording ? stopRecording() : (newMsgText.trim() ? handleSend() : startRecording())"
- :class="[ 'w-12 h-12 text-white rounded-md flex items-center justify-center hover:brightness-110 active:scale-95 transition-all shrink-0', isRecording ? 'bg-red-500' : 'bg-[#00A884]' ]"
+ :class="[ 'w-12 h-12 text-white rounded-md flex items-center justify-center hover:brightness-110 active:scale-95 transition-all shrink-0', isRecording ? 'bg-red-500' : 'bg-[#FF5C1A]' ]"
  >
  <Send v-if="newMsgText.trim() && !isRecording" class="w-5 h-5 ml-0.5" />
  <Mic v-else-if="!isRecording" class="w-5 h-5" />

@@ -60,8 +60,8 @@ import { MessageCircle, X } from 'lucide-vue-next'
 const isOpen = ref(false)
 
 const agents = [
+  { name: 'Ruth', initial: 'R', number: '2348106600919' },
   { name: 'Kim', initial: 'K', number: '2348052854256' },
   { name: 'Brandy', initial: 'B', number: '2348139908262' },
-  // { name: 'Marquis', initial: 'M', number: '2348147626503' }
 ]
 </script>
