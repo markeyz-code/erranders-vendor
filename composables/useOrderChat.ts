@@ -176,7 +176,9 @@ export const useOrderChat = (
 
       const msgOrderId = String(message.orderId || message.order?._id || message.order || '');
       
-      if (msgOrderId === String(orderId)) {
+      const cleanReceiverId = extractObjectId(toValue(targetUserIdArg));
+      
+      if (msgOrderId === String(orderId) || (cleanReceiverId === 'admin_support_channel' && message.roomType === 'support')) {
         if (currentUserId) {
           const sId = String(message.senderId || message.sender?._id || message.sender || '');
           const cIds = String(currentUserId).split(',').map(id => id.trim());
