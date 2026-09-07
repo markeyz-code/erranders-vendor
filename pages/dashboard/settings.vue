@@ -342,51 +342,50 @@
  <div class="space-y-4 md:space-y-6 pt-6 border-t border-gray-50">
  <div>
  <h4 class="text-sm font-bold text-gray-900">Weekly Schedule</h4>
- <p class="text-xs text-gray-500 mt-0.5">Toggle days on/off and set specific hours.</p>
+ <p class="text-xs text-gray-500 mt-0.5">Toggle days on/off and set specific hours and breaks.</p>
  </div>
  
  <div class="space-y-2">
- <div v-for="bh in profile.businessHours" :key="bh.day" class="p-4 rounded-2xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4" :class="bh.isClosed ? 'border-transparent bg-gray-50' : 'border-gray-200 bg-white '">
- <div class="flex items-center gap-4">
- <input type="checkbox" :checked="!bh.isClosed" @change="bh.isClosed = !($event.target as HTMLInputElement).checked" class="w-5 h-5 rounded border-gray-300 text-[#FF5C1A] focus:ring-[#FF5C1A]" />
- <span class="text-sm font-bold text-gray-900 capitalize w-20">{{ bh.day }}</span>
+ <div v-for="(bh, i) in profile.businessHours" :key="bh.day" class="p-4 rounded-2xl border transition-all flex flex-col gap-4" :class="bh.isClosed ? 'border-transparent bg-gray-50' : 'border-gray-200 bg-white '">
+ <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+   <div class="flex items-center gap-4">
+     <input type="checkbox" :checked="!bh.isClosed" @change="bh.isClosed = !($event.target as HTMLInputElement).checked" class="w-5 h-5 rounded border-gray-300 text-[#FF5C1A] focus:ring-[#FF5C1A]" />
+     <span class="text-sm font-bold text-gray-900 capitalize w-20">{{ bh.day }}</span>
+   </div>
+   
+   <div class="flex items-center gap-3 transition-opacity duration-300" :class="bh.isClosed ? 'opacity-30 pointer-events-none' : 'opacity-100'">
+     <input type="time" v-model="bh.open" :disabled="bh.isClosed" class="text-base font-bold px-4 py-2.5 bg-gray-50 rounded-xl border-transparent focus:bg-white focus:border-gray-200 focus:ring-0 outline-none w-32" />
+     <span class="text-gray-400 font-bold text-sm">to</span>
+     <input type="time" v-model="bh.close" :disabled="bh.isClosed" class="text-base font-bold px-4 py-2.5 bg-gray-50 rounded-xl border-transparent focus:bg-white focus:border-gray-200 focus:ring-0 outline-none w-32" />
+   </div>
+ </div>
+
+ <!-- Day-Specific Breaks -->
+ <div v-if="!bh.isClosed" class="pl-0 sm:pl-[6.5rem] space-y-3 pt-2">
+   <div class="flex items-center justify-between">
+     <span class="text-xs font-bold text-orange-500 uppercase tracking-wider">Automated Breaks</span>
+     <button @click="addBreak(i)" class="text-xs font-bold text-orange-500 bg-orange-50 hover:bg-orange-100 px-3 py-1.5 rounded-lg transition-colors">
+       + Add Break
+     </button>
+   </div>
+   
+   <div v-for="(b, bIndex) in bh.breaks" :key="bIndex" class="flex flex-wrap items-center gap-3 bg-orange-50/50 p-3 rounded-xl border border-orange-100 relative group">
+     <input type="text" v-model="b.title" placeholder="e.g. Lunch Break" class="text-sm font-medium px-3 py-2 bg-white rounded-lg border-transparent focus:bg-white focus:border-orange-200 focus:ring-0 outline-none flex-1 min-w-[120px]" />
+     <input type="time" v-model="b.start" class="text-sm font-bold px-3 py-2 bg-white rounded-lg border-transparent focus:bg-white focus:border-orange-200 focus:ring-0 outline-none w-28" />
+     <span class="text-orange-300 font-bold text-xs">to</span>
+     <input type="time" v-model="b.end" class="text-sm font-bold px-3 py-2 bg-white rounded-lg border-transparent focus:bg-white focus:border-orange-200 focus:ring-0 outline-none w-28" />
+     
+     <button @click="removeBreak(i, bIndex)" class="p-1.5 text-orange-300 hover:text-orange-500 hover:bg-orange-100 rounded-lg transition-colors absolute -right-2 -top-2 bg-white shadow-sm border border-orange-100 opacity-0 group-hover:opacity-100" title="Remove Break">
+       <X class="w-3.5 h-3.5" />
+     </button>
+   </div>
  </div>
  
- <div class="flex items-center gap-3 transition-opacity duration-300" :class="bh.isClosed ? 'opacity-30 pointer-events-none' : 'opacity-100'">
- <input type="time" v-model="bh.open" :disabled="bh.isClosed" class="text-base font-bold px-4 py-2.5 bg-gray-50 rounded-xl border-transparent focus:bg-white focus:border-gray-200 focus:ring-0 outline-none w-32" />
- <span class="text-gray-400 font-bold text-sm">to</span>
- <input type="time" v-model="bh.close" :disabled="bh.isClosed" class="text-base font-bold px-4 py-2.5 bg-gray-50 rounded-xl border-transparent focus:bg-white focus:border-gray-200 focus:ring-0 outline-none w-32" />
- </div>
  </div>
  </div>
  </div>
 
- <!-- Scheduled Breaks -->
- <div class="p-4 md:p-6 bg-orange-50/50 rounded-2xl border border-orange-100 space-y-4 md:space-y-6">
- <div class="flex items-center justify-between">
- <div class="flex items-center gap-4">
- <div class="p-2.5 bg-white rounded-xl text-orange-500 ">
- <Power class="w-4 h-4" />
- </div>
- <div>
- <h4 class="text-sm font-bold text-gray-900">Automated Breaks</h4>
- <p class="text-xs text-gray-500 mt-0.5">Go offline automatically during this time.</p>
- </div>
- </div>
- <input type="checkbox" v-model="profile.breakPeriod.enabled" class="w-5 h-5 rounded-lg border-orange-200 text-orange-500 focus:ring-orange-500" />
- </div>
 
- <div v-if="profile.breakPeriod.enabled" class="grid grid-cols-2 gap-4 pt-2">
- <div class="space-y-2">
- <label class="text-xs font-bold text-orange-600 uppercase tracking-wider pl-1">Start Break</label>
- <input type="time" v-model="profile.breakPeriod.start" class="w-full px-4 py-3 bg-white rounded-xl border-transparent focus:ring-2 focus:ring-orange-500/20 font-bold text-base outline-none" />
- </div>
- <div class="space-y-2">
- <label class="text-xs font-bold text-orange-600 uppercase tracking-wider pl-1">End Break</label>
- <input type="time" v-model="profile.breakPeriod.end" class="w-full px-4 py-3 bg-white rounded-xl border-transparent focus:ring-2 focus:ring-orange-500/20 font-bold text-base outline-none" />
- </div>
- </div>
- </div>
  </div>
  </section>
 
@@ -625,21 +624,31 @@ const profile = reactive({
  { name: 'Standard Pack', price: 300, isActive: true }
  ],
  businessHours: [
- { day: 'monday', open: '08:00', close: '21:00', isClosed: false },
- { day: 'tuesday', open: '08:00', close: '21:00', isClosed: false },
- { day: 'wednesday', open: '08:00', close: '21:00', isClosed: false },
- { day: 'thursday', open: '08:00', close: '21:00', isClosed: false },
- { day: 'friday', open: '08:00', close: '21:00', isClosed: false },
- { day: 'saturday', open: '08:00', close: '21:00', isClosed: false },
- { day: 'sunday', open: '08:00', close: '21:00', isClosed: true },
+ { day: 'monday', open: '08:00', close: '21:00', isClosed: false, breaks: [] as {start: string, end: string, title?: string}[] },
+ { day: 'tuesday', open: '08:00', close: '21:00', isClosed: false, breaks: [] as {start: string, end: string, title?: string}[] },
+ { day: 'wednesday', open: '08:00', close: '21:00', isClosed: false, breaks: [] as {start: string, end: string, title?: string}[] },
+ { day: 'thursday', open: '08:00', close: '21:00', isClosed: false, breaks: [] as {start: string, end: string, title?: string}[] },
+ { day: 'friday', open: '08:00', close: '21:00', isClosed: false, breaks: [] as {start: string, end: string, title?: string}[] },
+ { day: 'saturday', open: '08:00', close: '21:00', isClosed: false, breaks: [] as {start: string, end: string, title?: string}[] },
+ { day: 'sunday', open: '08:00', close: '21:00', isClosed: true, breaks: [] as {start: string, end: string, title?: string}[] },
  ],
- breakPeriod: {
- start: '14:00',
- end: '15:00',
- enabled: false
- },
  accountPurposes: ['Default / General'] as string[]
 });
+
+const addBreak = (dayIndex: number) => {
+  if (!profile.businessHours[dayIndex].breaks) {
+    profile.businessHours[dayIndex].breaks = [];
+  }
+  profile.businessHours[dayIndex].breaks.push({
+    title: '',
+    start: '12:00',
+    end: '13:00'
+  });
+};
+
+const removeBreak = (dayIndex: number, breakIndex: number) => {
+  profile.businessHours[dayIndex].breaks.splice(breakIndex, 1);
+};
 
 const payoutPreference = ref('weekly');
 interface PayoutAccount {
@@ -751,9 +760,6 @@ const loadInitialData = async () => {
  }
  if (data.businessHours && data.businessHours.length > 0) {
  profile.businessHours = data.businessHours;
- }
- if (data.breakPeriod) {
- profile.breakPeriod = data.breakPeriod;
  }
  if (data.accountPurposes && data.accountPurposes.length > 0) {
  profile.accountPurposes = data.accountPurposes;
@@ -899,7 +905,6 @@ const saveHours = async () => {
  openingTime: profile.operatingHours.open,
  closingTime: profile.operatingHours.close,
  businessHours: profile.businessHours,
- breakPeriod: profile.breakPeriod,
  preparationTime: profile.preparationTime,
  packs: profile.packs,
  packagingFee: profile.packs && profile.packs.length > 0 ? profile.packs[0].price : 300,
