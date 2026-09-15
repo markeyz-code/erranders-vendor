@@ -32,4 +32,8 @@ export const orders_api = {
   assignOrder: (id: string) => {
     return GATEWAY_ENDPOINT_WITH_AUTH.put(`/orders/${id}/accept`);
   },
+
+  getRecurringForecasts: () => {
+    return GATEWAY_ENDPOINT_WITH_AUTH.get('/recurring-orders/vendor-forecast');
+  }
 };
