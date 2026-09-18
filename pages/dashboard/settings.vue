@@ -452,7 +452,8 @@
  </div>
 
  <div class="pt-8 border-t border-gray-50">
- <h4 class="text-base font-bold text-gray-900 mb-4">Withdrawal Cycle</h4>
+ <h4 class="text-base font-bold text-gray-900 mb-2">Withdrawal Cycle</h4>
+ <p class="text-sm text-gray-500 mb-4">Standard processing fees may apply for daily settlements. Weekly and monthly settlements are completely free.</p>
  <div class="flex flex-wrap gap-3">
  <button 
  v-for="pref in ['daily', 'weekly', 'monthly']" 
