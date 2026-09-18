@@ -138,7 +138,8 @@
  { key: 'activity', label: 'Activity' },
  { key: 'type', label: 'Flow' },
  { key: 'amount', label: 'Amount' },
- { key: 'date', label: 'Timestamp' }
+ { key: 'date', label: 'Timestamp' },
+ { key: 'actions', label: '' }
  ]"
  :items="transactions"
  :loading="loadingTransactions"
@@ -183,6 +184,15 @@
  <div class="text-right">
  <p class="text-sm font-bold text-gray-900">{{ formatDate((item as any).createdAt) }}</p>
  <p class="text-sm text-gray-400 font-bold mt-0.5">{{ formatTime((item as any).createdAt) }}</p>
+ </div>
+ </template>
+
+ <template #actions="{ item }">
+ <div class="flex justify-end">
+ <button @click="downloadReceipt((item as any)._id)" class="px-3 py-1.5 rounded-lg text-xs font-bold text-gray-600 hover:text-[#FF5C1A] hover:bg-[#FF5C1A]/10 transition-colors flex items-center gap-1.5 border border-gray-100 shadow-sm bg-white">
+ <Download class="w-3.5 h-3.5" />
+ Receipt
+ </button>
  </div>
  </template>
  </UiTable>
@@ -268,7 +278,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue';
-import { CreditCard, TrendingUp, ShieldCheck, ArrowUpRight, ArrowDownLeft, Settings as SettingsIcon, Banknote, HelpCircle, X, Building2, AlertCircle, Store, Loader2 } from 'lucide-vue-next';
+import { CreditCard, TrendingUp, ShieldCheck, ArrowUpRight, ArrowDownLeft, Settings as SettingsIcon, Banknote, HelpCircle, X, Building2, AlertCircle, Store, Loader2, Download } from 'lucide-vue-next';
 import { useWallet } from '@/composables/modules/wallets';
 import { useCustomToast } from '@/composables/core/useCustomToast';
 import UiTable from '@/components/ui/UiTable.vue';
@@ -278,7 +288,7 @@ import SideDrawer from '@/components/ui/SideDrawer.vue';
 definePageMeta({ layout: 'vendor' });
 useHead({ title: 'Financial Hub - Errander Vendor' });
 
-const { balance, wallet, transactions, loading: loadingWallet, fetchWallet, fetchTransactions, withdrawFunds } = useWallet();
+const { balance, wallet, transactions, loading: loadingWallet, fetchWallet, fetchTransactions, withdrawFunds, downloadReceipt } = useWallet();
 const { showToast } = useCustomToast();
 
 const loadingTransactions = ref(true);
