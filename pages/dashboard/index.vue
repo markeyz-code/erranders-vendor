@@ -195,7 +195,27 @@
  </p>
  </div>
 
- <NuxtLink to="/dashboard/wallet" class="inv-btn inv-btn--primary w-full justify-center">
+ <!-- Payout Schedule Quick Config -->
+ <div class="pt-4 border-t border-gray-100">
+  <div class="flex items-center justify-between mb-3">
+    <h4 class="text-sm font-bold text-gray-900">Payout Schedule</h4>
+    <span v-if="updatingPayout" class="w-4 h-4 border-2 border-[#FF5C1A] border-t-transparent rounded-full animate-spin"></span>
+  </div>
+  <div class="grid grid-cols-3 gap-2">
+    <button 
+      v-for="pref in ['daily', 'weekly', 'monthly']" 
+      :key="pref"
+      @click="updatePayoutSchedule(pref)"
+      :disabled="updatingPayout"
+      class="py-2 px-1 text-[11px] font-bold rounded-lg border text-center capitalize transition-all"
+      :class="wallet?.payoutPreference === pref ? 'bg-[#FF5C1A]/10 border-[#FF5C1A]/30 text-[#FF5C1A]' : 'bg-white border-gray-200 text-gray-500 hover:bg-gray-50'"
+    >
+      {{ pref }}
+    </button>
+  </div>
+ </div>
+
+ <NuxtLink to="/dashboard/wallet" class="inv-btn inv-btn--primary w-full justify-center mt-2">
  Financial Hub <ArrowRight class="w-3.5 h-3.5 ml-2" />
  </NuxtLink>
  </div>
@@ -228,6 +248,7 @@ import { useVendorOrders } from '@/composables/modules/vendor/useVendorOrders';
 import { useVendorAppointments } from '@/composables/modules/appointments';
 import { useSocket } from '@/composables/useSocket';
 import { useUser } from '@/composables/modules/auth/user';
+import { useWallet } from '@/composables/modules/wallets';
 import UiTable from '@/components/ui/UiTable.vue';
 
 definePageMeta({ layout: 'vendor' });
@@ -238,9 +259,11 @@ const { appointmentsList, loading: loadingAppointments, fetchAppointments } = us
 const { showToast } = useCustomToast();
 const { user } = useUser();
 const { connect, on, emit } = useSocket('realtime');
+const { wallet, fetchWallet, updatePreferences } = useWallet();
 const currentStats = ref<any>({});
 const vendorProfile = ref<any>(null);
 const loadingStats = ref(true);
+const updatingPayout = ref(false);
 
 const isServiceProvider = computed(() => vendorProfile.value?.businessType === 'service_provider');
 const isMiniMart = computed(() => {
@@ -283,11 +306,22 @@ const fetchDashboardData = async () => {
  const res = await vendors_api.getMyVendorStats();
  currentStats.value = res.data;
  vendorProfile.value = (res as any)?.data?.profile || null;
+ await fetchWallet();
  } catch (error) {
  console.error('Failed to load dashboard stats:', error);
  } finally {
  loadingStats.value = false;
  }
+};
+
+const updatePayoutSchedule = async (pref: string) => {
+  if (wallet.value?.payoutPreference === pref) return;
+  updatingPayout.value = true;
+  try {
+    await updatePreferences({ preference: pref });
+  } finally {
+    updatingPayout.value = false;
+  }
 };
 
 onMounted(() => {
