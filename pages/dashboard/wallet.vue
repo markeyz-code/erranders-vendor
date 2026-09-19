@@ -110,7 +110,7 @@
  <div class="mt-10 pt-8 border-t border-white/5 space-y-4 relative z-10">
  <div class="flex justify-between items-center text-sm font-medium text-white/40">
  <span>Cycle</span>
- <span class="text-white">{{ wallet?.payoutPreference || 'Weekly' }}</span>
+ <span class="text-white capitalize">{{ wallet?.payoutPreference || 'Manual' }}</span>
  </div>
  </div>
  </div>

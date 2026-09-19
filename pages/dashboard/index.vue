@@ -201,9 +201,9 @@
     <h4 class="text-sm font-bold text-gray-900">Payout Schedule</h4>
     <span v-if="updatingPayout" class="w-4 h-4 border-2 border-[#FF5C1A] border-t-transparent rounded-full animate-spin"></span>
   </div>
-  <div class="grid grid-cols-3 gap-2">
+  <div class="grid grid-cols-4 gap-2">
     <button 
-      v-for="pref in ['daily', 'weekly', 'monthly']" 
+      v-for="pref in ['manual', 'daily', 'weekly', 'monthly']" 
       :key="pref"
       @click="updatePayoutSchedule(pref)"
       :disabled="updatingPayout"

@@ -456,7 +456,7 @@
  <p class="text-sm text-gray-500 mb-4">Standard processing fees may apply for daily settlements. Weekly and monthly settlements are completely free.</p>
  <div class="flex flex-wrap gap-3">
  <button 
- v-for="pref in ['daily', 'weekly', 'monthly']" 
+ v-for="pref in ['manual', 'daily', 'weekly', 'monthly']" 
  :key="pref"
  @click="updatePayoutPref(pref)"
  class="px-4 md:px-6 py-3 rounded-xl text-sm font-bold transition-all border-2 capitalize"
@@ -651,7 +651,7 @@ const removeBreak = (dayIndex: number, breakIndex: number) => {
   profile.businessHours[dayIndex].breaks.splice(breakIndex, 1);
 };
 
-const payoutPreference = ref('weekly');
+const payoutPreference = ref('manual');
 interface PayoutAccount {
  bankCode: string;
  bankName: string;
@@ -768,7 +768,7 @@ const loadInitialData = async () => {
  isOnline.value = !!data.isOnline;
 
  const wData = wallet.value || walletRes || {};
- let pref = wData.payoutPreference || 'weekly';
+ let pref = wData.payoutPreference || 'manual';
  if (pref === 'instant') pref = 'daily';
  payoutPreference.value = pref;
  
