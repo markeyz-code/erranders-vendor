@@ -1,14 +1,21 @@
 <template>
   <div>
-    <VitePwaManifest />
-    <UiToast class="z-[9999999]" />
-    <CoreNetworkStatusBanner />
-    <UiGlobalConfirmModal class="z-[10000000]" />
-    <NuxtLayout class="z-10">
-      <NuxtPage class="z-10" />
-    </NuxtLayout>
-    
-    <CoreCallOverlay />
+    <!-- Platform Closed Overlay -->
+    <ClientOnly>
+      <CorePlatformClosed v-if="isPlatformClosed" />
+    </ClientOnly>
+
+    <template v-if="!isPlatformClosed">
+      <VitePwaManifest />
+      <UiToast class="z-[9999999]" />
+      <CoreNetworkStatusBanner />
+      <UiGlobalConfirmModal class="z-[10000000]" />
+      <NuxtLayout class="z-10">
+        <NuxtPage class="z-10" />
+      </NuxtLayout>
+      
+      <CoreCallOverlay />
+    </template>
     
     <!-- Background Audio - Bottom Left -->
     <!-- <ClientOnly>
@@ -27,15 +34,31 @@ body {
 
 <script setup lang="ts">
 // Global app configuration
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRealtimeNotifications } from '@/composables/core/useRealtimeNotifications'
 import { useWebRTC } from '@/composables/useWebRTC'
+
+const isPlatformClosed = ref(false)
 
 useRealtimeNotifications()
 
 const { initSocketListeners } = useWebRTC()
 
+// Check platform status
+const checkPlatformStatus = async () => {
+  try {
+    const envApiUrl = import.meta.env?.VITE_API_BASE_URL
+    const baseUrl = envApiUrl || 'https://api.erranders.org'
+    const cleanBase = baseUrl.replace(/\/api\/v1\/?$/, '').replace(/\/$/, '')
+    const res = await $fetch<{ isClosed: boolean }>(`${cleanBase}/api/v1/settings/platform-status/public`)
+    isPlatformClosed.value = res?.isClosed ?? false
+  } catch (e) {
+    isPlatformClosed.value = false
+  }
+}
+
 onMounted(() => {
+  checkPlatformStatus()
   initSocketListeners()
 })
 
