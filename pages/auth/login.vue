@@ -8,10 +8,10 @@
             <img src="@/assets/img/logo.png" class="h-12 w-auto" />
           </div>
         </NuxtLink>
-        <h1 class="text-3xl font-extrabold text-gray-900 mb-3 tracking-tight">Welcome Back</h1>
+        <h1 class="text-3xl font-bold text-gray-900 mb-3 tracking-tight">Welcome Back</h1>
         <p class="text-gray-500 text-base">Sign in to your vendor dashboard</p>
       </div>
-
+<!-- 
       <form @submit.prevent="handleLogin" class="space-y-6 max-w-md">
         <UiAnimatedInput 
           v-model="email" 
@@ -52,10 +52,10 @@
           <Loader2 v-if="loading" class="animate-spin w-6 h-6" />
           {{ loading ? 'signing in...' : 'sign in' }}
         </button>
-      </form>
+      </form> -->
 
       <div class="max-w-md w-full mt-6">
-        <button type="button" @click="firebaseLogin()" :disabled="firebaseLoading" class="w-full py-3.5 border border-gray-100 rounded-2xl flex items-center justify-center gap-3 font-bold text-gray-700 hover:bg-gray-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm">
+        <button type="button" @click="firebaseLogin()" :disabled="firebaseLoading" class="w-full py-3.5 border border-gray-100 rounded-2xl flex items-center justify-center gap-3 font-bold text-gray-700 hover:bg-gray-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
           <Loader2 v-if="firebaseLoading" class="animate-spin w-5 h-5" />
           <svg v-else class="w-5 h-5" viewBox="0 0 24 24">
             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>

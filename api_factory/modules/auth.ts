@@ -36,4 +36,8 @@ export const auth_api = {
   getProfile: () => {
     return GATEWAY_ENDPOINT_WITH_AUTH.get('/auth/profile');
   },
+
+  updateProfile: (payload: any) => {
+    return GATEWAY_ENDPOINT_WITH_AUTH.put('/users/me', payload);
+  },
 };
