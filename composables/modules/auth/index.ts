@@ -47,7 +47,14 @@ export const useAuth = () => {
             toastType: "success",
           });
           
-          if (!userData.store) {
+          if (!userData.phone) {
+            showToast({
+              title: "Action Required",
+              message: "Please add your phone number to complete account setup.",
+              toastType: "info",
+            });
+            await navigateTo('/auth/setup');
+          } else if (!userData.store) {
             await navigateTo('/auth/register'); // New users need to create store
           } else {
             await navigateTo('/dashboard/orders');
@@ -104,7 +111,14 @@ export const useAuth = () => {
       });
 
       if (options.redirect) {
-        if (!userData.store) {
+        if (!userData.phone) {
+          showToast({
+            title: "Action Required",
+            message: "Please add your phone number to complete account setup.",
+            toastType: "info",
+          });
+          await navigateTo('/auth/setup');
+        } else if (!userData.store) {
           await navigateTo('/auth/register'); // New users need to create store
         } else {
           await navigateTo('/dashboard/orders');
