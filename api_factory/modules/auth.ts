@@ -9,6 +9,10 @@ export const auth_api = {
     return GATEWAY_ENDPOINT.post('/auth/login', payload);
   },
 
+  firebaseLogin: (payload: { idToken: string; role?: string }) => {
+    return GATEWAY_ENDPOINT.post('/auth/firebase', payload);
+  },
+
   verifyOtp: (payload: { email: string; otp: string }) => {
     return GATEWAY_ENDPOINT.post('/auth/verify-otp', payload);
   },

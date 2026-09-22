@@ -1,83 +1,227 @@
 import { ref } from 'vue';
 import { auth_api } from '@/api_factory/modules/auth';
 import { useUser } from './user';
-import { navigateTo } from '#imports';
+import { navigateTo, useRoute, useRuntimeConfig } from '#imports';
 import { useCustomToast } from '@/composables/core/useCustomToast';
+import { initializeApp, getApps, getApp } from 'firebase/app';
+import { getAuth, GoogleAuthProvider, signInWithPopup, getRedirectResult, signInWithRedirect } from 'firebase/auth';
 
 export const useAuth = () => {
   const { setUser, setToken, logOut } = useUser();
   const { showToast } = useCustomToast();
   const loading = ref(false);
+  const firebaseLoading = ref(false);
 
-  const login = async (payload: any) => {
+  const getFirebaseAuth = () => {
+    const config = useRuntimeConfig();
+    const firebaseConfig = {
+      apiKey: config.public.firebaseApiKey,
+      authDomain: config.public.firebaseAuthDomain,
+      projectId: config.public.firebaseProjectId,
+    };
+    const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+    return getAuth(app);
+  };
+
+  const checkRedirectResult = async () => {
+    try {
+      const auth = getFirebaseAuth();
+      const result = await getRedirectResult(auth);
+      if (result) {
+        firebaseLoading.value = true;
+        const idToken = await result.user.getIdToken();
+        const res = await auth_api.firebaseLogin({ idToken, role: 'vendor' });
+
+        if (res.type === 'ERROR') throw { data: res.data || { message: 'Firebase login failed' } };
+
+        const responseData = res.data?.data || res.data;
+        const userData = responseData?.user;
+        const tokenValue = responseData?.token;
+
+        if (userData && tokenValue) {
+          setUser(userData);
+          setToken(tokenValue);
+          showToast({
+            title: "Welcome!",
+            message: "You've successfully signed in with Google.",
+            toastType: "success",
+          });
+          
+          if (!userData.store) {
+            await navigateTo('/auth/register'); // New users need to create store
+          } else {
+            await navigateTo('/dashboard/orders');
+          }
+        }
+      }
+    } catch (e: any) {
+      console.error('Redirect login error:', e);
+    } finally {
+      firebaseLoading.value = false;
+    }
+  };
+
+  const firebaseLogin = async (options: { redirect?: boolean } = { redirect: true }) => {
+    firebaseLoading.value = true;
+    try {
+      const auth = getFirebaseAuth();
+      const provider = new GoogleAuthProvider();
+
+      let result;
+      try {
+        result = await signInWithPopup(auth, provider);
+      } catch (err: any) {
+        if (err.code === 'auth/popup-blocked') {
+          console.warn('Popup blocked by browser. Falling back to signInWithRedirect...');
+          await signInWithRedirect(auth, provider);
+          return new Promise(() => {});
+        }
+        throw err;
+      }
+      const idToken = await result.user.getIdToken();
+
+      const res = await auth_api.firebaseLogin({ idToken, role: 'vendor' });
+
+      if (res.type === 'ERROR') {
+        throw { data: res.data || { message: 'Firebase login failed' } };
+      }
+
+      const responseData = res.data?.data || res.data;
+      const userData = responseData?.user;
+      const tokenValue = responseData?.token;
+
+      if (!userData || !tokenValue) {
+        throw { data: { message: 'Firebase login failed: unexpected response format' } };
+      }
+
+      setUser(userData);
+      setToken(tokenValue);
+
+      showToast({
+        title: "Welcome!",
+        message: "You've successfully signed in with Google.",
+        toastType: "success",
+      });
+
+      if (options.redirect) {
+        if (!userData.store) {
+          await navigateTo('/auth/register'); // New users need to create store
+        } else {
+          await navigateTo('/dashboard/orders');
+        }
+      }
+
+      return responseData;
+    } catch (e: any) {
+      console.error('Firebase login failed:', e);
+      showToast({
+        title: "Login Failed",
+        message: e.message || "Failed to login with Google.",
+        toastType: "error",
+      });
+      throw e;
+    } finally {
+      firebaseLoading.value = false;
+    }
+  };
+
+  const login = async (payload: any, options: { redirect?: boolean } = { redirect: true }) => {
+    const route = useRoute();
     loading.value = true;
     try {
       payload.role = 'vendor';
       const res = await auth_api.login(payload);
       if (res?.type === 'ERROR') throw res;
-      
-      // Handle potential response wrapping (res.data or res.data.data)
-      const responseData = res.data?.data || res.data;
-      const userData = responseData?.user;
-      const tokenValue = responseData?.token;
-      
-      if (!userData || !tokenValue) {
-        throw { data: { message: 'Login failed: unexpected response format' } };
-      }
-      
-      // Clear any cached profile to prevent the new user from seeing the old user's logo/data
-      const profile = useCookie<any>('errandr_vendor_profile');
-      profile.value = null;
-      if (typeof window !== 'undefined') {
-        document.cookie = 'errandr_vendor_profile=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; samesite=lax';
-      }
-
-      setUser(userData);
-      setToken(tokenValue);
-      
+      setUser(res.data.user);
+      setToken(res.data.token);
       showToast({
         title: "Welcome Back!",
         message: "You've successfully logged in.",
         toastType: "success",
       });
-      
-      // Navigate to dashboard after setting credentials
-      try {
-        if (userData?.vendorOnboardingSession) {
-          await navigateTo('/auth/register');
-        } else {
-          await navigateTo('/dashboard/orders');
-        }
-      } catch (navError) {
-        // Navigation aborts are expected in Nuxt — ignore them
+      if (options.redirect) {
+        const redirectPath = (route.query.redirect as string) || '/dashboard/orders';
+        await navigateTo(redirectPath);
       }
-      
-      return responseData;
+      return res.data;
     } catch (e: any) {
+      console.error('Login error:', e);
       throw e;
     } finally {
       loading.value = false;
     }
   };
 
-  const register = async (payload: any, options?: { skipRedirect?: boolean }) => {
+  const register = async (payload: any, options: { redirect?: boolean } = { redirect: true }) => {
     loading.value = true;
     try {
+      payload.role = 'vendor';
       const res = await auth_api.register(payload);
       if (res?.type === 'ERROR') throw res;
-      
       setUser(res.data.user);
       setToken(res.data.token);
       showToast({
         title: "Account Created!",
-        message: "Welcome to Erranders.",
+        message: "Welcome to Errandr.",
         toastType: "success",
       });
-      if (!options?.skipRedirect) {
-        navigateTo('/');
+      if (options.redirect) {
+        // Vendor registration flow continues to store creation usually
       }
       return res.data;
     } catch (e: any) {
+      console.error('Register error:', e);
+      throw e;
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  const fetchProfile = async () => {
+    try {
+      const res = await auth_api.getProfile();
+      if (res?.type === 'ERROR') throw res;
+      setUser(res.data.user || res.data);
+    } catch (e: any) {
+      console.error('Fetch profile error:', e);
+      logOut();
+    }
+  };
+
+  const verifyOTP = async (email: string, otp: string, options: { redirect?: boolean } = { redirect: true }) => {
+    loading.value = true;
+    try {
+      const res = await auth_api.verifyOtp({ email, otp });
+      if (res?.type === 'ERROR') throw res;
+      setUser(res.data.user);
+      setToken(res.data.token);
+      showToast({
+        title: "Verified!",
+        message: "Email successfully verified.",
+        toastType: "success",
+      });
+      return res.data;
+    } catch (e: any) {
+      console.error('Verify OTP error:', e);
+      throw e;
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  const resendOTP = async (email: string) => {
+    loading.value = true;
+    try {
+      const res = await auth_api.resendOtp(email);
+      if (res?.type === 'ERROR') throw res;
+      showToast({
+        title: "Code Sent!",
+        message: "A new verification code has been sent to your email.",
+        toastType: "success",
+      });
+      return res.data;
+    } catch (e: any) {
+      console.error('Resend OTP error:', e);
       throw e;
     } finally {
       loading.value = false;
@@ -90,30 +234,34 @@ export const useAuth = () => {
       const res = await auth_api.forgotPassword(email);
       if (res?.type === 'ERROR') throw res;
       showToast({
-        title: "OTP Sent!",
-        message: "A password reset code has been sent to your email 📬",
-        toastType: "success"
+        title: "Code Sent!",
+        message: res.data?.message || "Check your inbox for the reset code.",
+        toastType: "success",
       });
+      navigateTo(`/auth/verify-reset-otp?email=${encodeURIComponent(email)}`);
       return res.data;
     } catch (e: any) {
+      console.error('Forgot password error:', e);
       throw e;
     } finally {
       loading.value = false;
     }
   };
 
-  const verifyResetOtp = async (payload: { email: string; otp: string }) => {
+  const verifyResetOTP = async (email: string, otp: string) => {
     loading.value = true;
     try {
-      const res = await auth_api.verifyResetOtp(payload);
+      const res = await auth_api.verifyResetOtp({ email, otp });
       if (res?.type === 'ERROR') throw res;
       showToast({
         title: "Code Verified!",
-        message: "You can now reset your password.",
-        toastType: "success"
+        message: res.data?.message || "Perfect! Now set your new password.",
+        toastType: "success",
       });
+      navigateTo(`/auth/reset-password?email=${encodeURIComponent(email)}&otp=${encodeURIComponent(otp)}`);
       return res.data;
     } catch (e: any) {
+      console.error('Verify reset OTP error:', e);
       throw e;
     } finally {
       loading.value = false;
@@ -126,35 +274,33 @@ export const useAuth = () => {
       const res = await auth_api.resetPassword(payload);
       if (res?.type === 'ERROR') throw res;
       showToast({
-        title: "Password Updated!",
-        message: "Your password has been successfully reset. Log in ✨",
-        toastType: "success"
+        title: "Password Changed!",
+        message: "You can now log in securely.",
+        toastType: "success",
       });
+      navigateTo('/auth/login');
       return res.data;
     } catch (e: any) {
+      console.error('Reset password error:', e);
       throw e;
     } finally {
       loading.value = false;
     }
   };
 
-  const fetchProfile = async () => {
-    try {
-      const res = await auth_api.getProfile();
-      setUser(res.data);
-    } catch (e) {
-      logOut();
-    }
-  };
-
   return {
     loading,
+    firebaseLoading,
     login,
+    firebaseLogin,
     register,
-    forgotPassword,
-    verifyResetOtp,
-    resetPassword,
     fetchProfile,
-    logOut
+    forgotPassword,
+    verifyResetOTP,
+    verifyOTP,
+    resendOTP,
+    resetPassword,
+    logOut,
+    checkRedirectResult
   };
 };
