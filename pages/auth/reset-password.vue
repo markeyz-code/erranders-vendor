@@ -4,7 +4,7 @@
     <div class="absolute top-0 left-0 w-[600px] h-[600px] bg-parentPrimary/10 rounded-md blur-[120px] -translate-x-1/2 -translate-y-1/2"></div>
     <div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-indigo-500/10 rounded-md blur-[120px] translate-x-1/2 translate-y-1/2"></div>
 
-    <div class="w-full max-w-[420px] relative z-10">
+    <div class="w-full max-w-[340px] relative z-10">
       <!-- Back Link -->
       <button 
         @click="handleBack" 
@@ -21,7 +21,7 @@
             <div class="inline-flex items-center justify-center w-16 h-16 rounded-md bg-parentPrimary/10 text-parentPrimary mb-6">
               <MailCheck class="w-8 h-8" />
             </div>
-            <h1 class="text-xl font-medium text-gray-900 tracking-tight mb-2">Verify Identity</h1>
+            <h1 class="text-lg font-medium text-gray-900 tracking-tight mb-2">Verify Identity</h1>
             <p class="text-gray-500 font-medium text-sm leading-relaxed">
               We sent a 6-digit security code to <br />
               <span class="text-gray-900 font-bold">{{ email }}</span>
@@ -41,7 +41,7 @@
               type="text" 
               maxlength="1" 
               inputmode="numeric" 
-              class="w-12 h-14 text-center text-xl font-medium bg-gray-50 border border-gray-200 rounded-md focus:border-[#FF5C1A] focus:ring-4 focus:ring-[#FF5C1A]/10 outline-none transition-all" 
+              class="w-12 h-14 text-center text-lg font-medium bg-gray-50 border border-gray-200 rounded-md focus:border-[#FF5C1A] focus:ring-4 focus:ring-[#FF5C1A]/10 outline-none transition-all" 
             />
           </div>
 
@@ -57,7 +57,7 @@
             :disabled="loading || otpDigits.join('').length < 6"
             class="w-full py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group active:scale-[0.98]"
           >
-            <Loader2 v-if="loading" class="animate-spin w-5 h-5" />
+            <Loader2 v-if="loading" class="animate-spin w-4 h-4" />
             <span v-else>Verify Reset Code</span>
             <ArrowRight v-if="!loading" class="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </button>
@@ -84,7 +84,7 @@
             <div class="inline-flex items-center justify-center w-16 h-16 rounded-md bg-emerald-50 text-emerald-600 mb-6">
               <LockKeyhole class="w-8 h-8" />
             </div>
-            <h1 class="text-xl font-medium text-gray-900 tracking-tight mb-2">New Password</h1>
+            <h1 class="text-lg font-medium text-gray-900 tracking-tight mb-2">New Password</h1>
             <p class="text-gray-500 font-medium text-sm">Create a strong password to secure your account</p>
           </div>
 
@@ -119,7 +119,7 @@
               :disabled="loading"
               class="w-full py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group active:scale-[0.98]"
             >
-              <Loader2 v-if="loading" class="animate-spin w-5 h-5" />
+              <Loader2 v-if="loading" class="animate-spin w-4 h-4" />
               <span v-else>Set New Password</span>
               <ArrowRight v-if="!loading" class="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>

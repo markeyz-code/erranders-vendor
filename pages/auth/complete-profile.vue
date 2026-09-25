@@ -8,10 +8,10 @@
         <div v-if="currentStep !== 'success'" class="mb-6 text-center flex flex-col items-center">
           <NuxtLink to="/" class="flex items-center gap-2 mb-8 inline-block group">
             <div class="flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Store class="w-12 h-10 text-[#FF5C1A]" />
+              <Store class="w-12 h-9 text-[#FF5C1A]" />
             </div>
           </NuxtLink>
-          <h1 class="text-xl font-extrabold text-gray-900 mb-2 tracking-tight">Open Your Store</h1>
+          <h1 class="text-lg font-extrabold text-gray-900 mb-2 tracking-tight">Open Your Store</h1>
           <p class="text-gray-500 text-sm">Join the campus delivery network</p>
         </div>
       </transition>
@@ -40,7 +40,7 @@
           <transition name="slide-up" mode="out-in">
             <form v-if="currentStep === 'account'" @submit.prevent="handleStep1" class="w-full flex flex-col space-y-6">
               <div class="mb-2">
-                <h2 class="text-xl font-medium text-gray-900 tracking-tight">Basic Info</h2>
+                <h2 class="text-lg font-medium text-gray-900 tracking-tight">Basic Info</h2>
                 <p class="text-sm text-gray-500 font-medium">Complete your merchant account details</p>
               </div>
               
@@ -49,7 +49,7 @@
 
               <div class="mt-auto pt-6">
                 <button type="submit" :disabled="loading || validatingReferral" 
-                  class="w-full py-2.5 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-xl font-bold text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md shadow-[#FF5C1A]/20">
+                  class="w-full py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-xl font-bold text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md shadow-[#FF5C1A]/20">
                   <Loader2 v-if="loading || validatingReferral" class="animate-spin w-6 h-6" />
                   <span>{{ loading || validatingReferral ? 'Processing...' : 'Continue' }}</span>
                   <ArrowRight v-if="!loading && !validatingReferral" class="w-5 h-5 ml-2" />
@@ -63,7 +63,7 @@
             <form v-if="currentStep === 'business'" @submit.prevent="handleStep2" class="w-full flex flex-col space-y-4">
               <div class="mb-4 flex justify-between items-center">
                 <div>
-                  <h2 class="text-xl font-medium text-gray-900 tracking-tight">Business Profile</h2>
+                  <h2 class="text-lg font-medium text-gray-900 tracking-tight">Business Profile</h2>
                   <p class="text-smtext-gray-500 font-medium">Tell us about your store</p>
                 </div>
                 <Store class="w-6 h-6 text-gray-300" />
@@ -146,7 +146,7 @@
                 
                 <!-- Restaurant -->
                 <div @click="vendor.vendorType = 'restaurant'" class="flex items-start gap-4 p-4 border rounded-md cursor-pointer transition-all duration-300" :class="vendor.vendorType === 'restaurant' ? 'bg-[#FF5C1A]/5 border-[#FF5C1A] ring-1 ring-[#FF5C1A]/10' : 'bg-white border-gray-200 hover:border-[#FF5C1A]/50'">
-                  <div class="w-10 h-10 rounded-md bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">🍽️</div>
+                  <div class="w-10 h-9 rounded-md bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">🍽️</div>
                   <div>
                     <h3 class="text-sm font-bold text-gray-900 mb-1">Restaurant / Eatery</h3>
                     <p class="text-xs text-gray-500 leading-relaxed">Perfect for food vendors. Includes advanced menu features, takeaway packs, modifiers, and prep time management.</p>
@@ -156,7 +156,7 @@
                 
                 <!-- Mini-Mart -->
                 <div @click="vendor.vendorType = 'mini-mart'" class="flex items-start gap-4 p-4 border rounded-md cursor-pointer transition-all duration-300" :class="vendor.vendorType === 'mini-mart' ? 'bg-[#FF5C1A]/5 border-[#FF5C1A] ring-1 ring-[#FF5C1A]/10' : 'bg-white border-gray-200 hover:border-[#FF5C1A]/50'">
-                  <div class="w-10 h-10 rounded-md bg-green-50 text-green-600 flex items-center justify-center shrink-0">🛒</div>
+                  <div class="w-10 h-9 rounded-md bg-green-50 text-green-600 flex items-center justify-center shrink-0">🛒</div>
                   <div>
                     <h3 class="text-sm font-bold text-gray-900 mb-1">Mini-Mart / Provisions</h3>
                     <p class="text-xs text-gray-500 leading-relaxed">Ideal for grocers and marts. Manage hundreds of items with a simplified interface optimized for fast bulk additions.</p>
@@ -166,7 +166,7 @@
 
                 <!-- Single Category -->
                 <div @click="vendor.vendorType = 'single-category'" class="flex items-start gap-4 p-4 border rounded-md cursor-pointer transition-all duration-300" :class="vendor.vendorType === 'single-category' ? 'bg-[#FF5C1A]/5 border-[#FF5C1A] ring-1 ring-[#FF5C1A]/10' : 'bg-white border-gray-200 hover:border-[#FF5C1A]/50'">
-                  <div class="w-10 h-10 rounded-md bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">🛍️</div>
+                  <div class="w-10 h-9 rounded-md bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">🛍️</div>
                   <div>
                     <h3 class="text-sm font-bold text-gray-900 mb-1">Single Category Retail</h3>
                     <p class="text-xs text-gray-500 leading-relaxed">Best for boutiques, fashion, or electronics. Offers standard product variations (sizes, colors) and precise stock tracking.</p>
@@ -176,9 +176,9 @@
               </div>
 
               <div class="flex gap-3 pt-4 mt-auto">
-                <button type="button" @click="currentStep = 'otp'" class="w-14 h-14 shrink-0 flex items-center justify-center bg-gray-50 hover:bg-gray-100 border border-gray-100 text-gray-600 rounded-md font-bold transition-all"><ArrowLeft class="w-5 h-5" /></button>
+                <button type="button" @click="currentStep = 'otp'" class="w-14 h-14 shrink-0 flex items-center justify-center bg-gray-50 hover:bg-gray-100 border border-gray-100 text-gray-600 rounded-md font-bold transition-all"><ArrowLeft class="w-4 h-4" /></button>
                 <button type="submit" class="flex-1 py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">
-                  Continue <ArrowRight class="w-5 h-5" />
+                  Continue <ArrowRight class="w-4 h-4" />
                 </button>
               </div>
             </form>
@@ -188,13 +188,13 @@
           <transition name="slide-up" mode="out-in">
             <form v-if="currentStep === 'businessType'" @submit.prevent="handleStepType" class="w-full flex flex-col space-y-4">
               <div class="mb-4">
-                <h2 class="text-xl font-medium text-gray-900 tracking-tight">Business Type</h2>
+                <h2 class="text-lg font-medium text-gray-900 tracking-tight">Business Type</h2>
                 <p class="text-sm text-gray-500 font-medium">What kind of business do you run?</p>
               </div>
 
               <div class="grid gap-3">
                 <div @click="vendor.businessType = 'physical_product'" class="flex items-start gap-4 p-4 border rounded-md cursor-pointer transition-all duration-300" :class="vendor.businessType === 'physical_product' ? 'bg-[#FF5C1A]/5 border-[#FF5C1A] ring-1 ring-[#FF5C1A]/10' : 'bg-white border-gray-200 hover:border-[#FF5C1A]/50'">
-                  <div class="w-10 h-10 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">📦</div>
+                  <div class="w-10 h-9 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">📦</div>
                   <div>
                     <h3 class="text-sm font-bold text-gray-900 mb-1">Physical Products</h3>
                     <p class="text-xs text-gray-500 leading-relaxed">I sell physical items that require delivery or pickup (e.g. food, clothing, groceries).</p>
@@ -203,7 +203,7 @@
                 </div>
 
                 <div @click="vendor.businessType = 'service_provider'" class="flex items-start gap-4 p-4 border rounded-md cursor-pointer transition-all duration-300" :class="vendor.businessType === 'service_provider' ? 'bg-[#FF5C1A]/5 border-[#FF5C1A] ring-1 ring-[#FF5C1A]/10' : 'bg-white border-gray-200 hover:border-[#FF5C1A]/50'">
-                  <div class="w-10 h-10 rounded-md bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">✂️</div>
+                  <div class="w-10 h-9 rounded-md bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">✂️</div>
                   <div>
                     <h3 class="text-sm font-bold text-gray-900 mb-1">Service Provider</h3>
                     <p class="text-xs text-gray-500 leading-relaxed">I provide services that require booking appointments (e.g. salon, spa, tutoring).</p>
@@ -212,7 +212,7 @@
                 </div>
 
                 <div @click="vendor.businessType = 'hybrid'" class="flex items-start gap-4 p-4 border rounded-md cursor-pointer transition-all duration-300" :class="vendor.businessType === 'hybrid' ? 'bg-[#FF5C1A]/5 border-[#FF5C1A] ring-1 ring-[#FF5C1A]/10' : 'bg-white border-gray-200 hover:border-[#FF5C1A]/50'">
-                  <div class="w-10 h-10 rounded-md bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">🛍️</div>
+                  <div class="w-10 h-9 rounded-md bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">🛍️</div>
                   <div>
                     <h3 class="text-sm font-bold text-gray-900 mb-1">Hybrid (Products & Services)</h3>
                     <p class="text-xs text-gray-500 leading-relaxed">I provide services AND sell physical products (e.g. a salon selling hair cream).</p>
@@ -222,8 +222,8 @@
               </div>
 
               <div class="flex gap-3 pt-4 mt-auto">
-                <button type="button" @click="currentStep = 'business'" class="w-14 h-14 shrink-0 flex items-center justify-center bg-gray-50 hover:bg-gray-100 border border-gray-100 text-gray-600 rounded-md font-bold transition-all"><ArrowLeft class="w-5 h-5" /></button>
-                <button type="submit" class="flex-1 py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">Continue <ArrowRight class="w-5 h-5" /></button>
+                <button type="button" @click="currentStep = 'business'" class="w-14 h-14 shrink-0 flex items-center justify-center bg-gray-50 hover:bg-gray-100 border border-gray-100 text-gray-600 rounded-md font-bold transition-all"><ArrowLeft class="w-4 h-4" /></button>
+                <button type="submit" class="flex-1 py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">Continue <ArrowRight class="w-4 h-4" /></button>
               </div>
             </form>
           </transition>
@@ -233,7 +233,7 @@
           <transition name="slide-up" mode="out-in">
             <form v-if="currentStep === 'categories'" @submit.prevent="handleStepCategories" class="w-full flex flex-col space-y-4">
               <div class="mb-4">
-                <h2 class="text-xl font-medium text-gray-900 tracking-tight">Business Categories</h2>
+                <h2 class="text-lg font-medium text-gray-900 tracking-tight">Business Categories</h2>
                 <p class="text-sm text-gray-500 font-medium">What describes your offerings?</p>
               </div>
 
@@ -242,7 +242,7 @@
                 <div class="relative" ref="categoryDropdownRef">
                   <div 
                     @click="showCategoryDropdown = !showCategoryDropdown"
-                    class="flex items-center flex-wrap gap-2 min-h-[48px] px-4 py-2.5 border rounded-md cursor-pointer transition-all duration-200 bg-white"
+                    class="flex items-center flex-wrap gap-2 min-h-[48px] px-4 py-2 border rounded-md cursor-pointer transition-all duration-200 bg-white"
                     :class="showCategoryDropdown ? 'border-[#FF5C1A]/40 ring-1 ring-[#FF5C1A]/5' : 'border-gray-200 hover:border-gray-300'"
                   >
                     <div v-for="cat in selectedCategories" :key="cat" class="flex items-center gap-1.5 px-2.5 py-1 bg-[#FF5C1A]/10 border border-[#FF5C1A]/20 text-[#FF5C1A] text-xs font-medium rounded-lg">
@@ -275,7 +275,7 @@
                     <div v-if="showCategoryDropdown" class="absolute z-50 w-full mt-2 bg-white rounded-xl border border-gray-200 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.1)] max-h-[300px] overflow-y-auto scrollbar-hide">
                       <div v-if="filteredCategoryOptions.length === 0 && categorySearch.trim()" class="p-2">
                         <button type="button" @click="addCustomCategory" class="w-full flex items-center gap-3 px-4 py-2 rounded-lg bg-gray-50 hover:bg-[#FF5C1A]/5 transition-all text-left group">
-                          <div class="w-10 h-10 rounded-lg bg-[#FF5C1A]/10 text-[#FF5C1A] flex items-center justify-center group-hover:scale-105 transition-transform"><span class="text-lg font-bold">+</span></div>
+                          <div class="w-10 h-9 rounded-lg bg-[#FF5C1A]/10 text-[#FF5C1A] flex items-center justify-center group-hover:scale-105 transition-transform"><span class="text-lg font-bold">+</span></div>
                           <div>
                             <p class="text-sm font-bold text-gray-900">Add "<span class="text-[#FF5C1A]">{{ categorySearch.trim() }}</span>"</p>
                             <p class="text-[11px] text-gray-500 font-medium">Create a custom category</p>
@@ -296,7 +296,7 @@
                             <Check v-if="selectedCategories.includes(cat.value)" class="w-3 h-3 text-white" />
                           </div>
                           <div class="flex-1 min-w-0 flex items-start gap-3">
-                            <span class="text-xl leading-none mt-0.5">{{ cat.icon }}</span>
+                            <span class="text-lg leading-none mt-0.5">{{ cat.icon }}</span>
                             <div class="flex flex-col">
                               <span class="text-sm font-bold text-gray-900">{{ cat.label }}</span>
                               <span class="text-xs text-gray-500 leading-snug mt-0.5">{{ cat.desc }}</span>
@@ -306,7 +306,7 @@
                       </div>
                       
                       <div v-if="categorySearch.trim() && filteredCategoryOptions.length > 0" class="border-t border-gray-100 p-2">
-                        <button type="button" @click="addCustomCategory" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-50 transition-all text-left">
+                        <button type="button" @click="addCustomCategory" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-50 transition-all text-left">
                           <div class="w-8 h-8 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center"><span class="text-sm font-bold">+</span></div>
                           <div>
                             <span class="text-sm font-bold text-gray-700">Custom Category</span>
@@ -415,8 +415,8 @@
               </transition>
 
               <div class="flex gap-3 pt-4 mt-auto">
-                <button type="button" @click="currentStep = 'businessType'" class="w-14 h-14 shrink-0 flex items-center justify-center bg-gray-50 hover:bg-gray-100 border border-gray-100 text-gray-600 rounded-md font-bold transition-all"><ArrowLeft class="w-5 h-5" /></button>
-                <button type="submit" class="flex-1 py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">Continue <ArrowRight class="w-5 h-5" /></button>
+                <button type="button" @click="currentStep = 'businessType'" class="w-14 h-14 shrink-0 flex items-center justify-center bg-gray-50 hover:bg-gray-100 border border-gray-100 text-gray-600 rounded-md font-bold transition-all"><ArrowLeft class="w-4 h-4" /></button>
+                <button type="submit" class="flex-1 py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">Continue <ArrowRight class="w-4 h-4" /></button>
               </div>
             </form>
           </transition>
@@ -425,7 +425,7 @@
           <transition name="slide-up" mode="out-in">
             <form v-if="currentStep === 'teamSize'" @submit.prevent="handleStepTeamSize" class="w-full flex flex-col space-y-4">
               <div class="mb-4">
-                <h2 class="text-xl font-medium text-gray-900 tracking-tight">Team Size</h2>
+                <h2 class="text-lg font-medium text-gray-900 tracking-tight">Team Size</h2>
                 <p class="text-sm text-gray-500 font-medium">How many people work at your business?</p>
               </div>
 
@@ -457,8 +457,8 @@
               </div>
 
               <div class="flex gap-3 pt-4 mt-auto">
-                <button type="button" @click="currentStep = 'categories'" class="w-14 h-14 shrink-0 flex items-center justify-center bg-gray-50 hover:bg-gray-100 border border-gray-100 text-gray-600 rounded-md font-bold transition-all"><ArrowLeft class="w-5 h-5" /></button>
-                <button type="submit" class="flex-1 py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">Continue <ArrowRight class="w-5 h-5" /></button>
+                <button type="button" @click="currentStep = 'categories'" class="w-14 h-14 shrink-0 flex items-center justify-center bg-gray-50 hover:bg-gray-100 border border-gray-100 text-gray-600 rounded-md font-bold transition-all"><ArrowLeft class="w-4 h-4" /></button>
+                <button type="submit" class="flex-1 py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">Continue <ArrowRight class="w-4 h-4" /></button>
               </div>
             </form>
           </transition>
@@ -467,13 +467,13 @@
           <transition name="slide-up" mode="out-in">
             <form v-if="currentStep === 'locationType'" @submit.prevent="handleStepLocationType" class="w-full flex flex-col space-y-4">
               <div class="mb-4">
-                <h2 class="text-xl font-medium text-gray-900 tracking-tight">Service Location</h2>
+                <h2 class="text-lg font-medium text-gray-900 tracking-tight">Service Location</h2>
                 <p class="text-sm text-gray-500 font-medium">Where do you provide your services/products?</p>
               </div>
 
               <div class="grid gap-3">
                 <div @click="vendor.serviceLocation = 'physical_location'" class="flex items-start gap-4 p-4 border rounded-md cursor-pointer transition-all duration-300" :class="vendor.serviceLocation === 'physical_location' ? 'bg-[#FF5C1A]/5 border-[#FF5C1A] ring-1 ring-[#FF5C1A]/10' : 'bg-white border-gray-200 hover:border-[#FF5C1A]/50'">
-                  <div class="w-10 h-10 rounded-md bg-orange-50 text-[#FF5C1A] flex items-center justify-center shrink-0"><MapPin class="w-5 h-5" /></div>
+                  <div class="w-10 h-9 rounded-md bg-orange-50 text-[#FF5C1A] flex items-center justify-center shrink-0"><MapPin class="w-4 h-4" /></div>
                   <div>
                     <h3 class="text-sm font-bold text-gray-900 mb-1">Physical Location</h3>
                     <p class="text-xs text-gray-500 leading-relaxed">I have a store, salon, or physical space where customers come to me.</p>
@@ -482,7 +482,7 @@
                 </div>
 
                 <div @click="vendor.serviceLocation = 'mobile_operator'" class="flex items-start gap-4 p-4 border rounded-md cursor-pointer transition-all duration-300" :class="vendor.serviceLocation === 'mobile_operator' ? 'bg-[#FF5C1A]/5 border-[#FF5C1A] ring-1 ring-[#FF5C1A]/10' : 'bg-white border-gray-200 hover:border-[#FF5C1A]/50'">
-                  <div class="w-10 h-10 rounded-md bg-blue-50 text-blue-500 flex items-center justify-center shrink-0">🚙</div>
+                  <div class="w-10 h-9 rounded-md bg-blue-50 text-blue-500 flex items-center justify-center shrink-0">🚙</div>
                   <div>
                     <h3 class="text-sm font-bold text-gray-900 mb-1">Mobile Operator</h3>
                     <p class="text-xs text-gray-500 leading-relaxed">I travel to my clients to provide services or deliver goods.</p>
@@ -491,7 +491,7 @@
                 </div>
 
                 <div @click="vendor.serviceLocation = 'virtual_online'" class="flex items-start gap-4 p-4 border rounded-md cursor-pointer transition-all duration-300" :class="vendor.serviceLocation === 'virtual_online' ? 'bg-[#FF5C1A]/5 border-[#FF5C1A] ring-1 ring-[#FF5C1A]/10' : 'bg-white border-gray-200 hover:border-[#FF5C1A]/50'">
-                  <div class="w-10 h-10 rounded-md bg-emerald-50 text-emerald-500 flex items-center justify-center shrink-0">💻</div>
+                  <div class="w-10 h-9 rounded-md bg-emerald-50 text-emerald-500 flex items-center justify-center shrink-0">💻</div>
                   <div>
                     <h3 class="text-sm font-bold text-gray-900 mb-1">Virtual / Online</h3>
                     <p class="text-xs text-gray-500 leading-relaxed">I provide my services entirely online or via social media.</p>
@@ -501,8 +501,8 @@
               </div>
 
               <div class="flex gap-3 pt-4 mt-auto">
-                <button type="button" @click="currentStep = 'teamSize'" class="w-14 h-14 shrink-0 flex items-center justify-center bg-gray-50 hover:bg-gray-100 border border-gray-100 text-gray-600 rounded-md font-bold transition-all"><ArrowLeft class="w-5 h-5" /></button>
-                <button type="submit" class="flex-1 py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">Continue <ArrowRight class="w-5 h-5" /></button>
+                <button type="button" @click="currentStep = 'teamSize'" class="w-14 h-14 shrink-0 flex items-center justify-center bg-gray-50 hover:bg-gray-100 border border-gray-100 text-gray-600 rounded-md font-bold transition-all"><ArrowLeft class="w-4 h-4" /></button>
+                <button type="submit" class="flex-1 py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">Continue <ArrowRight class="w-4 h-4" /></button>
               </div>
             </form>
           </transition>
@@ -513,7 +513,7 @@
               
               <div v-if="vendor.serviceLocation === 'physical_location'">
                 <div class="mb-4">
-                  <h2 class="text-xl font-medium text-gray-900 tracking-tight">Business Address</h2>
+                  <h2 class="text-lg font-medium text-gray-900 tracking-tight">Business Address</h2>
                   <p class="text-sm text-gray-500 font-medium">Where is your business located?</p>
                 </div>
                 <div class="relative mt-2">
@@ -528,7 +528,7 @@
 
               <div v-else>
                 <div class="mb-4">
-                  <h2 class="text-xl font-medium text-gray-900 tracking-tight">Software Used</h2>
+                  <h2 class="text-lg font-medium text-gray-900 tracking-tight">Software Used</h2>
                   <p class="text-sm text-gray-500 font-medium">Which software are you currently using to manage your business?</p>
                 </div>
                 <UiAnimatedInput v-model="vendor.softwareUsed" type="text" label="Software Name (e.g. Fresha, Calendly, WhatsApp)" />
@@ -592,8 +592,8 @@
               </div>
 
               <div class="flex gap-3 pt-4 mt-auto">
-                <button type="button" @click="currentStep = 'locationType'" class="w-14 h-14 shrink-0 flex items-center justify-center bg-gray-50 hover:bg-gray-100 border border-gray-100 text-gray-600 rounded-md font-bold transition-all"><ArrowLeft class="w-5 h-5" /></button>
-                <button type="submit" class="flex-1 py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">Continue <ArrowRight class="w-5 h-5" /></button>
+                <button type="button" @click="currentStep = 'locationType'" class="w-14 h-14 shrink-0 flex items-center justify-center bg-gray-50 hover:bg-gray-100 border border-gray-100 text-gray-600 rounded-md font-bold transition-all"><ArrowLeft class="w-4 h-4" /></button>
+                <button type="submit" class="flex-1 py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">Continue <ArrowRight class="w-4 h-4" /></button>
               </div>
             </form>
           </transition>
@@ -603,7 +603,7 @@
             <form v-if="currentStep === 'logistics'" @submit.prevent="handleFinalSubmit" class="w-full flex flex-col space-y-4">
               <div class="mb-4 flex justify-between items-center">
                 <div>
-                  <h2 class="text-xl font-medium text-gray-900 tracking-tight">Logistics & Payouts</h2>
+                  <h2 class="text-lg font-medium text-gray-900 tracking-tight">Logistics & Payouts</h2>
                   <p class="text-smtext-gray-500 font-medium">Final setup steps</p>
                 </div>
                 <ImageIcon class="w-6 h-6 text-gray-300" />
@@ -613,8 +613,8 @@
               <div class="relative border-2 border-dashed border-gray-200 rounded-md p-5 text-center hover:border-parentPrimary hover:bg-parentPrimary/5 transition-colors cursor-pointer group" @click="triggerLogoUpload">
                 <input type="file" ref="logoInput" accept="image/*" class="hidden" @change="handleLogoSelect" />
                 <div v-if="!logoPreview" class="flex flex-col items-center">
-                  <div class="w-10 h-10 bg-white rounded-md border border-gray-100 flex items-center justify-center mb-2 group-hover:scale-110 group-hover:text-parentPrimary transition-transform">
-                    <ImageIcon class="w-5 h-5" />
+                  <div class="w-10 h-9 bg-white rounded-md border border-gray-100 flex items-center justify-center mb-2 group-hover:scale-110 group-hover:text-parentPrimary transition-transform">
+                    <ImageIcon class="w-4 h-4" />
                   </div>
                   <p class="text-smfont-bold text-gray-700">Upload Store Logo</p>
                   <p class="text-[11px] text-gray-400 font-medium">PNG or JPG, up to 5MB</p>
@@ -754,9 +754,9 @@
               <!-- <div v-if="error" class="p-3 bg-red-50 text-red-600 text-smfont-bold rounded-md flex items-center justify-center gap-2"><AlertCircle class="w-4 h-4 shrink-0" /> {{ error }}</div> -->
 
               <div class="flex gap-3 pt-4 mt-auto">
-                <button type="button" @click="currentStep = 'business'" class="w-14 h-14 shrink-0 flex items-center justify-center bg-gray-50 hover:bg-gray-100 border border-gray-100 text-gray-600 rounded-md font-bold transition-all"><ArrowLeft class="w-5 h-5" /></button>
+                <button type="button" @click="currentStep = 'business'" class="w-14 h-14 shrink-0 flex items-center justify-center bg-gray-50 hover:bg-gray-100 border border-gray-100 text-gray-600 rounded-md font-bold transition-all"><ArrowLeft class="w-4 h-4" /></button>
                 <button type="submit" :disabled="submitting || logoUploading" class="flex-1 py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50 active:scale-[0.98]">
-                  <Loader2 v-if="submitting" class="animate-spin w-5 h-5" />
+                  <Loader2 v-if="submitting" class="animate-spin w-4 h-4" />
                   <span>{{ submitting ? 'Launching...' : 'Launch Store 🚀' }}</span>
                 </button>
               </div>
@@ -770,12 +770,12 @@
                 <div class="absolute inset-0 bg-[#FF5C1A]/10 rounded-md animate-ping" style="animation-duration: 2s;"></div>
                 <div class="absolute inset-2 bg-[#FF5C1A]/20 rounded-md animate-ping" style="animation-duration: 2s; animation-delay: 0.5s;"></div>
                 <div class="w-24 h-24 bg-gradient-to-br from-[#FF5C1A] to-[#FFA785] rounded-md flex items-center justify-center text-white relative z-10 animate-bounce">
-                  <Check class="w-12 h-10" stroke-width="3" />
+                  <Check class="w-12 h-9" stroke-width="3" />
                 </div>
               </div>
               
               <div class="space-y-3">
-                <h2 class="text-xl font-medium text-gray-900 tracking-tight">Welcome aboard! 🎉</h2>
+                <h2 class="text-lg font-medium text-gray-900 tracking-tight">Welcome aboard! 🎉</h2>
                 <div class="relative">
                   <p class="text-gray-500 font-medium leading-relaxed max-w-[300px] mx-auto text-[15px]">
                     We're incredibly excited to have you as a vendor. Get ready to share your magic with the campus! 💖
@@ -784,7 +784,7 @@
               </div>
 
               <div class="w-full pt-8 mt-auto">
-                <button @click="proceedToDashboard" class="w-full py-2.5 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-[17px] transition-all flex items-center justify-center gap-2 active:scale-[0.98] group">
+                <button @click="proceedToDashboard" class="w-full py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-[17px] transition-all flex items-center justify-center gap-2 active:scale-[0.98] group">
                   Proceed to Dashboard <ArrowRight class="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
@@ -805,7 +805,7 @@
         <div v-if="activeInfoModal && infoModalContent" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" @click="activeInfoModal = null"></div>
           <div class="relative bg-white rounded-xl p-6 w-full max-w-sm shadow-xl flex flex-col items-center text-center">
-            <div class="w-12 h-10 bg-[#FF5C1A]/10 rounded-full flex items-center justify-center text-[#FF5C1A] mb-4">
+            <div class="w-12 h-9 bg-[#FF5C1A]/10 rounded-full flex items-center justify-center text-[#FF5C1A] mb-4">
               <Info class="w-6 h-6" />
             </div>
             <h3 class="text-lg font-bold text-gray-900 mb-2">{{ infoModalContent.title }}</h3>
@@ -844,7 +844,7 @@
         <div v-if="showResumeModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" @click="ignoreResume"></div>
           <div class="relative bg-white rounded-xl p-6 w-full max-w-sm shadow-xl flex flex-col items-center text-center">
-            <div class="w-12 h-10 bg-[#FF5C1A]/10 rounded-full flex items-center justify-center text-[#FF5C1A] mb-4">
+            <div class="w-12 h-9 bg-[#FF5C1A]/10 rounded-full flex items-center justify-center text-[#FF5C1A] mb-4">
               <Store class="w-6 h-6" />
             </div>
             <h3 class="text-lg font-bold text-gray-900 mb-2">Welcome Back!</h3>
