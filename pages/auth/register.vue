@@ -66,7 +66,7 @@ const error = ref('')
 const handleGoogleSignup = async () => {
   error.value = ''
   try {
-    const res = await firebaseLogin({ redirect: false })
+    const res = await firebaseLogin({ redirect: false, isSignUp: true })
     navigateTo('/auth/complete-profile')
   } catch (e: any) {
     error.value = e?.data?.message || e?.message || 'Signup failed. Please try again.'
