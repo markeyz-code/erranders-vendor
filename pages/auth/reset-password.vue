@@ -21,7 +21,7 @@
             <div class="inline-flex items-center justify-center w-16 h-16 rounded-md bg-parentPrimary/10 text-parentPrimary mb-6">
               <MailCheck class="w-8 h-8" />
             </div>
-            <h1 class="text-2xl font-medium text-gray-900 tracking-tight mb-2">Verify Identity</h1>
+            <h1 class="text-xl font-medium text-gray-900 tracking-tight mb-2">Verify Identity</h1>
             <p class="text-gray-500 font-medium text-sm leading-relaxed">
               We sent a 6-digit security code to <br />
               <span class="text-gray-900 font-bold">{{ email }}</span>
@@ -63,7 +63,7 @@
           </button>
 
           <!-- Resend Area -->
-          <div class="mt-8 text-center pt-6 border-t border-gray-100">
+          <div class="mt-5 text-center pt-6 border-t border-gray-100">
             <p class="text-gray-500 font-medium text-sm">
               Didn't receive a code? 
               <button 
@@ -84,7 +84,7 @@
             <div class="inline-flex items-center justify-center w-16 h-16 rounded-md bg-emerald-50 text-emerald-600 mb-6">
               <LockKeyhole class="w-8 h-8" />
             </div>
-            <h1 class="text-2xl font-medium text-gray-900 tracking-tight mb-2">New Password</h1>
+            <h1 class="text-xl font-medium text-gray-900 tracking-tight mb-2">New Password</h1>
             <p class="text-gray-500 font-medium text-sm">Create a strong password to secure your account</p>
           </div>
 
@@ -128,7 +128,7 @@
       </div>
       
       <!-- Copy info -->
-      <div class="mt-8 text-center flex items-center justify-center gap-4 text-sm font-bold text-gray-400">
+      <div class="mt-5 text-center flex items-center justify-center gap-4 text-sm font-bold text-gray-400">
         <p>&copy; {{ new Date().getFullYear() }} Erranders</p>
         <span class="w-1 h-1 bg-gray-300 rounded-md"></span>
         <NuxtLink to="/terms" class="hover:text-gray-600 transition-colors">Terms & Privacy</NuxtLink>

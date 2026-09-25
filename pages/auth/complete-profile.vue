@@ -1,18 +1,18 @@
 <template>
-  <div class="min-h-screen w-full flex flex-col items-center justify-center bg-white overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen w-full flex flex-col items-center justify-center bg-white overflow-hidden py-8 px-4 sm:px-6 lg:px-8">
     <!-- Form Card -->
-    <div class="w-full max-w-xl flex flex-col justify-center px-4 sm:px-10 py-12 bg-white sm:rounded-[2rem] relative z-10 my-8 shadow-sm border border-gray-50">
+    <div class="w-full max-w-xl flex flex-col justify-center px-4 sm:px-10 py-8 bg-white sm:rounded-[2rem] relative z-10 my-8 shadow-sm border border-gray-50">
       
       <!-- Header -->
       <transition name="fade" mode="out-in">
-        <div v-if="currentStep !== 'success'" class="mb-10 text-center flex flex-col items-center">
+        <div v-if="currentStep !== 'success'" class="mb-6 text-center flex flex-col items-center">
           <NuxtLink to="/" class="flex items-center gap-2 mb-8 inline-block group">
             <div class="flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Store class="w-12 h-12 text-[#FF5C1A]" />
+              <Store class="w-12 h-10 text-[#FF5C1A]" />
             </div>
           </NuxtLink>
-          <h1 class="text-3xl font-extrabold text-gray-900 mb-2 tracking-tight">Open Your Store</h1>
-          <p class="text-gray-500 text-base">Join the campus delivery network</p>
+          <h1 class="text-xl font-extrabold text-gray-900 mb-2 tracking-tight">Open Your Store</h1>
+          <p class="text-gray-500 text-sm">Join the campus delivery network</p>
         </div>
       </transition>
 
@@ -49,7 +49,7 @@
 
               <div class="mt-auto pt-6">
                 <button type="submit" :disabled="loading || validatingReferral" 
-                  class="w-full py-3.5 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-xl font-bold text-base transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md shadow-[#FF5C1A]/20">
+                  class="w-full py-2.5 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-xl font-bold text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md shadow-[#FF5C1A]/20">
                   <Loader2 v-if="loading || validatingReferral" class="animate-spin w-6 h-6" />
                   <span>{{ loading || validatingReferral ? 'Processing...' : 'Continue' }}</span>
                   <ArrowRight v-if="!loading && !validatingReferral" class="w-5 h-5 ml-2" />
@@ -74,7 +74,7 @@
               <!-- Use Store Name as URL toggle -->
               <div 
                 @click="useStoreNameAsUrl = !useStoreNameAsUrl; if (useStoreNameAsUrl) syncSubdomainFromStore()"
-                class="flex items-center gap-3 px-4 py-3 rounded-md border cursor-pointer transition-all duration-300"
+                class="flex items-center gap-3 px-4 py-2 rounded-md border cursor-pointer transition-all duration-300"
                 :class="useStoreNameAsUrl ? 'bg-[#FF5C1A]/5 border-[#FF5C1A]/30' : 'bg-gray-50/80 border-gray-100 hover:border-gray-200'"
               >
                 <div 
@@ -98,7 +98,7 @@
                   <div class="flex items-center border rounded-md overflow-hidden transition-all duration-300"
                     :class="valErrors.subdomain ? 'border-red-300 bg-red-50/30' : subdomainAvailable === true ? 'border-emerald-300 bg-emerald-50/30' : subdomainAvailable === false && vendor.subdomain.length >= 3 ? 'border-red-300 bg-red-50/30' : 'border-gray-200 bg-white focus-within:border-[#FF5C1A]/40 focus-within:ring-2 focus-within:ring-[#FF5C1A]/10'"
                   >
-                    <div class="pl-4 pr-2 py-3 bg-gray-50/80 border-r border-gray-100 shrink-0">
+                    <div class="pl-4 pr-2 py-2 bg-gray-50/80 border-r border-gray-100 shrink-0">
                       <span class="text-xs font-medium text-gray-400 tracking-wide">https://</span>
                     </div>
                     <input 
@@ -106,10 +106,10 @@
                       :disabled="useStoreNameAsUrl"
                       type="text" 
                       placeholder="your-store-name"
-                      class="flex-1 px-3 py-3 text-base font-bold text-gray-900 bg-transparent outline-none placeholder:text-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
+                      class="flex-1 px-3 py-2 text-sm font-bold text-gray-900 bg-transparent outline-none placeholder:text-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
                       @input="valErrors.subdomain = ''; vendor.subdomain = vendor.subdomain.toLowerCase().replace(/[^a-z0-9-]/g, ''); debouncedCheckSubdomain()"
                     />
-                    <div class="pr-4 py-3 bg-gray-50/80 border-l border-gray-100 shrink-0">
+                    <div class="pr-4 py-2 bg-gray-50/80 border-l border-gray-100 shrink-0">
                       <span class="text-xs font-medium text-gray-400 tracking-wide">.erranders.org</span>
                     </div>
                   </div>
@@ -255,7 +255,7 @@
                       @keydown.enter.prevent="handleCategoryEnter"
                       type="text" 
                       :placeholder="selectedCategories.length === 0 ? 'Search or type a custom category...' : 'Add more...'"
-                      class="flex-1 min-w-[120px] text-base font-medium text-gray-900 bg-transparent outline-none placeholder:text-gray-300"
+                      class="flex-1 min-w-[120px] text-sm font-medium text-gray-900 bg-transparent outline-none placeholder:text-gray-300"
                       @click.stop
                     />
                     <div class="shrink-0 text-gray-300">
@@ -274,7 +274,7 @@
                   >
                     <div v-if="showCategoryDropdown" class="absolute z-50 w-full mt-2 bg-white rounded-xl border border-gray-200 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.1)] max-h-[300px] overflow-y-auto scrollbar-hide">
                       <div v-if="filteredCategoryOptions.length === 0 && categorySearch.trim()" class="p-2">
-                        <button type="button" @click="addCustomCategory" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-gray-50 hover:bg-[#FF5C1A]/5 transition-all text-left group">
+                        <button type="button" @click="addCustomCategory" class="w-full flex items-center gap-3 px-4 py-2 rounded-lg bg-gray-50 hover:bg-[#FF5C1A]/5 transition-all text-left group">
                           <div class="w-10 h-10 rounded-lg bg-[#FF5C1A]/10 text-[#FF5C1A] flex items-center justify-center group-hover:scale-105 transition-transform"><span class="text-lg font-bold">+</span></div>
                           <div>
                             <p class="text-sm font-bold text-gray-900">Add "<span class="text-[#FF5C1A]">{{ categorySearch.trim() }}</span>"</p>
@@ -395,7 +395,7 @@
                     <label class="text-xs font-bold text-gray-700 tracking-wide uppercase">Select Institution <span class="text-[#FF5C1A]">*</span></label>
                     <select 
                       v-model="vendor.university" 
-                      class="w-full px-3 py-3 bg-gray-50 border border-gray-200 rounded-md text-base outline-none focus:border-[#FF5C1A] focus:bg-white transition-all text-gray-900"
+                      class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md text-sm outline-none focus:border-[#FF5C1A] focus:bg-white transition-all text-gray-900"
                       required
                     >
                       <option value="" disabled selected>Select your institution</option>
@@ -408,7 +408,7 @@
                       v-model="vendor.matricNumber" 
                       type="text" 
                       placeholder="e.g. 1902040..."
-                      class="w-full px-3 py-3 bg-gray-50 border border-gray-200 rounded-md text-base outline-none focus:border-[#FF5C1A] focus:bg-white transition-all text-gray-900"
+                      class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md text-sm outline-none focus:border-[#FF5C1A] focus:bg-white transition-all text-gray-900"
                     />
                   </div>
                 </div>
@@ -770,12 +770,12 @@
                 <div class="absolute inset-0 bg-[#FF5C1A]/10 rounded-md animate-ping" style="animation-duration: 2s;"></div>
                 <div class="absolute inset-2 bg-[#FF5C1A]/20 rounded-md animate-ping" style="animation-duration: 2s; animation-delay: 0.5s;"></div>
                 <div class="w-24 h-24 bg-gradient-to-br from-[#FF5C1A] to-[#FFA785] rounded-md flex items-center justify-center text-white relative z-10 animate-bounce">
-                  <Check class="w-12 h-12" stroke-width="3" />
+                  <Check class="w-12 h-10" stroke-width="3" />
                 </div>
               </div>
               
               <div class="space-y-3">
-                <h2 class="text-2xl font-medium text-gray-900 tracking-tight">Welcome aboard! 🎉</h2>
+                <h2 class="text-xl font-medium text-gray-900 tracking-tight">Welcome aboard! 🎉</h2>
                 <div class="relative">
                   <p class="text-gray-500 font-medium leading-relaxed max-w-[300px] mx-auto text-[15px]">
                     We're incredibly excited to have you as a vendor. Get ready to share your magic with the campus! 💖
@@ -804,8 +804,8 @@
       >
         <div v-if="activeInfoModal && infoModalContent" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" @click="activeInfoModal = null"></div>
-          <div class="relative bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl flex flex-col items-center text-center">
-            <div class="w-12 h-12 bg-[#FF5C1A]/10 rounded-full flex items-center justify-center text-[#FF5C1A] mb-4">
+          <div class="relative bg-white rounded-xl p-6 w-full max-w-sm shadow-xl flex flex-col items-center text-center">
+            <div class="w-12 h-10 bg-[#FF5C1A]/10 rounded-full flex items-center justify-center text-[#FF5C1A] mb-4">
               <Info class="w-6 h-6" />
             </div>
             <h3 class="text-lg font-bold text-gray-900 mb-2">{{ infoModalContent.title }}</h3>
@@ -816,7 +816,7 @@
               <p class="text-sm text-gray-700 font-medium">{{ infoModalContent.importance }}</p>
             </div>
             
-            <button type="button" @click="activeInfoModal = null" class="w-full py-3 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-xl font-bold text-sm transition-all active:scale-95">
+            <button type="button" @click="activeInfoModal = null" class="w-full py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-xl font-bold text-sm transition-all active:scale-95">
               Got it!
             </button>
           </div>
@@ -824,7 +824,7 @@
       </transition>
 
       <!-- Footer Info -->
-      <div class="mt-8 text-center flex items-center justify-center gap-4 text-sm font-bold text-gray-400">
+      <div class="mt-5 text-center flex items-center justify-center gap-4 text-sm font-bold text-gray-400">
         <p>&copy; {{ new Date().getFullYear() }} Erranders</p>
         <span class="w-1 h-1 bg-gray-300 rounded-md"></span>
         <NuxtLink to="/terms" class="hover:text-gray-600 transition-colors">Terms & Privacy</NuxtLink>
@@ -843,18 +843,18 @@
       >
         <div v-if="showResumeModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" @click="ignoreResume"></div>
-          <div class="relative bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl flex flex-col items-center text-center">
-            <div class="w-12 h-12 bg-[#FF5C1A]/10 rounded-full flex items-center justify-center text-[#FF5C1A] mb-4">
+          <div class="relative bg-white rounded-xl p-6 w-full max-w-sm shadow-xl flex flex-col items-center text-center">
+            <div class="w-12 h-10 bg-[#FF5C1A]/10 rounded-full flex items-center justify-center text-[#FF5C1A] mb-4">
               <Store class="w-6 h-6" />
             </div>
             <h3 class="text-lg font-bold text-gray-900 mb-2">Welcome Back!</h3>
             <p class="text-sm text-gray-500 font-medium leading-relaxed mb-6">We noticed that you did not complete your onboarding process. Please proceed to complete your onboarding here.</p>
             
             <div class="flex gap-3 w-full">
-              <button type="button" @click="ignoreResume" class="flex-1 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-bold text-sm transition-all active:scale-95">
+              <button type="button" @click="ignoreResume" class="flex-1 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-bold text-sm transition-all active:scale-95">
                 Start Over
               </button>
-              <button type="button" @click="resumeSession" class="flex-[2] py-3 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-xl font-bold text-sm transition-all active:scale-95">
+              <button type="button" @click="resumeSession" class="flex-[2] py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-xl font-bold text-sm transition-all active:scale-95">
                 Continue
               </button>
             </div>

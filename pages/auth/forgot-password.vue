@@ -13,11 +13,11 @@
       <!-- Main Content -->
       <div class="w-full">
         <!-- Header -->
-        <div class="text-center mb-10">
+        <div class="text-center mb-6">
           <div class="inline-flex items-center justify-center w-16 h-16 rounded-md bg-parentPrimary/10 text-parentPrimary mb-6">
             <KeyRound class="w-8 h-8" />
           </div>
-          <h1 class="text-2xl font-medium text-gray-900 tracking-tight mb-2">Forgot Password</h1>
+          <h1 class="text-xl font-medium text-gray-900 tracking-tight mb-2">Forgot Password</h1>
           <p class="text-gray-500 font-medium text-sm">Enter your email to receive a password reset code</p>
         </div>
 
@@ -48,7 +48,7 @@
         </form>
 
         <!-- Footer -->
-        <div class="mt-10 text-center pt-8 border-t border-gray-200">
+        <div class="mt-6 text-center pt-8 border-t border-gray-200">
           <p class="text-gray-500 font-medium text-sm">
             Remembered your password? 
             <NuxtLink to="/auth/login" class="text-parentPrimary font-bold hover:underline">Sign in</NuxtLink>
@@ -56,7 +56,7 @@
         </div>
       </div>
       
-      <div class="mt-8 text-center flex items-center justify-center gap-4 text-sm font-bold text-gray-400">
+      <div class="mt-5 text-center flex items-center justify-center gap-4 text-sm font-bold text-gray-400">
         <p>&copy; {{ new Date().getFullYear() }} Erranders</p>
         <span class="w-1 h-1 bg-gray-300 rounded-md"></span>
         <NuxtLink to="/terms" class="hover:text-gray-600 transition-colors">Terms & Privacy</NuxtLink>
