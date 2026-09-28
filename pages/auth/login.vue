@@ -11,7 +11,6 @@
         <h1 class="text-lg font-bold text-gray-900 mb-3 tracking-tight">Welcome Back</h1>
         <p class="text-gray-500 text-sm">Sign in to your vendor dashboard</p>
       </div>
-<!-- 
       <form @submit.prevent="handleLogin" class="space-y-6 max-w-sm">
         <UiAnimatedInput 
           v-model="email" 
@@ -52,7 +51,7 @@
           <Loader2 v-if="loading" class="animate-spin w-6 h-6" />
           {{ loading ? 'signing in...' : 'sign in' }}
         </button>
-      </form> -->
+      </form>
 
       <div class="max-w-sm w-full mt-6">
         <button type="button" @click="firebaseLogin()" :disabled="firebaseLoading" class="w-full py-2 border border-gray-100 rounded-xl flex items-center justify-center gap-3 font-bold text-gray-700 hover:bg-gray-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
