@@ -36,9 +36,9 @@
  <div class="w-1.5 h-1.5 rounded-md bg-emerald-500 animate-pulse"></div>
  <span class="text-sm font-medium">Available for Withdrawal</span>
  </div>
- <div class="flex items-baseline gap-3">
- <span class="text-2xl font-medium text-gray-300">₦</span>
- <h2 class="text-7xl font-medium text-gray-900">{{ balance?.toLocaleString() || '0' }}</h2>
+ <div class="flex items-baseline gap-2 overflow-hidden w-full max-w-full">
+ <span class="text-2xl font-medium text-gray-300 shrink-0">₦</span>
+ <h2 class="text-5xl md:text-6xl font-medium text-gray-900 truncate">{{ balance?.toLocaleString() || '0' }}</h2>
  </div>
  <p class="text-sm text-gray-400 font-medium max-w-sm leading-relaxed">
  This is your current balance after commission deductions. Withdrawals are now processed instantly to your bank account.
@@ -48,9 +48,9 @@
  <div class="h-px md:w-px md:h-24 bg-gray-100"></div>
  
  <div class="space-y-8">
- <div class="space-y-1">
+ <div class="space-y-1 overflow-hidden w-full">
  <p class="text-sm font-medium text-gray-400">Total Earned</p>
- <p class="text-xl font-medium text-gray-900">₦{{ wallet?.totalEarned?.toLocaleString() || '0' }}</p>
+ <p class="text-xl font-medium text-gray-900 truncate">₦{{ wallet?.totalEarned?.toLocaleString() || '0' }}</p>
  </div>
  <div class="space-y-1">
  <p class="text-sm font-medium text-gray-400">Monthly Growth</p>
