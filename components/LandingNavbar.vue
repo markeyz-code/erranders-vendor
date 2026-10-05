@@ -80,7 +80,7 @@
           <NuxtLink 
             to="/auth/login" 
             @click="isMobileMenuOpen = false"
-            class="w-full py-3 text-center text-sm font-bold text-gray-600 bg-gray-50 rounded-md border border-gray-100"
+            class="w-full py-3 text-center text-sm font-bold text-gray-600 bg-gray-50 rounded-md border border-gray-50"
           >
             Log In to Dashboard
           </NuxtLink>

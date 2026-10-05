@@ -24,7 +24,7 @@
  <UiAnimatedInput v-model="form.description" type="textarea" label="Quick Description" placeholder="Optional" />
  </div>
 
- <div class="flex items-center justify-between p-4 bg-gray-50 rounded-md border border-gray-100">
+ <div class="flex items-center justify-between p-4 bg-gray-50 rounded-md border border-gray-50">
  <span class="text-sm font-bold text-gray-700">Display this category</span>
  <input type="checkbox" v-model="form.isActive" class="w-5 h-5 rounded-md border-gray-300 text-[#FF5C1A] focus:ring-[#FF5C1A]" />
  </div>

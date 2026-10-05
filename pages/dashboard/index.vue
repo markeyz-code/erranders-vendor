@@ -1,37 +1,37 @@
 <template>
- <div class="inv-page">
+ <div class="py-5 pb-10 max-w-7xl mx-auto animate-fade-in">
  <!-- Header Section -->
- <header class="inv-header">
- <div class="inv-header__left">
- <h1 class="inv-header__title">Dashboard</h1>
- <p class="inv-header__sub">Welcome back to your store overview</p>
+ <header class="flex items-end justify-between gap-4 flex-wrap mb-6">
+ <div class="flex-1 min-w-[200px]">
+ <h1 class="text-[26px] font-extrabold text-gray-900 tracking-tight">Dashboard</h1>
+ <p class="text-sm text-gray-400 font-medium mt-1">Welcome back to your store overview</p>
  </div>
- <div class="inv-header__actions">
- <button @click="shareStore" class="inv-btn inv-btn--outline">
- <Share2 class="inv-btn__icon" />
+ <div class="flex items-center gap-2.5 flex-wrap">
+ <!-- <button @click="shareStore" class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-[13px] font-bold cursor-pointer transition-all duration-200 active:scale-95 bg-white text-gray-600 border border-gray-25 hover:border-gray-200 hover:bg-gray-50">
+ <Share2 class="w-4 h-4" />
  Share Store
- </button>
- <div class="flex items-center gap-2 bg-emerald-50/50 px-4 py-2 rounded-lg border border-emerald-100">
+ </button> -->
+ <div class="flex items-center gap-2 bg-emerald-50/50 px-4 py-2.5 rounded-xl border border-emerald-100">
  <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
- <span class="text-emerald-600 text-sm font-bold">Store Online</span>
+ <span class="text-emerald-600 text-[13px] font-bold">Store Online</span>
  </div>
- <NuxtLink to="/dashboard/settings" class="inv-icon-btn">
+ <NuxtLink to="/dashboard/settings" class="w-10 h-10 inline-flex items-center justify-center rounded-xl bg-transparent text-gray-400 hover:bg-gray-50 hover:text-gray-800 transition-all duration-150">
  <Settings class="w-5 h-5" />
  </NuxtLink>
  </div>
  </header>
 
  <!-- Stats Grid -->
- <div class="inv-stats">
- <div v-for="stat in computedStats" :key="stat.label" class="inv-stat-card relative overflow-hidden group">
- <div class="inv-stat-card__icon" :class="stat.iconColorClass">
+ <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5 mb-6">
+ <div v-for="stat in computedStats" :key="stat.label" class="bg-white border border-gray-25 rounded-2xl p-5 flex flex-col justify-between h-32 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 group relative overflow-hidden">
+ <div class="w-10 h-10 rounded-xl flex items-center justify-center relative z-10 transition-transform duration-300 group-hover:scale-110 mb-2" :class="stat.iconColorClass === 'inv-stat-card__icon--blue' ? 'bg-blue-50 text-blue-500' : stat.iconColorClass === 'inv-stat-card__icon--amber' ? 'bg-amber-50 text-amber-500' : stat.iconColorClass === 'inv-stat-card__icon--purple' ? 'bg-purple-50 text-purple-500' : 'bg-emerald-50 text-emerald-500'">
  <component :is="stat.icon" class="w-5 h-5" />
  </div>
  <div class="relative z-10">
- <p class="inv-stat-card__value">{{ stat.value }}</p>
- <p class="inv-stat-card__label">{{ stat.label }}</p>
+ <p class="text-[28px] font-bold text-gray-900 leading-none tracking-tight mb-1">{{ stat.value }}</p>
+ <p class="text-xs text-gray-500 font-medium">{{ stat.label }}</p>
  </div>
- <span v-if="stat.trend" class="absolute top-4 right-4 text-xs font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-600 border border-emerald-100">
+ <span v-if="stat.trend" class="absolute top-4 right-4 text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-600 border border-emerald-100 uppercase tracking-wider">
  Live
  </span>
  </div>
@@ -46,7 +46,7 @@
  <h3 class="font-bold text-gray-900 text-lg tracking-tight">{{ isServiceProvider ? 'Recent Appointments' : 'Recent Orders' }}</h3>
  <p class="text-sm font-medium text-gray-400 mt-1">Real-time incoming requests</p>
  </div>
- <NuxtLink to="/dashboard/orders" class="inv-btn inv-btn--outline text-[#FF5C1A] self-start sm:self-auto bg-white">
+ <NuxtLink to="/dashboard/orders" class="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl text-[13px] font-bold cursor-pointer transition-all duration-200 active:scale-95 bg-white text-[#FF5C1A] border border-gray-25 hover:border-gray-200 hover:bg-gray-50 self-start sm:self-auto">
  See All
  </NuxtLink>
  </div>
@@ -71,7 +71,7 @@
  </template>
  <template #store="{ item }">
  <div v-if="!isServiceProvider" class="flex items-center gap-2">
- <div class="w-5 h-5 rounded-md bg-gray-100 overflow-hidden flex items-center justify-center border border-gray-100 shrink-0">
+ <div class="w-5 h-5 rounded-md bg-gray-100 overflow-hidden flex items-center justify-center border border-gray-50 shrink-0">
  <img v-if="item.vendor?.logo" :src="item.vendor.logo" class="w-full h-full object-cover" />
  <Building v-else class="w-2.5 h-2.5 text-gray-300" />
  </div>
@@ -92,7 +92,7 @@
  <span class="font-bold text-gray-900 whitespace-nowrap">₦{{ (item.total || item.price || 0).toLocaleString() }}</span>
  </template>
  <template #status="{ item }">
- <span :class="getStatusBadge(item.status)" class="text-sm font-bold px-2 py-1 rounded-lg border whitespace-nowrap">
+ <span :class="getStatusBadge(item.status)" class="text-[11px] font-bold px-2.5 py-1 rounded-md border whitespace-nowrap uppercase tracking-wider">
  {{ item.status.replace(/_/g, ' ') }}
  </span>
  </template>
@@ -115,10 +115,10 @@
  </div>
  </div>
  <div class="flex items-center gap-3 flex-wrap justify-end">
- <NuxtLink v-if="isMiniMart" to="/products/bulk-add" class="px-5 py-2.5 bg-[#FF5C1A] text-white rounded-xl text-sm font-bold hover:bg-[#E54D12] transition-all whitespace-nowrap text-center ">
+ <NuxtLink v-if="isMiniMart" to="/products/bulk-add" class="px-5 py-2.5 bg-[#FF5C1A] text-white rounded-xl text-[13px] font-bold hover:bg-[#E54D12] transition-all whitespace-nowrap text-center shadow-sm">
  Add Products from Catalog
  </NuxtLink>
- <NuxtLink to="/dashboard/settings" class="px-5 py-2.5 bg-white text-gray-900 rounded-xl text-sm font-bold hover:bg-gray-50 transition-all border border-gray-200 whitespace-nowrap text-center">
+ <NuxtLink to="/dashboard/settings" class="px-5 py-2.5 bg-white text-gray-900 rounded-xl text-[13px] font-bold hover:bg-gray-50 transition-all border border-gray-200 shadow-sm whitespace-nowrap text-center">
  Setup Store Profile
  </NuxtLink>
  </div>
@@ -127,7 +127,7 @@
 
  <!-- Marketing / Insight Cards -->
  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
- <div class="bg-white rounded-[14px] border border-[#f0f0f0] p-4 md:p-6 relative overflow-hidden group hover:border-[#e0e0e0] transition-colors">
+ <div class="bg-white rounded-2xl border border-gray-25 p-4 md:p-6 relative overflow-hidden group hover:border-gray-200 transition-colors">
  <div class="relative z-10">
  <div class="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center mb-5 border border-orange-100">
  <Package v-if="!isServiceProvider" class="w-5 h-5 text-[#FF5C1A]" />
@@ -136,24 +136,24 @@
  <h3 class="text-lg font-bold text-gray-900 mb-1 tracking-tight">{{ isServiceProvider ? 'Upcoming Bookings' : 'Stock Status' }}</h3>
  <p class="text-gray-500 text-sm mb-6 font-medium">{{ isServiceProvider ? 'Check your appointment schedule' : 'Some items running low' }}</p>
  <div class="flex flex-col sm:flex-row gap-3">
- <NuxtLink :to="isServiceProvider ? '/dashboard/appointments' : '/dashboard/inventory'" class="inv-btn inv-btn--primary justify-center">
+ <NuxtLink :to="isServiceProvider ? '/dashboard/appointments' : '/dashboard/inventory'" class="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl text-[13px] font-bold cursor-pointer transition-all duration-200 active:scale-95 bg-gray-900 text-white hover:bg-black hover:shadow-md">
  {{ isServiceProvider ? 'View Schedule' : 'Manage Stock' }}
  </NuxtLink>
- <NuxtLink v-if="isMiniMart" to="/products/bulk-add" class="inv-btn inv-btn--outline text-[#FF5C1A] border-[#FF5C1A]/20 bg-[#FF5C1A]/5 hover:bg-[#FF5C1A]/10 justify-center">
+ <NuxtLink v-if="isMiniMart" to="/products/bulk-add" class="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl text-[13px] font-bold cursor-pointer transition-all duration-200 active:scale-95 bg-[#FF5C1A]/5 text-[#FF5C1A] border border-[#FF5C1A]/20 hover:bg-[#FF5C1A]/10">
  Add from Catalog
  </NuxtLink>
  </div>
  </div>
  </div>
  
- <div class="bg-white rounded-[14px] p-4 md:p-6 border border-[#f0f0f0] relative overflow-hidden group hover:border-[#e0e0e0] transition-colors">
+ <div class="bg-white rounded-2xl p-4 md:p-6 border border-gray-25 relative overflow-hidden group hover:border-gray-200 transition-colors">
  <div class="relative z-10">
  <div class="flex items-center gap-0.5 mb-5">
  <Star v-for="i in 5" :key="i" class="w-4 h-4 text-amber-400 fill-amber-400" />
  </div>
  <p class="text-sm text-gray-500 font-semibold mb-1">Store Rating</p>
  <h3 class="text-4xl font-bold text-gray-900 tracking-tight">{{ Number(currentStats.rating || 5).toFixed(1) }}</h3>
- <p class="text-sm text-gray-400 font-bold mt-4 flex items-center gap-2">
+ <p class="text-xs text-gray-400 font-bold mt-4 flex items-center gap-1.5">
  <CheckCircle class="w-3.5 h-3.5 text-emerald-500" /> {{ currentStats.reviewsCount || 0 }} CUSTOMER REVIEWS
  </p>
  </div>
@@ -163,7 +163,7 @@
 
  <!-- Financial Sidebar -->
  <div class="space-y-4 md:space-y-6">
- <div class="bg-white rounded-[14px] border border-[#f0f0f0] p-4 md:p-6 space-y-4 md:space-y-6 transition-all hover:border-[#e0e0e0]">
+ <div class="bg-white rounded-2xl border border-gray-25 p-4 md:p-6 space-y-4 md:space-y-6 transition-all hover:border-gray-200">
  <div class="flex items-center gap-4">
  <div class="w-10 h-10 rounded-xl bg-[#FF5C1A]/5 text-[#FF5C1A] flex items-center justify-center border border-[#FF5C1A]/10 shrink-0">
  <Banknote class="w-5 h-5" />
@@ -175,31 +175,20 @@
  </div>
  
  <div class="space-y-1">
- <p class="text-sm font-medium text-gray-400 ml-1">Current Balance</p>
+ <p class="text-xs font-medium text-gray-400 ml-1">Current Balance</p>
  <div class="flex items-baseline gap-1">
  <span class="text-lg font-medium text-gray-400">₦</span>
- <h4 class="text-4xl font-bold text-gray-900">{{ currentStats.todaySales?.toLocaleString() || '0' }}</h4>
+ <h4 class="text-4xl font-bold text-gray-900 tracking-tight">{{ currentStats.todaySales?.toLocaleString() || '0' }}</h4>
  </div>
  </div>
 
- <div class="p-5 bg-gray-50/50 rounded-[10px] border border-[#f0f0f0] space-y-3">
- <div class="flex justify-between items-center text-sm font-bold">
- <span class="text-gray-400">Target</span>
- <span class="text-[#FF5C1A]">₦65,000</span>
- </div>
- <div class="h-1.5 bg-gray-200 rounded-md overflow-hidden">
- <div class="h-full bg-[#FF5C1A] transition-all duration-1000" :style="{ width: Math.min(((currentStats.todaySales || 0) / 65000) * 100, 100) + '%' }"></div>
- </div>
- <p class="text-sm text-gray-400 font-medium mt-2 text-center">
- {{ Math.round(((currentStats.todaySales || 0) / 65000) * 100) }}% complete
- </p>
- </div>
+
 
  <!-- Payout Schedule Quick Config -->
  <div class="pt-4 border-t border-gray-100">
   <div class="flex items-center justify-between mb-3">
     <h4 class="text-sm font-bold text-gray-900">Payout Schedule</h4>
-    <span v-if="updatingPayout" class="w-4 h-4 border-2 border-[#FF5C1A] border-t-transparent rounded-full animate-spin"></span>
+    <span v-if="updatingPayout" class="w-4 h-4 border border-[#FF5C1A] border-t-transparent rounded-full animate-spin"></span>
   </div>
   <div class="grid grid-cols-4 gap-2">
     <button 
@@ -215,22 +204,12 @@
   </div>
  </div>
 
- <NuxtLink to="/dashboard/wallet" class="inv-btn inv-btn--primary w-full justify-center mt-2">
+ <NuxtLink to="/dashboard/wallet" class="inline-flex items-center justify-center w-full gap-1.5 px-5 py-3 rounded-xl text-[13px] font-bold cursor-pointer transition-all duration-200 active:scale-95 bg-gray-900 text-white hover:bg-black hover:shadow-md mt-2">
  Financial Hub <ArrowRight class="w-3.5 h-3.5 ml-2" />
  </NuxtLink>
  </div>
 
- <div class="bg-white rounded-[14px] border border-[#f0f0f0] p-4 md:p-8 relative overflow-hidden group hover:border-[#e0e0e0] transition-colors">
- <h3 class="text-lg font-bold text-gray-900 flex items-center gap-3 relative z-10 tracking-tight">
- <Megaphone class="w-5 h-5 text-[#FF5C1A]" /> Campus Insight
- </h3>
- <p class="text-gray-600 text-sm font-medium leading-relaxed mt-6 relative z-10">
- Students are searching for <span class="text-[#FF5C1A] font-bold underline decoration-[#FF5C1A]/30 decoration-2 underline-offset-4">{{ isServiceProvider ? 'Hair Styling' : 'Shawarma' }}</span> more than usual.
- </p>
- <div class="mt-8 relative z-10">
- <button class="inv-btn inv-btn--outline">Quick Promo</button>
- </div>
- </div>
+
  </div>
  </div>
  </div>
@@ -275,7 +254,6 @@ const isMiniMart = computed(() => {
 
 const orderColumns = [
  { key: 'customer', label: 'Customer' },
- { key: 'store', label: 'Store' },
  { key: 'total', label: 'Amount' },
  { key: 'status', label: 'Status' }
 ];
@@ -294,7 +272,7 @@ const computedStats = computed(() => [
  { label: 'Rating', value: Number(currentStats.value?.rating || 5).toFixed(1), icon: Star, iconColorClass: 'inv-stat-card__icon--green', trend: 0 },
 ]);
 
-const fetchDashboardData = async () => {
+ const fetchDashboardData = async () => {
  loadingStats.value = true;
  try {
  const [statsRes, profileRes] = await Promise.all([
@@ -303,9 +281,7 @@ const fetchDashboardData = async () => {
  ]);
  
  currentStats.value = statsRes?.data || {};
- const res = await vendors_api.getMyVendorStats();
- currentStats.value = res.data;
- vendorProfile.value = (res as any)?.data?.profile || null;
+ vendorProfile.value = profileRes?.data || null;
  await fetchWallet();
  } catch (error) {
  console.error('Failed to load dashboard stats:', error);

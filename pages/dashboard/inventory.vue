@@ -1,75 +1,75 @@
 <template>
- <div class="inv-page">
+ <div class="py-5 pb-10 containter mx-auto animate-fade-in space-y-6 w-full">
   <!-- ─── Header ─── -->
-  <header class="inv-header">
-   <div class="inv-header__left">
-    <h1 class="inv-header__title">{{ isFoodVendor ? 'Menu & Inventory' : 'Products' }}</h1>
-    <p class="inv-header__sub">Manage your catalog, categories &amp; stock in one place.</p>
+  <header class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-6">
+   <div>
+    <h1 class="text-xl font-bold text-gray-900 tracking-tight sm:text-2xl">{{ isFoodVendor ? 'Menu & Inventory' : 'Products' }}</h1>
+    <p class="text-sm text-gray-400 font-medium mt-1">Manage your catalog, categories &amp; stock in one place.</p>
    </div>
-   <div class="inv-header__actions">
-    <button v-if="activeTab === 'items'" @click="isCategoryDrawerOpen = true" class="inv-btn inv-btn--outline">
-     <FolderPlus class="inv-btn__icon" /> Categories
+   <div class="flex flex-wrap items-center gap-3">
+    <button v-if="activeTab === 'items'" @click="isCategoryDrawerOpen = true" class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-[13px] font-bold cursor-pointer transition-all duration-200 active:scale-95 bg-white text-gray-600 border border-gray-25 hover:border-gray-200 hover:bg-gray-50">
+     <FolderPlus class="w-4 h-4" /> Categories
     </button>
-    <button v-if="activeTab === 'items'" @click="openAddProduct" class="inv-btn inv-btn--primary">
-     <Plus class="inv-btn__icon" /> Add Product
+    <button v-if="activeTab === 'items'" @click="openAddProduct" class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-[13px] font-bold cursor-pointer transition-all duration-200 active:scale-95 bg-gray-900 text-white hover:bg-black hover:shadow-md">
+     <Plus class="w-4 h-4" /> Add Product
     </button>
-    <button v-if="activeTab === 'packs'" @click="openAddPack" class="inv-btn inv-btn--primary">
-     <Plus class="inv-btn__icon" /> Add Combo Pack
+    <button v-if="activeTab === 'packs'" @click="openAddPack" class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-[13px] font-bold cursor-pointer transition-all duration-200 active:scale-95 bg-gray-900 text-white hover:bg-black hover:shadow-md">
+     <Plus class="w-4 h-4" /> Add Combo Pack
     </button>
-    <button v-if="activeTab === 'addons'" @click="openAddAddOn" class="inv-btn inv-btn--primary">
-     <Plus class="inv-btn__icon" /> Add Add-on Group
+    <button v-if="activeTab === 'addons'" @click="openAddAddOn" class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-[13px] font-bold cursor-pointer transition-all duration-200 active:scale-95 bg-gray-900 text-white hover:bg-black hover:shadow-md">
+     <Plus class="w-4 h-4" /> Add Add-on Group
     </button>
    </div>
   </header>
 
   <!-- ─── Stats Row ─── -->
-  <div class="inv-stats">
-   <div class="inv-stat-card">
-    <div class="inv-stat-card__icon inv-stat-card__icon--blue">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+   <div class="bg-white border border-gray-25 rounded-2xl p-5 flex items-center gap-4 transition-all duration-300 hover:shadow-md hover:border-gray-200">
+    <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-blue-50 text-blue-500">
      <Package class="w-5 h-5" />
     </div>
     <div>
-     <p class="inv-stat-card__value">{{ products.length }}</p>
-     <p class="inv-stat-card__label">Total Products</p>
+     <p class="text-2xl font-bold text-gray-900 leading-none tracking-tight mb-1">{{ products.length }}</p>
+     <p class="text-xs text-gray-500 font-medium">Total Products</p>
     </div>
    </div>
-   <div class="inv-stat-card">
-    <div class="inv-stat-card__icon inv-stat-card__icon--green">
+   <div class="bg-white border border-gray-25 rounded-2xl p-5 flex items-center gap-4 transition-all duration-300 hover:shadow-md hover:border-gray-200">
+    <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-emerald-50 text-emerald-500">
      <CheckCircle class="w-5 h-5" />
     </div>
     <div>
-     <p class="inv-stat-card__value">{{ availableCount }}</p>
-     <p class="inv-stat-card__label">Available</p>
+     <p class="text-2xl font-bold text-gray-900 leading-none tracking-tight mb-1">{{ availableCount }}</p>
+     <p class="text-xs text-gray-500 font-medium">Available</p>
     </div>
    </div>
-   <div class="inv-stat-card">
-    <div class="inv-stat-card__icon inv-stat-card__icon--amber">
+   <div class="bg-white border border-gray-25 rounded-2xl p-5 flex items-center gap-4 transition-all duration-300 hover:shadow-md hover:border-gray-200">
+    <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-amber-50 text-amber-500">
      <AlertTriangle class="w-5 h-5" />
     </div>
     <div>
-     <p class="inv-stat-card__value">{{ lowStockCount }}</p>
-     <p class="inv-stat-card__label">Low Stock</p>
+     <p class="text-2xl font-bold text-gray-900 leading-none tracking-tight mb-1">{{ lowStockCount }}</p>
+     <p class="text-xs text-gray-500 font-medium">Low Stock</p>
     </div>
    </div>
-   <div class="inv-stat-card">
-    <div class="inv-stat-card__icon inv-stat-card__icon--purple">
+   <div class="bg-white border border-gray-25 rounded-2xl p-5 flex items-center gap-4 transition-all duration-300 hover:shadow-md hover:border-gray-200">
+    <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-purple-50 text-purple-500">
      <Layers class="w-5 h-5" />
     </div>
     <div>
-     <p class="inv-stat-card__value">{{ categories.length }}</p>
-     <p class="inv-stat-card__label">Categories</p>
+     <p class="text-2xl font-bold text-gray-900 leading-none tracking-tight mb-1">{{ categories.length }}</p>
+     <p class="text-xs text-gray-500 font-medium">Categories</p>
     </div>
    </div>
   </div>
 
   <!-- ─── Master Tabs (food vendors only) ─── -->
-  <div v-if="isFoodVendor" class="inv-master-tabs">
+  <div v-if="isFoodVendor" class="flex gap-1.5 bg-gray-50 rounded-xl p-1 mb-5 w-fit">
    <button
     v-for="tab in masterTabs"
     :key="tab.key"
     @click="activeTab = tab.key"
-    class="inv-master-tab"
-    :class="{ 'inv-master-tab--active': activeTab === tab.key }"
+    class="flex items-center gap-1.5 px-4 py-2.5 rounded-lg text-[13px] font-bold border-none transition-all whitespace-nowrap"
+    :class="activeTab === tab.key ? 'bg-white text-gray-900 shadow-sm' : 'bg-transparent text-gray-500 hover:text-gray-700'"
    >
     <component :is="tab.icon" class="w-4 h-4" />
     {{ tab.label }}
@@ -77,25 +77,25 @@
   </div>
 
   <!-- ─── Toolbar: Search + Category Filter ─── -->
-  <div v-if="activeTab === 'items'" class="inv-toolbar">
-   <div class="inv-search">
-    <Search class="inv-search__icon" />
+  <div v-if="activeTab === 'items'" class="flex flex-col sm:flex-row items-center gap-4 mb-5">
+   <div class="relative w-full sm:w-auto sm:flex-1 sm:min-w-[220px] sm:max-w-sm">
+    <Search class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300 pointer-events-none" />
     <input
      v-model="searchQuery"
      type="text"
      placeholder="Search products..."
-     class="inv-search__input"
+     class="w-full py-2.5 pl-10 pr-10 border border-gray-25 rounded-xl text-[13px] font-medium text-gray-900 bg-white outline-none transition-all focus:border-gray-25focus:ring-1 focus:ring-gray-900"
     />
-    <button v-if="searchQuery" @click="searchQuery = ''" class="inv-search__clear">
+    <button v-if="searchQuery" @click="searchQuery = ''" class="absolute right-2.5 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-md bg-gray-50 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors">
      <X class="w-3.5 h-3.5" />
     </button>
    </div>
 
-   <div class="inv-category-pills">
+   <div class="flex gap-1.5 overflow-x-auto w-full sm:flex-1 no-scrollbar pb-2 sm:pb-0">
     <button
      @click="activeCategory = 'all'"
-     class="inv-pill"
-     :class="{ 'inv-pill--active': activeCategory === 'all' }"
+     class="shrink-0 px-4 py-2 rounded-full text-xs font-bold border transition-all"
+     :class="activeCategory === 'all' ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-500 border-gray-100 hover:border-gray-200 hover:text-gray-700'"
     >
      All
     </button>
@@ -103,8 +103,8 @@
      v-for="cat in categories"
      :key="cat._id"
      @click="activeCategory = cat.name"
-     class="inv-pill"
-     :class="{ 'inv-pill--active': activeCategory === cat.name }"
+     class="shrink-0 px-4 py-2 rounded-full text-xs font-bold border transition-all"
+     :class="activeCategory === cat.name ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-500 border-gray-100 hover:border-gray-200 hover:text-gray-700'"
     >
      {{ cat.name }}
     </button>
@@ -114,7 +114,7 @@
   <!-- ═══════════════════════════════════════════ -->
   <!-- PRODUCTS TABLE (Items Tab)                 -->
   <!-- ═══════════════════════════════════════════ -->
-  <div v-if="activeTab === 'items'" class="inv-table-section">
+  <div v-if="activeTab === 'items'" class="bg-white rounded-2xl border border-gray-25 shadow-sm overflow-hidden mt-4">
    <UiTable
     :columns="productColumns"
     :items="filteredProducts"
@@ -123,32 +123,32 @@
     empty-subtitle="Add your first product to start selling."
     :has-actions="true">
     <template #name="{ item }">
-     <div class="inv-tbl-product">
-      <div class="inv-tbl-product__img">
-       <img :src="(item as any).image || (item as any).images?.[0] || '/placeholder-food.jpg'" :alt="(item as any).name" />
+     <div class="flex items-center gap-3">
+      <div class="w-11 h-11 rounded-lg overflow-hidden bg-gray-50 shrink-0">
+       <img :src="(item as any).image || (item as any).images?.[0] || '/placeholder-food.jpg'" :alt="(item as any).name" class="w-full h-full object-cover" />
       </div>
-      <div class="inv-tbl-product__info">
-       <p class="inv-tbl-product__name">{{ (item as any).name }}</p>
-       <p class="inv-tbl-product__cat">{{ (item as any).category?.name || (item as any).categoryId?.name || (item as any).category || 'Uncategorized' }}</p>
+      <div class="flex flex-col">
+       <p class="text-sm font-bold text-gray-900 mb-0.5">{{ (item as any).name }}</p>
+       <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">{{ (item as any).category?.name || (item as any).categoryId?.name || (item as any).category || 'Uncategorized' }}</p>
       </div>
      </div>
     </template>
 
     <template #price="{ item }">
-     <span class="inv-tbl-price">₦{{ ((item as any).pricePerPortion || (item as any).price || 0).toLocaleString() }}</span>
+     <span class="text-sm font-bold text-gray-900">₦{{ ((item as any).pricePerPortion || (item as any).price || 0).toLocaleString() }}</span>
     </template>
 
     <template #stock="{ item }">
-     <div class="inv-tbl-stock">
-      <span class="inv-tbl-stock__dot" :class="stockDotClass(item as any)"></span>
-      <span class="inv-tbl-stock__text" :class="stockTextClass(item as any)">{{ stockLabel(item as any) }}</span>
+     <div class="flex items-center gap-1.5 text-[13px] font-bold">
+      <span class="w-1.5 h-1.5 rounded-full" :class="stockDotClass(item as any)"></span>
+      <span :class="stockTextClass(item as any)">{{ stockLabel(item as any) }}</span>
      </div>
     </template>
 
     <template #status="{ item }">
      <span
-      class="inv-tbl-badge"
-      :class="(item as any).isAvailable ? 'inv-tbl-badge--green' : 'inv-tbl-badge--red'"
+      class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider cursor-pointer"
+      :class="(item as any).isAvailable ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'"
       @click.stop="quickToggleAvailability(item as any)"
      >
       {{ (item as any).isAvailable ? 'Available' : 'Unavailable' }}
@@ -156,14 +156,14 @@
     </template>
 
     <template #actions="{ item }">
-     <div class="inv-tbl-actions">
-      <button class="inv-action-btn inv-action-btn--view" @click.stop="viewProductDetails(item as any)">
+     <div class="flex items-center gap-1.5">
+      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-bold border transition-all bg-gray-50 text-gray-600 border-gray-100 hover:bg-gray-100" @click.stop="viewProductDetails(item as any)">
        <Eye class="w-3.5 h-3.5" /> View
       </button>
-      <button class="inv-action-btn inv-action-btn--edit" @click.stop="editProduct(item as any)">
+      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-bold border transition-all bg-blue-50 text-blue-600 border-blue-100 hover:bg-blue-100" @click.stop="editProduct(item as any)">
        <Edit2 class="w-3.5 h-3.5" /> Edit
       </button>
-      <button class="inv-action-btn inv-action-btn--delete" @click.stop="confirmDelete(item as any)">
+      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-bold border transition-all bg-red-50 text-red-600 border-red-100 hover:bg-red-100" @click.stop="confirmDelete(item as any)">
        <Trash2 class="w-3.5 h-3.5" /> Delete
       </button>
      </div>
@@ -174,7 +174,7 @@
   <!-- ═══════════════════════════════════════════ -->
   <!-- COMBO PACKS TAB                            -->
   <!-- ═══════════════════════════════════════════ -->
-  <div v-if="activeTab === 'packs'" class="inv-table-section">
+  <div v-if="activeTab === 'packs'" class="bg-white rounded-2xl border border-gray-25 shadow-sm overflow-hidden mt-4">
    <UiTable
     :columns="[{ key: 'name', label: 'Pack Details' }, { key: 'price', label: 'Bundle Price' }, { key: 'items', label: 'Items' }]"
     :items="packs"
@@ -183,31 +183,31 @@
     empty-subtitle="Create combo packs to bundle products together."
     :has-actions="true">
     <template #name="{ item }">
-     <div class="inv-tbl-product">
-      <div class="inv-tbl-product__img">
-       <img :src="(item as any).imageUrl || profile?.logo || profile?.bannerUrl || '/placeholder-food.jpg'" :alt="(item as any).name" />
+     <div class="flex items-center gap-3">
+      <div class="w-11 h-11 rounded-lg overflow-hidden bg-gray-50 shrink-0">
+       <img :src="(item as any).imageUrl || profile?.logo || profile?.bannerUrl || '/placeholder-food.jpg'" :alt="(item as any).name" class="w-full h-full object-cover" />
       </div>
-      <div class="inv-tbl-product__info">
-       <p class="inv-tbl-product__name">{{ (item as any).name }}</p>
-       <p class="inv-tbl-product__cat">{{ (item as any).description || '—' }}</p>
+      <div class="flex flex-col">
+       <p class="text-sm font-bold text-gray-900 mb-0.5">{{ (item as any).name }}</p>
+       <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">{{ (item as any).description || '—' }}</p>
       </div>
      </div>
     </template>
     <template #price="{ item }">
-     <span class="inv-tbl-price">₦{{ ((item as any).bundlePrice || 0).toLocaleString() }}</span>
+     <span class="text-sm font-bold text-gray-900">₦{{ ((item as any).bundlePrice || 0).toLocaleString() }}</span>
     </template>
     <template #items="{ item }">
      <span class="text-sm text-gray-500 font-semibold">{{ (item as any).items?.length || 0 }} items</span>
     </template>
     <template #actions="{ item }">
-     <div class="inv-tbl-actions">
-      <button class="inv-action-btn inv-action-btn--view" @click.stop="editPack(item)">
+     <div class="flex items-center gap-1.5">
+      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-bold border transition-all bg-gray-50 text-gray-600 border-gray-100 hover:bg-gray-100" @click.stop="editPack(item)">
        <Eye class="w-3.5 h-3.5" /> View
       </button>
-      <button class="inv-action-btn inv-action-btn--edit" @click.stop="editPack(item)">
+      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-bold border transition-all bg-blue-50 text-blue-600 border-blue-100 hover:bg-blue-100" @click.stop="editPack(item)">
        <Edit2 class="w-3.5 h-3.5" /> Edit
       </button>
-      <button class="inv-action-btn inv-action-btn--delete" @click.stop="deletePack(item._id)">
+      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-bold border transition-all bg-red-50 text-red-600 border-red-100 hover:bg-red-100" @click.stop="deletePack(item._id)">
        <Trash2 class="w-3.5 h-3.5" /> Delete
       </button>
      </div>
@@ -218,7 +218,7 @@
   <!-- ═══════════════════════════════════════════ -->
   <!-- ADD-ON GROUPS TAB                          -->
   <!-- ═══════════════════════════════════════════ -->
-  <div v-if="activeTab === 'addons'" class="inv-table-section">
+  <div v-if="activeTab === 'addons'" class="bg-white rounded-2xl border border-gray-25 shadow-sm overflow-hidden mt-4">
    <UiTable
     :columns="[{ key: 'name', label: 'Group Name' }, { key: 'type', label: 'Selection Type' }, { key: 'options', label: 'Options' }]"
     :items="addOnGroups"
@@ -227,10 +227,10 @@
     empty-subtitle="Create add-on groups to offer optional extras."
     :has-actions="true">
     <template #name="{ item }">
-     <p class="inv-tbl-product__name">{{ (item as any).name }}</p>
+     <p class="text-sm font-bold text-gray-900 mb-0.5">{{ (item as any).name }}</p>
     </template>
     <template #type="{ item }">
-     <span class="inv-tbl-badge inv-tbl-badge--neutral">
+     <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider bg-gray-50 text-gray-600">
       {{ (item as any).selectionType === 'single' ? 'Select One' : 'Multi Select' }}
      </span>
     </template>
@@ -238,14 +238,14 @@
      <span class="text-sm text-gray-500 font-semibold">{{ (item as any).options?.length || 0 }} options</span>
     </template>
     <template #actions="{ item }">
-     <div class="inv-tbl-actions">
-      <button class="inv-action-btn inv-action-btn--view" @click.stop="editAddOn(item)">
+     <div class="flex items-center gap-1.5">
+      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-bold border transition-all bg-gray-50 text-gray-600 border-gray-100 hover:bg-gray-100" @click.stop="editAddOn(item)">
        <Eye class="w-3.5 h-3.5" /> View
       </button>
-      <button class="inv-action-btn inv-action-btn--edit" @click.stop="editAddOn(item)">
+      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-bold border transition-all bg-blue-50 text-blue-600 border-blue-100 hover:bg-blue-100" @click.stop="editAddOn(item)">
        <Edit2 class="w-3.5 h-3.5" /> Edit
       </button>
-      <button class="inv-action-btn inv-action-btn--delete" @click.stop="deleteAddOnGroup(item._id)">
+      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-bold border transition-all bg-red-50 text-red-600 border-red-100 hover:bg-red-100" @click.stop="deleteAddOnGroup(item._id)">
        <Trash2 class="w-3.5 h-3.5" /> Delete
       </button>
      </div>
@@ -453,577 +453,3 @@ onMounted(() => {
 
 
 </script>
-
-<style scoped>
-/* ─── Page ─── */
-.inv-page {
- padding: 20px 20px 40px;
- max-width: 1280px;
- margin: 0 auto;
- animation: invFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes invFadeIn {
- from { opacity: 0; transform: translateY(12px); }
- to { opacity: 1; transform: translateY(0); }
-}
-
-/* ─── Header ─── */
-.inv-header {
- display: flex;
- align-items: flex-end;
- justify-content: space-between;
- gap: 16px;
- flex-wrap: wrap;
- margin-bottom: 24px;
-}
-.inv-header__title {
- font-size: 26px;
- font-weight: 800;
- color: #111;
- letter-spacing: -0.5px;
-}
-.inv-header__sub {
- font-size: 14px;
- color: #999;
- font-weight: 500;
- margin-top: 4px;
-}
-.inv-header__actions {
- display: flex;
- align-items: center;
- gap: 10px;
- flex-wrap: wrap;
-}
-
-/* ─── Buttons ─── */
-.inv-btn {
- display: inline-flex;
- align-items: center;
- gap: 6px;
- padding: 10px 20px;
- border-radius: 10px;
- font-size: 13px;
- font-weight: 700;
- cursor: pointer;
- border: none;
- transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.inv-btn__icon { width: 16px; height: 16px; }
-
-.inv-btn--primary {
- background: #111;
- color: #fff;
-}
-.inv-btn--primary:hover { background: #000; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-.inv-btn--primary:active { transform: scale(0.97); }
-
-.inv-btn--outline {
- background: #fff;
- color: #555;
- border: 1.5px solid #e5e5e5;
-}
-.inv-btn--outline:hover { border-color: #ccc; background: #fafafa; }
-
-.inv-icon-btn {
- width: 32px;
- height: 32px;
- display: inline-flex;
- align-items: center;
- justify-content: center;
- border-radius: 8px;
- border: none;
- background: transparent;
- color: #bbb;
- cursor: pointer;
- transition: all 0.15s;
-}
-.inv-icon-btn:hover { background: #f5f5f5; color: #333; }
-.inv-icon-btn--danger:hover { background: #fef2f2; color: #ef4444; }
-
-/* ─── Stats Row ─── */
-.inv-stats {
- display: grid;
- grid-template-columns: repeat(4, 1fr);
- gap: 14px;
- margin-bottom: 24px;
-}
-@media (max-width: 768px) {
- .inv-stats { grid-template-columns: repeat(2, 1fr); }
-}
-.inv-stat-card {
- background: #fff;
- border: 1px solid #f0f0f0;
- border-radius: 14px;
- padding: 18px 20px;
- display: flex;
- align-items: center;
- gap: 14px;
- transition: all 0.2s;
-}
-.inv-stat-card:hover { border-color: #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-.inv-stat-card__icon {
- width: 42px;
- height: 42px;
- border-radius: 12px;
- display: flex;
- align-items: center;
- justify-content: center;
- flex-shrink: 0;
-}
-.inv-stat-card__icon--blue { background: #eff6ff; color: #3b82f6; }
-.inv-stat-card__icon--green { background: #f0fdf4; color: #22c55e; }
-.inv-stat-card__icon--amber { background: #fffbeb; color: #f59e0b; }
-.inv-stat-card__icon--purple { background: #faf5ff; color: #a855f7; }
-
-.inv-stat-card__value {
- font-size: 22px;
- font-weight: 800;
- color: #111;
- line-height: 1;
-}
-.inv-stat-card__label {
- font-size: 12px;
- color: #999;
- font-weight: 600;
- margin-top: 3px;
-}
-
-/* ─── Master Tabs ─── */
-.inv-master-tabs {
- display: flex;
- gap: 6px;
- background: #f8f8f8;
- border-radius: 12px;
- padding: 4px;
- margin-bottom: 20px;
- width: fit-content;
-}
-.inv-master-tab {
- display: flex;
- align-items: center;
- gap: 6px;
- padding: 10px 18px;
- border-radius: 9px;
- font-size: 13px;
- font-weight: 700;
- color: #888;
- border: none;
- background: transparent;
- cursor: pointer;
- transition: all 0.2s;
-}
-.inv-master-tab:hover { color: #555; }
-.inv-master-tab--active {
- background: #fff;
- color: #111;
- box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-}
-
-/* ─── Toolbar ─── */
-.inv-toolbar {
- display: flex;
- align-items: center;
- gap: 16px;
- margin-bottom: 20px;
- flex-wrap: wrap;
-}
-
-/* ─── Search ─── */
-.inv-search {
- position: relative;
- flex: 1;
- min-width: 220px;
- max-width: 360px;
-}
-.inv-search__icon {
- position: absolute;
- left: 14px;
- top: 50%;
- transform: translateY(-50%);
- width: 16px;
- height: 16px;
- color: #ccc;
- pointer-events: none;
-}
-.inv-search__input {
- width: 100%;
- padding: 11px 36px 11px 40px;
- border: 1.5px solid #f0f0f0;
- border-radius: 10px;
- font-size: 13px;
- font-weight: 500;
- color: #333;
- background: #fff;
- outline: none;
- transition: all 0.2s;
-}
-.inv-search__input::placeholder { color: #ccc; }
-.inv-search__input:focus { border-color: #111; box-shadow: 0 0 0 3px rgba(0,0,0,0.04); }
-.inv-search__clear {
- position: absolute;
- right: 10px;
- top: 50%;
- transform: translateY(-50%);
- width: 24px;
- height: 24px;
- display: flex;
- align-items: center;
- justify-content: center;
- border-radius: 6px;
- border: none;
- background: #f5f5f5;
- color: #999;
- cursor: pointer;
-}
-.inv-search__clear:hover { background: #eee; color: #555; }
-
-/* ─── Category Pills ─── */
-.inv-category-pills {
- display: flex;
- gap: 6px;
- overflow-x: auto;
- flex: 1;
- -ms-overflow-style: none;
- scrollbar-width: none;
-}
-.inv-category-pills::-webkit-scrollbar { display: none; }
-
-.inv-pill {
- flex-shrink: 0;
- padding: 8px 16px;
- border-radius: 20px;
- font-size: 12px;
- font-weight: 700;
- border: 1.5px solid #eee;
- background: #fff;
- color: #888;
- cursor: pointer;
- transition: all 0.2s;
- white-space: nowrap;
-}
-.inv-pill:hover { border-color: #ccc; color: #555; }
-.inv-pill--active {
- background: #111;
- color: #fff;
- border-color: #111;
-}
-
-/* ─── Product Grid ─── */
-.inv-grid {
- display: grid;
- grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
- gap: 16px;
-}
-
-/* ─── Product Card ─── */
-.inv-product-card {
- background: #fff;
- border: 1px solid #f0f0f0;
- border-radius: 14px;
- overflow: hidden;
- cursor: pointer;
- transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.inv-product-card:hover {
- border-color: #e0e0e0;
- box-shadow: 0 8px 24px rgba(0,0,0,0.06);
- transform: translateY(-2px);
-}
-
-.inv-product-card__img-wrap {
- position: relative;
- width: 100%;
- aspect-ratio: 16 / 10;
- background: #f8f8f8;
- overflow: hidden;
-}
-.inv-product-card__img {
- width: 100%;
- height: 100%;
- object-fit: cover;
- transition: transform 0.4s ease;
-}
-.inv-product-card:hover .inv-product-card__img { transform: scale(1.04); }
-
-.inv-product-card__badge {
- position: absolute;
- top: 10px;
- left: 10px;
- padding: 4px 10px;
- border-radius: 6px;
- font-size: 10px;
- font-weight: 800;
- text-transform: uppercase;
- letter-spacing: 0.5px;
- cursor: pointer;
- backdrop-filter: blur(8px);
- transition: all 0.15s;
-}
-.inv-product-card__badge--available {
- background: rgba(34, 197, 94, 0.15);
- color: #16a34a;
- border: 1px solid rgba(34, 197, 94, 0.2);
-}
-.inv-product-card__badge--unavailable {
- background: rgba(239, 68, 68, 0.15);
- color: #dc2626;
- border: 1px solid rgba(239, 68, 68, 0.2);
-}
-
-.inv-product-card__body {
- padding: 14px 16px 16px;
-}
-.inv-product-card__top {
- display: flex;
- align-items: center;
- justify-content: space-between;
- margin-bottom: 6px;
-}
-.inv-product-card__category {
- font-size: 11px;
- font-weight: 700;
- color: #aaa;
- text-transform: uppercase;
- letter-spacing: 0.5px;
-}
-.inv-product-card__menu {
- display: flex;
- gap: 2px;
- opacity: 0;
- transition: opacity 0.2s;
-}
-.inv-product-card:hover .inv-product-card__menu { opacity: 1; }
-
-.inv-product-card__name {
- font-size: 15px;
- font-weight: 700;
- color: #111;
- margin-bottom: 4px;
- display: -webkit-box;
- -webkit-line-clamp: 1;
- -webkit-box-orient: vertical;
- overflow: hidden;
-}
-.inv-product-card__desc {
- font-size: 12px;
- color: #999;
- font-weight: 500;
- margin-bottom: 12px;
- display: -webkit-box;
- -webkit-line-clamp: 2;
- -webkit-box-orient: vertical;
- overflow: hidden;
-}
-
-.inv-product-card__footer {
- display: flex;
- align-items: center;
- justify-content: space-between;
- padding-top: 12px;
- border-top: 1px solid #f5f5f5;
-}
-.inv-product-card__price {
- font-size: 16px;
- font-weight: 800;
- color: #111;
-}
-.inv-product-card__stock {
- font-size: 11px;
- font-weight: 700;
- color: #888;
- display: flex;
- align-items: center;
- gap: 5px;
-}
-.inv-product-card__stock--warn { color: #d97706; }
-.inv-product-card__stock--danger { color: #ef4444; }
-.inv-product-card__stock-dot {
- width: 6px;
- height: 6px;
- border-radius: 50%;
-}
-
-/* ─── Empty State ─── */
-.inv-empty {
- display: flex;
- flex-direction: column;
- align-items: center;
- justify-content: center;
- padding: 80px 20px;
- text-align: center;
-}
-.inv-empty__icon-wrap {
- width: 72px;
- height: 72px;
- border-radius: 20px;
- background: #f8f8f8;
- display: flex;
- align-items: center;
- justify-content: center;
- margin-bottom: 16px;
- border: 1px solid #f0f0f0;
-}
-.inv-empty__icon { width: 32px; height: 32px; color: #ccc; }
-.inv-empty__title { font-size: 18px; font-weight: 800; color: #111; }
-.inv-empty__sub { font-size: 13px; color: #999; font-weight: 500; margin-top: 4px; }
-
-/* ─── Skeleton ─── */
-.inv-product-skeleton {
- background: #fff;
- border: 1px solid #f0f0f0;
- border-radius: 14px;
- overflow: hidden;
-}
-.inv-product-skeleton__img {
- width: 100%;
- aspect-ratio: 16 / 10;
- background: linear-gradient(110deg, #f5f5f5 30%, #ebebeb 50%, #f5f5f5 70%);
- background-size: 200% 100%;
- animation: shimmer 1.5s infinite;
-}
-.inv-product-skeleton__body { padding: 16px; }
-.inv-product-skeleton__line {
- height: 12px;
- border-radius: 6px;
- background: linear-gradient(110deg, #f5f5f5 30%, #ebebeb 50%, #f5f5f5 70%);
- background-size: 200% 100%;
- animation: shimmer 1.5s infinite;
- margin-bottom: 10px;
-}
-.inv-product-skeleton__line--lg { width: 70%; height: 14px; }
-.inv-product-skeleton__line--sm { width: 40%; }
-.inv-product-skeleton__line--md { width: 55%; margin-bottom: 0; }
-@keyframes shimmer {
- 0% { background-position: 200% 0; }
- 100% { background-position: -200% 0; }
-}
-
-/* ─── Table Layout ─── */
-.inv-table-section {
- background: #fff;
- border: 1px solid transparent;
- border-radius: 16px;
- box-shadow: 0 2px 10px -4px rgba(0,0,0,0.05);
- overflow: hidden;
- margin-top: 16px;
-}
-.inv-tbl-product {
- display: flex;
- align-items: center;
- gap: 12px;
-}
-.inv-tbl-product__img {
- width: 44px;
- height: 44px;
- border-radius: 8px;
- overflow: hidden;
- background: #f8f8f8;
- flex-shrink: 0;
-}
-.inv-tbl-product__img img {
- width: 100%;
- height: 100%;
- object-fit: cover;
-}
-.inv-tbl-product__info {
- display: flex;
- flex-direction: column;
-}
-.inv-tbl-product__name {
- font-size: 14px;
- font-weight: 700;
- color: #111;
- margin-bottom: 2px;
-}
-.inv-tbl-product__cat {
- font-size: 11px;
- font-weight: 600;
- color: #999;
- text-transform: uppercase;
-}
-.inv-tbl-price {
- font-size: 14px;
- font-weight: 700;
- color: #111;
-}
-.inv-tbl-stock {
- display: flex;
- align-items: center;
- gap: 6px;
- font-size: 13px;
- font-weight: 600;
-}
-.inv-tbl-stock__dot {
- width: 6px;
- height: 6px;
- border-radius: 50%;
-}
-.inv-tbl-badge {
- padding: 4px 10px;
- border-radius: 6px;
- font-size: 11px;
- font-weight: 700;
- text-transform: uppercase;
- cursor: pointer;
- display: inline-flex;
- align-items: center;
-}
-.inv-tbl-badge--green {
- background: #ecfdf5;
- color: #10b981;
-}
-.inv-tbl-badge--red {
- background: #fef2f2;
- color: #ef4444;
-}
-.inv-tbl-badge--neutral {
- background: #f3f4f6;
- color: #4b5563;
-}
-.inv-tbl-actions {
- display: flex;
- align-items: center;
- gap: 6px;
-}
-.inv-action-btn {
- display: flex;
- align-items: center;
- gap: 4px;
- padding: 6px 10px;
- border-radius: 6px;
- font-size: 12px;
- font-weight: 600;
- border: 1px solid transparent;
- cursor: pointer;
- transition: all 0.2s;
-}
-.inv-action-btn--view {
- background: #f9fafb;
- color: #374151;
- border-color: #e5e7eb;
-}
-.inv-action-btn--view:hover { background: #f3f4f6; }
-.inv-action-btn--edit {
- background: #eff6ff;
- color: #3b82f6;
- border-color: #bfdbfe;
-}
-.inv-action-btn--edit:hover { background: #dbeafe; }
-.inv-action-btn--delete {
- background: #fef2f2;
- color: #ef4444;
- border-color: #fecaca;
-}
-.inv-action-btn--delete:hover { background: #fee2e2; }
-
-/* ─── Responsive ─── */
-@media (max-width: 640px) {
- .inv-page { padding: 12px 12px 40px; }
- .inv-header { flex-direction: column; align-items: flex-start; }
- .inv-header__title { font-size: 22px; }
- .inv-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
- .inv-toolbar { flex-direction: column; align-items: stretch; }
- .inv-search { max-width: none; }
-}
-</style>

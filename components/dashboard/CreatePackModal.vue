@@ -5,7 +5,7 @@
 
       <div class="relative bg-white rounded-xl w-full max-w-lg overflow-hidden flex flex-col transform transition-all shadow-xl">
         <div class="p-6 sm:p-8 space-y-6">
-          <h2 class="text-2xl font-bold italic text-gray-800 tracking-tight mb-2">CREATE PACK</h2>
+          <h2 class="text-2xl font-bold  text-gray-800 tracking-tight mb-2">CREATE PACK</h2>
 
           <div class="space-y-5">
             <div>
@@ -14,7 +14,7 @@
                 v-model="form.name" 
                 type="text" 
                 placeholder="Centimeters" 
-                class="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-900 transition-all"
+                class="w-full px-4 py-3 bg-white border border-gray-25 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-25transition-all"
               />
             </div>
 
@@ -24,7 +24,7 @@
                 v-model="form.description" 
                 type="text" 
                 placeholder="Enter a description" 
-                class="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-900 transition-all"
+                class="w-full px-4 py-3 bg-white border border-gray-25 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-25transition-all"
               />
             </div>
 
@@ -34,7 +34,7 @@
                 v-model="form.price" 
                 type="number" 
                 placeholder="Enter a price" 
-                class="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-900 transition-all"
+                class="w-full px-4 py-3 bg-white border border-gray-25 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-25transition-all"
               />
             </div>
 
@@ -44,7 +44,7 @@
                 v-model="form.maxVolume" 
                 type="text" 
                 placeholder="Enter a maximum volume" 
-                class="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-900 transition-all"
+                class="w-full px-4 py-3 bg-white border border-gray-25 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-25transition-all"
               />
             </div>
           </div>

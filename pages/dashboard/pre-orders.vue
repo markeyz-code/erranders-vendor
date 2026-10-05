@@ -1,26 +1,26 @@
 <template>
-  <div class="space-y-8 pb-20 animate-fade-in container mx-auto px-4">
+  <div class="py-5 pb-10 container mx-auto animate-fade-in space-y-8">
     <!-- Header -->
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
       <div>
         <h1 class="text-xl font-medium text-gray-900">Pre-Order Hub</h1>
         <p class="text-sm text-gray-500 font-bold mt-1">Manage your student business batches and scheduled deliveries.</p>
       </div>
-      <button @click="showCampaignModal = true" class="px-8 py-2.5 bg-gray-900 text-white rounded-md font-medium text-sm hover:bg-parentPrimary transition-all active:scale-95 flex items-center gap-2">
+      <button @click="showCampaignModal = true" class="w-fit px-8 py-2.5 bg-gray-900 text-white rounded-md font-medium text-sm hover:bg-parentPrimary transition-all active:scale-95 flex items-center gap-2">
         <Plus class="w-4 h-4" /> Start New Batch
       </button>
     </div>
 
     <!-- Stats Matrix -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div v-for="stat in hubStats" :key="stat.label" class="bg-white p-8 rounded-lg border border-gray-50 transition-all relative overflow-hidden">
-        <div class="absolute -right-4 -top-4 w-24 h-24 bg-parentPrimary/5 rounded-md blur-2xl group-hover:bg-parentPrimary/10 transition-colors"></div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div v-for="stat in hubStats" :key="stat.label" class="bg-white p-5 rounded-2xl border border-gray-25 transition-all relative overflow-hidden">
+        <div class="absolute -right-4 -top-4 w-24 h-24 bg-parentPrimary/5 rounded-full blur-2xl group-hover:bg-parentPrimary/10 transition-colors"></div>
         <div class="relative z-10">
-          <div class="w-12 h-12 rounded-md mb-6 flex items-center justify-center border border-gray-100" :class="stat.bg">
+          <div class="w-10 h-10 rounded-xl mb-4 flex items-center justify-center border border-gray-50" :class="stat.bg">
             <component :is="stat.icon" class="w-5 h-5" :class="stat.color" />
           </div>
-          <p class="text-sm font-medium text-gray-400 mb-1">{{ stat.label }}</p>
-          <h3 class="text-2xl font-medium text-gray-900">{{ stat.value }}</h3>
+          <p class="text-xs font-medium text-gray-500 mb-1">{{ stat.label }}</p>
+          <h3 class="text-2xl font-bold text-gray-900 tracking-tight">{{ stat.value }}</h3>
         </div>
       </div>
     </div>
@@ -49,7 +49,7 @@
           <div v-else class="divide-y divide-gray-50">
             <div v-for="batch in batches" :key="batch._id" class="p-8 hover:bg-gray-50/50 transition-all group flex flex-col md:flex-row md:items-center justify-between gap-6 cursor-pointer">
               <div class="flex items-start gap-6">
-                <div class="w-14 h-14 rounded-md bg-gray-100 flex items-center justify-center text-xl border border-gray-100 overflow-hidden">
+                <div class="w-14 h-14 rounded-md bg-gray-100 flex items-center justify-center text-xl border border-gray-50 overflow-hidden">
                   <img v-if="batch.image" :src="batch.image" class="w-full h-full object-cover" />
                   <span v-else>🎁</span>
                 </div>
@@ -67,7 +67,7 @@
                   <p class="text-sm font-medium text-gray-400 mb-1">Deadline</p>
                   <p class="text-sm font-medium text-rose-500">{{ formatDeadline(batch.deadline) }}</p>
                 </div>
-                <button class="p-4 bg-white border border-gray-100 rounded-md hover: transition-all group-hover:bg-gray-900 group-hover:text-white group-hover:border-gray-900">
+                <button class="p-4 bg-white border border-gray-50 rounded-md hover: transition-all group-hover:bg-gray-900 group-hover:text-white group-hover:border-gray-900">
                   <ArrowRight class="w-5 h-5" />
                 </button>
               </div>
@@ -112,7 +112,7 @@
             </div>
           </div>
           
-          <div class="flex items-center justify-between p-4 bg-gray-50 rounded-md border border-gray-100 cursor-pointer">
+          <div class="flex items-center justify-between p-4 bg-gray-50 rounded-md border border-gray-50 cursor-pointer">
             <span class="text-sm font-medium text-gray-900">Auto-Notify Riders</span>
             <div class="w-10 h-5 bg-emerald-500 rounded-md relative">
               <div class="absolute top-1 right-1 w-3 h-3 bg-white rounded-md"></div>
@@ -141,17 +141,17 @@
           <div class="space-y-6 pt-4">
             <div class="space-y-1.5">
               <label class="text-sm font-medium text-gray-400 ml-1">Batch Name</label>
-              <input v-model="newBatch.windowName" placeholder="e.g. Next Saturday Cake Batch" class="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-md text-base font-medium focus:ring-4 focus:ring-parentPrimary/10 outline-none transition-all" />
+              <input v-model="newBatch.windowName" placeholder="e.g. Next Saturday Cake Batch" class="w-full px-6 py-4 bg-gray-50 border border-gray-50 rounded-md text-base font-medium focus:ring-4 focus:ring-parentPrimary/10 outline-none transition-all" />
             </div>
 
             <div class="grid grid-cols-2 gap-6">
               <div class="space-y-1.5">
                 <label class="text-sm font-medium text-gray-400 ml-1">Deadline</label>
-                <input v-model="newBatch.deadline" type="datetime-local" class="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-md text-base font-medium focus:ring-4 focus:ring-parentPrimary/10 outline-none transition-all" />
+                <UiDatePicker v-model="newBatch.deadline" :enableTime="true" class="w-full" />
               </div>
               <div class="space-y-1.5">
                 <label class="text-sm font-medium text-gray-400 ml-1">Delivery Date</label>
-                <input v-model="newBatch.deliveryDate" type="date" class="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-md text-base font-medium focus:ring-4 focus:ring-parentPrimary/10 outline-none transition-all" />
+                <UiDatePicker v-model="newBatch.deliveryDate" class="w-full" />
               </div>
             </div>
 

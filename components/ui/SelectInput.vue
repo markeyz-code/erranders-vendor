@@ -1,5 +1,5 @@
 <template>
- <div class="mb-5 relative" ref="containerRef">
+ <div class="relative" ref="containerRef">
  <!-- Header -->
  <div class="flex items-center justify-between mb-2 px-1">
  <label v-if="label" class="text-sm text-gray-400">
@@ -16,7 +16,7 @@
  <!-- Select trigger -->
  <div
  @click="toggleDropdown"
- class="w-full h-12 px-4 bg-white border border-gray-100 rounded-md flex justify-between items-center cursor-pointer hover:border-[#FF5C1A] transition-all duration-300"
+ class="w-full h-12 px-4 bg-white border border-gray-50 rounded-md flex justify-between items-center cursor-pointer hover:border-[#FF5C1A] transition-all duration-300"
  :class="[ disabled ? 'opacity-50 cursor-not-allowed bg-gray-50' : '', showDropdown ? 'ring-2 ring-[#FF5C1A]/10 border-[#FF5C1A] ' : '', (hasError || (errorMessage && showError)) ? 'border-red-500 ring-red-500/10' : '' ]"
  >
  <span v-if="selectedLabel" class="text-sm font-medium text-gray-900 truncate">

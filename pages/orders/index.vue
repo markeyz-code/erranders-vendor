@@ -11,8 +11,8 @@
  class="w-full pl-11 pr-14 py-2.5 bg-gray-50/70 hover:bg-gray-100 transition-colors border-none rounded-md text-base font-medium focus:outline-none focus:bg-white focus:ring-2 focus:ring-parentPrimary/20"
  />
  <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">
- <kbd class="px-1.5 py-0.5 text-sm font-bold bg-white text-gray-400 rounded-md border border-gray-200">⌘</kbd>
- <kbd class="px-1.5 py-0.5 text-sm font-bold bg-white text-gray-400 rounded-md border border-gray-200">K</kbd>
+ <kbd class="px-1.5 py-0.5 text-sm font-bold bg-white text-gray-400 rounded-md border border-gray-25">⌘</kbd>
+ <kbd class="px-1.5 py-0.5 text-sm font-bold bg-white text-gray-400 rounded-md border border-gray-25">K</kbd>
  </div>
  </div>
  <div class="flex items-center gap-4">
@@ -30,7 +30,7 @@
  </div>
  
  <div class="flex items-center gap-4">
- <button class="flex items-center gap-2 px-4 py-2 bg-gray-50 hover:bg-gray-100 rounded-md text-sm font-medium text-gray-700 transition-colors border border-gray-200">
+ <button class="flex items-center gap-2 px-4 py-2 bg-gray-50 hover:bg-gray-100 rounded-md text-sm font-medium text-gray-700 transition-colors border border-gray-25">
  <ListFilter class="w-4 h-4" />
  Filters
  </button>
@@ -65,7 +65,7 @@
  />
  </div>
 
- <div v-else class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden w-full min-w-0">
+ <div v-else class="bg-white rounded-xl border border-gray-50 shadow-sm overflow-hidden w-full min-w-0">
  <div class="overflow-x-auto w-full hide-scrollbar">
  <table class="w-full text-left border-collapse">
  <thead class="bg-gray-50/50">
@@ -130,7 +130,7 @@
  </div>
 
  <div class="py-6 space-y-6">
- <div class="bg-gray-50/80 rounded-md p-6 space-y-4 border border-gray-100/50">
+ <div class="bg-gray-50/80 rounded-md p-6 space-y-4 border border-gray-50/50">
  <div class="flex justify-between items-center mb-2">
  <p class="text-sm font-bold text-gray-400">Order Contents</p>
  <span class="text-sm font-bold text-gray-500">{{ timeAgo(selectedOrder.createdAt) }}</span>
@@ -138,7 +138,7 @@
  <div class="space-y-3">
  <div v-for="item in selectedOrder.items" :key="item._id" class="flex items-center justify-between text-sm">
  <div class="flex items-center gap-3">
- <span class="w-7 h-7 bg-white rounded-lg flex items-center justify-center text-sm font-medium text-gray-400 border border-gray-100">{{ item.quantity }}x</span>
+ <span class="w-7 h-7 bg-white rounded-lg flex items-center justify-center text-sm font-medium text-gray-400 border border-gray-50">{{ item.quantity }}x</span>
  <span class="text-gray-900 font-bold tracking-tight text-[13px]">{{ item.name }}</span>
  </div>
  <span class="text-gray-500 font-medium text-[13px]">₦{{ item.subtotal?.toLocaleString() }}</span>
@@ -153,7 +153,7 @@
  <div class="pt-4 border-t border-gray-100 flex flex-col gap-3">
  <h4 class="text-sm font-bold text-gray-400 mb-2">Customer Contact</h4>
  <div v-if="selectedOrder.customer?.phone" class="flex gap-2 mb-2">
-    <a :href="`tel:${selectedOrder.customer.phone}`" class="flex-1 px-3 py-1.5 bg-gray-50 text-gray-700 rounded-lg text-[11px] font-bold hover:bg-gray-100 transition-all border border-gray-200 flex items-center justify-center gap-1.5">
+    <a :href="`tel:${selectedOrder.customer.phone}`" class="flex-1 px-3 py-1.5 bg-gray-50 text-gray-700 rounded-lg text-[11px] font-bold hover:bg-gray-100 transition-all border border-gray-25 flex items-center justify-center gap-1.5">
       Call
     </a>
     <a :href="`https://wa.me/${selectedOrder.customer.phone.replace(/[^0-9]/g, '')}?text=Hi,%20this%20is%20${selectedOrder.vendor?.storeName || 'the vendor'}`" target="_blank" class="flex-1 px-3 py-1.5 bg-[#25D366]/10 text-[#25D366] rounded-lg text-[11px] font-bold hover:bg-[#25D366]/20 transition-all border border-[#25D366]/30 flex items-center justify-center gap-1.5">
@@ -194,7 +194,7 @@
  
  <NuxtLink 
  :to="`/orders/${selectedOrder._id}`" 
- class="w-full px-5 py-3.5 bg-white text-gray-500 rounded-md text-[11px] font-bold border border-gray-200 hover:text-gray-900 hover:border-gray-300 transition-all text-center mt-2 group"
+ class="w-full px-5 py-3.5 bg-white text-gray-500 rounded-md text-[11px] font-bold border border-gray-25 hover:text-gray-900 hover:border-gray-300 transition-all text-center mt-2 group"
  >
  Report Issue <span class="group-hover:translate-x-1 inline-block transition-transform">→</span>
  </NuxtLink>

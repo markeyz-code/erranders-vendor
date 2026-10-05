@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-6 animate-fade-in w-full px-4 pb-20 sm:px-8">
+  <div class="py-5 pb-10 container mx-auto animate-fade-in space-y-6 w-full">
     <!-- Header with Stats & Actions -->
     <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pt-6">
       <div class="space-y-1">
@@ -33,7 +33,7 @@
         :has-actions="true">
         <template #name="{ item }">
           <div class="flex items-center gap-4">
-            <div class="w-10 h-10 rounded-md bg-gray-50 overflow-hidden shrink-0 flex items-center justify-center border border-gray-100">
+            <div class="w-10 h-10 rounded-md bg-gray-50 overflow-hidden shrink-0 flex items-center justify-center border border-gray-50">
               <img v-if="(item as any).image" :src="(item as any).image" class="w-full h-full object-cover" />
               <Folder v-else class="w-5 h-5 text-gray-300" />
             </div>

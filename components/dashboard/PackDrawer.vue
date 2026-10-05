@@ -6,11 +6,11 @@
       <section class="space-y-5">
         <div>
           <label class="text-sm font-semibold text-gray-800 block mb-1.5">Pack Name</label>
-          <input type="text" v-model="form.name" placeholder="e.g. Student Special" class="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-900 transition-all" required />
+          <input type="text" v-model="form.name" placeholder="e.g. Student Special" class="w-full px-4 py-3 bg-white border border-gray-25 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-25transition-all" required />
         </div>
         <div>
           <label class="text-sm font-semibold text-gray-800 block mb-1.5">Description</label>
-          <textarea v-model="form.description" placeholder="e.g. 2 plates Fried Rice + Zobo — bundle discount" class="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-900 transition-all resize-none h-20"></textarea>
+          <textarea v-model="form.description" placeholder="e.g. 2 plates Fried Rice + Zobo — bundle discount" class="w-full px-4 py-3 bg-white border border-gray-25 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-25transition-all resize-none h-20"></textarea>
         </div>
 
         <!-- Category -->
@@ -24,7 +24,7 @@
               <Plus class="w-4 h-4" /> Create
             </button>
           </div>
-          <select v-model="form.categoryId" class="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-900 transition-all">
+          <select v-model="form.categoryId" class="w-full px-4 py-3 bg-white border border-gray-25 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-25transition-all">
             <option value="">Select a category</option>
             <option v-for="cat in categories" :key="cat._id" :value="cat._id">{{ cat.name }}</option>
           </select>
@@ -38,7 +38,7 @@
           <p class="text-[13px] text-gray-500 mt-0.5">Upload a photo for this combo</p>
         </div>
         <div class="flex gap-2">
-          <div v-if="form.imageUrl" class="h-20 w-20 rounded-lg bg-gray-50 border border-gray-200 overflow-hidden group relative shrink-0">
+          <div v-if="form.imageUrl" class="h-20 w-20 rounded-lg bg-gray-50 border border-gray-25 overflow-hidden group relative shrink-0">
             <img :src="form.imageUrl" class="w-full h-full object-cover" />
             <button @click.stop="form.imageUrl = ''" class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all">
               <Trash2 class="w-4 h-4 text-white" />
@@ -46,7 +46,7 @@
           </div>
           <button v-if="!form.imageUrl" type="button" @click="triggerImageUpload" class="h-20 w-20 rounded-lg bg-gray-50 border border-dashed border-gray-300 flex flex-col items-center justify-center transition-all hover:bg-blue-50 hover:border-blue-300 shrink-0">
             <template v-if="uploadingImage">
-              <div class="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+              <div class="w-5 h-5 border border-blue-500 border-t-transparent rounded-full animate-spin"></div>
             </template>
             <template v-else>
               <ImageIcon class="w-5 h-5 text-gray-400 mb-1" />
@@ -63,10 +63,10 @@
         <div>
           <label class="text-sm font-semibold text-gray-800 block mb-1.5">Fixed Bundle Price (₦)</label>
           <p class="text-xs text-gray-500 mb-2">This is the total price customers pay — NOT the sum of individual items.</p>
-          <input type="number" v-model.number="form.bundlePrice" placeholder="e.g. 5200" class="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-900 transition-all" />
+          <input type="number" v-model.number="form.bundlePrice" placeholder="e.g. 5200" class="w-full px-4 py-3 bg-white border border-gray-25 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-25transition-all" />
         </div>
         
-        <div class="flex items-center justify-between py-3 px-4 bg-gray-50 rounded-lg border border-gray-100">
+        <div class="flex items-center justify-between py-3 px-4 bg-gray-50 rounded-lg border border-gray-50">
           <div class="flex items-center gap-3">
             <span class="text-sm font-semibold text-gray-700">Available for order</span>
           </div>
@@ -76,7 +76,7 @@
           </label>
         </div>
 
-        <div class="flex items-start gap-3 py-3 px-4 bg-gray-50 rounded-lg border border-gray-100 mt-3">
+        <div class="flex items-start gap-3 py-3 px-4 bg-gray-50 rounded-lg border border-gray-50 mt-3">
           <label class="relative inline-flex items-center cursor-pointer shrink-0 mt-1">
             <input type="checkbox" v-model="form.isPackagingFeeIncluded" class="sr-only peer" />
             <div class="w-10 h-5 bg-gray-200 rounded-full peer peer-checked:bg-green-500 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
@@ -102,11 +102,11 @@
         
         <div class="space-y-3">
           <div v-for="(comp, idx) in form.components" :key="idx" class="flex gap-2 items-center bg-gray-50 p-3 rounded-xl">
-            <select v-model="comp.itemId" class="flex-1 px-3 py-2 bg-white border border-gray-200 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900">
+            <select v-model="comp.itemId" class="flex-1 px-3 py-2 bg-white border border-gray-25 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900">
               <option disabled value="">Select an Item</option>
               <option v-for="prod in products" :key="prod._id" :value="prod._id">{{ prod.name }} (₦{{ prod.pricePerPortion || prod.price }})</option>
             </select>
-            <div class="flex items-center gap-1 bg-white border border-gray-200 rounded-lg px-2">
+            <div class="flex items-center gap-1 bg-white border border-gray-25 rounded-lg px-2">
               <span class="text-gray-500 text-xs">Portions</span>
               <input type="number" v-model.number="comp.portions" min="1" placeholder="1" class="w-14 px-1 py-2 text-base focus:outline-none" />
             </div>
@@ -135,7 +135,7 @@
           <p class="text-sm text-gray-500 mt-1">Select reusable add-on groups applicable to this pack.</p>
         </div>
         <div v-if="addOnGroups && addOnGroups.length > 0" class="grid grid-cols-2 gap-3">
-          <label v-for="group in addOnGroups" :key="group._id" class="flex items-center gap-2 p-3 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-gray-300">
+          <label v-for="group in addOnGroups" :key="group._id" class="flex items-center gap-2 p-3 bg-white border border-gray-25 rounded-xl cursor-pointer hover:border-gray-300">
             <input type="checkbox" :value="group._id" v-model="form.addOnGroupIds" class="rounded text-gray-900 focus:ring-gray-900" />
             <span class="text-sm font-semibold text-gray-700">{{ group.name }}</span>
           </label>
@@ -146,7 +146,7 @@
 
     <template #footer>
       <div class="flex items-center gap-4 w-full">
-        <button @click="$emit('close')" type="button" class="flex-1 py-3 bg-white border border-gray-200 text-gray-600 text-sm font-medium rounded-lg hover:bg-gray-50 transition-all">Cancel</button>
+        <button @click="$emit('close')" type="button" class="flex-1 py-3 bg-white border border-gray-25 text-gray-600 text-sm font-medium rounded-lg hover:bg-gray-50 transition-all">Cancel</button>
         <button @click="handleSubmit" type="button" class="flex-[2] py-3 bg-gray-900 text-white rounded-lg font-medium text-sm hover:bg-black transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2">
           {{ pack ? 'Update Pack' : 'Create Pack' }}
         </button>

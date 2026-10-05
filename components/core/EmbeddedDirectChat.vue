@@ -14,7 +14,7 @@
           <h3 class="text-[16px] font-medium truncate leading-tight text-white">{{ receiverName || 'Direct Message' }}</h3>
           <p class="text-[13px] text-white/80 font-normal truncate">
             <span v-if="serviceName">Enquiry: {{ serviceName }}</span>
-            <span v-else-if="isTyping" class="text-emerald-200 italic">typing...</span>
+            <span v-else-if="isTyping" class="text-emerald-200 ">typing...</span>
             <span v-else>Direct Message</span>
           </p>
         </div>
@@ -30,7 +30,7 @@
         </div>
 
         <div v-if="loading" class="flex flex-col items-center justify-center h-40 space-y-4">
-          <div class="w-8 h-8 border-2 border-[#25D366]/20 border-t-[#25D366] rounded-md animate-spin" />
+          <div class="w-8 h-8 border border-[#25D366]/20 border-t-[#25D366] rounded-md animate-spin" />
         </div>
 
         <div v-else-if="messages.length === 0" class="flex flex-col items-center justify-center p-10 text-center space-y-3 mt-10">
@@ -51,7 +51,7 @@
                 class="max-w-[75%] px-3 py-2 rounded-lg relative text-sm leading-relaxed"
                 :class="isMine(msg) 
                   ? 'bg-[#FFF3ED] text-[#14110F] rounded-tr-none border border-[#FF5C1A]/10' 
-                  : 'bg-white text-[#14110F] rounded-tl-none border border-gray-100'"
+                  : 'bg-white text-[#14110F] rounded-tl-none border border-gray-50'"
               >
                 <div class="break-words pr-14 whitespace-pre-wrap">{{ msg.message || msg.content }}</div>
                 <span class="text-[10px] text-gray-400 absolute bottom-1.5 right-2.5 flex items-center gap-0.5 font-medium">
@@ -66,7 +66,7 @@
 
       <!-- Input -->
       <div class="px-3 py-2 bg-[#F0F0F0] border-t border-gray-200 flex items-end gap-2 flex-shrink-0">
-        <div class="flex-1 bg-white rounded-2xl flex items-end overflow-hidden border border-gray-100 shadow-sm">
+        <div class="flex-1 bg-white rounded-2xl flex items-end overflow-hidden border border-gray-50 shadow-sm">
           <textarea
             v-model="newMessage"
             rows="1"

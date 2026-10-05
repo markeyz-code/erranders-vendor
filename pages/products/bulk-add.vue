@@ -27,7 +27,7 @@
           @input="debounceSearch"
           type="text" 
           placeholder="Search global catalog" 
-          class="w-full bg-gray-50 text-gray-900 border border-gray-200 rounded-xl pl-12 pr-4 py-3.5 focus:ring-2 focus:ring-gray-900/10 focus:border-gray-300 outline-none placeholder-gray-400 transition-all"
+          class="w-full bg-gray-50 text-gray-900 border border-gray-25 rounded-xl pl-12 pr-4 py-3.5 focus:ring-2 focus:ring-gray-900/10 focus:border-gray-300 outline-none placeholder-gray-400 transition-all"
         />
       </div>
 
@@ -38,7 +38,7 @@
           :key="cat"
           @click="activeCategory = cat"
           class="px-4 py-2 rounded-full text-sm whitespace-nowrap transition-colors"
-          :class="activeCategory === cat ? 'bg-gray-900 text-white font-medium' : 'bg-transparent text-gray-500 border border-gray-200 hover:border-gray-400'"
+          :class="activeCategory === cat ? 'bg-gray-900 text-white font-medium' : 'bg-transparent text-gray-500 border border-gray-25 hover:border-gray-400'"
         >
           {{ cat }}
         </button>
@@ -47,7 +47,7 @@
       <!-- Products Grid -->
       <div class="flex-1 overflow-y-auto min-h-0 pb-24">
         <div v-if="loading" class="flex justify-center py-12">
-          <div class="w-8 h-8 border-2 border-gray-200 border-t-gray-900 rounded-full animate-spin"></div>
+          <div class="w-8 h-8 border border-gray-200 border-t-gray-900 rounded-full animate-spin"></div>
         </div>
         <div v-else-if="filteredProducts.length === 0" class="text-center py-12 text-gray-400">
           No products found.
@@ -70,7 +70,7 @@
               </div>
               
               <!-- Image Placeholder -->
-              <div class="w-12 h-12 bg-gray-100 rounded-xl shrink-0 overflow-hidden border border-gray-200">
+              <div class="w-12 h-12 bg-gray-100 rounded-xl shrink-0 overflow-hidden border border-gray-25">
                 <img v-if="product.image" :src="product.image" class="w-full h-full object-cover" />
               </div>
               
@@ -81,7 +81,7 @@
             </div>
 
             <!-- Price Input (only visible when selected) -->
-            <div v-if="selectedItems[product._id]" class="ml-4 flex items-center bg-white rounded-lg px-3 py-1.5 border border-gray-200" @click.stop>
+            <div v-if="selectedItems[product._id]" class="ml-4 flex items-center bg-white rounded-lg px-3 py-1.5 border border-gray-25" @click.stop>
               <span class="text-gray-400 text-sm mr-1">₦</span>
               <input 
                 v-model.number="selectedItems[product._id].price"
@@ -106,7 +106,7 @@
           :disabled="isSubmitting || selectedCount === 0"
           class="px-6 py-2.5 bg-gray-900 text-white rounded-lg text-sm font-bold hover:bg-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
         >
-          <span v-if="isSubmitting" class="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></span>
+          <span v-if="isSubmitting" class="w-4 h-4 border border-white/20 border-t-white rounded-full animate-spin"></span>
           {{ isOnboarding ? 'Complete Setup' : 'Save products' }}
         </button>
       </div>

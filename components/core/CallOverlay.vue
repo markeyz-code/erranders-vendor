@@ -56,7 +56,7 @@
       </div>
 
       <!-- Local Video (Picture in Picture) -->
-      <div v-if="isVideoCall" class="absolute top-6 right-6 w-32 md:w-48 aspect-[3/4] bg-gray-900 rounded-xl overflow-hidden shadow-2xl border-2 border-white/20 z-20 transition-all hover:scale-105">
+      <div v-if="isVideoCall" class="absolute top-6 right-6 w-32 md:w-48 aspect-[3/4] bg-gray-900 rounded-xl overflow-hidden shadow-2xl border border-white/20 z-20 transition-all hover:scale-105">
         <video ref="localVideoEl" autoplay playsinline muted class="w-full h-full object-cover transform -scale-x-100"></video>
       </div>
 

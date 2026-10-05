@@ -21,7 +21,7 @@
       </div>
 
       <div v-else class="space-y-4">
-        <div v-for="req in requests" :key="req._id" class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm flex items-center justify-between hover:border-indigo-100 transition-all">
+        <div v-for="req in requests" :key="req._id" class="bg-white rounded-2xl border border-gray-50 p-5 shadow-sm flex items-center justify-between hover:border-indigo-100 transition-all">
           <div class="flex items-center gap-4">
             <div class="w-12 h-12 rounded-xl flex items-center justify-center text-xl" :class="getStatusBg(req.status)">
               <span v-if="req.status === 'PENDING'">⏳</span>

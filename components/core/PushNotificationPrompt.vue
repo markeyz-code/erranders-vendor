@@ -14,7 +14,7 @@
         Later
       </button>
       <button @click="enable" :disabled="loading" class="px-4 py-2 text-sm font-medium text-white bg-[#FF5C1A] hover:bg-orange-600 rounded-lg transition-colors flex items-center gap-2">
-        <span v-if="loading" class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+        <span v-if="loading" class="w-4 h-4 border border-white/30 border-t-white rounded-full animate-spin"></span>
         Enable
       </button>
     </div>

@@ -39,7 +39,7 @@
  </div>
 
  <div v-if="loading" class="flex flex-col items-center justify-center h-40 space-y-4">
- <div class="w-8 h-8 border-2 border-[#FF5C1A]/20 border-t-[#FF5C1A] rounded-md animate-spin" />
+ <div class="w-8 h-8 border border-[#FF5C1A]/20 border-t-[#FF5C1A] rounded-md animate-spin" />
  </div>
  
  <div v-else-if="messages.length === 0" class="flex flex-col items-center justify-center p-10 text-center space-y-3 mt-10">
@@ -122,7 +122,7 @@
 
  <!-- Media Preview if uploading -->
  <div class="flex flex-col items-center justify-center p-4 bg-white/50 backdrop-blur-sm rounded-md mx-10 animate-pulse border border-[#FF5C1A]/10">
- <div class="w-8 h-8 border-2 border-[#FF5C1A]/20 border-t-[#FF5C1A] rounded-md animate-spin mb-2" />
+ <div class="w-8 h-8 border border-[#FF5C1A]/20 border-t-[#FF5C1A] rounded-md animate-spin mb-2" />
  <p class="text-sm font-bold text-[#FF5C1A]">Sending media...</p>
  </div>
  </div>

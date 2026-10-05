@@ -32,7 +32,7 @@
     <Transition name="slide-fade">
       <div 
         v-if="isOpen && (suggestions.length > 0 || loading || error || (!loading && modelValue.length > 2 && suggestions.length === 0))" 
-        class="absolute z-[99999] w-full mt-2 bg-white/95 backdrop-blur-md rounded-2xl border border-gray-100 overflow-hidden"
+        class="absolute z-[99999] w-full mt-2 bg-white/95 backdrop-blur-md rounded-2xl border border-gray-50 overflow-hidden"
       >
         <div class="p-2">
           <!-- Loading State inside dropdown -->

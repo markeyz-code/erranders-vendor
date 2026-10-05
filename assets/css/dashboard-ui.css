@@ -65,9 +65,9 @@
 .inv-btn--outline {
  background: #fff;
  color: #555;
- border: 1.5px solid #e5e5e5;
+ border: 1px solid #f3f4f6; /* Lighter 1px border */
 }
-.inv-btn--outline:hover { border-color: #ccc; background: #fafafa; }
+.inv-btn--outline:hover { border-color: #e5e7eb; background: #f9fafb; }
 
 .inv-icon-btn {
  width: 32px;

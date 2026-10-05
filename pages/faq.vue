@@ -22,10 +22,10 @@
     <section class="py-24 bg-white">
       <div class="max-w-4xl mx-auto px-6 sm:px-10">
         <div class="space-y-4">
-          <div v-for="(faq, i) in faqs" :key="i" class="group border border-gray-100 rounded-md overflow-hidden transition-all duration-500" :class="{ 'bg-gray-50/50 border-parentPrimary/20 ': openIndex === i }">
+          <div v-for="(faq, i) in faqs" :key="i" class="group border border-gray-50 rounded-md overflow-hidden transition-all duration-500" :class="{ 'bg-gray-50/50 border-parentPrimary/20 ': openIndex === i }">
             <button @click="openIndex = openIndex === i ? -1 : i" class="w-full flex items-center justify-between p-8 text-left outline-none">
               <span class="text-xl font-medium text-gray-900 tracking-tight group-hover:text-parentPrimary transition-colors">{{ faq.q }}</span>
-              <div class="w-10 h-10 rounded-md bg-white border border-gray-100 flex items-center justify-center text-gray-400 group-hover:text-parentPrimary transition-all" :class="{ 'rotate-180 bg-parentPrimary text-white border-transparent': openIndex === i }">
+              <div class="w-10 h-10 rounded-md bg-white border border-gray-50 flex items-center justify-center text-gray-400 group-hover:text-parentPrimary transition-all" :class="{ 'rotate-180 bg-parentPrimary text-white border-transparent': openIndex === i }">
                 <ChevronDown class="w-5 h-5" />
               </div>
             </button>

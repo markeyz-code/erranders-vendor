@@ -7,12 +7,12 @@
       <div class="flex items-center gap-4">
         <button 
           @click="selectDate(new Date())"
-          class="px-4 py-2 border border-gray-200 rounded-md text-sm font-bold text-gray-700 hover:bg-gray-50 transition-colors focus:outline-none"
+          class="px-4 py-2 border border-gray-25 rounded-md text-sm font-bold text-gray-700 hover:bg-gray-50 transition-colors focus:outline-none"
         >
           Today
         </button>
         
-        <div class="flex items-center gap-1 bg-gray-50 rounded-md p-1 border border-gray-200">
+        <div class="flex items-center gap-1 bg-gray-50 rounded-md p-1 border border-gray-25">
           <button @click="addDays(-1)" class="p-1.5 rounded-lg hover:bg-white hover: text-gray-600 transition-all">
             <ChevronLeft class="w-4 h-4" />
           </button>
@@ -25,7 +25,7 @@
         <DatePickerPopover v-model="currentDate" @update:modelValue="onDateChanged" />
         
         <!-- View Switcher -->
-        <div class="flex items-center bg-gray-50 rounded-md p-1 border border-gray-200 ml-4">
+        <div class="flex items-center bg-gray-50 rounded-md p-1 border border-gray-25 ml-4">
           <button 
             @click="setView('day')" 
             class="px-3 py-1.5 text-xs font-bold rounded transition-colors"
@@ -59,7 +59,7 @@
       <div class="flex items-center gap-3">
         <button 
           @click="isWaitlistOpen = true"
-          class="px-4 py-2 text-sm font-bold text-gray-700 bg-gray-50 border border-gray-200 hover:bg-gray-100 rounded-md transition-colors flex items-center gap-2"
+          class="px-4 py-2 text-sm font-bold text-gray-700 bg-gray-50 border border-gray-25 hover:bg-gray-100 rounded-md transition-colors flex items-center gap-2"
         >
           <Users class="w-4 h-4" /> Waitlist
         </button>

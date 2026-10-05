@@ -5,7 +5,7 @@
 
       <div class="relative bg-white rounded-xl w-full max-w-lg overflow-hidden flex flex-col transform transition-all shadow-xl">
         <div class="p-6 sm:p-8 space-y-6">
-          <h2 class="text-2xl font-bold italic text-gray-800 tracking-tight mb-2 uppercase">{{ category ? 'EDIT CATEGORY' : 'CREATE CATEGORY' }}</h2>
+          <h2 class="text-2xl font-bold  text-gray-800 tracking-tight mb-2 uppercase">{{ category ? 'EDIT CATEGORY' : 'CREATE CATEGORY' }}</h2>
 
           <div class="space-y-5">
             <!-- Image Upload -->
@@ -35,7 +35,7 @@
                 v-model="form.name" 
                 type="text" 
                 placeholder="e.g. Main Dishes, Soups" 
-                class="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-900 transition-all"
+                class="w-full px-4 py-3 bg-white border border-gray-25 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-25transition-all"
               />
             </div>
 
@@ -45,11 +45,11 @@
                 v-model="form.description" 
                 type="text" 
                 placeholder="Enter a description" 
-                class="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-900 transition-all"
+                class="w-full px-4 py-3 bg-white border border-gray-25 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-25transition-all"
               />
             </div>
 
-            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-100">
+            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-50">
                <div>
                  <p class="text-sm font-bold text-gray-900">Visibility Status</p>
                  <p class="text-xs text-gray-500 mt-0.5">Toggle to hide this category from the store.</p>

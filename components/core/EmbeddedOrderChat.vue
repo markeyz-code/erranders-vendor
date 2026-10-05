@@ -40,7 +40,7 @@
  </div>
 
  <div v-if="loading" class="flex flex-col items-center justify-center h-40 space-y-4">
- <div class="w-8 h-8 border-2 border-[#FF5C1A]/20 border-t-[#FF5C1A] rounded-md animate-spin" />
+ <div class="w-8 h-8 border border-[#FF5C1A]/20 border-t-[#FF5C1A] rounded-md animate-spin" />
  </div>
  
  <div v-else-if="messages.length === 0" class="flex flex-col items-center justify-center p-10 text-center space-y-3 mt-10">
@@ -56,7 +56,7 @@
  :class="isMe(msg) ? 'items-end' : 'items-start'">
  
  <div class="flex group items-center max-w-full" :class="isMe(msg) ? 'flex-row-reverse' : 'flex-row'">
- <div :class="[ 'relative max-w-[85%] px-3.5 py-2 rounded-[18px] text-[14.5px] transition-all', isMe(msg) ? 'bg-[#FF5C1A] text-white ml-2' : 'bg-white border border-gray-100 text-[#111B21] mr-2 shadow-sm', shouldShowTail(msg, idx) ? (isMe(msg) ? 'rounded-br-sm' : 'rounded-bl-sm') : '' ]">
+ <div :class="[ 'relative max-w-[85%] px-3.5 py-2 rounded-[18px] text-[14.5px] transition-all', isMe(msg) ? 'bg-[#FF5C1A] text-white ml-2' : 'bg-white border border-gray-50 text-[#111B21] mr-2 shadow-sm', shouldShowTail(msg, idx) ? (isMe(msg) ? 'rounded-br-sm' : 'rounded-bl-sm') : '' ]">
  
  <!-- Sender name for groups/receivers -->
  <p v-if="!isMe(msg) && shouldShowSender(msg, idx)" class="text-[12px] font-bold text-[#FF5C1A] mb-0.5">
@@ -109,7 +109,7 @@
  </div>
  
  <div v-if="isTyping" class="flex items-center ml-2 transition-all my-2">
- <div class="bg-white px-4 py-2 rounded-full border border-gray-100 shadow-sm text-[12px] text-[#FF5C1A] font-bold animate-pulse flex items-center gap-2">
+ <div class="bg-white px-4 py-2 rounded-full border border-gray-50 shadow-sm text-[12px] text-[#FF5C1A] font-bold animate-pulse flex items-center gap-2">
  <div class="flex gap-1">
    <div class="w-1.5 h-1.5 bg-[#FF5C1A]/60 rounded-full animate-bounce"></div>
    <div class="w-1.5 h-1.5 bg-[#FF5C1A]/60 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
@@ -120,7 +120,7 @@
 
  <!-- Media Preview if uploading -->
  <div v-if="uploadingMedia" class="flex flex-col items-center justify-center p-4 bg-white/50 backdrop-blur-sm rounded-md mx-10 animate-pulse border border-[#FF5C1A]/10">
- <div class="w-8 h-8 border-2 border-[#FF5C1A]/20 border-t-[#FF5C1A] rounded-md animate-spin mb-2" />
+ <div class="w-8 h-8 border border-[#FF5C1A]/20 border-t-[#FF5C1A] rounded-md animate-spin mb-2" />
  <p class="text-sm font-bold text-[#FF5C1A]">Sending media...</p>
  </div>
  </div>

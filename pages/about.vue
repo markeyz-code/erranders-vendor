@@ -28,7 +28,7 @@
       <div class="max-w-7xl mx-auto px-6 sm:px-10">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <!-- Multi-Module Dash -->
-          <div class="bg-white p-10 rounded-[3rem] border border-gray-100 hover: hover:-translate-y-2 transition-all duration-500 group">
+          <div class="bg-white p-10 rounded-[3rem] border border-gray-50 hover: hover:-translate-y-2 transition-all duration-500 group">
             <div class="w-16 h-16 bg-blue-50 rounded-md flex items-center justify-center text-parentPrimary mb-8 group-hover:scale-110 transition-transform">
               <LayoutDashboard class="w-8 h-8" />
             </div>
@@ -41,7 +41,7 @@
           </div>
 
           <!-- Automated Payouts -->
-          <div class="bg-white p-10 rounded-[3rem] border border-gray-100 hover: hover:-translate-y-2 transition-all duration-500 group">
+          <div class="bg-white p-10 rounded-[3rem] border border-gray-50 hover: hover:-translate-y-2 transition-all duration-500 group">
             <div class="w-16 h-16 bg-emerald-50 rounded-md flex items-center justify-center text-emerald-600 mb-8 group-hover:scale-110 transition-transform">
               <Wallet class="w-8 h-8" />
             </div>
@@ -54,7 +54,7 @@
           </div>
 
           <!-- Reach -->
-          <div class="bg-white p-10 rounded-[3rem] border border-gray-100 hover: hover:-translate-y-2 transition-all duration-500 group">
+          <div class="bg-white p-10 rounded-[3rem] border border-gray-50 hover: hover:-translate-y-2 transition-all duration-500 group">
             <div class="w-16 h-16 bg-indigo-50 rounded-md flex items-center justify-center text-indigo-600 mb-8 group-hover:scale-110 transition-transform">
               <Zap class="w-8 h-8" />
             </div>
@@ -88,11 +88,11 @@
               </NuxtLink>
             </div>
           </div>
-          <div class="flex-1 bg-gray-50 p-12 rounded-[4rem] relative border border-gray-100">
+          <div class="flex-1 bg-gray-50 p-12 rounded-[4rem] relative border border-gray-50">
             <div class="absolute inset-0 bg-parentPrimary/5 blur-[100px] rounded-md animate-pulse-slow"></div>
             <div class="relative z-10 space-y-8">
               <div v-for="item in steps" :key="item.t" class="flex gap-6 items-start">
-                <div class="w-10 h-10 rounded-md bg-white border border-gray-200 flex items-center justify-center text-sm font-medium text-parentPrimary">{{ item.n }}</div>
+                <div class="w-10 h-10 rounded-md bg-white border border-gray-25 flex items-center justify-center text-sm font-medium text-parentPrimary">{{ item.n }}</div>
                 <div>
                    <h4 class="font-medium text-gray-900 mb-2 tracking-tight">{{ item.t }}</h4>
                    <p class="text-gray-600 font-medium text-sm">{{ item.d }}</p>

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-md border border-gray-100 overflow-hidden flex flex-col h-[70vh] min-h-[600px]">
+  <div class="bg-white rounded-md border border-gray-50 overflow-hidden flex flex-col h-[70vh] min-h-[600px]">
     
     <!-- Days of the Week Header -->
     <div class="grid grid-cols-7 border-b border-gray-100 bg-gray-50 z-10 sticky top-0">

@@ -72,7 +72,7 @@
    <div class="flex flex-wrap gap-2">
     <div 
      v-for="(img, idx) in allImages" :key="idx"
-     class="h-20 w-20 rounded-lg bg-gray-50 border border-gray-200 overflow-hidden group relative shrink-0"
+     class="h-20 w-20 rounded-lg bg-gray-50 border border-gray-25 overflow-hidden group relative shrink-0"
     >
      <img :src="img" class="w-full h-full object-cover" />
      <button @click.stop="removeImage(idx)" class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all">
@@ -81,7 +81,7 @@
     </div>
     <div 
      v-for="(vid, idx) in allVideos" :key="`vid-${idx}`"
-     class="h-20 w-20 rounded-lg bg-gray-50 border border-gray-200 overflow-hidden group relative shrink-0"
+     class="h-20 w-20 rounded-lg bg-gray-50 border border-gray-25 overflow-hidden group relative shrink-0"
     >
      <video :src="vid" class="w-full h-full object-cover" muted loop playsinline></video>
      <button @click.stop="removeVideo(idx)" class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all">
@@ -90,7 +90,7 @@
     </div>
     <button type="button" @click="triggerImageUpload" class="h-20 w-20 rounded-lg bg-gray-50 border border-dashed border-gray-300 flex flex-col items-center justify-center transition-all hover:bg-blue-50 hover:border-blue-300 shrink-0">
      <template v-if="uploadingImage">
-      <div class="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      <div class="w-5 h-5 border border-blue-500 border-t-transparent rounded-full animate-spin"></div>
      </template>
      <template v-else>
       <ImageIcon class="w-5 h-5 text-gray-400 mb-1" />
@@ -100,7 +100,7 @@
     </button>
     <button v-if="allVideos.length < 3" type="button" @click="triggerVideoUpload" class="h-20 w-20 rounded-lg bg-gray-50 border border-dashed border-gray-300 flex flex-col items-center justify-center transition-all hover:bg-blue-50 hover:border-blue-300 shrink-0">
      <template v-if="uploadingVideo">
-      <div class="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      <div class="w-5 h-5 border border-blue-500 border-t-transparent rounded-full animate-spin"></div>
      </template>
      <template v-else>
       <VideoIcon class="w-5 h-5 text-gray-400 mb-1" />
@@ -194,7 +194,7 @@
       </div>
     </div>
     
-    <div class="p-4 bg-gray-50 border border-gray-200 rounded-xl space-y-4">
+    <div class="p-4 bg-gray-50 border border-gray-25 rounded-xl space-y-4">
       <div class="flex items-center gap-3">
         <label class="relative inline-flex items-center cursor-pointer">
           <input type="checkbox" v-model="form.hasPackFee" class="sr-only peer" />
@@ -230,7 +230,7 @@
       </button>
     </div>
     
-    <div v-for="(mod, mIdx) in form.modifiers" :key="mIdx" class="p-4 bg-gray-50 border border-gray-200 rounded-xl space-y-3">
+    <div v-for="(mod, mIdx) in form.modifiers" :key="mIdx" class="p-4 bg-gray-50 border border-gray-25 rounded-xl space-y-3">
       <div class="flex items-center gap-2">
         <input type="text" v-model="mod.name" :placeholder="requiresPrepTime || requiresTakeawayPack || usesMenuApi ? 'Option Name (e.g. Pack Size)' : 'Option Name (e.g. Storage Capacity)'" class="flex-1 px-3 py-2 bg-gray-50 border border-transparent hover:border-gray-200 focus:bg-white rounded-lg text-base focus:outline-none focus:border-[#FF5C1A]" />
         <label class="flex items-center gap-1.5 text-xs font-semibold text-gray-700 whitespace-nowrap">
@@ -241,8 +241,8 @@
       
       <div class="pl-4 border-l-2 border-gray-200 space-y-2">
         <div v-for="(opt, oIdx) in mod.options" :key="oIdx" class="flex items-center gap-2">
-          <input type="text" v-model="opt.name" :placeholder="requiresPrepTime || requiresTakeawayPack || usesMenuApi ? 'Choice (e.g. Big Pack)' : 'Choice (e.g. 512GB)'" class="flex-1 px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-base focus:outline-none focus:border-[#FF5C1A]" />
-          <input type="number" v-model.number="opt.priceDelta" placeholder="Price (+₦)" class="w-24 px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-base focus:outline-none focus:border-[#FF5C1A]" />
+          <input type="text" v-model="opt.name" :placeholder="requiresPrepTime || requiresTakeawayPack || usesMenuApi ? 'Choice (e.g. Big Pack)' : 'Choice (e.g. 512GB)'" class="flex-1 px-3 py-1.5 bg-white border border-gray-25 rounded-lg text-base focus:outline-none focus:border-[#FF5C1A]" />
+          <input type="number" v-model.number="opt.priceDelta" placeholder="Price (+₦)" class="w-24 px-3 py-1.5 bg-white border border-gray-25 rounded-lg text-base focus:outline-none focus:border-[#FF5C1A]" />
           <button type="button" @click="removeModifierOption(mIdx, oIdx)" class="p-1.5 text-gray-400 hover:text-red-500"><X class="w-3 h-3" /></button>
         </div>
         <button type="button" @click="addModifierOption(mIdx)" class="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 mt-1">
@@ -266,7 +266,7 @@
       </button>
     </div>
     <div class="space-y-3">
-      <label v-for="group in addOnGroups" :key="group._id" class="block p-4 bg-white border border-gray-200 rounded-xl cursor-pointer hover:border-gray-300 transition-all">
+      <label v-for="group in addOnGroups" :key="group._id" class="block p-4 bg-white border border-gray-25 rounded-xl cursor-pointer hover:border-gray-300 transition-all">
         <div class="flex items-center justify-between border-b border-gray-100 pb-3 mb-3">
           <div class="flex items-center gap-3">
             <input type="checkbox" :value="group._id" v-model="form.addOnGroupIds" class="rounded text-gray-900 focus:ring-gray-900 w-4 h-4" />
@@ -299,7 +299,7 @@
   <!-- 8. TOGGLES -->
   <!-- ═══════════════════════════════════════════════ -->
   <section class="space-y-3">
-   <div class="flex items-center justify-between py-3 px-4 bg-gray-50 rounded-lg border border-gray-100">
+   <div class="flex items-center justify-between py-3 px-4 bg-gray-50 rounded-lg border border-gray-50">
     <div class="flex items-center gap-3">
      <Star class="w-4 h-4 text-amber-500" />
      <span class="text-sm font-semibold text-gray-700">Feature on menu</span>
@@ -309,7 +309,7 @@
      <div class="w-10 h-5 bg-gray-200 rounded-full peer peer-checked:bg-green-500 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
     </label>
    </div>
-   <div class="flex items-center justify-between py-3 px-4 bg-gray-50 rounded-lg border border-gray-100">
+   <div class="flex items-center justify-between py-3 px-4 bg-gray-50 rounded-lg border border-gray-50">
     <div class="flex items-center gap-3">
      <CheckCircle class="w-4 h-4 text-emerald-500" />
      <span class="text-sm font-semibold text-gray-700">Available for order</span>
@@ -328,7 +328,7 @@
    <button v-if="product" @click="$emit('delete', product)" type="button" class="flex-none py-3 px-4 bg-rose-50 text-rose-500 rounded-lg hover:bg-rose-100 transition-all flex items-center justify-center" title="Delete Product">
     <Trash2 class="w-5 h-5" />
    </button>
-   <button @click="$emit('close')" type="button" class="flex-1 py-3 bg-white border border-gray-200 text-gray-600 text-sm font-medium rounded-lg hover:bg-gray-50 transition-all">Cancel</button>
+   <button @click="$emit('close')" type="button" class="flex-1 py-3 bg-white border border-gray-25 text-gray-600 text-sm font-medium rounded-lg hover:bg-gray-50 transition-all">Cancel</button>
    <button @click="handleSubmit" type="button" :disabled="uploadingImage || uploadingVideo || uploading || isSaving || localSaving" class="flex-[2] py-3 bg-gray-900 text-white rounded-lg font-medium text-sm hover:bg-black transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2">
     <Loader2 v-if="uploadingImage || uploadingVideo || uploading || isSaving || localSaving" class="w-5 h-5 animate-spin" />
     <span v-else>{{ product ? 'Update Product' : 'Save Product' }}</span>

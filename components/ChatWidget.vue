@@ -140,7 +140,7 @@
                   v-for="faq in faqs.slice(0, 8)"
                   :key="faq._id"
                   @click="handleFaqClick(faq)"
-                  class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full text-[13px] font-semibold transition-colors border border-gray-200/50 whitespace-nowrap"
+                  class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full text-[13px] font-semibold transition-colors border border-gray-25/50 whitespace-nowrap"
                 >
                   {{ faq.question }}
                 </button>

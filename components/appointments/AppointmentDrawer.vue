@@ -25,13 +25,13 @@
       <div class="flex gap-2 mb-8">
         <button 
           @click="showChatModal = true"
-          class="flex-1 py-2.5 bg-gray-50 border border-gray-200 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors flex justify-center items-center gap-2"
+          class="flex-1 py-2.5 bg-gray-50 border border-gray-25 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors flex justify-center items-center gap-2"
         >
           <MessageCircle class="w-4 h-4" /> Message
         </button>
         <a 
           :href="appointment.user?.phoneNumber ? `tel:${appointment.user.phoneNumber}` : '#'"
-          class="flex-1 py-2.5 bg-gray-50 border border-gray-200 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors flex justify-center items-center gap-2"
+          class="flex-1 py-2.5 bg-gray-50 border border-gray-25 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors flex justify-center items-center gap-2"
         >
           <Phone class="w-4 h-4" /> Call
         </a>
@@ -45,7 +45,7 @@
             {{ formattedDate }}
           </h4>
           
-          <div class="p-4 bg-gray-50 rounded-md border border-gray-100 relative overflow-hidden group">
+          <div class="p-4 bg-gray-50 rounded-md border border-gray-50 relative overflow-hidden group">
             <div class="absolute left-0 top-0 bottom-0 w-1" :class="getStatusColor(appointment.status).border"></div>
             
             <div class="pl-2">
@@ -74,7 +74,7 @@
             <Info class="w-4 h-4 text-gray-400" /> 
             Booking Info
           </h4>
-          <div class="bg-white border border-gray-100 rounded-md p-4 space-y-3">
+          <div class="bg-white border border-gray-50 rounded-md p-4 space-y-3">
             <div class="flex justify-between text-sm">
               <span class="text-gray-500">Status</span>
               <span 
@@ -113,7 +113,7 @@
       <!-- Bottom Actions -->
       <div class="pt-6 mt-6 border-t border-gray-100 space-y-3 relative">
         <div v-if="loading" class="absolute inset-0 z-10 bg-white/50 backdrop-blur-[1px] flex items-center justify-center rounded-lg">
-          <div class="w-6 h-6 border-2 border-gray-200 border-t-gray-800 rounded-full animate-spin"></div>
+          <div class="w-6 h-6 border border-gray-200 border-t-gray-800 rounded-full animate-spin"></div>
         </div>
 
         <div class="flex justify-between items-center mb-1">

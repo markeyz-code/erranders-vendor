@@ -2,7 +2,7 @@
   <div class="relative w-full" ref="containerRef">
     <p v-if="label" class="text-sm font-bold text-gray-400 mb-1 ml-1">{{ label }}</p>
     <div 
-      class="flex items-center w-full px-4 py-3.5 bg-white border border-gray-200 rounded-md transition-all cursor-pointer"
+      class="flex items-center w-full px-4 py-3.5 bg-white border border-gray-25 rounded-md transition-all cursor-pointer"
       :class="{ 'border-[#FF5C1A] ring-2 ring-[#FF5C1A]/10': openPopover !== null }"
       @click="openPopover = 'hour'"
     >
@@ -20,7 +20,7 @@
           </div>
           
           <Transition name="fade">
-            <div v-if="openPopover === 'hour'" class="absolute z-[100] top-full left-1/2 -translate-x-1/2 mt-1 w-16 h-48 bg-white border border-gray-100 rounded-md overflow-y-auto no-scrollbar py-1">
+            <div v-if="openPopover === 'hour'" class="absolute z-[100] top-full left-1/2 -translate-x-1/2 mt-1 w-16 h-48 bg-white border border-gray-50 rounded-md overflow-y-auto no-scrollbar py-1">
               <div 
                 v-for="h in 12" :key="h" 
                 @click="hour = h.toString(); openPopover = 'minute'"
@@ -46,7 +46,7 @@
           </div>
           
           <Transition name="fade">
-            <div v-if="openPopover === 'minute'" class="absolute z-[100] top-full left-1/2 -translate-x-1/2 mt-1 w-16 h-48 bg-white border border-gray-100 rounded-md overflow-y-auto no-scrollbar py-1">
+            <div v-if="openPopover === 'minute'" class="absolute z-[100] top-full left-1/2 -translate-x-1/2 mt-1 w-16 h-48 bg-white border border-gray-50 rounded-md overflow-y-auto no-scrollbar py-1">
               <div 
                 v-for="m in 60" :key="m-1" 
                 @click="minute = (m-1).toString(); openPopover = null"
@@ -70,7 +70,7 @@
           </div>
           
           <Transition name="fade">
-            <div v-if="openPopover === 'period'" class="absolute z-[100] top-full left-1/2 -translate-x-1/2 mt-1 w-16 bg-white border border-gray-100 rounded-md py-1">
+            <div v-if="openPopover === 'period'" class="absolute z-[100] top-full left-1/2 -translate-x-1/2 mt-1 w-16 bg-white border border-gray-50 rounded-md py-1">
               <div 
                 @click="period = 'AM'; openPopover = null"
                 class="w-full text-center py-2 text-sm font-bold cursor-pointer hover:bg-gray-50 transition-colors"

@@ -27,7 +27,7 @@
       </div>
 
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div v-for="plan in plans" :key="plan._id" class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm group hover:border-[#FF5C1A]/30 transition-all">
+        <div v-for="plan in plans" :key="plan._id" class="bg-white rounded-2xl border border-gray-50 p-6 shadow-sm group hover:border-[#FF5C1A]/30 transition-all">
           <div class="flex items-center justify-between mb-4">
             <span class="text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-widest" :class="getStatusClass(plan.status)">
               {{ plan.status }}
@@ -69,7 +69,7 @@
               v-model="newPlan.caption" 
               rows="4" 
               placeholder="Write what you want to post..."
-              class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500 focus:bg-white transition-all resize-none"
+              class="w-full bg-gray-50 border border-gray-25 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500 focus:bg-white transition-all resize-none"
             ></textarea>
           </div>
           
@@ -78,7 +78,7 @@
             <input 
               type="datetime-local" 
               v-model="newPlan.scheduledDate" 
-              class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:border-indigo-500 focus:bg-white transition-colors" 
+              class="w-full bg-gray-50 border border-gray-25 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:border-indigo-500 focus:bg-white transition-colors" 
             />
           </div>
         </div>
@@ -92,7 +92,7 @@
             :disabled="saving"
             class="bg-indigo-600 text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-sm hover:bg-indigo-700 disabled:opacity-50 transition-all flex items-center gap-2"
           >
-            <span v-if="saving" class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+            <span v-if="saving" class="w-4 h-4 border border-white/30 border-t-white rounded-full animate-spin"></span>
             {{ saving ? 'Scheduling...' : 'Schedule Post' }}
           </button>
         </div>

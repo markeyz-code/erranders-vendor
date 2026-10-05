@@ -41,7 +41,7 @@
               type="text" 
               maxlength="1" 
               inputmode="numeric" 
-              class="w-12 h-14 text-center text-lg font-medium bg-gray-50 border border-gray-200 rounded-md focus:border-[#FF5C1A] focus:ring-4 focus:ring-[#FF5C1A]/10 outline-none transition-all" 
+              class="w-12 h-14 text-center text-lg font-medium bg-gray-50 border border-gray-25 rounded-md focus:border-[#FF5C1A] focus:ring-4 focus:ring-[#FF5C1A]/10 outline-none transition-all" 
             />
           </div>
 

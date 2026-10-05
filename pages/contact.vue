@@ -28,7 +28,7 @@
       <div class="max-w-7xl mx-auto px-6 sm:px-10">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <!-- Support Card -->
-          <div class="bg-gray-50/50 p-8 rounded-[2.5rem] border border-gray-100 hover:bg-white hover: hover:-translate-y-2 transition-all duration-500 group">
+          <div class="bg-gray-50/50 p-8 rounded-[2.5rem] border border-gray-50 hover:bg-white hover: hover:-translate-y-2 transition-all duration-500 group">
             <div class="w-14 h-14 bg-parentPrimary/10 rounded-md flex items-center justify-center text-parentPrimary mb-8 group-hover:scale-110 transition-transform">
               <Mail class="w-7 h-7" />
             </div>
@@ -38,7 +38,7 @@
           </div>
 
           <!-- Payouts Card -->
-          <div class="bg-gray-50/50 p-8 rounded-[2.5rem] border border-gray-100 hover:bg-white hover: hover:-translate-y-2 transition-all duration-500 group">
+          <div class="bg-gray-50/50 p-8 rounded-[2.5rem] border border-gray-50 hover:bg-white hover: hover:-translate-y-2 transition-all duration-500 group">
             <div class="w-14 h-14 bg-emerald-50 rounded-md flex items-center justify-center text-emerald-600 mb-8 group-hover:scale-110 transition-transform">
               <Banknote class="w-7 h-7" />
             </div>
@@ -48,7 +48,7 @@
           </div>
 
           <!-- Hotline Card -->
-          <div class="bg-gray-50/50 p-8 rounded-[2.5rem] border border-gray-100 hover:bg-white hover: hover:-translate-y-2 transition-all duration-500 group">
+          <div class="bg-gray-50/50 p-8 rounded-[2.5rem] border border-gray-50 hover:bg-white hover: hover:-translate-y-2 transition-all duration-500 group">
             <div class="w-14 h-14 bg-indigo-50 rounded-md flex items-center justify-center text-indigo-600 mb-8 group-hover:scale-110 transition-transform">
               <Phone class="w-7 h-7" />
             </div>
@@ -58,7 +58,7 @@
           </div>
 
           <!-- Partnership Card -->
-          <div class="bg-gray-50/50 p-8 rounded-[2.5rem] border border-gray-100 hover:bg-white hover: hover:-translate-y-2 transition-all duration-500 group">
+          <div class="bg-gray-50/50 p-8 rounded-[2.5rem] border border-gray-50 hover:bg-white hover: hover:-translate-y-2 transition-all duration-500 group">
             <div class="w-14 h-14 bg-purple-50 rounded-md flex items-center justify-center text-purple-600 mb-8 group-hover:scale-110 transition-transform">
               <Handshake class="w-7 h-7" />
             </div>

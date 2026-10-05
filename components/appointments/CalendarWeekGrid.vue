@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-md border border-gray-100 overflow-hidden flex flex-col h-[70vh] min-h-[600px]">
+  <div class="bg-white rounded-md border border-gray-50 overflow-hidden flex flex-col h-[70vh] min-h-[600px]">
     
     <!-- Top Headers (Days of the week) -->
     <div class="flex border-b border-gray-100 bg-white z-10 sticky top-0">

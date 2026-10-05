@@ -2,7 +2,7 @@
   <div class="relative" ref="popoverRef">
     <button 
       @click="toggle"
-      class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-md hover:bg-gray-50 hover:border-gray-300 transition-all focus:outline-none focus:ring-2 focus:ring-parentPrimary/20"
+      class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-25 rounded-md hover:bg-gray-50 hover:border-gray-300 transition-all focus:outline-none focus:ring-2 focus:ring-parentPrimary/20"
     >
       <span class="text-sm font-bold text-gray-900">{{ formattedDate }}</span>
       <ChevronDown class="w-4 h-4 text-gray-500" :class="{'rotate-180': isOpen}" />
@@ -16,7 +16,7 @@
       leave-from-class="transform scale-100 opacity-100"
       leave-to-class="transform scale-95 opacity-0"
     >
-      <div v-if="isOpen" class="absolute top-full left-0 mt-2 w-[340px] bg-white rounded-md border border-gray-100 z-50 p-4">
+      <div v-if="isOpen" class="absolute top-full left-0 mt-2 w-[340px] bg-white rounded-md border border-gray-50 z-50 p-4">
         
         <!-- Header -->
         <div class="flex justify-between items-center mb-4">
@@ -52,9 +52,9 @@
 
         <!-- Quick Filters -->
         <div class="mt-4 pt-4 border-t border-gray-100 flex flex-wrap gap-2">
-          <button @click="selectDate(new Date())" class="px-3 py-1.5 text-xs font-semibold text-gray-600 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-200">Today</button>
-          <button @click="addDays(1)" class="px-3 py-1.5 text-xs font-semibold text-gray-600 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-200">Tomorrow</button>
-          <button @click="addDays(7)" class="px-3 py-1.5 text-xs font-semibold text-gray-600 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-200">In 1 week</button>
+          <button @click="selectDate(new Date())" class="px-3 py-1.5 text-xs font-semibold text-gray-600 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-25">Today</button>
+          <button @click="addDays(1)" class="px-3 py-1.5 text-xs font-semibold text-gray-600 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-25">Tomorrow</button>
+          <button @click="addDays(7)" class="px-3 py-1.5 text-xs font-semibold text-gray-600 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-25">In 1 week</button>
         </div>
       </div>
     </Transition>

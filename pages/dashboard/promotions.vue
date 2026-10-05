@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-6 animate-fade-in container mx-auto pb-20 mt-6 px-4">
+  <div class="space-y-6 animate-fade-in container mx-auto pb-20 mt-6">
     <!-- Header -->
     <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pt-6">
       <div>
@@ -16,11 +16,11 @@
 
     <!-- Active Banners Grid -->
     <div v-if="loading" class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-      <div v-for="i in 2" :key="i" class="h-48 bg-white rounded-md border border-gray-100 animate-pulse" />
+      <div v-for="i in 2" :key="i" class="h-48 bg-white rounded-md border border-gray-50 animate-pulse" />
     </div>
 
     <div v-else-if="banners.length === 0" class="text-center py-20 bg-white rounded-md border border-gray-50 mt-8">
-      <div class="w-20 h-20 bg-gray-50 rounded-md flex items-center justify-center text-4xl mx-auto mb-4 border border-gray-100">
+      <div class="w-20 h-20 bg-gray-50 rounded-md flex items-center justify-center text-4xl mx-auto mb-4 border border-gray-50">
         <Megaphone class="w-8 h-8 text-gray-400" />
       </div>
       <h3 class="text-lg font-bold text-gray-900 mb-2">No active promotions</h3>
@@ -30,7 +30,7 @@
       </button>
     </div>
 
-    <div v-else class="mt-8 bg-white rounded-xl border border-gray-100 overflow-hidden w-full min-w-0 shadow-sm">
+    <div v-else class="mt-8 bg-white rounded-xl border border-gray-50 overflow-hidden w-full min-w-0 shadow-sm">
       <div class="overflow-x-auto min-h-[300px] w-full hide-scrollbar">
         <table class="w-full text-left border-collapse">
           <thead class="bg-gray-50/50">
@@ -45,7 +45,7 @@
           <tbody class="divide-y divide-gray-50">
             <tr v-for="(banner, index) in banners" :key="index" class="hover:bg-gray-50/50 transition-colors group">
               <td class="px-6 py-4 w-48">
-                <div class="h-16 w-32 rounded-lg bg-gray-100 relative overflow-hidden border border-gray-100">
+                <div class="h-16 w-32 rounded-lg bg-gray-100 relative overflow-hidden border border-gray-50">
                   <img v-if="banner.image" :src="banner.image" class="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                   <div v-else class="w-full h-full flex items-center justify-center text-gray-400">
                     <ImageIcon class="w-4 h-4 opacity-50" />
@@ -68,7 +68,7 @@
                 </div>
               </td>
               <td class="px-6 py-4">
-                <span :class="banner.isActive ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-gray-50 text-gray-500 border border-gray-200'" class="px-2.5 py-1 rounded-md text-sm font-medium inline-block">
+                <span :class="banner.isActive ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-gray-50 text-gray-500 border border-gray-25'" class="px-2.5 py-1 rounded-md text-sm font-medium inline-block">
                   {{ banner.isActive ? 'LIVE' : 'HIDDEN' }}
                 </span>
               </td>
@@ -125,12 +125,11 @@
         <!-- Product Link -->
         <div>
           <label class="block text-sm font-bold text-gray-700 mb-2">Related Product (Optional)</label>
-          <select v-model="form.productId" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md text-base font-medium focus:outline-none focus:border-parentPrimary focus:ring-1 focus:ring-parentPrimary transition-colors appearance-none">
-            <option value="">No specific product (General Store Promo)</option>
-            <option v-for="p in products" :key="p._id" :value="p._id">
-              {{ p.name }} - ₦{{ p.price }}
-            </option>
-          </select>
+          <UiSelectInput 
+            v-model="form.productId" 
+            :options="[{ label: 'No specific product (General Store Promo)', value: '' }, ...products.map(p => ({ label: `${p.name} - ₦${p.price}`, value: p._id }))]" 
+            class="w-full" 
+          />
         </div>
 
         <UiAnimatedInput v-model="form.link" label="External Link (Optional)" placeholder="e.g. https://example.com/promo or leave blank" />

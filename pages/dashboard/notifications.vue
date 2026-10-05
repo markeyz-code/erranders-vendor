@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-6 h-screen animate-fade-in w-full px-4 pb-20 sm:px-8">
+  <div class="space-y-6 h-screen animate-fade-in w-full pb-20 sm:px-8">
     <!-- Header -->
     <div class="flex items-center justify-between">
       <div>
@@ -17,7 +17,7 @@
 
     <!-- Loading -->
     <div v-if="loading" class="space-y-3">
-      <div v-for="i in 5" :key="i" class="h-20 bg-white rounded-md border border-gray-100 animate-pulse" />
+      <div v-for="i in 5" :key="i" class="h-20 bg-white rounded-md border border-gray-50 animate-pulse" />
     </div>
 
     <!-- Empty State -->
@@ -33,7 +33,7 @@
         v-for="notif in notifications"
         :key="notif.id"
         :class="notif.read ? 'bg-white' : 'bg-blue-50/50 border-blue-100'"
-        class="rounded-md border border-gray-100 overflow-hidden transition-all hover: group cursor-pointer"
+        class="rounded-md border border-gray-50 overflow-hidden transition-all hover: group cursor-pointer"
         @click="handleNotifClick(notif)"
       >
         <div class="p-5 flex items-start gap-4">
@@ -66,7 +66,7 @@
               </button>
               <button
                 @click.stop="dismissNotification(notif.id)"
-                class="px-5 py-2 text-sm font-semibold text-gray-500 bg-gray-50 rounded-md hover:bg-gray-100 transition-all border border-gray-100"
+                class="px-5 py-2 text-sm font-semibold text-gray-500 bg-gray-50 rounded-md hover:bg-gray-100 transition-all border border-gray-50"
               >
                 Dismiss
               </button>

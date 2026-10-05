@@ -19,7 +19,7 @@
       leave-from-class="translate-y-0 md:translate-x-0"
       leave-to-class="translate-y-full md:translate-y-0 md:translate-x-full"
     >
-      <div v-if="isOpen" class="fixed inset-x-0 bottom-0 md:top-4 md:bottom-4 md:right-4 md:left-auto z-[101] bg-white rounded-t-[2rem] md:rounded-md md:w-[600px] flex flex-col max-h-[90vh] md:max-h-[calc(100vh-2rem)] border border-gray-200 overflow-hidden h-full">
+      <div v-if="isOpen" class="fixed inset-x-0 bottom-0 md:top-4 md:bottom-4 md:right-4 md:left-auto z-[101] bg-white rounded-t-[2rem] md:rounded-md md:w-[600px] flex flex-col max-h-[90vh] md:max-h-[calc(100vh-2rem)] border border-gray-25 overflow-hidden h-full">
         
         <!-- Header -->
         <div class="px-6 py-5 border-b border-gray-100 flex items-center justify-between shrink-0 bg-white">
@@ -39,7 +39,7 @@
             <div class="grid gap-4">
               <div>
                 <label class="block text-xs font-bold text-gray-700 mb-1.5">Service Name</label>
-                <input v-model="form.name" type="text" placeholder="e.g. Classic European Massage" class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-base rounded-md focus:ring-parentPrimary focus:border-parentPrimary block p-3 outline-none transition-all" />
+                <input v-model="form.name" type="text" placeholder="e.g. Classic European Massage" class="w-full bg-gray-50 border border-gray-25 text-gray-900 text-base rounded-md focus:ring-parentPrimary focus:border-parentPrimary block p-3 outline-none transition-all" />
               </div>
               <div>
                 <SelectInput 
@@ -52,17 +52,17 @@
               </div>
               <div>
                 <label class="block text-xs font-bold text-gray-700 mb-1.5">Description</label>
-                <textarea v-model="form.description" rows="3" placeholder="Briefly describe what this service includes..." class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-base rounded-md focus:ring-parentPrimary focus:border-parentPrimary block p-3 outline-none transition-all"></textarea>
+                <textarea v-model="form.description" rows="3" placeholder="Briefly describe what this service includes..." class="w-full bg-gray-50 border border-gray-25 text-gray-900 text-base rounded-md focus:ring-parentPrimary focus:border-parentPrimary block p-3 outline-none transition-all"></textarea>
               </div>
               
               <div class="grid grid-cols-2 gap-4">
                 <div>
                   <label class="block text-xs font-bold text-gray-700 mb-1.5">Base Price (₦)</label>
-                  <input :value="formatPrice(form.price)" @input="form.price = parsePrice($event.target.value)" type="text" placeholder="30,000" class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-base rounded-md focus:ring-parentPrimary focus:border-parentPrimary block p-3 outline-none transition-all" />
+                  <input :value="formatPrice(form.price)" @input="form.price = parsePrice($event.target.value)" type="text" placeholder="30,000" class="w-full bg-gray-50 border border-gray-25 text-gray-900 text-base rounded-md focus:ring-parentPrimary focus:border-parentPrimary block p-3 outline-none transition-all" />
                 </div>
                 <div>
                   <label class="block text-xs font-bold text-gray-700 mb-1.5">Base Duration (Mins)</label>
-                  <input v-model.number="form.durationInMinutes" type="number" placeholder="60" class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-base rounded-md focus:ring-parentPrimary focus:border-parentPrimary block p-3 outline-none transition-all" />
+                  <input v-model.number="form.durationInMinutes" type="number" placeholder="60" class="w-full bg-gray-50 border border-gray-25 text-gray-900 text-base rounded-md focus:ring-parentPrimary focus:border-parentPrimary block p-3 outline-none transition-all" />
                 </div>
               </div>
               
@@ -115,21 +115,21 @@
             </div>
             <p class="text-xs text-gray-500">Provide different duration/price options (e.g. "Pick me up - 30mins", "Classic - 1hr"). If left empty, the base price/duration is used.</p>
             
-            <div v-for="(v, idx) in form.variants" :key="idx" class="p-4 bg-gray-50 border border-gray-100 rounded-md space-y-3 relative group">
+            <div v-for="(v, idx) in form.variants" :key="idx" class="p-4 bg-gray-50 border border-gray-50 rounded-md space-y-3 relative group">
               <button @click="removeVariant(idx)" class="absolute top-2 right-2 p-1.5 bg-white text-gray-400 hover:text-red-500 rounded-md opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 class="w-3.5 h-3.5"/></button>
               
               <div>
                 <label class="block text-xs font-bold text-gray-700 mb-1">Variant Name</label>
-                <input v-model="v.name" type="text" placeholder="e.g. A little longer" class="w-full bg-white border border-gray-200 text-gray-900 text-base rounded-lg p-2 outline-none" />
+                <input v-model="v.name" type="text" placeholder="e.g. A little longer" class="w-full bg-white border border-gray-25 text-gray-900 text-base rounded-lg p-2 outline-none" />
               </div>
               <div class="grid grid-cols-2 gap-3">
                 <div>
                   <label class="block text-xs font-bold text-gray-700 mb-1">Price (₦)</label>
-                  <input :value="formatPrice(v.price)" @input="v.price = parsePrice($event.target.value)" type="text" class="w-full bg-white border border-gray-200 text-gray-900 text-base rounded-lg p-2 outline-none" />
+                  <input :value="formatPrice(v.price)" @input="v.price = parsePrice($event.target.value)" type="text" class="w-full bg-white border border-gray-25 text-gray-900 text-base rounded-lg p-2 outline-none" />
                 </div>
                 <div>
                   <label class="block text-xs font-bold text-gray-700 mb-1">Duration (Mins)</label>
-                  <input v-model.number="v.durationInMinutes" type="number" class="w-full bg-white border border-gray-200 text-gray-900 text-base rounded-lg p-2 outline-none" />
+                  <input v-model.number="v.durationInMinutes" type="number" class="w-full bg-white border border-gray-25 text-gray-900 text-base rounded-lg p-2 outline-none" />
                 </div>
               </div>
               <div class="mt-3">
@@ -186,16 +186,16 @@
               
               <div>
                 <label class="block text-xs font-bold text-gray-700 mb-1">Extra Name</label>
-                <input v-model="ext.name" type="text" placeholder="e.g. Pedicure" class="w-full bg-white border border-gray-200 text-gray-900 text-base rounded-lg p-2 outline-none" />
+                <input v-model="ext.name" type="text" placeholder="e.g. Pedicure" class="w-full bg-white border border-gray-25 text-gray-900 text-base rounded-lg p-2 outline-none" />
               </div>
               <div class="grid grid-cols-2 gap-3">
                 <div>
                   <label class="block text-xs font-bold text-gray-700 mb-1">Extra Price (₦)</label>
-                  <input :value="formatPrice(ext.price)" @input="ext.price = parsePrice($event.target.value)" type="text" class="w-full bg-white border border-gray-200 text-gray-900 text-base rounded-lg p-2 outline-none" />
+                  <input :value="formatPrice(ext.price)" @input="ext.price = parsePrice($event.target.value)" type="text" class="w-full bg-white border border-gray-25 text-gray-900 text-base rounded-lg p-2 outline-none" />
                 </div>
                 <div>
                   <label class="block text-xs font-bold text-gray-700 mb-1">Added Duration (Mins)</label>
-                  <input v-model.number="ext.durationInMinutes" type="number" class="w-full bg-white border border-gray-200 text-gray-900 text-base rounded-lg p-2 outline-none" />
+                  <input v-model.number="ext.durationInMinutes" type="number" class="w-full bg-white border border-gray-25 text-gray-900 text-base rounded-lg p-2 outline-none" />
                 </div>
               </div>
             </div>

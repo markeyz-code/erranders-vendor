@@ -10,7 +10,7 @@
         :disabled="saving"
         class="bg-[#FF5C1A] text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-sm hover:brightness-110 disabled:opacity-50 transition-all flex items-center gap-2"
       >
-        <span v-if="saving" class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+        <span v-if="saving" class="w-4 h-4 border border-white/30 border-t-white rounded-full animate-spin"></span>
         {{ saving ? 'Saving...' : 'Save Settings' }}
       </button>
     </div>
@@ -22,7 +22,7 @@
 
     <template v-else>
       <!-- Master Toggle -->
-      <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm flex items-start gap-4 transition-all" :class="availability.isExamModeActive ? 'ring-2 ring-[#FF5C1A]/20' : ''">
+      <div class="bg-white rounded-2xl border border-gray-50 p-6 shadow-sm flex items-start gap-4 transition-all" :class="availability.isExamModeActive ? 'ring-2 ring-[#FF5C1A]/20' : ''">
         <div class="w-12 h-12 rounded-xl flex items-center justify-center text-xl flex-shrink-0 transition-colors" :class="availability.isExamModeActive ? 'bg-[#FF5C1A]/10 text-[#FF5C1A]' : 'bg-gray-100 text-gray-400'">
           📚
         </div>
@@ -41,7 +41,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" :class="{ 'opacity-50 pointer-events-none grayscale transition-all': !availability.isExamModeActive }">
         
         <!-- Unavailable Ranges -->
-        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm space-y-6">
+        <div class="bg-white rounded-2xl border border-gray-50 p-6 shadow-sm space-y-6">
           <div class="flex items-center justify-between">
             <div>
               <h3 class="text-base font-bold text-gray-900">Unavailable Dates</h3>
@@ -57,15 +57,15 @@
           </div>
 
           <div v-else class="space-y-3">
-            <div v-for="(range, idx) in availability.unavailableRanges" :key="idx" class="flex items-center gap-3 bg-gray-50 p-3 rounded-xl border border-gray-100 group">
+            <div v-for="(range, idx) in availability.unavailableRanges" :key="idx" class="flex items-center gap-3 bg-gray-50 p-3 rounded-xl border border-gray-50 group">
               <div class="flex-1 grid grid-cols-2 gap-3">
                 <div>
                   <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">Start</label>
-                  <input type="date" v-model="range.startDate" class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium focus:outline-none focus:border-[#FF5C1A] transition-colors" />
+                  <UiDatePicker v-model="range.startDate" class="w-full" />
                 </div>
                 <div>
                   <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">End</label>
-                  <input type="date" v-model="range.endDate" class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium focus:outline-none focus:border-[#FF5C1A] transition-colors" />
+                  <UiDatePicker v-model="range.endDate" class="w-full" />
                 </div>
               </div>
               <button @click="removeRange(idx)" class="w-8 h-8 rounded-lg flex items-center justify-center text-red-400 hover:bg-red-50 hover:text-red-600 transition-colors self-end">
@@ -76,7 +76,7 @@
         </div>
 
         <!-- Auto-Reply Settings -->
-        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm space-y-6">
+        <div class="bg-white rounded-2xl border border-gray-50 p-6 shadow-sm space-y-6">
           <div class="flex items-center justify-between">
             <div>
               <h3 class="text-base font-bold text-gray-900">Auto-Reply (Inbox)</h3>
@@ -95,7 +95,7 @@
                 v-model="availability.autoReplyMessage" 
                 rows="3" 
                 placeholder="E.g. I am currently studying and will reply during my active windows."
-                class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500 focus:bg-white transition-all resize-none"
+                class="w-full bg-gray-50 border border-gray-25 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500 focus:bg-white transition-all resize-none"
               ></textarea>
             </div>
 
@@ -107,15 +107,15 @@
                 </button>
               </div>
 
-              <div v-if="availability.replyHours.length === 0" class="text-xs text-gray-400 font-medium italic">
+              <div v-if="availability.replyHours.length === 0" class="text-xs text-gray-400 font-medium ">
                 No active reply hours. Auto-reply will always trigger.
               </div>
 
               <div v-else class="space-y-2">
                 <div v-for="(window, idx) in availability.replyHours" :key="idx" class="flex items-center gap-2">
-                  <input type="time" v-model="window.startTime" class="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-3 py-1.5 text-sm font-medium focus:outline-none focus:border-indigo-500" />
+                  <input type="time" v-model="window.startTime" class="flex-1 bg-gray-50 border border-gray-25 rounded-lg px-3 py-1.5 text-sm font-medium focus:outline-none focus:border-indigo-500" />
                   <span class="text-gray-400 font-bold text-xs">to</span>
-                  <input type="time" v-model="window.endTime" class="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-3 py-1.5 text-sm font-medium focus:outline-none focus:border-indigo-500" />
+                  <input type="time" v-model="window.endTime" class="flex-1 bg-gray-50 border border-gray-25 rounded-lg px-3 py-1.5 text-sm font-medium focus:outline-none focus:border-indigo-500" />
                   <button @click="removeReplyHour(idx)" class="p-1.5 text-gray-400 hover:text-red-500 transition-colors">
                     <X class="w-4 h-4" />
                   </button>

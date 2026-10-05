@@ -1,15 +1,15 @@
 <template>
- <div class="inv-page">
- <header class="inv-header">
- <div class="inv-header__left">
- <h1 class="inv-header__title">Merchant Settings</h1>
- <p class="inv-header__sub">Fine-tune your store profile, operations, and financial preferences.</p>
+ <div class="py-5 pb-10 container mx-auto animate-fade-in space-y-6 w-full">
+ <header class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-6">
+ <div>
+ <h1 class="text-xl font-bold text-gray-900 tracking-tight sm:text-2xl">Merchant Settings</h1>
+ <p class="text-sm text-gray-400 font-medium mt-1">Fine-tune your store profile, operations, and financial preferences.</p>
  </div>
- <div class="inv-header__actions">
+ <div class="flex flex-wrap items-center gap-3">
  <button 
  @click="saveProfile" 
  :disabled="savingProfile" 
- class="inv-btn inv-btn--primary"
+ class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-[13px] font-bold cursor-pointer transition-all duration-200 active:scale-95 bg-gray-900 text-white hover:bg-black hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
  >
  <Loader2 v-if="savingProfile" class="animate-spin w-4 h-4" />
  {{ savingProfile ? 'Saving...' : 'Save All Changes' }}
@@ -18,27 +18,27 @@
  </header>
 
  <!-- Horizontal Navigation Tabs -->
- <div class="inv-master-tabs sticky top-0 z-30 mb-8 overflow-x-auto hide-scrollbar">
+ <div class="flex gap-1.5 bg-gray-50 rounded-xl p-1 mb-8 w-fit overflow-x-auto no-scrollbar sticky top-0 z-30">
  <button 
  @click="activeTab = 'profile'" 
- class="inv-master-tab"
- :class="{ 'inv-master-tab--active': activeTab === 'profile' }"
+ class="flex items-center gap-1.5 px-4 py-2.5 rounded-lg text-[13px] font-bold border-none transition-all whitespace-nowrap"
+ :class="activeTab === 'profile' ? 'bg-white text-gray-900 shadow-sm' : 'bg-transparent text-gray-500 hover:text-gray-700'"
  >
  <StoreIcon class="w-4 h-4" :class="activeTab === 'profile' ? 'text-[#FF5C1A]' : 'text-gray-400'" />
  Store Identity
  </button>
  <button 
  @click="activeTab = 'operations'" 
- class="inv-master-tab"
- :class="{ 'inv-master-tab--active': activeTab === 'operations' }"
+ class="flex items-center gap-1.5 px-4 py-2.5 rounded-lg text-[13px] font-bold border-none transition-all whitespace-nowrap"
+ :class="activeTab === 'operations' ? 'bg-white text-gray-900 shadow-sm' : 'bg-transparent text-gray-500 hover:text-gray-700'"
  >
  <Clock class="w-4 h-4" :class="activeTab === 'operations' ? 'text-amber-500' : 'text-gray-400'" />
  {{ isServiceProvider ? 'Scheduling & Status' : 'Operations & Status' }}
  </button>
  <button 
  @click="activeTab = 'financials'" 
- class="inv-master-tab"
- :class="{ 'inv-master-tab--active': activeTab === 'financials' }"
+ class="flex items-center gap-1.5 px-4 py-2.5 rounded-lg text-[13px] font-bold border-none transition-all whitespace-nowrap"
+ :class="activeTab === 'financials' ? 'bg-white text-gray-900 shadow-sm' : 'bg-transparent text-gray-500 hover:text-gray-700'"
  >
  <CreditCard class="w-4 h-4" :class="activeTab === 'financials' ? 'text-emerald-500' : 'text-gray-400'" />
  Payout Methods
@@ -73,7 +73,7 @@
  <!-- Branding -->
  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
  <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-3 md:gap-6">
- <div class="w-24 h-24 rounded-2xl bg-gray-50 overflow-hidden border border-gray-100 flex items-center justify-center shrink-0 group/logo relative ">
+ <div class="w-24 h-24 rounded-2xl bg-gray-50 overflow-hidden border border-gray-50 flex items-center justify-center shrink-0 group/logo relative ">
  <video v-if="profile.logo && profile.logo.match(/\.(mp4|webm|ogg|mov)$/i)" :src="profile.logo" class="w-full h-full object-cover" autoplay loop muted playsinline></video>
  <img v-else-if="profile.logo" :src="profile.logo" class="w-full h-full object-cover" />
  <ImageIcon v-else class="w-8 h-8 text-gray-300" />
@@ -90,7 +90,7 @@
  </div>
 
  <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-3 md:gap-6">
- <div class="w-full sm:w-32 h-32 sm:h-24 rounded-2xl bg-gray-50 overflow-hidden border border-gray-100 flex items-center justify-center shrink-0 group/banner relative ">
+ <div class="w-full sm:w-32 h-32 sm:h-24 rounded-2xl bg-gray-50 overflow-hidden border border-gray-50 flex items-center justify-center shrink-0 group/banner relative ">
  <video v-if="profile.banner && profile.banner.match(/\.(mp4|webm|ogg|mov)$/i)" :src="profile.banner" class="w-full h-full object-cover" autoplay loop muted playsinline></video>
  <img v-else-if="profile.banner" :src="profile.banner" class="w-full h-full object-cover" />
  <ImageIcon v-else class="w-8 h-8 text-gray-300" />
@@ -146,7 +146,7 @@
  placeholder="Specific location for pickups..." 
  />
  </div>
- <div class="flex items-center justify-between p-4 sm:p-5 bg-gray-50 rounded-xl border border-gray-100 h-full mt-2 md:mt-0">
+ <div class="flex items-center justify-between p-4 sm:p-5 bg-gray-50 rounded-xl border border-gray-50 h-full mt-2 md:mt-0">
  <div class="flex items-center gap-3">
  <div class="p-2 bg-white rounded-lg text-[#FF5C1A] ">
  <Building class="w-4 h-4" />
@@ -218,11 +218,11 @@
  <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
  <div class="flex flex-col gap-2">
  <label class="text-sm font-bold text-gray-700">Opens At</label>
- <input v-model="profile.operatingHours.open" type="time" @change="syncHoursToWeekly" class="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#FF5C1A] outline-none transition-all w-full font-bold" />
+ <input v-model="profile.operatingHours.open" type="time" @change="syncHoursToWeekly" class="px-4 py-3 bg-gray-50 border border-gray-25 rounded-xl focus:ring-2 focus:ring-[#FF5C1A] outline-none transition-all w-full font-bold" />
  </div>
  <div class="flex flex-col gap-2">
  <label class="text-sm font-bold text-gray-700">Closes At</label>
- <input v-model="profile.operatingHours.close" type="time" @change="syncHoursToWeekly" class="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#FF5C1A] outline-none transition-all w-full font-bold" />
+ <input v-model="profile.operatingHours.close" type="time" @change="syncHoursToWeekly" class="px-4 py-3 bg-gray-50 border border-gray-25 rounded-xl focus:ring-2 focus:ring-[#FF5C1A] outline-none transition-all w-full font-bold" />
  </div>
  </div>
 
@@ -297,7 +297,7 @@
  <button 
  v-if="profile.requiresTakeawayPack"
  @click="addPack" 
- class="p-2 bg-gray-50 text-gray-600 rounded-full hover:bg-gray-100 transition-all border border-gray-200"
+ class="p-2 bg-gray-50 text-gray-600 rounded-full hover:bg-gray-100 transition-all border border-gray-25"
  >
  <Plus class="w-4 h-4" />
  </button>
@@ -316,7 +316,7 @@
 
  <!-- Food Vendor View (Multiple Packs) -->
  <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-4">
- <div v-for="(pack, index) in profile.packs" :key="index" class="p-4 sm:p-5 rounded-2xl border border-gray-100 bg-gray-50/50 space-y-4 relative group/pack hover:border-blue-200 transition-colors">
+ <div v-for="(pack, index) in profile.packs" :key="index" class="p-4 sm:p-5 rounded-2xl border border-gray-50 bg-gray-50/50 space-y-4 relative group/pack hover:border-blue-200 transition-colors">
  <button 
  v-if="profile.packs.length > 1"
  @click="removePack(index)" 
@@ -411,7 +411,7 @@
 
  <!-- Account List -->
  <div v-if="payoutAccounts.length === 0" class="py-12 text-center bg-gray-50/50 rounded-2xl border border-dashed border-gray-200">
- <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto border border-gray-100 text-gray-400 mb-4">
+ <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto border border-gray-50 text-gray-400 mb-4">
  <CreditCard class="w-6 h-6" />
  </div>
  <p class="text-base font-bold text-gray-900">No bank accounts linked</p>
@@ -423,7 +423,7 @@
  <div 
  v-for="acc in payoutAccounts" 
  :key="acc.accountNumber"
- class="p-5 rounded-2xl border-2 transition-all cursor-pointer relative group/acc flex flex-col"
+ class="p-5 rounded-2xl border transition-all cursor-pointer relative group/acc flex flex-col"
  :class="acc.isActive ? 'border-emerald-500 bg-emerald-50/20 ' : 'border-gray-100 bg-white hover:border-gray-200'"
  @click="setActiveAccount(acc)"
  >
@@ -459,8 +459,8 @@
  v-for="pref in ['manual', 'daily', 'weekly', 'monthly']" 
  :key="pref"
  @click="updatePayoutPref(pref)"
- class="px-4 md:px-6 py-3 rounded-xl text-sm font-bold transition-all border-2 capitalize"
- :class="payoutPreference === pref ? 'bg-gray-900 text-white border-gray-900 ' : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'"
+ class="px-4 md:px-6 py-3 rounded-xl text-sm font-bold transition-all border capitalize"
+ :class="payoutPreference === pref ? 'bg-gray-900 text-white border-gray-25' : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'"
  >
  {{ pref }}
  </button>
@@ -471,7 +471,7 @@
  <h4 class="text-base font-bold text-gray-900 mb-4">Account Purposes</h4>
  <p class="text-sm text-gray-500 mb-4">Manage categories for splitting your funds across bank accounts.</p>
  <div class="flex flex-wrap gap-2">
- <div v-for="(purpose, index) in profile.accountPurposes" :key="index" class="flex items-center gap-2 px-4 py-2 bg-gray-50 rounded-lg border border-gray-100">
+ <div v-for="(purpose, index) in profile.accountPurposes" :key="index" class="flex items-center gap-2 px-4 py-2 bg-gray-50 rounded-lg border border-gray-50">
  <span class="text-sm font-medium text-gray-700">{{ purpose }}</span>
  <button v-if="purpose !== 'Default / General'" @click="removeAccountPurpose(index)" class="text-gray-400 hover:text-rose-500 transition-colors">
  <X class="w-4 h-4" />

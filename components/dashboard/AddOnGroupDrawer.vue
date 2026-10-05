@@ -4,7 +4,7 @@
       <section class="space-y-4">
         <div>
           <label class="text-sm font-semibold text-gray-800 block mb-1.5">Group Name</label>
-          <input type="text" v-model="form.name" placeholder="e.g. Extra Protein" class="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-900 transition-all" required />
+          <input type="text" v-model="form.name" placeholder="e.g. Extra Protein" class="w-full px-4 py-3 bg-white border border-gray-25 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-25transition-all" required />
         </div>
       </section>
 
@@ -18,7 +18,7 @@
           <div class="flex gap-3">
             <label
               class="flex-1 flex items-center gap-3 p-3 border rounded-xl cursor-pointer transition-all"
-              :class="form.selectionType === 'multi' ? 'border-gray-900 bg-gray-50 ring-1 ring-gray-900' : 'border-gray-200 hover:border-gray-300'"
+              :class="form.selectionType === 'multi' ? 'border-gray-25bg-gray-50 ring-1 ring-gray-900' : 'border-gray-200 hover:border-gray-300'"
             >
               <input type="radio" v-model="form.selectionType" value="multi" class="text-gray-900 focus:ring-gray-900" />
               <div>
@@ -28,7 +28,7 @@
             </label>
             <label
               class="flex-1 flex items-center gap-3 p-3 border rounded-xl cursor-pointer transition-all"
-              :class="form.selectionType === 'single' ? 'border-gray-900 bg-gray-50 ring-1 ring-gray-900' : 'border-gray-200 hover:border-gray-300'"
+              :class="form.selectionType === 'single' ? 'border-gray-25bg-gray-50 ring-1 ring-gray-900' : 'border-gray-200 hover:border-gray-300'"
             >
               <input type="radio" v-model="form.selectionType" value="single" class="text-gray-900 focus:ring-gray-900" />
               <div>
@@ -42,11 +42,11 @@
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label class="text-sm font-semibold text-gray-800 block mb-1.5">Min Select</label>
-            <input type="number" v-model.number="form.minSelect" placeholder="0 = optional" class="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-900 transition-all" />
+            <input type="number" v-model.number="form.minSelect" placeholder="0 = optional" class="w-full px-4 py-3 bg-white border border-gray-25 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-25transition-all" />
           </div>
           <div>
             <label class="text-sm font-semibold text-gray-800 block mb-1.5">Max Select</label>
-            <input type="number" v-model.number="form.maxSelect" placeholder="No limit" class="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-900 transition-all" />
+            <input type="number" v-model.number="form.maxSelect" placeholder="No limit" class="w-full px-4 py-3 bg-white border border-gray-25 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-25transition-all" />
           </div>
         </div>
       </section>
@@ -65,8 +65,8 @@
         
         <div class="space-y-3">
           <div v-for="(opt, idx) in form.options" :key="idx" class="flex gap-2 items-center bg-gray-50 p-3 rounded-xl">
-            <input type="text" v-model="opt.name" placeholder="e.g. Extra Chicken" class="flex-1 px-3 py-2 bg-white border border-gray-200 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900" />
-            <div class="flex items-center gap-1 bg-white border border-gray-200 rounded-lg px-2">
+            <input type="text" v-model="opt.name" placeholder="e.g. Extra Chicken" class="flex-1 px-3 py-2 bg-white border border-gray-25 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900" />
+            <div class="flex items-center gap-1 bg-white border border-gray-25 rounded-lg px-2">
               <span class="text-gray-500 text-sm">₦</span>
               <input type="number" v-model.number="opt.price" placeholder="0" class="w-20 px-1 py-2 text-base focus:outline-none" />
             </div>
@@ -85,7 +85,7 @@
 
     <template #footer>
       <div class="flex items-center gap-4 w-full">
-        <button @click="$emit('close')" type="button" class="flex-1 py-3 bg-white border border-gray-200 text-gray-600 text-sm font-medium rounded-lg hover:bg-gray-50 transition-all">Cancel</button>
+        <button @click="$emit('close')" type="button" class="flex-1 py-3 bg-white border border-gray-25 text-gray-600 text-sm font-medium rounded-lg hover:bg-gray-50 transition-all">Cancel</button>
         <button @click="handleSubmit" type="button" class="flex-[2] py-3 bg-gray-900 text-white rounded-lg font-medium text-sm hover:bg-black transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2">
           {{ group ? 'Update Group' : 'Create Group' }}
         </button>

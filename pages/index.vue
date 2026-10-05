@@ -255,7 +255,7 @@
               </div>
 
               <!-- Logo Avatar -->
-              <div v-if="vendor.logo" class="absolute bottom-3 right-3 w-11 h-11 rounded-xl border-2 border-white shadow-lg overflow-hidden bg-white">
+              <div v-if="vendor.logo" class="absolute bottom-3 right-3 w-11 h-11 rounded-xl border border-white shadow-lg overflow-hidden bg-white">
                 <img :src="vendor.logo" class="w-full h-full object-cover" />
               </div>
             </div>

@@ -1,10 +1,10 @@
 <template>
- <div class="inv-page">
+ <div class="py-5 pb-10 continue mx-auto animate-fade-in space-y-6 w-full">
  <!-- Header -->
- <header class="inv-header">
- <div class="inv-header__left">
- <h1 class="inv-header__title">Active Orders</h1>
- <p class="inv-header__sub flex items-center gap-2">
+ <header class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-6">
+ <div>
+ <h1 class="text-xl font-bold text-gray-900 tracking-tight sm:text-2xl">Active Orders</h1>
+ <p class="text-sm text-gray-400 font-medium mt-1 flex items-center gap-2">
  Monitor and fulfill your active campus orders. 
  <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-sm font-bold bg-amber-50 text-amber-600 whitespace-nowrap shrink-0">
  {{ pendingOrdersCount }} Pending
@@ -14,27 +14,27 @@
  </header>
  
  <!-- Toolbar -->
- <div class="inv-toolbar">
- <div class="inv-search w-full sm:w-80">
- <Search class="inv-search__icon" />
+ <div class="flex flex-col sm:flex-row items-center gap-4 mb-5">
+ <div class="relative w-full sm:w-80">
+ <Search class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300 pointer-events-none" />
  <input 
  v-model="searchQuery"
  type="text" 
  placeholder="Find order or customer..." 
- class="inv-search__input"
+ class="w-full py-2.5 pl-10 pr-10 border border-gray-25 rounded-xl text-[13px] font-medium text-gray-900 bg-white outline-none transition-all focus:border-gray-25focus:ring-1 focus:ring-gray-900"
  />
- <button v-if="searchQuery" @click="searchQuery = ''" class="inv-search__clear">
+ <button v-if="searchQuery" @click="searchQuery = ''" class="absolute right-2.5 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-md bg-gray-50 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors">
  <X class="w-3.5 h-3.5" />
  </button>
  </div>
 
- <div class="inv-category-pills">
+ <div class="flex gap-1.5 overflow-x-auto w-full sm:flex-1 no-scrollbar pb-2 sm:pb-0">
  <button
  v-for="filter in statusFilters"
  :key="filter.key"
  @click="activeFilter = filter.key"
- class="inv-pill"
- :class="{ 'inv-pill--active': activeFilter === filter.key }"
+ class="shrink-0 px-4 py-2 rounded-full text-xs font-bold border transition-all"
+ :class="activeFilter === filter.key ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-500 border-gray-100 hover:border-gray-200 hover:text-gray-700'"
  >
  {{ filter.label }}
  </button>
@@ -42,7 +42,7 @@
  </div>
 
  <!-- Orders Table -->
- <div class="bg-white rounded-md overflow-hidden min-h-[500px]">
+ <div class="bg-white rounded-2xl border border-gray-25 shadow-sm overflow-hidden min-h-[500px]">
  <UiTable 
  :columns="orderColumns" 
  :items="filteredOrders" 
@@ -115,7 +115,7 @@
  <div class="space-y-3">
  <div v-for="group in groupedOrderItems" :key="group.name" class="space-y-3">
  <h5 v-if="group.name !== 'Other Items' || groupedOrderItems.length > 1" class="text-[11px] font-bold text-gray-400 uppercase tracking-widest pl-1 mt-4">{{ group.name }}</h5>
- <div v-for="item in group.items" :key="item._id || item.name" class="p-4 bg-white border border-gray-100 rounded-2xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] space-y-3">
+ <div v-for="item in group.items" :key="item._id || item.name" class="p-4 bg-white border border-gray-50 rounded-2xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] space-y-3">
  <!-- Item Header -->
  <div class="flex items-start justify-between">
  <div class="flex items-center gap-3">
@@ -193,6 +193,13 @@
    WhatsApp
  </a>
  <button 
+ @click="pingParticipant(selectedOrder._id, 'customer')"
+ class="px-3 py-1.5 bg-yellow-50 text-yellow-600 rounded-xl hover:bg-yellow-600 hover:text-white transition-all border border-yellow-100 flex items-center justify-center gap-1.5 font-bold text-xs"
+ >
+ <Bell class="w-3.5 h-3.5" />
+ <span>Ping</span>
+ </button>
+ <button 
  @click="openChat(selectedOrder.customer?._id, selectedOrder.customer?.firstName + ' ' + selectedOrder.customer?.lastName, selectedOrder.customer?.avatar)"
  class="px-3 py-1.5 bg-[#FF5C1A]/10 text-[#FF5C1A] rounded-xl hover:bg-[#FF5C1A] hover:text-white transition-all border border-[#FF5C1A]/20 flex items-center justify-center gap-1.5 font-bold text-xs"
  >
@@ -217,6 +224,13 @@
    </svg>
    WhatsApp
  </a>
+ <button 
+ @click="pingParticipant(selectedOrder._id, 'errander')"
+ class="px-3 py-1.5 bg-yellow-50 text-yellow-600 rounded-lg hover:bg-yellow-600 hover:text-white transition-all border border-yellow-100 flex items-center justify-center gap-1.5 font-bold text-xs"
+ >
+ <Bell class="w-3.5 h-3.5" />
+ <span>Ping</span>
+ </button>
  <button 
  @click="openChat(selectedOrder.errander?._id, selectedOrder.errander?.firstName + ' (Rider)', selectedOrder.errander?.avatar)"
  class="px-3 py-1.5 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-600 hover:text-white transition-all border border-indigo-100 flex items-center justify-center gap-1.5 font-bold text-xs"
@@ -251,7 +265,7 @@
  {{ updatingOrderId === selectedOrder._id ? 'UPDATING...' : 'READY FOR PICKUP' }}
  </button>
  
- <button @click="selectedOrder = null" class="w-full py-2 bg-white border border-gray-100 text-gray-400 text-sm font-medium rounded-md hover:bg-gray-50 transition-all">
+ <button @click="selectedOrder = null" class="w-full py-2 bg-white border border-gray-50 text-gray-400 text-sm font-medium rounded-md hover:bg-gray-50 transition-all">
  Close Details
  </button>
  </div>
@@ -273,7 +287,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { Search, ChevronRight, Clock, Package, Star, ArrowRight, MessageSquare, Loader2, Sparkles, X } from 'lucide-vue-next';
+import { Search, ChevronRight, Clock, Package, Star, ArrowRight, MessageSquare, Loader2, Sparkles, X, Bell } from 'lucide-vue-next';
 import { GATEWAY_ENDPOINT_WITH_AUTH as api } from '@/api_factory/axios.config';
 import SideDrawer from '@/components/ui/SideDrawer.vue';
 import UiTable from '@/components/ui/UiTable.vue';
@@ -282,8 +296,10 @@ import { useUser } from '@/composables/modules/auth/user';
 import { useSocket } from "@/composables/useSocket";
 import { useGetBusiness } from '@/composables/modules/business/useGetBusiness';
 import { useRouter } from 'vue-router';
+import { useCustomToast } from "@/composables/core/useCustomToast";
 
 const { user } = useUser();
+const { showToast } = useCustomToast();
 const { cachedBusiness } = useGetBusiness();
 const router = useRouter();
 
@@ -384,6 +400,35 @@ const chatState = ref({
  currentUserId: '',
  initialMessage: ''
 });
+
+const isPinging = ref<string | null>(null);
+const pingParticipant = async (orderId: string, target: 'customer' | 'errander') => {
+  if (isPinging.value) return;
+  isPinging.value = target;
+  try {
+    const res = await api.post(`/orders/${orderId}/ping`, {
+      target,
+      message: 'Please check the app for an update regarding your order.'
+    });
+    // you could show a success toast here
+    showToast({
+      title: 'Success',
+      message: `Successfully pinged the ${target}!`,
+      toastType: 'success',
+      duration: 3000
+    });
+  } catch (error: any) {
+    const msg = error.response?.data?.message || 'Failed to ping participant. They may have notifications disabled or you are pinging too fast.';
+    showToast({
+      title: 'Error',
+      message: msg,
+      toastType: 'error',
+      duration: 3000
+    });
+  } finally {
+    isPinging.value = null;
+  }
+};
 
 const openChat = (receiverId: string | undefined, name: string, avatar?: string) => {
  if (!receiverId || !selectedOrder.value) return;

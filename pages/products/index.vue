@@ -11,8 +11,8 @@
  class="w-full pl-11 pr-14 py-2.5 bg-gray-50/70 hover:bg-gray-100 transition-colors border-none rounded-md text-base font-medium focus:outline-none focus:bg-white focus:ring-2 focus:ring-parentPrimary/20"
  />
  <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">
- <kbd class="px-1.5 py-0.5 text-sm font-bold bg-white text-gray-400 rounded-md border border-gray-200">⌘</kbd>
- <kbd class="px-1.5 py-0.5 text-sm font-bold bg-white text-gray-400 rounded-md border border-gray-200">K</kbd>
+ <kbd class="px-1.5 py-0.5 text-sm font-bold bg-white text-gray-400 rounded-md border border-gray-25">⌘</kbd>
+ <kbd class="px-1.5 py-0.5 text-sm font-bold bg-white text-gray-400 rounded-md border border-gray-25">K</kbd>
  </div>
  </div>
  <div class="flex items-center gap-4">
@@ -27,7 +27,7 @@
   <p class="text-gray-500 text-sm font-medium">Manage your store's menu, inventory availability, and pricing.</p>
   </div>
   <div class="flex items-center gap-2">
-    <NuxtLink to="/products/bulk-add" class="px-4 py-2.5 bg-gray-50 text-gray-700 border border-gray-200 rounded-md font-bold text-sm hover:bg-gray-100 active:scale-[0.98] transition-all flex items-center gap-2">
+    <NuxtLink to="/products/bulk-add" class="px-4 py-2.5 bg-gray-50 text-gray-700 border border-gray-25 rounded-md font-bold text-sm hover:bg-gray-100 active:scale-[0.98] transition-all flex items-center gap-2">
       <Search class="w-4 h-4" /> Add from Catalog
     </NuxtLink>
     <button @click="openAddDrawer" class="px-6 py-2.5 bg-parentPrimary text-white rounded-md font-bold text-sm hover:brightness-110 active:scale-[0.98] transition-all flex items-center gap-2">
@@ -37,7 +37,7 @@
   </div>
 
  <div class="flex items-center gap-4">
- <button class="flex items-center gap-2 px-4 py-2 bg-gray-50 hover:bg-gray-100 rounded-md text-sm font-medium text-gray-700 transition-colors border border-gray-200">
+ <button class="flex items-center gap-2 px-4 py-2 bg-gray-50 hover:bg-gray-100 rounded-md text-sm font-medium text-gray-700 transition-colors border border-gray-25">
  <ListFilter class="w-4 h-4" />
  Filters
  </button>
@@ -78,7 +78,7 @@
  </EmptyState>
  </div>
 
- <div v-else class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden w-full min-w-0">
+ <div v-else class="bg-white rounded-xl border border-gray-50 shadow-sm overflow-hidden w-full min-w-0">
  <div class="overflow-x-auto w-full hide-scrollbar">
  <table class="w-full text-left border-collapse">
  <thead class="bg-gray-50/50">
@@ -94,7 +94,7 @@
  <tr v-for="product in filteredProducts" :key="product._id" class="hover:bg-gray-50/80 transition-colors group cursor-pointer" @click="selectedProduct = product">
  <td class="py-4 px-2 min-w-[250px]">
  <div class="flex items-center gap-3">
- <div class="w-10 h-10 rounded-md bg-gray-100 flex items-center justify-center overflow-hidden flex-shrink-0 border border-gray-200">
+ <div class="w-10 h-10 rounded-md bg-gray-100 flex items-center justify-center overflow-hidden flex-shrink-0 border border-gray-25">
  <img :src="product.image || '/placeholder-store.jpg'" class="w-full h-full object-cover" />
  </div>
  <div class="min-w-0">
@@ -104,7 +104,7 @@
  </div>
  </td>
  <td class="py-4 px-2">
- <span class="px-2.5 py-1 bg-gray-100 text-gray-600 rounded-md text-sm font-bold border border-gray-200/50">{{ product.category }}</span>
+ <span class="px-2.5 py-1 bg-gray-100 text-gray-600 rounded-md text-sm font-bold border border-gray-25/50">{{ product.category }}</span>
  </td>
  <td class="py-4 px-2 text-right">
  <p class="text-[13px] font-bold text-gray-900 tracking-tighter">₦{{ product.price?.toLocaleString() }}</p>
