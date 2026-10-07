@@ -22,8 +22,8 @@
                </div>
                <div>
                   <p class="text-sm font-semibold text-gray-800">Category Icon</p>
-                  <p class="text-xs text-gray-500 mt-0.5">Optional. PNG or JPG</p>
-                  <div v-if="uploading" class="text-xs text-blue-500 mt-1 flex items-center gap-1 font-medium">
+                  <p class="text-sm text-gray-500 mt-0.5">Optional. PNG or JPG</p>
+                  <div v-if="uploading" class="text-sm text-blue-500 mt-1 flex items-center gap-1 font-medium">
                      <Loader2 class="w-3 h-3 animate-spin" /> Uploading...
                   </div>
                </div>
@@ -40,7 +40,7 @@
             </div>
 
             <div>
-              <label class="block text-sm font-semibold text-gray-900 mb-1.5">Description <span class="text-xs text-gray-500 font-normal ml-1">(Optional)</span></label>
+              <label class="block text-sm font-semibold text-gray-900 mb-1.5">Description <span class="text-sm text-gray-500 font-normal ml-1">(Optional)</span></label>
               <input 
                 v-model="form.description" 
                 type="text" 
@@ -52,7 +52,7 @@
             <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-50">
                <div>
                  <p class="text-sm font-bold text-gray-900">Visibility Status</p>
-                 <p class="text-xs text-gray-500 mt-0.5">Toggle to hide this category from the store.</p>
+                 <p class="text-sm text-gray-500 mt-0.5">Toggle to hide this category from the store.</p>
                </div>
                <button 
                 @click="form.isActive = !form.isActive"

@@ -12,7 +12,7 @@
         @focus="handleFocus"
         :placeholder="placeholder"
         :required="required"
-        class="w-full pl-11 pr-12 py-3.5 bg-gray-50/50 hover:bg-gray-100 focus:bg-gray-100 rounded-2xl text-xs md:text-sm font-medium text-gray-900 outline-none transition-all duration-300 placeholder:text-gray-400"
+        class="w-full pl-11 pr-12 py-3.5 bg-gray-50/50 hover:bg-gray-100 focus:bg-gray-100 rounded-2xl text-sm md:text-sm font-medium text-gray-900 outline-none transition-all duration-300 placeholder:text-gray-400"
       />
       <div class="absolute inset-y-0 right-0 pr-3 flex items-center gap-2">
         <button 
@@ -38,19 +38,19 @@
           <!-- Loading State inside dropdown -->
           <div v-if="loading && suggestions.length === 0" class="flex flex-col items-center justify-center py-6 gap-2 text-gray-400">
             <Loader2 class="h-6 w-6 text-parentPrimary/50 animate-spin" />
-            <p class="text-xs font-medium">Searching map...</p>
+            <p class="text-sm font-medium">Searching map...</p>
           </div>
 
           <!-- Error State -->
           <div v-else-if="error" class="flex flex-col items-center justify-center py-6 gap-2 text-rose-400">
             <AlertCircle class="h-6 w-6" />
-            <p class="text-xs font-medium">{{ error }}</p>
+            <p class="text-sm font-medium">{{ error }}</p>
           </div>
 
           <!-- Empty State -->
           <div v-else-if="!loading && modelValue.length > 2 && suggestions.length === 0" class="flex flex-col items-center justify-center py-6 gap-2 text-gray-400">
             <Map class="h-6 w-6 opacity-50" />
-            <p class="text-xs font-medium">No locations found</p>
+            <p class="text-sm font-medium">No locations found</p>
           </div>
 
           <!-- Suggestions List -->

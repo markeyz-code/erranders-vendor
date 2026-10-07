@@ -32,7 +32,7 @@
             <div>
               <div class="flex items-center gap-2 mb-1">
                 <span class="font-bold text-gray-900">Order #{{ req.orderId?.orderNumber || '...' }}</span>
-                <span class="text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-widest" :class="getStatusColor(req.status)">
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded uppercase " :class="getStatusColor(req.status)">
                   {{ req.status.replace('_', ' ') }}
                 </span>
               </div>
@@ -45,7 +45,7 @@
           </div>
           
           <div class="text-right">
-            <p class="text-xs text-gray-400 font-medium mb-1">Customer</p>
+            <p class="text-sm text-gray-400 font-medium mb-1">Customer</p>
             <p class="text-sm font-bold text-gray-900">{{ req.customerId?.firstName }} {{ req.customerId?.lastName }}</p>
           </div>
         </div>

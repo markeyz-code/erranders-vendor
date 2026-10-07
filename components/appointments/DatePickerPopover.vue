@@ -31,7 +31,7 @@
 
         <!-- Days Header -->
         <div class="grid grid-cols-7 gap-1 mb-2">
-          <div v-for="day in ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']" :key="day" class="text-center text-xs font-bold text-gray-400">
+          <div v-for="day in ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']" :key="day" class="text-center text-sm font-bold text-gray-400">
             {{ day }}
           </div>
         </div>
@@ -52,9 +52,9 @@
 
         <!-- Quick Filters -->
         <div class="mt-4 pt-4 border-t border-gray-100 flex flex-wrap gap-2">
-          <button @click="selectDate(new Date())" class="px-3 py-1.5 text-xs font-semibold text-gray-600 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-25">Today</button>
-          <button @click="addDays(1)" class="px-3 py-1.5 text-xs font-semibold text-gray-600 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-25">Tomorrow</button>
-          <button @click="addDays(7)" class="px-3 py-1.5 text-xs font-semibold text-gray-600 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-25">In 1 week</button>
+          <button @click="selectDate(new Date())" class="px-3 py-1.5 text-sm font-semibold text-gray-600 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-25">Today</button>
+          <button @click="addDays(1)" class="px-3 py-1.5 text-sm font-semibold text-gray-600 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-25">Tomorrow</button>
+          <button @click="addDays(7)" class="px-3 py-1.5 text-sm font-semibold text-gray-600 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-25">In 1 week</button>
         </div>
       </div>
     </Transition>

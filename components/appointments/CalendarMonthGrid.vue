@@ -4,7 +4,7 @@
     <!-- Days of the Week Header -->
     <div class="grid grid-cols-7 border-b border-gray-100 bg-gray-50 z-10 sticky top-0">
       <div v-for="day in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" :key="day" class="py-3 text-center border-r border-gray-100 last:border-r-0">
-        <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">{{ day }}</span>
+        <span class="text-sm font-bold text-gray-500 uppercase tracking-wider">{{ day }}</span>
       </div>
     </div>
 

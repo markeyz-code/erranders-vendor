@@ -29,7 +29,7 @@
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div v-for="plan in plans" :key="plan._id" class="bg-white rounded-2xl border border-gray-50 p-6 shadow-sm group hover:border-[#FF5C1A]/30 transition-all">
           <div class="flex items-center justify-between mb-4">
-            <span class="text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-widest" :class="getStatusClass(plan.status)">
+            <span class="text-[10px] font-bold px-2 py-1 rounded-md uppercase " :class="getStatusClass(plan.status)">
               {{ plan.status }}
             </span>
             <button @click="deletePlan(plan._id)" class="text-gray-400 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100">
@@ -44,7 +44,7 @@
               <Calendar class="w-5 h-5" />
             </div>
             <div>
-              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Scheduled For</p>
+              <p class="text-[10px] font-bold text-gray-400 uppercase ">Scheduled For</p>
               <p class="text-sm font-bold text-gray-900">{{ formatDate(plan.scheduledDate) }}</p>
             </div>
           </div>
@@ -64,7 +64,7 @@
         
         <div class="p-6 space-y-5">
           <div>
-            <label class="block text-xs font-bold text-gray-700 mb-1.5">Caption text</label>
+            <label class="block text-sm font-bold text-gray-700 mb-1.5">Caption text</label>
             <textarea 
               v-model="newPlan.caption" 
               rows="4" 
@@ -74,7 +74,7 @@
           </div>
           
           <div>
-            <label class="block text-xs font-bold text-gray-700 mb-1.5">Scheduled Date & Time</label>
+            <label class="block text-sm font-bold text-gray-700 mb-1.5">Scheduled Date & Time</label>
             <input 
               type="datetime-local" 
               v-model="newPlan.scheduledDate" 

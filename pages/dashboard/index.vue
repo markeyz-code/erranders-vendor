@@ -29,7 +29,7 @@
  </div>
  <div class="relative z-10">
  <p class="text-[28px] font-bold text-gray-900 leading-none tracking-tight mb-1">{{ stat.value }}</p>
- <p class="text-xs text-gray-500 font-medium">{{ stat.label }}</p>
+ <p class="text-sm text-gray-500 font-medium">{{ stat.label }}</p>
  </div>
  <span v-if="stat.trend" class="absolute top-4 right-4 text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-600 border border-emerald-100 uppercase tracking-wider">
  Live
@@ -79,13 +79,13 @@
  </div>
  <div v-else class="flex flex-col">
  <span class="text-sm font-bold text-gray-900 truncate max-w-[150px]">{{ item.items?.[0]?.service?.name || 'Service' }}</span>
- <span class="text-xs text-gray-500 font-medium">{{ item.items?.[0]?.variantName || '' }}</span>
+ <span class="text-sm text-gray-500 font-medium">{{ item.items?.[0]?.variantName || '' }}</span>
  </div>
  </template>
  <template #date="{ item }">
  <div class="flex flex-col">
  <span class="text-sm font-bold text-gray-900 whitespace-nowrap">{{ new Date(item.scheduledDate).toLocaleDateString() }}</span>
- <span class="text-xs text-gray-500 font-medium whitespace-nowrap">{{ item.startTime }} - {{ item.endTime }}</span>
+ <span class="text-sm text-gray-500 font-medium whitespace-nowrap">{{ item.startTime }} - {{ item.endTime }}</span>
  </div>
  </template>
  <template #total="{ item }">
@@ -153,7 +153,7 @@
  </div>
  <p class="text-sm text-gray-500 font-semibold mb-1">Store Rating</p>
  <h3 class="text-4xl font-bold text-gray-900 tracking-tight">{{ Number(currentStats.rating || 5).toFixed(1) }}</h3>
- <p class="text-xs text-gray-400 font-bold mt-4 flex items-center gap-1.5">
+ <p class="text-sm text-gray-400 font-bold mt-4 flex items-center gap-1.5">
  <CheckCircle class="w-3.5 h-3.5 text-emerald-500" /> {{ currentStats.reviewsCount || 0 }} CUSTOMER REVIEWS
  </p>
  </div>
@@ -175,7 +175,7 @@
  </div>
  
  <div class="space-y-1">
- <p class="text-xs font-medium text-gray-400 ml-1">Current Balance</p>
+ <p class="text-sm font-medium text-gray-400 ml-1">Current Balance</p>
  <div class="flex items-baseline gap-1">
  <span class="text-lg font-medium text-gray-400">₦</span>
  <h4 class="text-4xl font-bold text-gray-900 tracking-tight">{{ currentStats.todaySales?.toLocaleString() || '0' }}</h4>

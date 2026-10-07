@@ -19,7 +19,7 @@
           <div class="w-10 h-10 rounded-xl mb-4 flex items-center justify-center border border-gray-50" :class="stat.bg">
             <component :is="stat.icon" class="w-5 h-5" :class="stat.color" />
           </div>
-          <p class="text-xs font-medium text-gray-500 mb-1">{{ stat.label }}</p>
+          <p class="text-sm font-medium text-gray-500 mb-1">{{ stat.label }}</p>
           <h3 class="text-2xl font-bold text-gray-900 tracking-tight">{{ stat.value }}</h3>
         </div>
       </div>

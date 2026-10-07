@@ -11,7 +11,7 @@
             :placeholder="type === 'modifier' ? 'e.g. Choose Protein' : 'e.g. Extra Toppings'" 
             class="text-base font-bold w-full bg-transparent border-b border-gray-200 focus:border-gray-25outline-none py-1.5 placeholder:text-gray-400 transition-colors"
           />
-          <div class="flex gap-4 text-xs font-medium text-gray-500">
+          <div class="flex gap-4 text-sm font-medium text-gray-500">
             <label class="flex items-center gap-1.5">
               Min: 
               <input type="number" v-model.number="group.minSelection" min="0" class="w-14 px-2 py-1 border border-gray-25 rounded-md outline-none text-gray-900 focus:ring-1 focus:ring-gray-900 transition-all" />
@@ -36,7 +36,7 @@
             class="flex-1 px-3 py-2 bg-gray-50 border border-gray-25 rounded-lg text-base outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-25transition-all"
           />
           <div class="relative">
-            <span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">₦</span>
+            <span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-400">₦</span>
             <input 
               v-model.number="item.price" 
               type="number" 
@@ -48,7 +48,7 @@
             <X class="w-4 h-4" />
           </button>
         </div>
-        <button type="button" @click="addItem(groupIndex)" class="text-xs font-semibold text-blue-600 flex items-center gap-1.5 mt-1 hover:text-blue-800 transition-colors">
+        <button type="button" @click="addItem(groupIndex)" class="text-sm font-semibold text-blue-600 flex items-center gap-1.5 mt-1 hover:text-blue-800 transition-colors">
           <Plus class="w-3.5 h-3.5" /> Add option
         </button>
       </div>

@@ -6,7 +6,7 @@
       <div class="w-16 shrink-0 border-r border-gray-100 bg-white"></div>
       <div v-for="day in weekDays" :key="day.iso" class="flex-1 py-4 text-center border-r border-gray-100 last:border-r-0">
         <div class="inline-flex flex-col items-center justify-center">
-          <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">{{ day.name }}</span>
+          <span class="text-sm font-bold text-gray-500 uppercase tracking-wider">{{ day.name }}</span>
           <div 
             class="w-8 h-8 mt-1 rounded-full flex items-center justify-center font-bold text-sm"
             :class="day.isToday ? 'bg-parentPrimary text-white' : 'text-gray-900'"
@@ -28,7 +28,7 @@
             :key="hour" 
             class="h-[80px] relative flex items-start justify-center pt-2"
           >
-            <span class="text-xs font-bold text-gray-400">
+            <span class="text-sm font-bold text-gray-400">
               {{ formatHour(hour) }}
             </span>
           </div>
@@ -67,7 +67,7 @@
               <div class="absolute left-0 top-0 bottom-0 w-1 bg-black/20"></div>
 
               <div class="relative z-10 h-full flex flex-col overflow-hidden">
-                <div class="font-bold text-xs tracking-tight truncate leading-tight">
+                <div class="font-bold text-sm tracking-tight truncate leading-tight">
                   {{ app.user?.firstName }} {{ app.user?.lastName }}
                 </div>
                 

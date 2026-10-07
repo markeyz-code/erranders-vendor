@@ -23,7 +23,7 @@
               <input type="radio" v-model="form.selectionType" value="multi" class="text-gray-900 focus:ring-gray-900" />
               <div>
                 <p class="text-sm font-bold text-gray-900">Multi-select</p>
-                <p class="text-xs text-gray-500">Customer can pick multiple extras</p>
+                <p class="text-sm text-gray-500">Customer can pick multiple extras</p>
               </div>
             </label>
             <label
@@ -33,7 +33,7 @@
               <input type="radio" v-model="form.selectionType" value="single" class="text-gray-900 focus:ring-gray-900" />
               <div>
                 <p class="text-sm font-bold text-gray-900">Single-select</p>
-                <p class="text-xs text-gray-500">Customer picks exactly one</p>
+                <p class="text-sm text-gray-500">Customer picks exactly one</p>
               </div>
             </label>
           </div>

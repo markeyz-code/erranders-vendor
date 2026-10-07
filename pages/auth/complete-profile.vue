@@ -88,7 +88,7 @@
                 </div>
                 <div class="flex-1 min-w-0">
                   <p class="text-sm font-bold text-gray-900">Use store name as my URL</p>
-                  <p class="text-xs text-gray-400 font-medium">Auto-generate your custom link from store name</p>
+                  <p class="text-sm text-gray-400 font-medium">Auto-generate your custom link from store name</p>
                 </div>
               </div>
 
@@ -99,7 +99,7 @@
                     :class="valErrors.subdomain ? 'border-red-300 bg-red-50/30' : subdomainAvailable === true ? 'border-emerald-300 bg-emerald-50/30' : subdomainAvailable === false && vendor.subdomain.length >= 3 ? 'border-red-300 bg-red-50/30' : 'border-gray-200 bg-white focus-within:border-[#FF5C1A]/40 focus-within:ring-2 focus-within:ring-[#FF5C1A]/10'"
                   >
                     <div class="pl-4 pr-2 py-2 bg-gray-50/80 border-r border-gray-100 shrink-0">
-                      <span class="text-xs font-medium text-gray-400 tracking-wide">https://</span>
+                      <span class="text-sm font-medium text-gray-400 tracking-wide">https://</span>
                     </div>
                     <input 
                       v-model="vendor.subdomain" 
@@ -110,30 +110,30 @@
                       @input="valErrors.subdomain = ''; vendor.subdomain = vendor.subdomain.toLowerCase().replace(/[^a-z0-9-]/g, ''); debouncedCheckSubdomain()"
                     />
                     <div class="pr-4 py-2 bg-gray-50/80 border-l border-gray-100 shrink-0">
-                      <span class="text-xs font-medium text-gray-400 tracking-wide">.erranders.org</span>
+                      <span class="text-sm font-medium text-gray-400 tracking-wide">.erranders.org</span>
                     </div>
                   </div>
                   <!-- Availability Status -->
                   <div class="flex items-center gap-2 mt-2 min-h-[20px]">
                     <template v-if="checkingSubdomain">
                       <div class="w-3.5 h-3.5 border border-gray-200 border-t-[#FF5C1A] rounded-md animate-spin"></div>
-                      <span class="text-xs font-bold text-gray-400">Checking availability...</span>
+                      <span class="text-sm font-bold text-gray-400">Checking availability...</span>
                     </template>
                     <template v-else-if="subdomainAvailable === true && vendor.subdomain.length >= 3">
                       <CheckCircle class="w-3.5 h-3.5 text-emerald-500" />
-                      <span class="text-xs font-bold text-emerald-600">{{ vendor.subdomain }}.erranders.org is available! 🎉</span>
+                      <span class="text-sm font-bold text-emerald-600">{{ vendor.subdomain }}.erranders.org is available! 🎉</span>
                     </template>
                     <template v-else-if="subdomainAvailable === false && vendor.subdomain.length >= 3">
                       <AlertCircle class="w-3.5 h-3.5 text-red-500" />
-                      <span class="text-xs font-bold text-red-500">This subdomain is taken. Try another one.</span>
+                      <span class="text-sm font-bold text-red-500">This subdomain is taken. Try another one.</span>
                     </template>
                     <template v-else-if="vendor.subdomain.length > 0 && vendor.subdomain.length < 3">
                       <AlertCircle class="w-3.5 h-3.5 text-amber-500" />
-                      <span class="text-xs font-bold text-amber-500">Minimum 3 characters required</span>
+                      <span class="text-sm font-bold text-amber-500">Minimum 3 characters required</span>
                     </template>
                     <template v-else-if="valErrors.subdomain">
                       <AlertCircle class="w-3.5 h-3.5 text-red-500" />
-                      <span class="text-xs font-bold text-red-500">{{ valErrors.subdomain }}</span>
+                      <span class="text-sm font-bold text-red-500">{{ valErrors.subdomain }}</span>
                     </template>
                   </div>
                 </div>
@@ -149,7 +149,7 @@
                   <div class="w-10 h-9 rounded-md bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">🍽️</div>
                   <div>
                     <h3 class="text-sm font-bold text-gray-900 mb-1">Restaurant / Eatery</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">Perfect for food vendors. Includes advanced menu features, takeaway packs, modifiers, and prep time management.</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">Perfect for food vendors. Includes advanced menu features, takeaway packs, modifiers, and prep time management.</p>
                   </div>
                   <div class="ml-auto w-5 h-5 rounded-md border flex items-center justify-center" :class="vendor.vendorType === 'restaurant' ? 'border-[#FF5C1A] bg-[#FF5C1A]' : 'border-gray-300'"><Check v-if="vendor.vendorType === 'restaurant'" class="w-3 h-3 text-white" /></div>
                 </div>
@@ -159,7 +159,7 @@
                   <div class="w-10 h-9 rounded-md bg-green-50 text-green-600 flex items-center justify-center shrink-0">🛒</div>
                   <div>
                     <h3 class="text-sm font-bold text-gray-900 mb-1">Mini-Mart / Provisions</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">Ideal for grocers and marts. Manage hundreds of items with a simplified interface optimized for fast bulk additions.</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">Ideal for grocers and marts. Manage hundreds of items with a simplified interface optimized for fast bulk additions.</p>
                   </div>
                   <div class="ml-auto w-5 h-5 rounded-md border flex items-center justify-center" :class="vendor.vendorType === 'mini-mart' ? 'border-[#FF5C1A] bg-[#FF5C1A]' : 'border-gray-300'"><Check v-if="vendor.vendorType === 'mini-mart'" class="w-3 h-3 text-white" /></div>
                 </div>
@@ -169,7 +169,7 @@
                   <div class="w-10 h-9 rounded-md bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">🛍️</div>
                   <div>
                     <h3 class="text-sm font-bold text-gray-900 mb-1">Single Category Retail</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">Best for boutiques, fashion, or electronics. Offers standard product variations (sizes, colors) and precise stock tracking.</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">Best for boutiques, fashion, or electronics. Offers standard product variations (sizes, colors) and precise stock tracking.</p>
                   </div>
                   <div class="ml-auto w-5 h-5 rounded-md border flex items-center justify-center" :class="vendor.vendorType === 'single-category' ? 'border-[#FF5C1A] bg-[#FF5C1A]' : 'border-gray-300'"><Check v-if="vendor.vendorType === 'single-category'" class="w-3 h-3 text-white" /></div>
                 </div>
@@ -197,7 +197,7 @@
                   <div class="w-10 h-9 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">📦</div>
                   <div>
                     <h3 class="text-sm font-bold text-gray-900 mb-1">Physical Products</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">I sell physical items that require delivery or pickup (e.g. food, clothing, groceries).</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">I sell physical items that require delivery or pickup (e.g. food, clothing, groceries).</p>
                   </div>
                   <div class="ml-auto w-5 h-5 rounded-md border flex items-center justify-center" :class="vendor.businessType === 'physical_product' ? 'border-[#FF5C1A] bg-[#FF5C1A]' : 'border-gray-300'"><Check v-if="vendor.businessType === 'physical_product'" class="w-3 h-3 text-white" /></div>
                 </div>
@@ -206,7 +206,7 @@
                   <div class="w-10 h-9 rounded-md bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">✂️</div>
                   <div>
                     <h3 class="text-sm font-bold text-gray-900 mb-1">Service Provider</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">I provide services that require booking appointments (e.g. salon, spa, tutoring).</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">I provide services that require booking appointments (e.g. salon, spa, tutoring).</p>
                   </div>
                   <div class="ml-auto w-5 h-5 rounded-md border flex items-center justify-center" :class="vendor.businessType === 'service_provider' ? 'border-[#FF5C1A] bg-[#FF5C1A]' : 'border-gray-300'"><Check v-if="vendor.businessType === 'service_provider'" class="w-3 h-3 text-white" /></div>
                 </div>
@@ -215,7 +215,7 @@
                   <div class="w-10 h-9 rounded-md bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">🛍️</div>
                   <div>
                     <h3 class="text-sm font-bold text-gray-900 mb-1">Hybrid (Products & Services)</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">I provide services AND sell physical products (e.g. a salon selling hair cream).</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">I provide services AND sell physical products (e.g. a salon selling hair cream).</p>
                   </div>
                   <div class="ml-auto w-5 h-5 rounded-md border flex items-center justify-center" :class="vendor.businessType === 'hybrid' ? 'border-[#FF5C1A] bg-[#FF5C1A]' : 'border-gray-300'"><Check v-if="vendor.businessType === 'hybrid'" class="w-3 h-3 text-white" /></div>
                 </div>
@@ -245,7 +245,7 @@
                     class="flex items-center flex-wrap gap-2 min-h-[48px] px-4 py-2 border rounded-md cursor-pointer transition-all duration-200 bg-white"
                     :class="showCategoryDropdown ? 'border-[#FF5C1A]/40 ring-1 ring-[#FF5C1A]/5' : 'border-gray-200 hover:border-gray-300'"
                   >
-                    <div v-for="cat in selectedCategories" :key="cat" class="flex items-center gap-1.5 px-2.5 py-1 bg-[#FF5C1A]/10 border border-[#FF5C1A]/20 text-[#FF5C1A] text-xs font-medium rounded-lg">
+                    <div v-for="cat in selectedCategories" :key="cat" class="flex items-center gap-1.5 px-2.5 py-1 bg-[#FF5C1A]/10 border border-[#FF5C1A]/20 text-[#FF5C1A] text-sm font-medium rounded-lg">
                       {{ getCategoryLabel(cat) }}
                       <button type="button" @click.stop="removeCategory(cat)" class="hover:text-red-600 transition-colors"><X class="w-3 h-3" /></button>
                     </div>
@@ -299,7 +299,7 @@
                             <span class="text-lg leading-none mt-0.5">{{ cat.icon }}</span>
                             <div class="flex flex-col">
                               <span class="text-sm font-bold text-gray-900">{{ cat.label }}</span>
-                              <span class="text-xs text-gray-500 leading-snug mt-0.5">{{ cat.desc }}</span>
+                              <span class="text-sm text-gray-500 leading-snug mt-0.5">{{ cat.desc }}</span>
                             </div>
                           </div>
                         </div>
@@ -310,7 +310,7 @@
                           <div class="w-8 h-8 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center"><span class="text-sm font-bold">+</span></div>
                           <div>
                             <span class="text-sm font-bold text-gray-700">Custom Category</span>
-                            <p class="text-xs text-gray-400">Add "<span class="text-[#FF5C1A] font-bold">{{ categorySearch.trim() }}</span>"</p>
+                            <p class="text-sm text-gray-400">Add "<span class="text-[#FF5C1A] font-bold">{{ categorySearch.trim() }}</span>"</p>
                           </div>
                         </button>
                       </div>
@@ -319,7 +319,7 @@
                 </div>
 
                 <!-- Custom category note -->
-                <p class="text-xs text-gray-400 font-medium mt-2 flex items-start gap-1.5 leading-relaxed">
+                <p class="text-sm text-gray-400 font-medium mt-2 flex items-start gap-1.5 leading-relaxed">
                   <span class="text-amber-500 shrink-0 mt-px">💡</span>
                   If your business isn't among the list, simply type in the category of your business and it will be custom-added for you.
                 </p>
@@ -392,7 +392,7 @@
               >
                 <div v-if="vendor.isStudentBusiness" class="space-y-4 pt-4 border-t border-gray-100">
                   <div class="space-y-1.5">
-                    <label class="text-xs font-bold text-gray-700 tracking-wide uppercase">Select Institution <span class="text-[#FF5C1A]">*</span></label>
+                    <label class="text-sm font-bold text-gray-700 tracking-wide uppercase">Select Institution <span class="text-[#FF5C1A]">*</span></label>
                     <UiSelectInput 
                       v-model="vendor.university" 
                       :options="universityOptions" 
@@ -400,7 +400,7 @@
                     />
                   </div>
                   <div class="space-y-1.5">
-                    <label class="text-xs font-bold text-gray-700 tracking-wide uppercase">Matriculation Number (Optional)</label>
+                    <label class="text-sm font-bold text-gray-700 tracking-wide uppercase">Matriculation Number (Optional)</label>
                     <input 
                       v-model="vendor.matricNumber" 
                       type="text" 
@@ -473,7 +473,7 @@
                   <div class="w-10 h-9 rounded-md bg-orange-50 text-[#FF5C1A] flex items-center justify-center shrink-0"><MapPin class="w-4 h-4" /></div>
                   <div>
                     <h3 class="text-sm font-bold text-gray-900 mb-1">Physical Location</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">I have a store, salon, or physical space where customers come to me.</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">I have a store, salon, or physical space where customers come to me.</p>
                   </div>
                   <div class="ml-auto w-5 h-5 rounded-md border flex items-center justify-center" :class="vendor.serviceLocation === 'physical_location' ? 'border-[#FF5C1A] bg-[#FF5C1A]' : 'border-gray-300'"><Check v-if="vendor.serviceLocation === 'physical_location'" class="w-3 h-3 text-white" /></div>
                 </div>
@@ -482,7 +482,7 @@
                   <div class="w-10 h-9 rounded-md bg-blue-50 text-blue-500 flex items-center justify-center shrink-0">🚙</div>
                   <div>
                     <h3 class="text-sm font-bold text-gray-900 mb-1">Mobile Operator</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">I travel to my clients to provide services or deliver goods.</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">I travel to my clients to provide services or deliver goods.</p>
                   </div>
                   <div class="ml-auto w-5 h-5 rounded-md border flex items-center justify-center" :class="vendor.serviceLocation === 'mobile_operator' ? 'border-[#FF5C1A] bg-[#FF5C1A]' : 'border-gray-300'"><Check v-if="vendor.serviceLocation === 'mobile_operator'" class="w-3 h-3 text-white" /></div>
                 </div>
@@ -491,7 +491,7 @@
                   <div class="w-10 h-9 rounded-md bg-emerald-50 text-emerald-500 flex items-center justify-center shrink-0">💻</div>
                   <div>
                     <h3 class="text-sm font-bold text-gray-900 mb-1">Virtual / Online</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">I provide my services entirely online or via social media.</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">I provide my services entirely online or via social media.</p>
                   </div>
                   <div class="ml-auto w-5 h-5 rounded-md border flex items-center justify-center" :class="vendor.serviceLocation === 'virtual_online' ? 'border-[#FF5C1A] bg-[#FF5C1A]' : 'border-gray-300'"><Check v-if="vendor.serviceLocation === 'virtual_online'" class="w-3 h-3 text-white" /></div>
                 </div>
@@ -529,7 +529,7 @@
                   <p class="text-sm text-gray-500 font-medium">Which software are you currently using to manage your business?</p>
                 </div>
                 <UiAnimatedInput v-model="vendor.softwareUsed" type="text" label="Software Name (e.g. Fresha, Calendly, WhatsApp)" />
-                <p class="text-xs text-gray-500 mt-2 bg-blue-50 text-blue-700 p-3 rounded-md border border-blue-100">
+                <p class="text-sm text-gray-500 mt-2 bg-blue-50 text-blue-700 p-3 rounded-md border border-blue-100">
                   <span class="font-bold">Looking to switch?</span> We can help speed up your business setup and import your data into your new Erranders account.
                 </p>
               </div>
@@ -578,7 +578,7 @@
                   
                   <!-- Info tooltip -->
                   <div v-if="showPreOrderInfo" class="px-3.5 pb-3.5">
-                    <div class="p-3 bg-amber-50/70 border border-amber-100 rounded-md text-xs text-amber-800 leading-relaxed">
+                    <div class="p-3 bg-amber-50/70 border border-amber-100 rounded-md text-sm text-amber-800 leading-relaxed">
                       <div class="font-bold flex items-center gap-1.5 mb-1 text-amber-900">
                         <span>✨</span> How it works:
                       </div>
@@ -692,7 +692,7 @@
                 <div class="mt-0.5 w-5 h-5 rounded-md bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
                   <Info class="w-3 h-3" />
                 </div>
-                <div class="text-xs text-blue-800 leading-relaxed">
+                <div class="text-sm text-blue-800 leading-relaxed">
                   <p class="font-bold mb-1">How this works for your business type:</p>
                   <ul class="list-disc pl-4 space-y-0.5 text-blue-700/90 font-medium">
                     <li><strong>Product Sellers:</strong> Set your average prep time and minimum order amount. Delivery fees are automatically calculated based on distance.</li>
@@ -723,7 +723,7 @@
                   <div v-for="acc in payoutAccounts" :key="acc.accountNumber" class="p-3 bg-white border border-gray-25 rounded-md flex items-center justify-between">
                     <div>
                       <p class="text-sm font-bold text-gray-900">{{ acc.bankName }}</p>
-                      <p class="text-xs text-gray-500">{{ acc.accountNumber }} • {{ acc.accountName }}</p>
+                      <p class="text-sm text-gray-500">{{ acc.accountNumber }} • {{ acc.accountName }}</p>
                     </div>
                     <button type="button" @click="payoutAccounts = payoutAccounts.filter(a => a.accountNumber !== acc.accountNumber)" class="p-2 text-gray-400 hover:text-red-500 transition-colors">
                       <X class="w-4 h-4" />
@@ -733,7 +733,7 @@
 
                 <!-- Add New Account Form -->
                 <div class="space-y-3 border-t border-gray-200 pt-3">
-                  <p class="text-xs font-bold text-gray-700">Add Account</p>
+                  <p class="text-sm font-bold text-gray-700">Add Account</p>
                   <UiSelectInput v-model="newAccount.bankCode" label="Bank Name" :options="bankOptions" :disabled="banksLoading" searchable />
                   <div class="relative">
                     <UiAnimatedInput v-model="newAccount.accountNumber" type="text" label="Account Number" />
@@ -809,7 +809,7 @@
             <p class="text-sm text-gray-500 font-medium leading-relaxed mb-6">{{ infoModalContent.description }}</p>
             
             <div class="w-full bg-gray-50 rounded-xl p-4 mb-6">
-              <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Why it's important</p>
+              <p class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Why it's important</p>
               <p class="text-sm text-gray-700 font-medium">{{ infoModalContent.importance }}</p>
             </div>
             

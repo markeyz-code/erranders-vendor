@@ -9,7 +9,7 @@
           <div class="w-10 h-10 rounded-md bg-parentPrimary text-white flex items-center justify-center font-bold mb-1">
             ME
           </div>
-          <span class="text-xs font-bold text-gray-900">My Schedule</span>
+          <span class="text-sm font-bold text-gray-900">My Schedule</span>
         </div>
       </div>
     </div>
@@ -25,7 +25,7 @@
             :key="hour" 
             class="h-[80px] relative flex items-start justify-center pt-2"
           >
-            <span class="text-xs font-bold text-gray-400">
+            <span class="text-sm font-bold text-gray-400">
               {{ formatHour(hour) }}
             </span>
           </div>
@@ -60,14 +60,14 @@
             <div class="relative z-10 h-full flex flex-col">
               <div class="flex justify-between items-start gap-2">
                 <span class="font-bold text-sm tracking-tight truncate">{{ app.user?.firstName }} {{ app.user?.lastName }}</span>
-                <span class="text-xs font-bold whitespace-nowrap bg-white/20 px-1.5 rounded-md">{{ app.startTime }}</span>
+                <span class="text-sm font-bold whitespace-nowrap bg-white/20 px-1.5 rounded-md">{{ app.startTime }}</span>
               </div>
               
-              <div class="mt-1 text-xs opacity-90 truncate font-medium">
+              <div class="mt-1 text-sm opacity-90 truncate font-medium">
                 {{ app.items?.[0]?.service?.name || 'Service' }}
               </div>
               
-              <div class="mt-auto pt-2 flex items-center justify-between text-xs font-bold">
+              <div class="mt-auto pt-2 flex items-center justify-between text-sm font-bold">
                 <span class="opacity-80">{{ app.items?.[0]?.service?.durationInMinutes || 0 }} min</span>
                 <span>₦{{ app.price?.toLocaleString() || 0 }}</span>
               </div>

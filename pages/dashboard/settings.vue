@@ -84,8 +84,8 @@
  </div>
  <div>
  <h4 class="text-sm font-bold text-gray-900 mb-1">Store Logo</h4>
- <p class="text-xs text-gray-500 font-medium leading-relaxed">Square PNG/JPG<br/>Max 5MB</p>
- <p v-if="logoUploading" class="text-xs text-[#FF5C1A] font-bold mt-2 animate-pulse">UPLOADING...</p>
+ <p class="text-sm text-gray-500 font-medium leading-relaxed">Square PNG/JPG<br/>Max 5MB</p>
+ <p v-if="logoUploading" class="text-sm text-[#FF5C1A] font-bold mt-2 animate-pulse">UPLOADING...</p>
  </div>
  </div>
 
@@ -101,8 +101,8 @@
  </div>
  <div>
  <h4 class="text-sm font-bold text-gray-900 mb-1">Store Cover</h4>
- <p class="text-xs text-gray-500 font-medium leading-relaxed">Landscape<br/>Max 10MB</p>
- <p v-if="bannerUploading" class="text-xs text-[#FF5C1A] font-bold mt-2 animate-pulse">UPLOADING...</p>
+ <p class="text-sm text-gray-500 font-medium leading-relaxed">Landscape<br/>Max 10MB</p>
+ <p v-if="bannerUploading" class="text-sm text-[#FF5C1A] font-bold mt-2 animate-pulse">UPLOADING...</p>
  </div>
  </div>
  </div>
@@ -139,7 +139,7 @@
  
  <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
  <div class="relative">
- <label class="block text-xs font-bold text-gray-400 mb-1.5 pl-2 uppercase tracking-wider">Street Address</label>
+ <label class="block text-sm font-bold text-gray-400 mb-1.5 pl-2 uppercase tracking-wider">Street Address</label>
  <UiMapboxAutocomplete 
  v-model="profile.address" 
  @select="handleAddressSelect" 
@@ -292,7 +292,7 @@
  <div class="flex items-center justify-between">
  <div>
  <h4 class="text-sm font-bold text-gray-900">Packaging Options</h4>
- <p class="text-xs text-gray-500 mt-0.5">{{ profile.requiresTakeawayPack ? 'Manage container and pack pricing for food.' : 'Set your flat packaging or wrapping fee.' }}</p>
+ <p class="text-sm text-gray-500 mt-0.5">{{ profile.requiresTakeawayPack ? 'Manage container and pack pricing for food.' : 'Set your flat packaging or wrapping fee.' }}</p>
  </div>
  <button 
  v-if="profile.requiresTakeawayPack"
@@ -330,7 +330,7 @@
  <AnimatedInput v-model.number="pack.price" type="number" label="Price (₦)" />
  </div>
  <div class="flex flex-col items-center gap-2 pt-2">
- <span class="text-xs font-bold text-gray-500">Active</span>
+ <span class="text-sm font-bold text-gray-500">Active</span>
  <input type="checkbox" v-model="pack.isActive" class="w-5 h-5 rounded-lg border-gray-300 text-[#FF5C1A] focus:ring-[#FF5C1A]" />
  </div>
  </div>
@@ -342,7 +342,7 @@
  <div class="space-y-4 md:space-y-6 pt-6 border-t border-gray-50">
  <div>
  <h4 class="text-sm font-bold text-gray-900">Weekly Schedule</h4>
- <p class="text-xs text-gray-500 mt-0.5">Toggle days on/off and set specific hours and breaks.</p>
+ <p class="text-sm text-gray-500 mt-0.5">Toggle days on/off and set specific hours and breaks.</p>
  </div>
  
  <div class="space-y-2">
@@ -363,8 +363,8 @@
  <!-- Day-Specific Breaks -->
  <div v-if="!bh.isClosed" class="pl-0 sm:pl-[6.5rem] space-y-3 pt-2">
    <div class="flex items-center justify-between">
-     <span class="text-xs font-bold text-orange-500 uppercase tracking-wider">Automated Breaks</span>
-     <button @click="addBreak(i)" class="text-xs font-bold text-orange-500 bg-orange-50 hover:bg-orange-100 px-3 py-1.5 rounded-lg transition-colors">
+     <span class="text-sm font-bold text-orange-500 uppercase tracking-wider">Automated Breaks</span>
+     <button @click="addBreak(i)" class="text-sm font-bold text-orange-500 bg-orange-50 hover:bg-orange-100 px-3 py-1.5 rounded-lg transition-colors">
        + Add Break
      </button>
    </div>
@@ -372,7 +372,7 @@
    <div v-for="(b, bIndex) in bh.breaks" :key="bIndex" class="flex flex-wrap items-center gap-3 bg-orange-50/50 p-3 rounded-xl border border-orange-100 relative group">
      <input type="text" v-model="b.title" placeholder="e.g. Lunch Break" class="text-sm font-medium px-3 py-2 bg-white rounded-lg border-transparent focus:bg-white focus:border-orange-200 focus:ring-0 outline-none flex-1 min-w-[120px]" />
      <input type="time" v-model="b.start" class="text-sm font-bold px-3 py-2 bg-white rounded-lg border-transparent focus:bg-white focus:border-orange-200 focus:ring-0 outline-none w-28" />
-     <span class="text-orange-300 font-bold text-xs">to</span>
+     <span class="text-orange-300 font-bold text-sm">to</span>
      <input type="time" v-model="b.end" class="text-sm font-bold px-3 py-2 bg-white rounded-lg border-transparent focus:bg-white focus:border-orange-200 focus:ring-0 outline-none w-28" />
      
      <button @click="removeBreak(i, bIndex)" class="p-1.5 text-orange-300 hover:text-orange-500 hover:bg-orange-100 rounded-lg transition-colors absolute -right-2 -top-2 bg-white shadow-sm border border-orange-100 opacity-0 group-hover:opacity-100" title="Remove Break">
@@ -431,7 +431,7 @@
  <div class="p-2.5 rounded-xl" :class="acc.isActive ? 'bg-emerald-100 text-emerald-600' : 'bg-gray-50 text-gray-400'">
  <Building class="w-5 h-5" />
  </div>
- <div v-if="acc.isActive" class="flex items-center gap-1.5 px-2.5 py-1 bg-emerald-500 text-white rounded-full text-xs font-bold">
+ <div v-if="acc.isActive" class="flex items-center gap-1.5 px-2.5 py-1 bg-emerald-500 text-white rounded-full text-sm font-bold">
  <CheckCircle class="w-3 h-3" /> Active
  </div>
  <button 
@@ -444,7 +444,7 @@
  </div>
  
  <div class="mt-auto">
- <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">{{ acc.bankName }}</p>
+ <p class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-1">{{ acc.bankName }}</p>
  <p class="text-lg font-bold text-gray-900 font-mono tracking-tight">{{ maskAccountNumber(acc.accountNumber) }}</p>
  <p class="text-sm text-gray-600 font-medium mt-1 truncate">{{ acc.accountName }}</p>
  </div>
@@ -534,7 +534,7 @@
  <CheckCircle class="w-5 h-5" />
  </div>
  <div>
- <p class="text-xs text-emerald-700 font-bold uppercase tracking-wider mb-0.5">Verified Identity</p>
+ <p class="text-sm text-emerald-700 font-bold uppercase tracking-wider mb-0.5">Verified Identity</p>
  <p class="text-sm font-bold text-gray-900">{{ newAccount.accountName }}</p>
  </div>
  </div>
@@ -544,7 +544,7 @@
  <AlertCircle class="w-5 h-5" />
  </div>
  <div>
- <p class="text-xs text-rose-700 font-bold uppercase tracking-wider mb-0.5">Verification Failed</p>
+ <p class="text-sm text-rose-700 font-bold uppercase tracking-wider mb-0.5">Verification Failed</p>
  <p class="text-sm font-bold text-gray-900">{{ resolveError }}</p>
  </div>
  </div>

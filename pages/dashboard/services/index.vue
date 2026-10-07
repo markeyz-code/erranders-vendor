@@ -46,14 +46,14 @@
         <template #price="{ item }">
           <div class="flex flex-col">
             <span class="font-bold text-gray-900">₦{{ (item as any).price?.toLocaleString() }}</span>
-            <span class="text-xs text-gray-500 font-medium">{{ (item as any).durationInMinutes }} mins</span>
+            <span class="text-sm text-gray-500 font-medium">{{ (item as any).durationInMinutes }} mins</span>
           </div>
         </template>
 
         <template #status="{ item }">
           <span 
             :class="(item as any).isAvailable ? 'bg-emerald-50 text-emerald-600 border-emerald-100/50' : 'bg-red-50 text-red-600 border-red-100/50'"
-            class="text-xs font-bold px-2 py-0.5 rounded-lg border-0 cursor-pointer hover:scale-105 transition-transform"
+            class="text-sm font-bold px-2 py-0.5 rounded-lg border-0 cursor-pointer hover:scale-105 transition-transform"
             @click.stop="quickToggleAvailability(item as any)"
           >
             {{ (item as any).isAvailable ? 'Available' : 'Unavailable' }}

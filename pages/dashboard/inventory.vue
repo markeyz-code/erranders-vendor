@@ -30,7 +30,7 @@
     </div>
     <div>
      <p class="text-2xl font-bold text-gray-900 leading-none tracking-tight mb-1">{{ products.length }}</p>
-     <p class="text-xs text-gray-500 font-medium">Total Products</p>
+     <p class="text-sm text-gray-500 font-medium">Total Products</p>
     </div>
    </div>
    <div class="bg-white border border-gray-25 rounded-2xl p-5 flex items-center gap-4 transition-all duration-300 hover:shadow-md hover:border-gray-200">
@@ -39,7 +39,7 @@
     </div>
     <div>
      <p class="text-2xl font-bold text-gray-900 leading-none tracking-tight mb-1">{{ availableCount }}</p>
-     <p class="text-xs text-gray-500 font-medium">Available</p>
+     <p class="text-sm text-gray-500 font-medium">Available</p>
     </div>
    </div>
    <div class="bg-white border border-gray-25 rounded-2xl p-5 flex items-center gap-4 transition-all duration-300 hover:shadow-md hover:border-gray-200">
@@ -48,7 +48,7 @@
     </div>
     <div>
      <p class="text-2xl font-bold text-gray-900 leading-none tracking-tight mb-1">{{ lowStockCount }}</p>
-     <p class="text-xs text-gray-500 font-medium">Low Stock</p>
+     <p class="text-sm text-gray-500 font-medium">Low Stock</p>
     </div>
    </div>
    <div class="bg-white border border-gray-25 rounded-2xl p-5 flex items-center gap-4 transition-all duration-300 hover:shadow-md hover:border-gray-200">
@@ -57,7 +57,7 @@
     </div>
     <div>
      <p class="text-2xl font-bold text-gray-900 leading-none tracking-tight mb-1">{{ categories.length }}</p>
-     <p class="text-xs text-gray-500 font-medium">Categories</p>
+     <p class="text-sm text-gray-500 font-medium">Categories</p>
     </div>
    </div>
   </div>
@@ -94,7 +94,7 @@
    <div class="flex gap-1.5 overflow-x-auto w-full sm:flex-1 no-scrollbar pb-2 sm:pb-0">
     <button
      @click="activeCategory = 'all'"
-     class="shrink-0 px-4 py-2 rounded-full text-xs font-bold border transition-all"
+     class="shrink-0 px-4 py-2 rounded-full text-sm font-bold border transition-all"
      :class="activeCategory === 'all' ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-500 border-gray-100 hover:border-gray-200 hover:text-gray-700'"
     >
      All
@@ -103,7 +103,7 @@
      v-for="cat in categories"
      :key="cat._id"
      @click="activeCategory = cat.name"
-     class="shrink-0 px-4 py-2 rounded-full text-xs font-bold border transition-all"
+     class="shrink-0 px-4 py-2 rounded-full text-sm font-bold border transition-all"
      :class="activeCategory === cat.name ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-500 border-gray-100 hover:border-gray-200 hover:text-gray-700'"
     >
      {{ cat.name }}
@@ -157,13 +157,13 @@
 
     <template #actions="{ item }">
      <div class="flex items-center gap-1.5">
-      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-bold border transition-all bg-gray-50 text-gray-600 border-gray-100 hover:bg-gray-100" @click.stop="viewProductDetails(item as any)">
+      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-sm font-bold border transition-all bg-gray-50 text-gray-600 border-gray-100 hover:bg-gray-100" @click.stop="viewProductDetails(item as any)">
        <Eye class="w-3.5 h-3.5" /> View
       </button>
-      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-bold border transition-all bg-blue-50 text-blue-600 border-blue-100 hover:bg-blue-100" @click.stop="editProduct(item as any)">
+      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-sm font-bold border transition-all bg-blue-50 text-blue-600 border-blue-100 hover:bg-blue-100" @click.stop="editProduct(item as any)">
        <Edit2 class="w-3.5 h-3.5" /> Edit
       </button>
-      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-bold border transition-all bg-red-50 text-red-600 border-red-100 hover:bg-red-100" @click.stop="confirmDelete(item as any)">
+      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-sm font-bold border transition-all bg-red-50 text-red-600 border-red-100 hover:bg-red-100" @click.stop="confirmDelete(item as any)">
        <Trash2 class="w-3.5 h-3.5" /> Delete
       </button>
      </div>
@@ -201,13 +201,13 @@
     </template>
     <template #actions="{ item }">
      <div class="flex items-center gap-1.5">
-      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-bold border transition-all bg-gray-50 text-gray-600 border-gray-100 hover:bg-gray-100" @click.stop="editPack(item)">
+      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-sm font-bold border transition-all bg-gray-50 text-gray-600 border-gray-100 hover:bg-gray-100" @click.stop="editPack(item)">
        <Eye class="w-3.5 h-3.5" /> View
       </button>
-      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-bold border transition-all bg-blue-50 text-blue-600 border-blue-100 hover:bg-blue-100" @click.stop="editPack(item)">
+      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-sm font-bold border transition-all bg-blue-50 text-blue-600 border-blue-100 hover:bg-blue-100" @click.stop="editPack(item)">
        <Edit2 class="w-3.5 h-3.5" /> Edit
       </button>
-      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-bold border transition-all bg-red-50 text-red-600 border-red-100 hover:bg-red-100" @click.stop="deletePack(item._id)">
+      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-sm font-bold border transition-all bg-red-50 text-red-600 border-red-100 hover:bg-red-100" @click.stop="deletePack(item._id)">
        <Trash2 class="w-3.5 h-3.5" /> Delete
       </button>
      </div>
@@ -239,13 +239,13 @@
     </template>
     <template #actions="{ item }">
      <div class="flex items-center gap-1.5">
-      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-bold border transition-all bg-gray-50 text-gray-600 border-gray-100 hover:bg-gray-100" @click.stop="editAddOn(item)">
+      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-sm font-bold border transition-all bg-gray-50 text-gray-600 border-gray-100 hover:bg-gray-100" @click.stop="editAddOn(item)">
        <Eye class="w-3.5 h-3.5" /> View
       </button>
-      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-bold border transition-all bg-blue-50 text-blue-600 border-blue-100 hover:bg-blue-100" @click.stop="editAddOn(item)">
+      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-sm font-bold border transition-all bg-blue-50 text-blue-600 border-blue-100 hover:bg-blue-100" @click.stop="editAddOn(item)">
        <Edit2 class="w-3.5 h-3.5" /> Edit
       </button>
-      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-bold border transition-all bg-red-50 text-red-600 border-red-100 hover:bg-red-100" @click.stop="deleteAddOnGroup(item._id)">
+      <button class="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-sm font-bold border transition-all bg-red-50 text-red-600 border-red-100 hover:bg-red-100" @click.stop="deleteAddOnGroup(item._id)">
        <Trash2 class="w-3.5 h-3.5" /> Delete
       </button>
      </div>

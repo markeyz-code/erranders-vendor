@@ -26,7 +26,7 @@
               {{ toast.title || (toast.type.charAt(0).toUpperCase() + toast.type.slice(1)) }}
             </h4>
             <!-- Toast Message -->
-            <p class="text-xs font-bold text-white/90 leading-relaxed mt-0.5">
+            <p class="text-sm font-bold text-white/90 leading-relaxed mt-0.5">
               {{ toast.message }}
             </p>
           </div>

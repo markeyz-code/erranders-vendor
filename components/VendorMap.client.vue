@@ -106,10 +106,10 @@ const updateMarkers = () => {
             </div>
             <div>
               <h4 class="font-extrabold text-slate-900 text-[15px] leading-tight m-0">${vendor.storeName}</h4>
-              <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mt-1 m-0">${vendor.category || 'Store'}</p>
+              <p class="text-sm font-bold text-slate-500 uppercase tracking-wider mt-1 m-0">${vendor.category || 'Store'}</p>
             </div>
           </div>
-          <p class="text-xs text-slate-600 mb-0 font-medium">${vendor.description ? vendor.description.substring(0, 50) + '...' : 'Available on Errander'}</p>
+          <p class="text-sm text-slate-600 mb-0 font-medium">${vendor.description ? vendor.description.substring(0, 50) + '...' : 'Available on Errander'}</p>
         </div>
       `
       

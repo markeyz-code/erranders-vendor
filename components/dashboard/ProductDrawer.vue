@@ -190,7 +190,7 @@
     <div class="flex items-center justify-between">
       <div>
         <h3 class="text-lg font-bold text-gray-900">Takeaway Pack Sizes</h3>
-        <p class="text-xs text-gray-500">Configure required takeaway container fees</p>
+        <p class="text-sm text-gray-500">Configure required takeaway container fees</p>
       </div>
     </div>
     
@@ -223,9 +223,9 @@
     <div class="flex items-center justify-between">
       <div>
         <h3 class="text-lg font-bold text-gray-900">Required Options (Modifiers)</h3>
-        <p class="text-xs text-gray-500">{{ requiresPrepTime || requiresTakeawayPack || usesMenuApi ? 'e.g. Pack Size, Spice Level' : 'e.g. Size, Color, Storage Capacity' }}</p>
+        <p class="text-sm text-gray-500">{{ requiresPrepTime || requiresTakeawayPack || usesMenuApi ? 'e.g. Pack Size, Spice Level' : 'e.g. Size, Color, Storage Capacity' }}</p>
       </div>
-      <button type="button" @click="addModifier" class="px-3 py-1.5 bg-gray-100 text-gray-700 text-xs font-bold rounded-lg hover:bg-gray-200 transition-all flex items-center gap-1">
+      <button type="button" @click="addModifier" class="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm font-bold rounded-lg hover:bg-gray-200 transition-all flex items-center gap-1">
         <Plus class="w-3 h-3" /> Add Option
       </button>
     </div>
@@ -233,7 +233,7 @@
     <div v-for="(mod, mIdx) in form.modifiers" :key="mIdx" class="p-4 bg-gray-50 border border-gray-25 rounded-xl space-y-3">
       <div class="flex items-center gap-2">
         <input type="text" v-model="mod.name" :placeholder="requiresPrepTime || requiresTakeawayPack || usesMenuApi ? 'Option Name (e.g. Pack Size)' : 'Option Name (e.g. Storage Capacity)'" class="flex-1 px-3 py-2 bg-gray-50 border border-transparent hover:border-gray-200 focus:bg-white rounded-lg text-base focus:outline-none focus:border-[#FF5C1A]" />
-        <label class="flex items-center gap-1.5 text-xs font-semibold text-gray-700 whitespace-nowrap">
+        <label class="flex items-center gap-1.5 text-sm font-semibold text-gray-700 whitespace-nowrap">
           <input type="checkbox" v-model="mod.isRequired" class="rounded text-gray-900 focus:ring-gray-900" /> Required
         </label>
         <button type="button" @click="removeModifier(mIdx)" class="p-2 text-red-500 hover:bg-red-50 rounded-lg"><Trash2 class="w-4 h-4" /></button>
@@ -245,7 +245,7 @@
           <input type="number" v-model.number="opt.priceDelta" placeholder="Price (+₦)" class="w-24 px-3 py-1.5 bg-white border border-gray-25 rounded-lg text-base focus:outline-none focus:border-[#FF5C1A]" />
           <button type="button" @click="removeModifierOption(mIdx, oIdx)" class="p-1.5 text-gray-400 hover:text-red-500"><X class="w-3 h-3" /></button>
         </div>
-        <button type="button" @click="addModifierOption(mIdx)" class="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 mt-1">
+        <button type="button" @click="addModifierOption(mIdx)" class="text-sm font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 mt-1">
           <Plus class="w-3 h-3" /> Add Choice
         </button>
       </div>
@@ -259,9 +259,9 @@
     <div class="flex items-center justify-between">
       <div>
         <h3 class="text-lg font-bold text-gray-900">Optional Extras (Add-ons)</h3>
-        <p class="text-xs text-gray-500">Link reusable add-on groups</p>
+        <p class="text-sm text-gray-500">Link reusable add-on groups</p>
       </div>
-      <button type="button" @click="$emit('createAddOnGroup')" class="px-3 py-1.5 bg-gray-100 text-gray-700 text-xs font-bold rounded-lg hover:bg-gray-200 transition-all flex items-center gap-1">
+      <button type="button" @click="$emit('createAddOnGroup')" class="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm font-bold rounded-lg hover:bg-gray-200 transition-all flex items-center gap-1">
         <Plus class="w-3 h-3" /> Create Group
       </button>
     </div>
@@ -284,14 +284,14 @@
         </div>
         
         <div v-if="group.options && group.options.length" class="space-y-2 pl-7">
-          <div v-for="(opt, idx) in group.options" :key="idx" class="flex items-center justify-between text-xs">
+          <div v-for="(opt, idx) in group.options" :key="idx" class="flex items-center justify-between text-sm">
             <span class="font-medium text-gray-700">{{ opt.name }}</span>
             <span v-if="(opt.price || opt.priceDelta) > 0" class="text-gray-500 font-bold">+₦{{ (opt.price || opt.priceDelta).toLocaleString() }}</span>
             <span v-else class="text-gray-400 font-medium">Free</span>
           </div>
         </div>
       </label>
-      <p v-if="!addOnGroups || addOnGroups.length === 0" class="text-xs text-gray-500">No add-on groups found. Create them in your inventory.</p>
+      <p v-if="!addOnGroups || addOnGroups.length === 0" class="text-sm text-gray-500">No add-on groups found. Create them in your inventory.</p>
     </div>
   </section>
 

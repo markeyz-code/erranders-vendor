@@ -38,7 +38,7 @@
             
             <div class="grid gap-4">
               <div>
-                <label class="block text-xs font-bold text-gray-700 mb-1.5">Service Name</label>
+                <label class="block text-sm font-bold text-gray-700 mb-1.5">Service Name</label>
                 <input v-model="form.name" type="text" placeholder="e.g. Classic European Massage" class="w-full bg-gray-50 border border-gray-25 text-gray-900 text-base rounded-md focus:ring-parentPrimary focus:border-parentPrimary block p-3 outline-none transition-all" />
               </div>
               <div>
@@ -51,23 +51,23 @@
                 />
               </div>
               <div>
-                <label class="block text-xs font-bold text-gray-700 mb-1.5">Description</label>
+                <label class="block text-sm font-bold text-gray-700 mb-1.5">Description</label>
                 <textarea v-model="form.description" rows="3" placeholder="Briefly describe what this service includes..." class="w-full bg-gray-50 border border-gray-25 text-gray-900 text-base rounded-md focus:ring-parentPrimary focus:border-parentPrimary block p-3 outline-none transition-all"></textarea>
               </div>
               
               <div class="grid grid-cols-2 gap-4">
                 <div>
-                  <label class="block text-xs font-bold text-gray-700 mb-1.5">Base Price (₦)</label>
+                  <label class="block text-sm font-bold text-gray-700 mb-1.5">Base Price (₦)</label>
                   <input :value="formatPrice(form.price)" @input="form.price = parsePrice($event.target.value)" type="text" placeholder="30,000" class="w-full bg-gray-50 border border-gray-25 text-gray-900 text-base rounded-md focus:ring-parentPrimary focus:border-parentPrimary block p-3 outline-none transition-all" />
                 </div>
                 <div>
-                  <label class="block text-xs font-bold text-gray-700 mb-1.5">Base Duration (Mins)</label>
+                  <label class="block text-sm font-bold text-gray-700 mb-1.5">Base Duration (Mins)</label>
                   <input v-model.number="form.durationInMinutes" type="number" placeholder="60" class="w-full bg-gray-50 border border-gray-25 text-gray-900 text-base rounded-md focus:ring-parentPrimary focus:border-parentPrimary block p-3 outline-none transition-all" />
                 </div>
               </div>
               
               <div class="pt-2">
-                <label class="block text-xs font-bold text-gray-700 mb-2">Service Media (Optional)</label>
+                <label class="block text-sm font-bold text-gray-700 mb-2">Service Media (Optional)</label>
                 <div class="flex items-center gap-3">
                   <button type="button" @click="triggerImageUpload(-1)" class="h-20 w-20 rounded-lg bg-gray-50 border border-dashed border-gray-300 flex flex-col items-center justify-center transition-all hover:bg-blue-50 hover:border-blue-300 shrink-0 relative overflow-hidden group">
                     <template v-if="uploadingImageIdx === -1">
@@ -111,29 +111,29 @@
           <div class="space-y-4">
             <div class="flex items-center justify-between">
               <h3 class="text-sm font-bold text-gray-900 flex items-center gap-2"><Layers class="w-4 h-4 text-blue-500"/> Service Variants</h3>
-              <button @click="addVariant" class="text-xs font-bold text-parentPrimary hover:underline">Add Variant</button>
+              <button @click="addVariant" class="text-sm font-bold text-parentPrimary hover:underline">Add Variant</button>
             </div>
-            <p class="text-xs text-gray-500">Provide different duration/price options (e.g. "Pick me up - 30mins", "Classic - 1hr"). If left empty, the base price/duration is used.</p>
+            <p class="text-sm text-gray-500">Provide different duration/price options (e.g. "Pick me up - 30mins", "Classic - 1hr"). If left empty, the base price/duration is used.</p>
             
             <div v-for="(v, idx) in form.variants" :key="idx" class="p-4 bg-gray-50 border border-gray-50 rounded-md space-y-3 relative group">
               <button @click="removeVariant(idx)" class="absolute top-2 right-2 p-1.5 bg-white text-gray-400 hover:text-red-500 rounded-md opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 class="w-3.5 h-3.5"/></button>
               
               <div>
-                <label class="block text-xs font-bold text-gray-700 mb-1">Variant Name</label>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Variant Name</label>
                 <input v-model="v.name" type="text" placeholder="e.g. A little longer" class="w-full bg-white border border-gray-25 text-gray-900 text-base rounded-lg p-2 outline-none" />
               </div>
               <div class="grid grid-cols-2 gap-3">
                 <div>
-                  <label class="block text-xs font-bold text-gray-700 mb-1">Price (₦)</label>
+                  <label class="block text-sm font-bold text-gray-700 mb-1">Price (₦)</label>
                   <input :value="formatPrice(v.price)" @input="v.price = parsePrice($event.target.value)" type="text" class="w-full bg-white border border-gray-25 text-gray-900 text-base rounded-lg p-2 outline-none" />
                 </div>
                 <div>
-                  <label class="block text-xs font-bold text-gray-700 mb-1">Duration (Mins)</label>
+                  <label class="block text-sm font-bold text-gray-700 mb-1">Duration (Mins)</label>
                   <input v-model.number="v.durationInMinutes" type="number" class="w-full bg-white border border-gray-25 text-gray-900 text-base rounded-lg p-2 outline-none" />
                 </div>
               </div>
               <div class="mt-3">
-                <label class="block text-xs font-bold text-gray-700 mb-2">Variant Media (Optional)</label>
+                <label class="block text-sm font-bold text-gray-700 mb-2">Variant Media (Optional)</label>
                 <div class="flex items-center gap-3">
                   <button type="button" @click="triggerImageUpload(idx)" class="h-16 w-16 rounded-lg bg-white border border-dashed border-gray-300 flex flex-col items-center justify-center transition-all hover:bg-blue-50 hover:border-blue-300 shrink-0 relative overflow-hidden group">
                     <template v-if="uploadingImageIdx === idx">
@@ -177,24 +177,24 @@
           <div class="space-y-4">
             <div class="flex items-center justify-between">
               <h3 class="text-sm font-bold text-gray-900 flex items-center gap-2"><Sparkles class="w-4 h-4 text-amber-500"/> Extra Add-ons</h3>
-              <button @click="addExtra" class="text-xs font-bold text-amber-500 hover:underline">Add Extra</button>
+              <button @click="addExtra" class="text-sm font-bold text-amber-500 hover:underline">Add Extra</button>
             </div>
-            <p class="text-xs text-gray-500">Suggest optional upsells clients can add to this service (e.g. "TNC Signature Pedicure").</p>
+            <p class="text-sm text-gray-500">Suggest optional upsells clients can add to this service (e.g. "TNC Signature Pedicure").</p>
             
             <div v-for="(ext, idx) in form.extras" :key="idx" class="p-4 bg-amber-50/50 border border-amber-100 rounded-md space-y-3 relative group">
               <button @click="removeExtra(idx)" class="absolute top-2 right-2 p-1.5 bg-white text-gray-400 hover:text-red-500 rounded-md opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 class="w-3.5 h-3.5"/></button>
               
               <div>
-                <label class="block text-xs font-bold text-gray-700 mb-1">Extra Name</label>
+                <label class="block text-sm font-bold text-gray-700 mb-1">Extra Name</label>
                 <input v-model="ext.name" type="text" placeholder="e.g. Pedicure" class="w-full bg-white border border-gray-25 text-gray-900 text-base rounded-lg p-2 outline-none" />
               </div>
               <div class="grid grid-cols-2 gap-3">
                 <div>
-                  <label class="block text-xs font-bold text-gray-700 mb-1">Extra Price (₦)</label>
+                  <label class="block text-sm font-bold text-gray-700 mb-1">Extra Price (₦)</label>
                   <input :value="formatPrice(ext.price)" @input="ext.price = parsePrice($event.target.value)" type="text" class="w-full bg-white border border-gray-25 text-gray-900 text-base rounded-lg p-2 outline-none" />
                 </div>
                 <div>
-                  <label class="block text-xs font-bold text-gray-700 mb-1">Added Duration (Mins)</label>
+                  <label class="block text-sm font-bold text-gray-700 mb-1">Added Duration (Mins)</label>
                   <input v-model.number="ext.durationInMinutes" type="number" class="w-full bg-white border border-gray-25 text-gray-900 text-base rounded-lg p-2 outline-none" />
                 </div>
               </div>

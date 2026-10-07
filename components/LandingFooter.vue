@@ -56,7 +56,7 @@
         <!-- Links Columns -->
         <div class="md:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-10">
           <div>
-            <h4 class="font-bold text-slate-400 mb-8 text-xs uppercase tracking-wider">Platform</h4>
+            <h4 class="font-bold text-slate-400 mb-8 text-sm uppercase tracking-wider">Platform</h4>
             <ul class="space-y-5 text-base font-bold text-slate-600">
               <li><NuxtLink to="/about" class="hover:text-[#FF5C1A] transition-colors relative group w-fit"><span class="relative z-10">About Us</span></NuxtLink></li>
               <li><NuxtLink to="/contact" class="hover:text-[#FF5C1A] transition-colors relative group w-fit"><span class="relative z-10">Contact Sales</span></NuxtLink></li>
@@ -65,7 +65,7 @@
           </div>
 
           <div>
-            <h4 class="font-bold text-slate-400 mb-8 text-xs uppercase tracking-wider">Legal</h4>
+            <h4 class="font-bold text-slate-400 mb-8 text-sm uppercase tracking-wider">Legal</h4>
             <ul class="space-y-5 text-base font-bold text-slate-600">
               <li><NuxtLink to="/terms" class="hover:text-[#FF5C1A] transition-colors relative group w-fit"><span class="relative z-10">Vendor Agreement</span></NuxtLink></li>
               <li><NuxtLink to="/terms" class="hover:text-[#FF5C1A] transition-colors relative group w-fit"><span class="relative z-10">Privacy Policy</span></NuxtLink></li>
@@ -73,7 +73,7 @@
           </div>
           
           <div class="col-span-2 sm:col-span-1">
-            <h4 class="font-bold text-slate-400 mb-8 text-xs uppercase tracking-wider">Ecosystem</h4>
+            <h4 class="font-bold text-slate-400 mb-8 text-sm uppercase tracking-wider">Ecosystem</h4>
             <ul class="space-y-5 text-base font-bold text-slate-600">
               <li>
                 <a href="https://erranders.org" target="_blank" class="group flex items-center gap-3 hover:text-[#FF5C1A] transition-colors p-3 rounded-md hover:bg-slate-50 border border-transparent hover:border-slate-100 -ml-3">

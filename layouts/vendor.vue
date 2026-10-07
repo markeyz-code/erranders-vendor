@@ -15,7 +15,7 @@
           <div class="w-8 h-8 rounded-lg overflow-hidden shrink-0">
             <video v-if="profile?.logo && profile.logo.match(/\.(mp4|webm|ogg|mov)$/i)" :src="profile.logo" class="w-full h-full object-cover" autoplay loop muted playsinline></video>
             <img v-else-if="profile?.logo" :src="profile.logo" class="w-full h-full object-cover" />
-            <div v-else class="w-full h-full bg-parentPrimary text-white flex items-center justify-center font-bold text-xs uppercase">{{ profile?.storeName ? profile.storeName.charAt(0) : 'E' }}</div>
+            <div v-else class="w-full h-full bg-parentPrimary text-white flex items-center justify-center font-bold text-sm uppercase">{{ profile?.storeName ? profile.storeName.charAt(0) : 'E' }}</div>
           </div>
           <span class="text-sm font-bold text-gray-900 truncate">{{ profile?.storeName || 'Merchant' }}</span>
         </template>
@@ -34,7 +34,7 @@
       <div class="px-4 py-3 border-b border-gray-100" :class="isSidebarMinimized ? 'flex justify-center' : ''">
         <button 
           @click="handleToggleOnline" :disabled="isToggling"
-          class="flex items-center gap-2 text-xs font-medium transition-colors"
+          class="flex items-center gap-2 text-sm font-medium transition-colors"
           :class="isSidebarMinimized ? '' : 'w-full px-3 py-2 rounded-lg justify-between'"
           :style="profile?.isOnline ? 'background: #ecfdf5' : 'background: #fef2f2'"
           :title="isSidebarMinimized ? (profile?.isOnline ? 'Store Open' : 'Store Closed') : ''"
@@ -113,7 +113,7 @@
         <div class="w-8 h-8 rounded-lg overflow-hidden shrink-0">
           <video v-if="profile?.logo && profile.logo.match(/\.(mp4|webm|ogg|mov)$/i)" :src="profile.logo" class="w-full h-full object-cover" autoplay loop muted playsinline></video>
           <img v-else-if="profile?.logo" :src="profile.logo" class="w-full h-full object-cover" />
-          <div v-else class="w-full h-full bg-parentPrimary text-white flex items-center justify-center font-bold text-xs uppercase">{{ profile?.storeName ? profile.storeName.charAt(0) : 'E' }}</div>
+          <div v-else class="w-full h-full bg-parentPrimary text-white flex items-center justify-center font-bold text-sm uppercase">{{ profile?.storeName ? profile.storeName.charAt(0) : 'E' }}</div>
         </div>
         <span class="font-semibold text-sm text-gray-900 truncate">{{ profile?.storeName || 'Merchant' }}</span>
       </div>
@@ -158,7 +158,7 @@
 
         <!-- User Profile -->
         <NuxtLink to="/dashboard/settings" @click="showMobileMenu = false" class="mx-3 mt-3 p-3 rounded-lg bg-gray-50 flex items-center gap-3 hover:bg-gray-100 transition-colors group">
-          <div class="w-9 h-9 rounded-full bg-gray-900 text-white flex items-center justify-center font-semibold text-xs shrink-0">{{ userInitials }}</div>
+          <div class="w-9 h-9 rounded-full bg-gray-900 text-white flex items-center justify-center font-semibold text-sm shrink-0">{{ userInitials }}</div>
           <div class="min-w-0 flex-1">
             <p class="text-sm font-semibold text-gray-900 truncate leading-tight">{{ userDisplayName }}</p>
             <p class="text-[11px] text-gray-400 truncate leading-tight mt-0.5">{{ user?.email }}</p>
@@ -170,7 +170,7 @@
         <div class="mx-3 mt-2 px-3 py-2 rounded-lg flex items-center justify-between" :style="profile?.isOnline ? 'background: #ecfdf5' : 'background: #fef2f2'">
           <div class="flex items-center gap-2">
             <span class="w-2 h-2 rounded-full" :class="profile?.isOnline ? 'bg-emerald-500' : 'bg-red-400'"></span>
-            <span class="text-xs font-medium" :class="profile?.isOnline ? 'text-emerald-700' : 'text-red-600'">Store {{ profile?.isOnline ? 'Open' : 'Closed' }}</span>
+            <span class="text-sm font-medium" :class="profile?.isOnline ? 'text-emerald-700' : 'text-red-600'">Store {{ profile?.isOnline ? 'Open' : 'Closed' }}</span>
           </div>
           <button @click="handleToggleOnline" :disabled="isToggling" class="text-[10px] font-semibold underline" :class="profile?.isOnline ? 'text-emerald-600' : 'text-red-500'">
             {{ profile?.isOnline ? 'Close' : 'Open' }}

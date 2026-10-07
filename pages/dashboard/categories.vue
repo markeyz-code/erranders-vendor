@@ -47,7 +47,7 @@
         <template #status="{ item }">
           <span 
             :class="(item as any).isActive ? 'bg-emerald-50 text-emerald-600 border-emerald-100/50' : 'bg-red-50 text-red-600 border-red-100/50'"
-            class="text-xs font-bold px-2 py-0.5 rounded-lg border-0 cursor-pointer hover:scale-105 transition-transform"
+            class="text-sm font-bold px-2 py-0.5 rounded-lg border-0 cursor-pointer hover:scale-105 transition-transform"
           >
             {{ (item as any).isActive ? 'Active' : 'Inactive' }}
           </span>

@@ -33,7 +33,7 @@
  v-for="filter in statusFilters"
  :key="filter.key"
  @click="activeFilter = filter.key"
- class="shrink-0 px-4 py-2 rounded-full text-xs font-bold border transition-all"
+ class="shrink-0 px-4 py-2 rounded-full text-sm font-bold border transition-all"
  :class="activeFilter === filter.key ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-500 border-gray-100 hover:border-gray-200 hover:text-gray-700'"
  >
  {{ filter.label }}
@@ -72,7 +72,7 @@
  </template>
 
  <template #status="{ item }">
- <span :class="getStatusBadge((item as any).status)" class="text-xs font-bold px-2.5 py-1 rounded-lg inline-block">
+ <span :class="getStatusBadge((item as any).status)" class="text-sm font-bold px-2.5 py-1 rounded-lg inline-block">
  {{ formatStatus((item as any).status) }}
  </span>
  </template>
@@ -111,10 +111,10 @@
 
  <!-- Items List -->
  <div class="space-y-4">
- <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400 px-1">Order Items</h4>
+ <h4 class="text-sm font-bold uppercase tracking-wider text-gray-400 px-1">Order Items</h4>
  <div class="space-y-3">
  <div v-for="group in groupedOrderItems" :key="group.name" class="space-y-3">
- <h5 v-if="group.name !== 'Other Items' || groupedOrderItems.length > 1" class="text-[11px] font-bold text-gray-400 uppercase tracking-widest pl-1 mt-4">{{ group.name }}</h5>
+ <h5 v-if="group.name !== 'Other Items' || groupedOrderItems.length > 1" class="text-[11px] font-bold text-gray-400 uppercase  pl-1 mt-4">{{ group.name }}</h5>
  <div v-for="item in group.items" :key="item._id || item.name" class="p-4 bg-white border border-gray-50 rounded-2xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] space-y-3">
  <!-- Item Header -->
  <div class="flex items-start justify-between">
@@ -124,7 +124,7 @@
  </span>
  <div>
  <p class="text-base font-bold text-gray-900">{{ item.name }}</p>
- <p class="text-xs text-gray-500 font-medium mt-0.5">Base Price: ₦{{ getOriginalPrice(item.price, selectedOrder)?.toLocaleString() }}</p>
+ <p class="text-sm text-gray-500 font-medium mt-0.5">Base Price: ₦{{ getOriginalPrice(item.price, selectedOrder)?.toLocaleString() }}</p>
  </div>
  </div>
  <span class="text-base font-extrabold text-gray-900">
@@ -143,7 +143,7 @@
  <span class="w-1.5 h-1.5 rounded-full bg-[#FF5C1A]"></span>
  {{ c.quantity > 1 ? c.quantity + 'x ' : '' }}{{ getCustomizationLabel(c) }}
  </span>
- <span v-if="c.price > 0" class="text-xs font-bold text-[#FF5C1A]">
+ <span v-if="c.price > 0" class="text-sm font-bold text-[#FF5C1A]">
  +₦{{ getOriginalPrice(c.price, selectedOrder).toLocaleString() }}
  </span>
  </div>
@@ -159,7 +159,7 @@
  <div class="flex gap-2">
  <MessageSquare class="w-4 h-4 text-amber-600 mt-0.5 shrink-0" />
  <div>
- <p class="text-xs font-bold text-amber-800 uppercase tracking-wider mb-1">Customer Instruction</p>
+ <p class="text-sm font-bold text-amber-800 uppercase tracking-wider mb-1">Customer Instruction</p>
  <p class="text-sm font-medium text-amber-900 leading-relaxed">{{ selectedOrder.vendorNote }}</p>
  </div>
  </div>
@@ -186,7 +186,7 @@
  <p class="text-sm text-gray-500 font-medium">Ordered {{ timeAgo(selectedOrder.createdAt) }}</p>
  </div>
  <div class="flex flex-col gap-2">
- <a v-if="selectedOrder.customer.phone" :href="getWhatsAppLink(selectedOrder.customer.phone, 'customer')" target="_blank" class="flex-1 px-3 py-2 bg-[#25D366]/10 text-[#25D366] rounded-lg text-xs font-bold hover:bg-[#25D366]/20 transition-all flex items-center justify-center gap-1.5">
+ <a v-if="selectedOrder.customer.phone" :href="getWhatsAppLink(selectedOrder.customer.phone, 'customer')" target="_blank" class="flex-1 px-3 py-2 bg-[#25D366]/10 text-[#25D366] rounded-lg text-sm font-bold hover:bg-[#25D366]/20 transition-all flex items-center justify-center gap-1.5">
    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 0 0-3.48-8.413z" />
    </svg>
@@ -194,14 +194,14 @@
  </a>
  <button 
  @click="pingParticipant(selectedOrder._id, 'customer')"
- class="px-3 py-1.5 bg-yellow-50 text-yellow-600 rounded-xl hover:bg-yellow-600 hover:text-white transition-all border border-yellow-100 flex items-center justify-center gap-1.5 font-bold text-xs"
+ class="px-3 py-1.5 bg-yellow-50 text-yellow-600 rounded-xl hover:bg-yellow-600 hover:text-white transition-all border border-yellow-100 flex items-center justify-center gap-1.5 font-bold text-sm"
  >
  <Bell class="w-3.5 h-3.5" />
  <span>Ping</span>
  </button>
  <button 
  @click="openChat(selectedOrder.customer?._id, selectedOrder.customer?.firstName + ' ' + selectedOrder.customer?.lastName, selectedOrder.customer?.avatar)"
- class="px-3 py-1.5 bg-[#FF5C1A]/10 text-[#FF5C1A] rounded-xl hover:bg-[#FF5C1A] hover:text-white transition-all border border-[#FF5C1A]/20 flex items-center justify-center gap-1.5 font-bold text-xs"
+ class="px-3 py-1.5 bg-[#FF5C1A]/10 text-[#FF5C1A] rounded-xl hover:bg-[#FF5C1A] hover:text-white transition-all border border-[#FF5C1A]/20 flex items-center justify-center gap-1.5 font-bold text-sm"
  >
  <MessageSquare class="w-3.5 h-3.5" />
  <span>In-App Chat</span>
@@ -218,7 +218,7 @@
  <p class="text-sm text-gray-400 font-medium">Assigned Delivery Agent</p>
  </div>
  <div class="flex flex-col gap-2">
- <a v-if="selectedOrder.errander.phone" :href="getWhatsAppLink(selectedOrder.errander.phone, 'rider')" target="_blank" class="px-3 py-2 bg-[#25D366]/10 text-[#25D366] rounded-lg text-xs font-bold hover:bg-[#25D366]/20 transition-all flex items-center justify-center gap-1.5">
+ <a v-if="selectedOrder.errander.phone" :href="getWhatsAppLink(selectedOrder.errander.phone, 'rider')" target="_blank" class="px-3 py-2 bg-[#25D366]/10 text-[#25D366] rounded-lg text-sm font-bold hover:bg-[#25D366]/20 transition-all flex items-center justify-center gap-1.5">
    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 0 0-3.48-8.413z" />
    </svg>
@@ -226,14 +226,14 @@
  </a>
  <button 
  @click="pingParticipant(selectedOrder._id, 'errander')"
- class="px-3 py-1.5 bg-yellow-50 text-yellow-600 rounded-lg hover:bg-yellow-600 hover:text-white transition-all border border-yellow-100 flex items-center justify-center gap-1.5 font-bold text-xs"
+ class="px-3 py-1.5 bg-yellow-50 text-yellow-600 rounded-lg hover:bg-yellow-600 hover:text-white transition-all border border-yellow-100 flex items-center justify-center gap-1.5 font-bold text-sm"
  >
  <Bell class="w-3.5 h-3.5" />
  <span>Ping</span>
  </button>
  <button 
  @click="openChat(selectedOrder.errander?._id, selectedOrder.errander?.firstName + ' (Rider)', selectedOrder.errander?.avatar)"
- class="px-3 py-1.5 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-600 hover:text-white transition-all border border-indigo-100 flex items-center justify-center gap-1.5 font-bold text-xs"
+ class="px-3 py-1.5 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-600 hover:text-white transition-all border border-indigo-100 flex items-center justify-center gap-1.5 font-bold text-sm"
  >
  <MessageSquare class="w-3.5 h-3.5" />
  <span>In-App Chat</span>

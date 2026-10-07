@@ -62,7 +62,7 @@
         <h3 class="text-lg font-bold text-gray-900">Bundle Pricing</h3>
         <div>
           <label class="text-sm font-semibold text-gray-800 block mb-1.5">Fixed Bundle Price (₦)</label>
-          <p class="text-xs text-gray-500 mb-2">This is the total price customers pay — NOT the sum of individual items.</p>
+          <p class="text-sm text-gray-500 mb-2">This is the total price customers pay — NOT the sum of individual items.</p>
           <input type="number" v-model.number="form.bundlePrice" placeholder="e.g. 5200" class="w-full px-4 py-3 bg-white border border-gray-25 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-25transition-all" />
         </div>
         
@@ -93,7 +93,7 @@
         <div class="flex items-center justify-between">
           <div>
             <h3 class="text-lg font-bold text-gray-900">Included Items</h3>
-            <p class="text-xs text-gray-500">Select menu items and how many portions of each are in the pack.</p>
+            <p class="text-sm text-gray-500">Select menu items and how many portions of each are in the pack.</p>
           </div>
           <button type="button" @click="addComponent" class="text-sm font-bold text-gray-900 bg-gray-100 px-3 py-1.5 rounded-lg hover:bg-gray-200">
             + Add Item
@@ -107,7 +107,7 @@
               <option v-for="prod in products" :key="prod._id" :value="prod._id">{{ prod.name }} (₦{{ prod.pricePerPortion || prod.price }})</option>
             </select>
             <div class="flex items-center gap-1 bg-white border border-gray-25 rounded-lg px-2">
-              <span class="text-gray-500 text-xs">Portions</span>
+              <span class="text-gray-500 text-sm">Portions</span>
               <input type="number" v-model.number="comp.portions" min="1" placeholder="1" class="w-14 px-1 py-2 text-base focus:outline-none" />
             </div>
             <button type="button" @click="removeComponent(idx)" class="p-2 text-gray-400 hover:text-red-500 transition-colors">
@@ -119,7 +119,7 @@
 
         <!-- Calculated à la carte comparison -->
         <div v-if="alaCarteTotal > 0" class="p-3 bg-blue-50 border border-blue-100 rounded-lg">
-          <p class="text-xs text-blue-700">
+          <p class="text-sm text-blue-700">
             <span class="font-bold">À la carte total:</span> ₦{{ alaCarteTotal.toLocaleString() }}
             <span v-if="form.bundlePrice > 0 && form.bundlePrice < alaCarteTotal" class="ml-2 text-green-700 font-bold">
               (Saving ₦{{ (alaCarteTotal - form.bundlePrice).toLocaleString() }})

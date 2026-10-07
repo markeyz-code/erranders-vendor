@@ -52,7 +52,7 @@
               <div class="flex justify-between items-start mb-2">
                 <div>
                   <h5 class="font-bold text-gray-900">{{ appointment.items?.[0]?.service?.name || 'Service' }}</h5>
-                  <p class="text-xs text-gray-500 mt-0.5">
+                  <p class="text-sm text-gray-500 mt-0.5">
                     {{ appointment.startTime }} - {{ appointment.endTime }} • {{ appointment.items?.[0]?.service?.durationInMinutes || 0 }}min
                   </p>
                 </div>
@@ -63,7 +63,7 @@
                 <div class="w-6 h-6 rounded-md bg-gray-200 flex items-center justify-center shrink-0">
                   <User class="w-3 h-3 text-gray-500" />
                 </div>
-                <span class="text-xs font-semibold text-gray-600">With Store Owner</span>
+                <span class="text-sm font-semibold text-gray-600">With Store Owner</span>
               </div>
             </div>
           </div>
@@ -78,7 +78,7 @@
             <div class="flex justify-between text-sm">
               <span class="text-gray-500">Status</span>
               <span 
-                class="font-bold px-2 py-0.5 rounded-md text-xs uppercase tracking-wider"
+                class="font-bold px-2 py-0.5 rounded-md text-sm uppercase tracking-wider"
                 :class="getStatusColor(appointment.status).badge"
               >
                 {{ appointment.status }}
@@ -90,7 +90,7 @@
             </div>
             <div class="flex justify-between text-sm">
               <span class="text-gray-500">Reference</span>
-              <span class="font-mono text-gray-900 text-xs">{{ appointment.paymentReference || 'N/A' }}</span>
+              <span class="font-mono text-gray-900 text-sm">{{ appointment.paymentReference || 'N/A' }}</span>
             </div>
           </div>
         </div>
@@ -99,12 +99,12 @@
       <!-- Direct Transfer Verification -->
       <div v-if="appointment.paymentStatus === 'pending_verification'" class="mt-4 p-4 bg-orange-50 rounded-lg border border-orange-100">
         <h4 class="text-sm font-bold text-orange-800 mb-2">Direct Transfer - Action Required</h4>
-        <p class="text-xs text-orange-700 mb-3">
+        <p class="text-sm text-orange-700 mb-3">
           The client has indicated they paid via direct bank transfer. Please review their receipt and verify the payment to confirm the booking.
         </p>
         <div v-if="appointment.proofOfPayment" class="mb-4">
-          <span class="text-xs font-semibold text-orange-900 block mb-1">Receipt Uploaded:</span>
-          <a :href="appointment.proofOfPayment" target="_blank" class="text-xs font-bold text-blue-600 hover:underline flex items-center gap-1">
+          <span class="text-sm font-semibold text-orange-900 block mb-1">Receipt Uploaded:</span>
+          <a :href="appointment.proofOfPayment" target="_blank" class="text-sm font-bold text-blue-600 hover:underline flex items-center gap-1">
             <Paperclip class="w-3 h-3" /> View Proof of Payment
           </a>
         </div>
@@ -131,7 +131,7 @@
 
         <div v-if="appointment.status === 'confirmed' || appointment.status === 'pending'" class="bg-blue-50 border border-blue-100 p-3 rounded-md mb-4 flex items-start gap-2">
           <Info class="w-4 h-4 text-blue-500 mt-0.5 shrink-0" />
-          <p class="text-xs text-blue-800">
+          <p class="text-sm text-blue-800">
             Please collect the pending balance of <strong>₦{{ appointment.pendingBalance?.toLocaleString() || 0 }}</strong> in cash or transfer before completing this booking.
           </p>
         </div>

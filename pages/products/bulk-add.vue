@@ -5,7 +5,7 @@
       <header class="flex justify-between items-start mb-6">
         <div>
           <div v-if="isOnboarding" class="flex items-center gap-2 mb-2 text-sm font-bold text-gray-500">
-            <span class="w-6 h-6 rounded-full bg-gray-900 text-white flex items-center justify-center text-xs">4</span>
+            <span class="w-6 h-6 rounded-full bg-gray-900 text-white flex items-center justify-center text-sm">4</span>
             Final Step
           </div>
           <h1 class="text-2xl font-bold mb-1">Add products</h1>

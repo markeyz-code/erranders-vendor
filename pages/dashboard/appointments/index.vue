@@ -28,21 +28,21 @@
         <div class="flex items-center bg-gray-50 rounded-md p-1 border border-gray-25 ml-4">
           <button 
             @click="setView('day')" 
-            class="px-3 py-1.5 text-xs font-bold rounded transition-colors"
+            class="px-3 py-1.5 text-sm font-bold rounded transition-colors"
             :class="currentView === 'day' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'"
           >
             Day
           </button>
           <button 
             @click="setView('week')" 
-            class="px-3 py-1.5 text-xs font-bold rounded transition-colors"
+            class="px-3 py-1.5 text-sm font-bold rounded transition-colors"
             :class="currentView === 'week' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'"
           >
             Week
           </button>
           <button 
             @click="setView('month')" 
-            class="px-3 py-1.5 text-xs font-bold rounded transition-colors"
+            class="px-3 py-1.5 text-sm font-bold rounded transition-colors"
             :class="currentView === 'month' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'"
           >
             Month

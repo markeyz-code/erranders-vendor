@@ -45,9 +45,9 @@
           <div class="flex items-center justify-between">
             <div>
               <h3 class="text-base font-bold text-gray-900">Unavailable Dates</h3>
-              <p class="text-xs text-gray-500 mt-1">Days when you cannot fulfill any orders.</p>
+              <p class="text-sm text-gray-500 mt-1">Days when you cannot fulfill any orders.</p>
             </div>
-            <button @click="addRange" class="text-xs font-bold text-[#FF5C1A] bg-[#FF5C1A]/10 px-3 py-1.5 rounded-lg hover:bg-[#FF5C1A]/20 transition-colors">
+            <button @click="addRange" class="text-sm font-bold text-[#FF5C1A] bg-[#FF5C1A]/10 px-3 py-1.5 rounded-lg hover:bg-[#FF5C1A]/20 transition-colors">
               + Add Dates
             </button>
           </div>
@@ -60,11 +60,11 @@
             <div v-for="(range, idx) in availability.unavailableRanges" :key="idx" class="flex items-center gap-3 bg-gray-50 p-3 rounded-xl border border-gray-50 group">
               <div class="flex-1 grid grid-cols-2 gap-3">
                 <div>
-                  <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">Start</label>
+                  <label class="block text-[10px] font-bold text-gray-500 uppercase  mb-1">Start</label>
                   <UiDatePicker v-model="range.startDate" class="w-full" />
                 </div>
                 <div>
-                  <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">End</label>
+                  <label class="block text-[10px] font-bold text-gray-500 uppercase  mb-1">End</label>
                   <UiDatePicker v-model="range.endDate" class="w-full" />
                 </div>
               </div>
@@ -80,7 +80,7 @@
           <div class="flex items-center justify-between">
             <div>
               <h3 class="text-base font-bold text-gray-900">Auto-Reply (Inbox)</h3>
-              <p class="text-xs text-gray-500 mt-1">Automatically respond to customers outside your reply hours.</p>
+              <p class="text-sm text-gray-500 mt-1">Automatically respond to customers outside your reply hours.</p>
             </div>
             <label class="relative inline-flex items-center cursor-pointer">
               <input type="checkbox" v-model="availability.autoReplyEnabled" class="sr-only peer">
@@ -90,7 +90,7 @@
 
           <div :class="{ 'opacity-50 pointer-events-none': !availability.autoReplyEnabled }" class="space-y-4">
             <div>
-              <label class="block text-xs font-bold text-gray-700 mb-1.5">Auto-Reply Message</label>
+              <label class="block text-sm font-bold text-gray-700 mb-1.5">Auto-Reply Message</label>
               <textarea 
                 v-model="availability.autoReplyMessage" 
                 rows="3" 
@@ -101,20 +101,20 @@
 
             <div class="pt-2 border-t border-gray-100">
               <div class="flex items-center justify-between mb-3">
-                <label class="block text-xs font-bold text-gray-700">Active Reply Hours</label>
-                <button @click="addReplyHour" class="text-[10px] font-bold text-indigo-600 uppercase tracking-widest hover:underline">
+                <label class="block text-sm font-bold text-gray-700">Active Reply Hours</label>
+                <button @click="addReplyHour" class="text-[10px] font-bold text-indigo-600 uppercase  hover:underline">
                   + Add Window
                 </button>
               </div>
 
-              <div v-if="availability.replyHours.length === 0" class="text-xs text-gray-400 font-medium ">
+              <div v-if="availability.replyHours.length === 0" class="text-sm text-gray-400 font-medium ">
                 No active reply hours. Auto-reply will always trigger.
               </div>
 
               <div v-else class="space-y-2">
                 <div v-for="(window, idx) in availability.replyHours" :key="idx" class="flex items-center gap-2">
                   <input type="time" v-model="window.startTime" class="flex-1 bg-gray-50 border border-gray-25 rounded-lg px-3 py-1.5 text-sm font-medium focus:outline-none focus:border-indigo-500" />
-                  <span class="text-gray-400 font-bold text-xs">to</span>
+                  <span class="text-gray-400 font-bold text-sm">to</span>
                   <input type="time" v-model="window.endTime" class="flex-1 bg-gray-50 border border-gray-25 rounded-lg px-3 py-1.5 text-sm font-medium focus:outline-none focus:border-indigo-500" />
                   <button @click="removeReplyHour(idx)" class="p-1.5 text-gray-400 hover:text-red-500 transition-colors">
                     <X class="w-4 h-4" />
