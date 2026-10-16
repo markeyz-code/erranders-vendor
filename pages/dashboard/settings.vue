@@ -156,6 +156,25 @@
  <input type="checkbox" v-model="profile.isInsideCampus" class="w-5 h-5 rounded-lg border-gray-300 text-[#FF5C1A] focus:ring-[#FF5C1A]" />
  </div>
  </div>
+
+ <!-- Campus - read only, fixed by the account -->
+ <div v-if="campus" class="flex flex-col sm:flex-row sm:items-center gap-3 p-4 sm:p-5 bg-gray-50 rounded-xl border border-gray-50">
+ <div class="flex items-center gap-3 min-w-0 flex-1">
+ <div class="p-2 bg-white rounded-lg text-[#FF5C1A] shrink-0">
+ <MapPin class="w-4 h-4" />
+ </div>
+ <div class="min-w-0">
+ <div class="flex items-center gap-2 flex-wrap">
+ <span v-if="campus.shortName" class="text-[10px] font-bold uppercase tracking-wider text-[#FF5C1A] bg-[#FF5C1A]/10 px-2 py-0.5 rounded-md">{{ campus.shortName }}</span>
+ <span class="text-sm font-bold text-gray-800 truncate">{{ campus.name }}</span>
+ </div>
+ <p v-if="campusLocation" class="text-[12px] font-medium text-gray-500 mt-0.5">{{ campusLocation }}</p>
+ </div>
+ </div>
+ <p class="text-[12px] font-medium text-gray-400 sm:text-right sm:max-w-[220px] shrink-0">
+ Your store operates on this campus only. The campus is fixed by your account and cannot be changed here.
+ </p>
+ </div>
  </div>
  </section>
 
@@ -572,7 +591,7 @@ import { ref, reactive, watch, onMounted, computed } from 'vue';
 import { 
  Store as StoreIcon, ImageIcon, Upload, Clock, 
  CreditCard, Power, Loader2, CheckCircle, 
- AlertCircle, Building, Plus, Trash2, X 
+ AlertCircle, Building, Plus, Trash2, X, MapPin 
 } from 'lucide-vue-next';
 import { vendors_api } from '@/api_factory/modules/vendors';
 import { payments_api } from '@/api_factory/modules/payments';
@@ -582,12 +601,48 @@ import AnimatedInput from '@/components/ui/AnimatedInput.vue';
 import SelectInput from '@/components/ui/SelectInput.vue';
 import SideDrawer from '@/components/ui/SideDrawer.vue';
 import { useVendorProfile } from '@/composables/modules/vendors';
+import { useUser } from '@/composables/modules/auth/user';
+import { institutions_api, institutionRefFrom, type Institution } from '@/api_factory/modules/institutions';
 
 definePageMeta({ layout: 'vendor' });
 useHead({ title: 'Settings - Errander Vendor' });
 
 const { showToast } = useCustomToast();
 const { wallet, updatePreferences, fetchWallet } = useWallet();
+const { user } = useUser();
+
+// The campus the store is pinned to. Read-only: a vendor cannot switch campus,
+// so there is deliberately no picker here — only a confirmation of the account.
+const campus = ref<Institution | null>(null);
+
+const campusLocation = computed(() => {
+ if (!campus.value) return '';
+ return [campus.value.city, campus.value.state].filter(Boolean).join(', ')
+ || campus.value.country
+ || '';
+});
+
+const loadCampus = async () => {
+ const populated = (user.value as any)?.institution;
+
+ // The signed-in payload sometimes already carries the whole campus document.
+ if (populated && typeof populated === 'object' && populated.name) {
+ campus.value = populated as Institution;
+ return;
+ }
+
+ const ref_ = institutionRefFrom(populated);
+ // No campus on the account - render nothing and send no header.
+ if (!ref_) return;
+
+ try {
+ const res: any = await institutions_api.get(ref_);
+ const data = res?.data?.data || res?.data;
+ if (data && data.name) campus.value = data as Institution;
+ } catch (e) {
+ // A campus that cannot be loaded simply hides the row; the store keeps working.
+ }
+};
 
 const activeTab = ref('profile');
 
@@ -962,6 +1017,7 @@ const toggleOnline = async () => {
 };
 
 onMounted(loadInitialData);
+onMounted(loadCampus);
 </script>
 
 <style scoped>

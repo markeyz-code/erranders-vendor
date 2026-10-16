@@ -1127,15 +1127,34 @@ const handleClickOutside = (e: MouseEvent) => {
     showCategoryDropdown.value = false
   }
 }
-onMounted(() => document.addEventListener('click', handleClickOutside))
-onUnmounted(() => document.removeEventListener('click', handleClickOutside))
+const universityOptions = ref<{ label: string; value: string; institutionId: string }[]>([])
+const institutionsList = ref<any[]>([])
 
-const universityOptions = [
-  { label: 'University of Lagos (UNILAG)', value: 'unilag' },
-  { label: 'University of Ibadan (UI)', value: 'ui' },
-  { label: 'Obafemi Awolowo University (OAU)', value: 'oau' },
-  { label: 'Other', value: 'other' },
-]
+const fetchInstitutions = async () => {
+  try {
+    const res: any = await GATEWAY_ENDPOINT.get('/institutions')
+    const list = res?.data || []
+    institutionsList.value = list
+    universityOptions.value = list.map((inst: any) => ({
+      label: `${inst.name} (${inst.shortName || inst.city})`,
+      value: inst._id,
+      institutionId: inst._id
+    }))
+  } catch (e) {
+    universityOptions.value = [
+      { label: 'College of Medicine, University of Lagos (CMUL)', value: '6ad26b70fda36e944287748c', institutionId: '6ad26b70fda36e944287748c' },
+      { label: 'University of Lagos (UNILAG)', value: 'unilag', institutionId: '' },
+    ]
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+  fetchInstitutions()
+})
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
+})
 
 const bankOptions = ref<{ label: string; value: string }[]>([])
 const banksLoading = ref(false)
@@ -1330,6 +1349,14 @@ const handleFinalSubmit = async () => {
     }
     if (logoUrl.value) payload.logo = logoUrl.value
     if (vendor.isStudentBusiness) { payload.matricNumber = vendor.matricNumber; payload.university = vendor.university }
+
+    if (vendor.university) {
+      const selectedInst = institutionsList.value.find((i: any) => i._id === vendor.university || i.slug === vendor.university)
+      if (selectedInst) {
+        payload.institution = selectedInst._id
+        payload.university = selectedInst.name
+      }
+    }
     
     // We will save bank details to wallet instead of just vendor profile
     if (payoutAccounts.value.length > 0) {

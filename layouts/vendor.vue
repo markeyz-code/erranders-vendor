@@ -30,6 +30,12 @@
         </button>
       </div>
 
+      <!-- Campus Badge -->
+      <div v-if="!isSidebarMinimized" class="px-4 py-2 border-b border-gray-100 flex items-center gap-1.5 text-xs text-gray-500 bg-gray-50/70">
+        <MapPin class="w-3.5 h-3.5 text-[#FF5C1A] shrink-0" />
+        <span class="truncate font-semibold text-gray-700">{{ vendorCampusName }}</span>
+      </div>
+
       <!-- Store Status -->
       <div class="px-4 py-3 border-b border-gray-100" :class="isSidebarMinimized ? 'flex justify-center' : ''">
         <button 
@@ -166,6 +172,12 @@
           <ChevronRight class="w-3.5 h-3.5 text-gray-300 group-hover:text-gray-500 shrink-0 transition-colors" />
         </NuxtLink>
 
+        <!-- Campus Badge in mobile menu -->
+        <div class="mx-3 mt-2 px-3 py-2 rounded-lg flex items-center gap-2 bg-orange-50/70 border border-orange-100 text-xs">
+          <MapPin class="w-3.5 h-3.5 text-[#FF5C1A] shrink-0" />
+          <span class="truncate font-semibold text-gray-800">{{ vendorCampusName }}</span>
+        </div>
+
         <!-- Store Status -->
         <div class="mx-3 mt-2 px-3 py-2 rounded-lg flex items-center justify-between" :style="profile?.isOnline ? 'background: #ecfdf5' : 'background: #fef2f2'">
           <div class="flex items-center gap-2">
@@ -261,7 +273,8 @@ import {
   Menu,
   MessageSquare,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  MapPin
 } from 'lucide-vue-next'
 import { useRealtimeNotifications } from '@/composables/core/useRealtimeNotifications'
 import { useVendorNotifications } from '@/composables/useVendorNotifications'
@@ -274,6 +287,16 @@ const { user, logOut } = useUser()
 const { profile, fetchProfile } = useVendorProfile()
 const { requestPermissionAndRegister, listenForOrders } = useVendorNotifications()
 const { toggleOnline } = useVendorStatus()
+
+const vendorCampusName = computed(() => {
+  const p = profile.value as any
+  if (p?.institution?.name) return p.institution.shortName || p.institution.name
+  if (p?.university) return p.university
+  const u = user.value as any
+  if (u?.institution?.name) return u.institution.shortName || u.institution.name
+  if (u?.school) return u.school
+  return 'Campus Merchant'
+})
 
 const showMobileMenu = ref(false)
 const logoutModalOpen = ref(false)

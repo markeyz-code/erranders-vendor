@@ -58,6 +58,49 @@ const instanceArray = [
   IMAGE_UPLOAD_ENDPOINT
 ];
 
+/**
+ * The signed-in vendor's campus, read from the `errandr_vendor_user` cookie the
+ * same way the token above is read from `errandr_vendor_token`.
+ *
+ * Accepts a plain ObjectId/slug (`user.institution`) or a populated document
+ * (`user.institution._id`). Returns '' when the account has no campus, in which
+ * case no header is sent and the backend keeps its previous unscoped behaviour.
+ */
+const readInstitutionId = (): string => {
+  let rawUser: any = null;
+
+  if (typeof window !== 'undefined') {
+    const match = document.cookie.match(new RegExp('(^| )errandr_vendor_user=([^;]+)'));
+    if (match) {
+      try {
+        rawUser = JSON.parse(decodeURIComponent(match[2]));
+      } catch (e) {}
+    }
+    // `setUser` also mirrors the user into localStorage, so fall back to it
+    // when the cookie was dropped.
+    if (!rawUser) {
+      try {
+        const stored = localStorage.getItem('user');
+        if (stored) rawUser = JSON.parse(stored);
+      } catch (e) {}
+    }
+  } else {
+    try {
+      const { useCookie } = require('#app');
+      const cookieUser = useCookie('errandr_vendor_user').value;
+      rawUser = typeof cookieUser === 'string' ? JSON.parse(cookieUser) : cookieUser;
+    } catch (e) {}
+  }
+
+  const institution = rawUser?.institution;
+  if (!institution) return '';
+
+  const ref = typeof institution === 'object'
+    ? (institution._id || institution.slug)
+    : institution;
+  return typeof ref === 'string' ? ref.trim() : '';
+};
+
 instanceArray.forEach((instance) => {
   instance.defaults.timeout = 15000; // Set global timeout to 15 seconds
   instance.interceptors.request.use((config: any) => {
@@ -74,6 +117,20 @@ instanceArray.forEach((instance) => {
     
     if (currentToken) {
       config.headers.Authorization = `Bearer ${currentToken}`;
+    }
+
+    // A vendor belongs to exactly one campus, so every request is pinned to it.
+    // The backend resolves tenancy from the authenticated user *before* this
+    // header, so it can never widen or move the account's campus — sending it
+    // simply makes the scoping explicit.
+    const institutionId = readInstitutionId();
+    if (institutionId) {
+      config.headers = config.headers || {};
+      if (typeof config.headers.set === 'function') {
+        config.headers.set('X-Institution-Id', institutionId);
+      } else {
+        config.headers['X-Institution-Id'] = institutionId;
+      }
     }
     return config;
   });
