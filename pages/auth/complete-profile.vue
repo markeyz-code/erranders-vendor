@@ -99,7 +99,7 @@
                     :class="valErrors.subdomain ? 'border-red-300 bg-red-50/30' : subdomainAvailable === true ? 'border-emerald-300 bg-emerald-50/30' : subdomainAvailable === false && vendor.subdomain.length >= 3 ? 'border-red-300 bg-red-50/30' : 'border-gray-200 bg-white focus-within:border-[#FF5C1A]/40 focus-within:ring-2 focus-within:ring-[#FF5C1A]/10'"
                   >
                     <div class="pl-4 pr-2 py-2 bg-gray-50/80 border-r border-gray-100 shrink-0">
-                      <span class="text-sm font-medium text-gray-400 tracking-wide">https://</span>
+                      <span class="text-sm font-medium text-gray-400 tracking-wide">erranders.org/vendors/</span>
                     </div>
                     <input 
                       v-model="vendor.subdomain" 
@@ -109,9 +109,6 @@
                       class="flex-1 px-3 py-2 text-sm font-bold text-gray-900 bg-transparent outline-none placeholder:text-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
                       @input="valErrors.subdomain = ''; vendor.subdomain = vendor.subdomain.toLowerCase().replace(/[^a-z0-9-]/g, ''); debouncedCheckSubdomain()"
                     />
-                    <div class="pr-4 py-2 bg-gray-50/80 border-l border-gray-100 shrink-0">
-                      <span class="text-sm font-medium text-gray-400 tracking-wide">.erranders.org</span>
-                    </div>
                   </div>
                   <!-- Availability Status -->
                   <div class="flex items-center gap-2 mt-2 min-h-[20px]">
@@ -121,7 +118,7 @@
                     </template>
                     <template v-else-if="subdomainAvailable === true && vendor.subdomain.length >= 3">
                       <CheckCircle class="w-3.5 h-3.5 text-emerald-500" />
-                      <span class="text-sm font-bold text-emerald-600">{{ vendor.subdomain }}.erranders.org is available! 🎉</span>
+                      <span class="text-sm font-bold text-emerald-600">erranders.org/vendors/{{ vendor.subdomain }} is available! 🎉</span>
                     </template>
                     <template v-else-if="subdomainAvailable === false && vendor.subdomain.length >= 3">
                       <AlertCircle class="w-3.5 h-3.5 text-red-500" />

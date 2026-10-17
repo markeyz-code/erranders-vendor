@@ -7,10 +7,10 @@
  <p class="text-sm text-gray-400 font-medium mt-1">Welcome back to your store overview</p>
  </div>
  <div class="flex items-center gap-2.5 flex-wrap">
- <!-- <button @click="shareStore" class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-[13px] font-bold cursor-pointer transition-all duration-200 active:scale-95 bg-white text-gray-600 border border-gray-25 hover:border-gray-200 hover:bg-gray-50">
+ <button @click="shareStore" class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-[13px] font-bold cursor-pointer transition-all duration-200 active:scale-95 bg-white text-gray-600 border border-gray-25 hover:border-gray-200 hover:bg-gray-50">
  <Share2 class="w-4 h-4" />
  Share Store
- </button> -->
+ </button>
  <div class="flex items-center gap-2 bg-emerald-50/50 px-4 py-2.5 rounded-xl border border-emerald-100">
  <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
  <span class="text-emerald-600 text-[13px] font-bold">Store Online</span>
@@ -331,31 +331,28 @@ const getStatusBadge = (s: string) => {
 };
 
 const shareStore = () => {
- if (!vendorProfile.value || !vendorProfile.value.subdomain) {
- showToast({ title: 'Error', message: 'Store link not available', type: 'error' });
- return;
+ const profile = vendorProfile.value;
+ const slug = profile?.subdomain || profile?._id;
+ if (!slug) {
+  showToast({ title: 'Error', message: 'Store link not available', type: 'error' });
+  return;
  }
- const protocol = window.location.protocol;
- let baseHost = window.location.host;
- const parts = window.location.hostname.split('.');
- if (parts.length >= 3 || (parts.length >= 2 && parts[parts.length - 1] === 'localhost')) {
- if (parts[0] !== 'www' && parts[0] !== 'student' && parts[0] !== 'vendor') {
- const port = window.location.port ? `:${window.location.port}` : '';
- baseHost = parts.slice(1).join('.') + port;
- }
- }
- const shareUrl = `${protocol}//${vendorProfile.value.subdomain}.${baseHost}/`;
+ const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+ const shareUrl = isLocal
+  ? `${window.location.protocol}//${window.location.hostname}:3001/vendors/${slug}`
+  : `https://www.erranders.org/vendors/${slug}`;
+
  if (navigator.share) {
- navigator.share({
- title: vendorProfile.value.storeName,
- text: `Check out ${vendorProfile.value.storeName} on Errandr!`,
- url: shareUrl,
- }).catch(err => {
- console.error('Error sharing:', err);
- });
+  navigator.share({
+   title: profile?.storeName || 'Store',
+   text: `Check out ${profile?.storeName || 'Store'} on Erranders!`,
+   url: shareUrl,
+  }).catch(err => {
+   console.error('Error sharing:', err);
+  });
  } else {
- navigator.clipboard.writeText(shareUrl);
- showToast({ title: 'Success', message: 'Store link copied to clipboard!', type: 'success' });
+  navigator.clipboard.writeText(shareUrl);
+  showToast({ title: 'Success', message: 'Store link copied to clipboard!', type: 'success' });
  }
 };
 
