@@ -7,6 +7,17 @@
  <p class="text-sm text-gray-400 font-medium mt-1">Welcome back to your store overview</p>
  </div>
  <div class="flex items-center gap-2.5 flex-wrap">
+ <a 
+  v-if="vendorProfile?.subdomain" 
+  :href="'https://' + vendorProfile.subdomain + '.erranders.org'" 
+  target="_blank" 
+  class="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-[12px] font-bold cursor-pointer transition-all duration-200 active:scale-95 bg-orange-50 text-[#FF5C1A] border border-[#FF5C1A]/20 hover:bg-[#FF5C1A]/10"
+  title="Visit your live store domain"
+ >
+  <Globe class="w-3.5 h-3.5 text-[#FF5C1A]" />
+  <span>{{ vendorProfile.subdomain }}.erranders.org</span>
+  <ExternalLink class="w-3 h-3 text-[#FF5C1A]/70" />
+ </a>
  <button @click="shareStore" class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-[13px] font-bold cursor-pointer transition-all duration-200 active:scale-95 bg-white text-gray-600 border border-gray-25 hover:border-gray-200 hover:bg-gray-50">
  <Share2 class="w-4 h-4" />
  Share Store
@@ -219,7 +230,7 @@
 import { ref, onMounted, computed } from 'vue';
 import { 
  ShoppingBag, Clock, TrendingUp, Building, Inbox, 
- Settings, ArrowRight, CheckCircle, Banknote, Megaphone, Package, Star, ShieldCheck, Share2, Calendar
+ Settings, ArrowRight, CheckCircle, Banknote, Megaphone, Package, Star, ShieldCheck, Share2, Calendar, Globe, ExternalLink
 } from 'lucide-vue-next';
 
 import { vendors_api } from '@/api_factory/modules/vendors';
@@ -340,7 +351,7 @@ const shareStore = () => {
  const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
  const shareUrl = isLocal
   ? `${window.location.protocol}//${window.location.hostname}:3001/vendors/${slug}`
-  : `https://www.erranders.org/vendors/${slug}`;
+  : `https://${slug}.erranders.org`;
 
  if (navigator.share) {
   navigator.share({

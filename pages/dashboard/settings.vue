@@ -111,6 +111,75 @@
  <AnimatedInput v-model="profile.storeName" label="Business Name" :description="isServiceProvider ? 'e.g. Glam by Sarah' : 'e.g. Gourmet Burger Central'" required />
  <SelectInput v-model="profile.category" :label="isServiceProvider ? 'Business Category' : 'Category'" :options="filteredCategoryOptions" :allowCustom="true" required />
  </div>
+
+ <!-- Unique Store Web Address / Custom Domain Card -->
+ <div class="p-5 md:p-6 bg-gradient-to-br from-orange-50/40 via-white to-gray-50/70 rounded-2xl border border-orange-100/80 space-y-4">
+ <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+ <div class="flex items-center gap-3">
+ <div class="w-10 h-10 rounded-xl bg-[#FF5C1A]/10 text-[#FF5C1A] flex items-center justify-center shrink-0">
+ <Globe class="w-5 h-5" />
+ </div>
+ <div>
+ <h4 class="text-sm font-bold text-gray-900">Unique Store Web Address</h4>
+ <p class="text-xs text-gray-500 font-medium">Your branded storefront domain for direct student visits & marketing</p>
+ </div>
+ </div>
+ <div v-if="profile.subdomain" class="flex items-center gap-2">
+ <a 
+ :href="'https://' + profile.subdomain + '.erranders.org'" 
+ target="_blank" 
+ class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 transition-colors shadow-sm"
+ >
+ <span>Visit Store</span>
+ <ExternalLink class="w-3.5 h-3.5 text-gray-400" />
+ </a>
+ <button 
+ type="button" 
+ @click="copyStoreUrl" 
+ class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm"
+ :class="copiedDomain ? 'bg-emerald-600 text-white' : 'bg-gray-900 hover:bg-black text-white'"
+ >
+ <Check v-if="copiedDomain" class="w-3.5 h-3.5" />
+ <Copy v-else class="w-3.5 h-3.5" />
+ <span>{{ copiedDomain ? 'Copied Link!' : 'Copy Link' }}</span>
+ </button>
+ </div>
+ </div>
+
+ <div class="space-y-2 pt-2">
+ <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 pl-1">Store Domain</label>
+ <div class="relative flex items-center">
+ <span class="absolute left-3.5 text-xs font-mono font-medium text-gray-400 select-none">https://</span>
+ <input 
+ v-model="profile.subdomain" 
+ @input="onSubdomainInput" 
+ type="text" 
+ placeholder="your-brand-name" 
+ class="w-full pl-[4.5rem] pr-36 py-3 rounded-xl border text-sm font-semibold text-gray-900 transition-all focus:outline-none"
+ :class="subdomainAvailable === false ? 'border-red-300 bg-red-50/20' : subdomainAvailable === true ? 'border-emerald-300 bg-emerald-50/20' : 'border-gray-200 bg-white focus:border-[#FF5C1A] focus:ring-2 focus:ring-[#FF5C1A]/10'"
+ />
+ <span class="absolute right-3.5 text-xs font-mono font-bold text-[#FF5C1A] select-none">.erranders.org</span>
+ </div>
+
+ <div class="flex items-center gap-2 pt-1 min-h-[20px]">
+ <div v-if="checkingSubdomain" class="flex items-center gap-1.5 text-xs text-gray-500 font-medium">
+ <Loader2 class="w-3.5 h-3.5 animate-spin text-[#FF5C1A]" />
+ <span>Checking domain availability...</span>
+ </div>
+ <div v-else-if="subdomainAvailable === true && profile.subdomain !== initialSubdomain" class="flex items-center gap-1.5 text-xs font-bold text-emerald-600">
+ <CheckCircle class="w-3.5 h-3.5" />
+ <span>https://{{ profile.subdomain }}.erranders.org is available!</span>
+ </div>
+ <div v-else-if="subdomainAvailable === false" class="flex items-center gap-1.5 text-xs font-bold text-red-500">
+ <AlertCircle class="w-3.5 h-3.5" />
+ <span>https://{{ profile.subdomain }}.erranders.org is already taken.</span>
+ </div>
+ <p v-else class="text-xs text-gray-400 font-medium">
+ Live Storefront URL: <strong class="text-gray-700">https://{{ profile.subdomain || 'your-brand' }}.erranders.org</strong>
+ </p>
+ </div>
+ </div>
+ </div>
  
  <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 pt-4 border-t border-gray-100">
  <SelectInput 
@@ -591,7 +660,8 @@ import { ref, reactive, watch, onMounted, computed } from 'vue';
 import { 
  Store as StoreIcon, ImageIcon, Upload, Clock, 
  CreditCard, Power, Loader2, CheckCircle, 
- AlertCircle, Building, Plus, Trash2, X, MapPin 
+ AlertCircle, Building, Plus, Trash2, X, MapPin,
+ Globe, ExternalLink, Copy, Check
 } from 'lucide-vue-next';
 import { vendors_api } from '@/api_factory/modules/vendors';
 import { payments_api } from '@/api_factory/modules/payments';
@@ -664,6 +734,7 @@ const profile = reactive({
  businessType: '',
  vendorType: '',
  storeName: '',
+ subdomain: '',
  description: '',
  category: '',
  address: '',
@@ -748,6 +819,48 @@ const syncHoursToWeekly = () => {
  });
 };
 
+const initialSubdomain = ref('');
+const checkingSubdomain = ref(false);
+const subdomainAvailable = ref<boolean | null>(null);
+let subdomainTimeout: any = null;
+
+const onSubdomainInput = () => {
+ profile.subdomain = (profile.subdomain || '').toLowerCase().replace(/[^a-z0-9-]/g, '');
+ subdomainAvailable.value = null;
+ if (subdomainTimeout) clearTimeout(subdomainTimeout);
+ if (!profile.subdomain || profile.subdomain.length < 3) return;
+ if (profile.subdomain === initialSubdomain.value) {
+   subdomainAvailable.value = true;
+   return;
+ }
+ subdomainTimeout = setTimeout(async () => {
+   checkingSubdomain.value = true;
+   try {
+     const res: any = await vendors_api.checkSubdomain(profile.subdomain);
+     const data = res?.data?.data || res?.data || {};
+     subdomainAvailable.value = data.available === true;
+   } catch {
+     subdomainAvailable.value = null;
+   } finally {
+     checkingSubdomain.value = false;
+   }
+ }, 500);
+};
+
+const copiedDomain = ref(false);
+const copyStoreUrl = async () => {
+ if (!profile.subdomain) return;
+ const url = `https://${profile.subdomain}.erranders.org`;
+ try {
+   await navigator.clipboard.writeText(url);
+   copiedDomain.value = true;
+   showToast({ title: 'Copied', message: 'Unique store URL copied to clipboard!', toastType: 'success' });
+   setTimeout(() => { copiedDomain.value = false; }, 2500);
+ } catch (e) {
+   showToast({ title: 'Error', message: 'Failed to copy link', toastType: 'error' });
+ }
+};
+
 const dynamicAccountPurposes = computed(() => {
  return profile.accountPurposes.map(p => ({ label: p, value: p }));
 });
@@ -791,6 +904,8 @@ const loadInitialData = async () => {
  profile.businessType = data.businessType || '';
  profile.vendorType = data.vendorType || '';
  profile.storeName = data.storeName || '';
+ profile.subdomain = data.subdomain || '';
+ initialSubdomain.value = data.subdomain || '';
  profile.description = data.description || '';
  profile.category = data.category || '';
  profile.address = data.address || '';
@@ -948,6 +1063,7 @@ const saveProfile = async () => {
  
  const { fetchProfile } = useVendorProfile();
  await fetchProfile();
+ initialSubdomain.value = profile.subdomain;
 
  showToast({ title: 'Profile Synced', message: 'Your store data has been updated.', toastType: 'success' });
  } finally { savingProfile.value = false; }
