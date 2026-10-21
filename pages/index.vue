@@ -5,124 +5,202 @@
     <LandingNavbar />
 
     <!-- Hero Section with Background Carousel & Continuous Marquee -->
-<!-- Hero Section with Background Carousel & Continuous Marquee -->
-<section class="relative pt-36 lg:pt-48 pb-24 overflow-hidden bg-gradient-to-b from-slate-50/80 via-white to-white border-b border-slate-100">
-  <!-- Soft Minimalist Grid Dot Overlay -->
-  <div class="absolute inset-0 bg-[radial-gradient(#e2e8f0_1.5px,transparent_1.5px)] [background-size:24px_24px] opacity-70 z-0 pointer-events-none"></div>
+    <!-- Hero Section with Background Carousel & Continuous Marquee -->
+    <section class="relative pt-32 lg:pt-40 pb-20 overflow-hidden bg-gradient-to-b from-slate-50/80 via-white to-white border-b border-slate-100">
+      <!-- Soft Minimalist Grid Dot Overlay & Ambient Lighting -->
+      <div class="absolute inset-0 bg-[radial-gradient(#e2e8f0_1.5px,transparent_1.5px)] [background-size:24px_24px] opacity-70 z-0 pointer-events-none"></div>
+      <div class="absolute -top-32 -left-32 w-96 h-96 bg-[#FF5C1A]/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-amber-400/10 rounded-full blur-3xl pointer-events-none"></div>
 
-  <div class="max-w-7xl mx-auto px-6 sm:px-10 relative z-10">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-      <!-- Left Column: Elegant, Balanced Content -->
-      <div class="lg:col-span-7 text-left flex flex-col items-start space-y-6">
-        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-slate-50 border border-slate-200 text-slate-600 text-sm font-bold tracking-wide">
-          <Sparkles class="w-3.5 h-3.5 text-[#FF5C1A]" />
-          Active at UNILAG, LASU & YABATECH
-        </div>
-        
-        <h1 class="text-4xl sm:text-5xl lg:text-[4.5rem] font-medium tracking-tight leading-[1.05] text-slate-900">
-          Sell to <span class="text-[#FF5C1A]">Students</span><br />
-          On Campus,<br />
-          Sharp Sharp!
-        </h1>
-        
-        <p class="text-base sm:text-lg text-slate-500 font-medium leading-relaxed max-w-xl">
-          Put your shop or restaurant right inside every student's phone. Get non-stop orders, track your money, and let us handle all the deliveries to their hostels. No stress, just sales!
-        </p>
-        
-        <div class="flex flex-row items-center gap-4 w-full sm:w-auto">
-          <NuxtLink to="/auth/register" class="px-6 py-3 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-extrabold text-sm transition-all flex items-center justify-center gap-2 active:scale-95 cursor-pointer">
-            Launch My Store
-            <Rocket class="w-4 h-4 text-white" />
-          </NuxtLink>
-          <!-- <a href="#features" class="px-6 py-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-md font-bold text-sm transition-all flex items-center justify-center gap-2 active:scale-95 cursor-pointer">
-            <PlayCircle class="w-4 h-4 text-slate-400" />
-            See How It Works
-          </a> -->
+      <!-- ═══ DESKTOP-ONLY FLOATING ORGANIC HERO IMAGE (Strictly hidden on Mobile) ═══ -->
+      <div class="hidden lg:block absolute top-16 right-6 xl:right-16 z-20 group cursor-pointer transition-all duration-500 hover:scale-105">
+        <div class="relative w-40 h-40 xl:w-48 xl:h-48 drop-shadow-2xl">
+          <div class="w-full h-full overflow-hidden rounded-[2.2rem] border-4 border-white shadow-xl bg-slate-100">
+            <img
+              src="/img/hero_vendor_chef.jpg"
+              alt="Campus food vendor chef"
+              class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-115"
+            />
+          </div>
+          <!-- Cute Top Badge -->
+          <div class="absolute -top-3 -right-2 px-2.5 py-1 rounded-full bg-emerald-500 text-white text-[10px] font-black shadow-md flex items-center gap-1">
+            <span>🧑‍🍳</span> Verified Kitchen
+          </div>
+          <!-- Micro Caption Pill -->
+          <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap px-3.5 py-1.5 bg-white/95 backdrop-blur-md rounded-full border border-slate-200/90 shadow-md text-xs font-black text-slate-800 flex items-center gap-1.5 transition-transform group-hover:scale-105">
+            <span class="w-2 h-2 rounded-full bg-[#FF5C1A] animate-pulse"></span>
+            <span>🍲 Campus Chef Kitchen</span>
+          </div>
         </div>
       </div>
 
-      <!-- Right Column: Minimalist Light Live Store Simulator -->
-      <div class="lg:col-span-5 relative w-full flex justify-center lg:justify-end">
-        <!-- The Main Light Glass Console -->
-        <div class="w-full max-w-[380px] bg-white border border-slate-100 rounded-[2.5rem] p-6 relative overflow-hidden">
-          <!-- Mockup Header -->
-          <div class="flex items-center justify-between border-b border-slate-100 pb-5 mb-5">
-            <div class="flex items-center gap-3">
-              <!-- Live Profile Avatar -->
-              <div class="w-11 h-11 rounded-md overflow-hidden border border-slate-200 relative bg-slate-50">
-                <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=150" class="w-full h-full object-cover" alt="Student Vendor" />
+      <div class="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          <!-- Left Column: Balanced, Engaging Content -->
+          <div class="lg:col-span-7 text-left flex flex-col items-start space-y-5">
+            <!-- Eyebrow + Multilingual Switcher -->
+            <div class="flex flex-wrap items-center gap-2">
+              <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-50 border border-orange-200/80 text-[#FF5C1A] text-xs font-bold tracking-wide shadow-2xs">
+                <Sparkles class="w-3.5 h-3.5 text-[#FF5C1A] animate-pulse" />
+                Active at UNILAG, LASU, YABATECH & Beyond
               </div>
-              <div>
-                <h3 class="text-sm font-bold text-slate-900">Mavis Kitchen</h3>
-                <p class="text-[11px] text-emerald-500 font-bold flex items-center gap-1 mt-0.5">
-                  <span class="w-1.5 h-1.5 rounded-md bg-emerald-500"></span> Store Online
-                </p>
-              </div>
-            </div>
-            <div class="w-8 h-8 rounded-md bg-slate-50 flex items-center justify-center text-slate-400">
-              <Store class="w-4 h-4" />
-            </div>
-          </div>
 
-          <!-- Total Sales Widget -->
-          <div class="bg-slate-50/60 rounded-md p-5 border border-slate-100 space-y-1 mb-5">
-            <div class="flex justify-between items-center text-slate-400 text-[10px] font-bold uppercase tracking-wider">
-              <span>Today's Sales</span>
-              <span class="text-emerald-600 font-medium flex items-center gap-0.5 text-[11px]">
-                <TrendingUp class="w-3 h-3" /> +28.4%
+              <!-- Interactive Language Tabs -->
+              <div class="flex items-center gap-1 bg-slate-100/90 p-1 rounded-full border border-slate-200/80 backdrop-blur-xs">
+                <button
+                  v-for="lang in vendorLanguageOptions"
+                  :key="lang.id"
+                  @click="selectVendorLanguage(lang.id)"
+                  :class="[
+                    activeVendorLangFilter === lang.id
+                      ? 'bg-slate-900 text-white shadow-xs font-bold'
+                      : 'text-slate-600 hover:text-slate-900 font-semibold hover:bg-white/60'
+                  ]"
+                  class="px-2.5 py-0.5 rounded-full text-[11px] transition-all flex items-center gap-1 cursor-pointer"
+                >
+                  <span>{{ lang.flag }}</span>
+                  <span>{{ lang.label }}</span>
+                </button>
+              </div>
+            </div>
+            
+            <h1 class="text-4xl sm:text-5xl lg:text-[4.25rem] font-black tracking-tight leading-[1.08] text-slate-900">
+              Sell to <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#FF5C1A] via-amber-500 to-[#FF4500]">30,000+ Students</span><br />
+              On Campus, Sharp Sharp!
+            </h1>
+
+            <!-- Multilingual Typewriter Text Feature for Vendors -->
+            <div class="w-full bg-slate-50/80 border border-slate-200/90 rounded-2xl p-4 shadow-2xs">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[10px] font-bold border" :class="currentVendorPhrase.badgeClass">
+                  <span>{{ currentVendorPhrase.flag }}</span>
+                  <span class="uppercase tracking-wider font-mono">{{ currentVendorPhrase.lang }}</span>
+                </span>
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Campus Vendor Hustle</span>
+              </div>
+              <p class="text-base sm:text-lg font-bold text-slate-800 tracking-tight min-h-[3rem] flex items-center">
+                <span>{{ typedVendorText }}</span>
+                <span class="inline-block w-0.5 h-5 bg-[#FF5C1A] ml-1 animate-pulse"></span>
+              </p>
+            </div>
+            
+            <p class="text-base sm:text-lg text-slate-600 font-medium leading-relaxed max-w-xl">
+              Put your restaurant, grocery shop, salon, or bakery right inside every student's pocket. You cook & pack — our Errand Ninjas deliver straight to their hostel rooms. Zero delivery stress, instant bank cashouts!
+            </p>
+
+            <!-- Feature Pills Strip -->
+            <div class="flex flex-wrap items-center gap-2 text-xs font-bold text-slate-600">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200/80">
+                <span>🛵</span> Ninjas Handle Delivery
+              </span>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200/80">
+                <span>🍱</span> Meal Desk Pre-Orders
+              </span>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200/80">
+                <span>👥</span> Hostel Group Orders
+              </span>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200/80">
+                <span>💸</span> Instant Bank Payouts
               </span>
             </div>
-            <h4 class="text-2xl font-medium text-slate-950 tracking-tight">₦148,250</h4>
-            <p class="text-[10px] text-slate-400 font-medium">Updated real-time from active checkout terminals</p>
+            
+            <div class="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto pt-2">
+              <NuxtLink to="/auth/register" class="w-full sm:w-auto px-7 py-3.5 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-xl font-black text-sm transition-all flex items-center justify-center gap-2 shadow-md shadow-[#FF5C1A]/25 active:scale-95 cursor-pointer">
+                Launch My Campus Store
+                <Rocket class="w-4 h-4 text-white" />
+              </NuxtLink>
+              <a href="#vendors-section" class="w-full sm:w-auto px-5 py-3.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 active:scale-95 cursor-pointer">
+                <Store class="w-4 h-4 text-slate-500" />
+                See Active Vendors
+              </a>
+            </div>
           </div>
 
-          <!-- Live Order Queue (Clean Light rows) -->
-          <div class="space-y-3">
-            <div class="p-3.5 bg-slate-50/50 rounded-md border border-slate-100 flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-md bg-orange-50 text-orange-500 flex items-center justify-center font-bold text-sm">🍹</div>
-                <div>
-                  <p class="text-sm font-extrabold text-slate-900">Smoothie Daddy</p>
-                  <p class="text-[11px] text-slate-500">2x Berry Boost, Extra Ice</p>
+          <!-- Right Column: Interactive Live Store Console -->
+          <div class="lg:col-span-5 relative w-full flex justify-center lg:justify-end">
+            <!-- The Main Glass Console -->
+            <div class="w-full max-w-[390px] bg-white border border-slate-200/90 rounded-[2rem] p-5 shadow-xl shadow-slate-200/40 relative overflow-hidden">
+              <!-- Mockup Header -->
+              <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
+                <div class="flex items-center gap-3">
+                  <!-- Live Profile Avatar -->
+                  <div class="w-11 h-11 rounded-xl overflow-hidden border border-slate-200 relative bg-slate-50">
+                    <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=150" class="w-full h-full object-cover" alt="Student Vendor" />
+                  </div>
+                  <div>
+                    <h3 class="text-sm font-bold text-slate-900">Mavis Kitchen & Grills</h3>
+                    <p class="text-[11px] text-emerald-600 font-bold flex items-center gap-1 mt-0.5">
+                      <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Receiving Campus Orders
+                    </p>
+                  </div>
+                </div>
+                <div class="w-8 h-8 rounded-xl bg-orange-50 text-[#FF5C1A] flex items-center justify-center border border-orange-100">
+                  <Store class="w-4 h-4" />
                 </div>
               </div>
-              <span class="px-2 py-0.5 bg-[#FF5C1A]/10 text-[#FF5C1A] border border-[#FF5C1A]/10 rounded-md text-[9px] font-extrabold uppercase">PREPARE</span>
-            </div>
 
-            <div class="p-3.5 bg-slate-50/50 rounded-md border border-slate-100 flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-md bg-green-50 text-emerald-500 flex items-center justify-center font-bold text-sm">🍲</div>
-                <div>
-                  <p class="text-sm font-extrabold text-slate-900">Iya Tinu Foods</p>
-                  <p class="text-[11px] text-slate-500">Jollof Rice & Beef (Jaja Hall)</p>
+              <!-- Total Sales Widget -->
+              <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-4 space-y-1 mb-4 shadow-sm">
+                <div class="flex justify-between items-center text-slate-400 text-[10px] font-bold uppercase tracking-wider">
+                  <span>Today's Settled Revenue</span>
+                  <span class="text-emerald-400 font-bold flex items-center gap-0.5 text-[11px]">
+                    <TrendingUp class="w-3 h-3" /> +34.2%
+                  </span>
+                </div>
+                <h4 class="text-2xl font-black text-white tracking-tight font-mono">₦164,500</h4>
+                <div class="flex items-center justify-between text-[10px] text-slate-300 pt-1 border-t border-slate-700/60">
+                  <span>38 Orders Completed</span>
+                  <span class="text-amber-300 font-semibold">Instant Escrow Settled ⚡</span>
                 </div>
               </div>
-              <span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-md text-[9px] font-extrabold uppercase">TRANSIT</span>
-            </div>
-          </div>
 
-          <!-- Decorative Floating Widgets -->
-          <!-- Widget 1: Floating Rating -->
-          <div class="absolute -top-4 -right-4 bg-white border border-slate-100 rounded-md p-2.5 flex items-center gap-2 animate-bounce [animation-duration:4s]">
-            <div class="w-7 h-7 rounded-lg bg-yellow-50 text-yellow-500 flex items-center justify-center font-medium text-sm">⭐</div>
-            <div>
-              <p class="text-[11px] font-medium text-slate-900">Iya Tinu Foods</p>
-              <p class="text-[9px] font-bold text-slate-400">4.9 Star Average</p>
-            </div>
-          </div>
+              <!-- Live Order Queue (Clean Light rows) -->
+              <div class="space-y-2.5">
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex items-center justify-between">
+                  <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-xs">🥘</div>
+                    <div>
+                      <p class="text-xs font-bold text-slate-900">Jollof & Turkey (Jaja Hall)</p>
+                      <p class="text-[10px] text-slate-500 font-medium">Group Order • 3 Portions</p>
+                    </div>
+                  </div>
+                  <span class="px-2 py-0.5 bg-[#FF5C1A]/10 text-[#FF5C1A] border border-[#FF5C1A]/20 rounded-md text-[9px] font-black uppercase">PACKED</span>
+                </div>
 
-          <!-- Widget 2: Floating Instant Payouts -->
-          <div class="absolute -bottom-4 -left-4 bg-white border border-slate-100 rounded-md p-2.5 flex items-center gap-2.5 animate-bounce [animation-duration:5s]">
-            <div class="w-7 h-7 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center font-medium text-sm">⚡</div>
-            <div>
-              <p class="text-[11px] font-medium text-slate-900">Iya Warris</p>
-              <p class="text-[9px] font-bold text-slate-400">Payout settled instantly</p>
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex items-center justify-between">
+                  <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-xs">🍱</div>
+                    <div>
+                      <p class="text-xs font-bold text-slate-900">Meal Desk Pre-Order</p>
+                      <p class="text-[10px] text-slate-500 font-medium">Fried Rice & Chicken • 12:30 PM</p>
+                    </div>
+                  </div>
+                  <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-md text-[9px] font-black uppercase">PRE-PAID</span>
+                </div>
+
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex items-center justify-between">
+                  <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-xs">🛵</div>
+                    <div>
+                      <p class="text-xs font-bold text-slate-900">Ninja Assigned: Tobi</p>
+                      <p class="text-[10px] text-slate-500 font-medium">Heading to Moremi Hall</p>
+                    </div>
+                  </div>
+                  <span class="px-2 py-0.5 bg-indigo-50 text-indigo-700 border border-indigo-200 rounded-md text-[9px] font-black uppercase">TRANSIT</span>
+                </div>
+              </div>
+
+              <!-- Floating Rating Badge -->
+              <div class="absolute -top-3 -right-3 bg-white border border-slate-200 rounded-xl p-2 shadow-md flex items-center gap-1.5">
+                <span class="text-amber-500 text-xs">⭐</span>
+                <span class="text-xs font-black text-slate-900">4.9</span>
+                <span class="text-[10px] text-slate-400 font-medium">(240+ reviews)</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
 
   <!-- Marquee Row 1 -->
   <div class="mt-24 relative bg-slate-900 overflow-hidden py-3 transform -rotate-1 border-y border-slate-800 z-10">
@@ -149,7 +227,6 @@
       </div>
     </div>
   </div>
-</section>
 
     <!-- Features Section -->
     <section id="features" class="py-32 bg-gray-50/50">
@@ -404,6 +481,135 @@ const allVendors = ref<any[]>([])
 const loadingAllVendors = ref(false)
 const mapCategory = ref('all')
 
+// Vendor Hero Multilingual Typewriter
+interface VendorPhrase {
+  text: string;
+  lang: 'Pidgin' | 'Yorùbá' | 'Igbo' | 'Hausa';
+  flag: string;
+  badgeClass: string;
+}
+
+const vendorLanguageOptions = [
+  { id: 'all', label: 'All Vibes', flag: '🔥' },
+  { id: 'Pidgin', label: 'Pidgin', flag: '🇳🇬' },
+  { id: 'Yorùbá', label: 'Yorùbá', flag: '🟢' },
+  { id: 'Igbo', label: 'Igbo', flag: '🟡' },
+  { id: 'Hausa', label: 'Hausa', flag: '🔵' },
+];
+
+const activeVendorLangFilter = ref<'all' | 'Pidgin' | 'Yorùbá' | 'Igbo' | 'Hausa'>('all');
+
+const vendorPhrases: VendorPhrase[] = [
+  // Pidgin
+  {
+    text: "No dey wait for customers to trek come your shop! Put your kitchen for 30,000+ students phone, sharp sharp! 💰",
+    lang: "Pidgin",
+    flag: "🇳🇬",
+    badgeClass: "bg-emerald-50 text-emerald-800 border-emerald-200/80",
+  },
+  {
+    text: "You cook & pack your jollof, our Errand Ninjas go do all the hostel running around for you! 🛵💨",
+    lang: "Pidgin",
+    flag: "🇳🇬",
+    badgeClass: "bg-emerald-50 text-emerald-800 border-emerald-200/80",
+  },
+  {
+    text: "Meal Desk dey bring 50+ bulk pre-orders every morning before classes start! Steady cashflow! 🍱",
+    lang: "Pidgin",
+    flag: "🇳🇬",
+    badgeClass: "bg-emerald-50 text-emerald-800 border-emerald-200/80",
+  },
+  // Yorùbá
+  {
+    text: "Ojà rẹ kò ní kù mọ́! Tà fún gbogbo students ní campus láìsí wàhálà delivery rárá! ✨",
+    lang: "Yorùbá",
+    flag: "🟢",
+    badgeClass: "bg-amber-50 text-amber-800 border-amber-200/80",
+  },
+  {
+    text: "Gbà ọ̀pọ̀lọpọ̀ Group Orders lojoojúmọ́ láti ọwọ́ àwọn akẹ́kọ̀ọ́ tó wà ní Moremi, Jaja àti Kuti! 🍲",
+    lang: "Yorùbá",
+    flag: "🟢",
+    badgeClass: "bg-amber-50 text-amber-800 border-amber-200/80",
+  },
+  // Igbo
+  {
+    text: "Mee ka ahịa gị gbasaa na campus niile! Errand Ninjas ga-ebuga nri gị na hostel ozugbo! 🚀",
+    lang: "Igbo",
+    flag: "🟡",
+    badgeClass: "bg-purple-50 text-purple-800 border-purple-200/80",
+  },
+  {
+    text: "Nweta ego kwa ụbọchị site na Meal Desk pre-orders! Ego gị na-abata na bank direct! 💰",
+    lang: "Igbo",
+    flag: "🟡",
+    badgeClass: "bg-purple-50 text-purple-800 border-purple-200/80",
+  },
+  // Hausa
+  {
+    text: "Bude shagonka a kan wayar kowane dalibi! Samu oda ba tsayawa, babu damuwa ko kadan! 🤝",
+    lang: "Hausa",
+    flag: "🔵",
+    badgeClass: "bg-blue-50 text-blue-800 border-blue-200/80",
+  },
+  {
+    text: "Sayar da abinci da kayan masarufi ga dalibai ba tare da wahalar aikawa ba! 📈",
+    lang: "Hausa",
+    flag: "🔵",
+    badgeClass: "bg-blue-50 text-blue-800 border-blue-200/80",
+  },
+];
+
+const activeVendorPhrases = computed(() => {
+  if (activeVendorLangFilter.value === 'all') return vendorPhrases;
+  return vendorPhrases.filter(p => p.lang === activeVendorLangFilter.value);
+});
+
+const currentVendorPhraseIndex = ref(0);
+const typedVendorText = ref('');
+const isVendorDeleting = ref(false);
+let vendorTypewriterTimeout: any = null;
+
+const currentVendorPhrase = computed<VendorPhrase>(() => {
+  const list = activeVendorPhrases.value;
+  return list[currentVendorPhraseIndex.value % list.length] || vendorPhrases[0];
+});
+
+const selectVendorLanguage = (langId: any) => {
+  activeVendorLangFilter.value = langId;
+  currentVendorPhraseIndex.value = 0;
+  typedVendorText.value = '';
+  isVendorDeleting.value = false;
+  if (vendorTypewriterTimeout) clearTimeout(vendorTypewriterTimeout);
+  runVendorTypewriter();
+};
+
+const runVendorTypewriter = () => {
+  const phrase = currentVendorPhrase.value.text;
+  const currentLen = typedVendorText.value.length;
+
+  if (!isVendorDeleting.value) {
+    if (currentLen < phrase.length) {
+      typedVendorText.value = phrase.slice(0, currentLen + 1);
+      vendorTypewriterTimeout = setTimeout(runVendorTypewriter, 32);
+    } else {
+      vendorTypewriterTimeout = setTimeout(() => {
+        isVendorDeleting.value = true;
+        runVendorTypewriter();
+      }, 2600);
+    }
+  } else {
+    if (currentLen > 0) {
+      typedVendorText.value = phrase.slice(0, currentLen - 1);
+      vendorTypewriterTimeout = setTimeout(runVendorTypewriter, 18);
+    } else {
+      isVendorDeleting.value = false;
+      currentVendorPhraseIndex.value = (currentVendorPhraseIndex.value + 1) % activeVendorPhrases.value.length;
+      vendorTypewriterTimeout = setTimeout(runVendorTypewriter, 350);
+    }
+  }
+};
+
 // Dynamic Category Generator
 const getCategoryIcon = (category: string) => {
   const icons: Record<string, string> = {
@@ -452,10 +658,12 @@ const fetchAllVendorsForMap = async () => {
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
   fetchAllVendorsForMap()
+  runVendorTypewriter()
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  if (vendorTypewriterTimeout) clearTimeout(vendorTypewriterTimeout)
 })
 
 // Data for Features Grid
