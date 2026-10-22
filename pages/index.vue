@@ -5,197 +5,113 @@
     <LandingNavbar />
 
     <!-- Hero Section with Background Carousel & Continuous Marquee -->
-    <!-- Hero Section with Background Carousel & Continuous Marquee -->
-    <section class="relative pt-32 lg:pt-40 pb-20 overflow-hidden bg-gradient-to-b from-slate-50/80 via-white to-white border-b border-slate-100">
-      <!-- Soft Minimalist Grid Dot Overlay & Ambient Lighting -->
-      <div class="absolute inset-0 bg-[radial-gradient(#e2e8f0_1.5px,transparent_1.5px)] [background-size:24px_24px] opacity-70 z-0 pointer-events-none"></div>
+    <!-- Hero Section: Clean, Centered Simplicity (Matching Erranders for Business) -->
+    <section class="relative border-b border-slate-100 min-h-[calc(100dvh-5rem)] flex flex-col justify-center items-center py-12 lg:py-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-orange-50/30 via-white to-white">
+      <!-- Soft dot background grid (seeding pattern) -->
+      <div class="absolute inset-0 bg-[radial-gradient(#e2e8f0_1.5px,transparent_1.5px)] [background-size:24px_24px] opacity-70 pointer-events-none"></div>
       <div class="absolute -top-32 -left-32 w-96 h-96 bg-[#FF5C1A]/10 rounded-full blur-3xl pointer-events-none"></div>
       <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-amber-400/10 rounded-full blur-3xl pointer-events-none"></div>
 
-      <!-- ═══ DESKTOP-ONLY FLOATING ORGANIC HERO IMAGE (Strictly hidden on Mobile) ═══ -->
-      <div class="hidden lg:block absolute top-16 right-6 xl:right-16 z-20 group cursor-pointer transition-all duration-500 hover:scale-105">
-        <div class="relative w-40 h-40 xl:w-48 xl:h-48 drop-shadow-2xl">
-          <div class="w-full h-full overflow-hidden rounded-[2.2rem] border-4 border-white shadow-xl bg-slate-100">
-            <img
-              src="/img/hero_vendor_chef.jpg"
-              alt="Campus food vendor chef"
-              class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-115"
-            />
+      <!-- Max Width Stage -->
+      <div class="max-w-7xl mx-auto relative w-full my-auto">
+        <!-- Center Column Content -->
+        <div class="max-w-3xl mx-auto text-center relative z-20 space-y-6">
+          <!-- Launch Pill -->
+          <div>
+            <NuxtLink
+              to="/auth/register"
+              class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-50 border border-orange-200/70 text-[#FF5C1A] text-xs font-bold hover:bg-orange-100/70 transition-colors shadow-2xs group"
+            >
+              <span class="w-2 h-2 rounded-full bg-[#FF5C1A] animate-pulse"></span>
+              <span>Active at UNILAG, LASU, YABATECH & Beyond</span>
+              <ArrowUpRight class="w-3.5 h-3.5 text-[#FF5C1A] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </NuxtLink>
           </div>
-          <!-- Cute Top Badge -->
-          <div class="absolute -top-3 -right-2 px-2.5 py-1 rounded-full bg-emerald-500 text-white text-[10px] font-black shadow-md flex items-center gap-1">
-            <span>🧑‍🍳</span> Verified Kitchen
-          </div>
-          <!-- Micro Caption Pill -->
-          <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap px-3.5 py-1.5 bg-white/95 backdrop-blur-md rounded-full border border-slate-200/90 shadow-md text-xs font-black text-slate-800 flex items-center gap-1.5 transition-transform group-hover:scale-105">
-            <span class="w-2 h-2 rounded-full bg-[#FF5C1A] animate-pulse"></span>
-            <span>🍲 Campus Chef Kitchen</span>
-          </div>
-        </div>
-      </div>
 
-      <div class="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          <!-- Left Column: Balanced, Engaging Content -->
-          <div class="lg:col-span-7 text-left flex flex-col items-start space-y-5">
-            <!-- Eyebrow + Multilingual Switcher -->
-            <div class="flex flex-wrap items-center gap-2">
-              <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-50 border border-orange-200/80 text-[#FF5C1A] text-xs font-bold tracking-wide shadow-2xs">
-                <Sparkles class="w-3.5 h-3.5 text-[#FF5C1A] animate-pulse" />
-                Active at UNILAG, LASU, YABATECH & Beyond
-              </div>
-
-              <!-- Interactive Language Tabs -->
-              <div class="flex items-center gap-1 bg-slate-100/90 p-1 rounded-full border border-slate-200/80 backdrop-blur-xs">
-                <button
-                  v-for="lang in vendorLanguageOptions"
-                  :key="lang.id"
-                  @click="selectVendorLanguage(lang.id)"
-                  :class="[
-                    activeVendorLangFilter === lang.id
-                      ? 'bg-slate-900 text-white shadow-xs font-bold'
-                      : 'text-slate-600 hover:text-slate-900 font-semibold hover:bg-white/60'
-                  ]"
-                  class="px-2.5 py-0.5 rounded-full text-[11px] transition-all flex items-center gap-1 cursor-pointer"
-                >
-                  <span>{{ lang.flag }}</span>
-                  <span>{{ lang.label }}</span>
-                </button>
-              </div>
-            </div>
-            
-            <h1 class="text-4xl sm:text-5xl lg:text-[4.25rem] font-black tracking-tight leading-[1.08] text-slate-900">
-              Sell to <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#FF5C1A] via-amber-500 to-[#FF4500]">30,000+ Students</span><br />
-              On Campus, Sharp Sharp!
+          <!-- Main Bold Heading with Rotating Carousel Tagline -->
+          <div class="space-y-3">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.08]">
+              Erranders for Vendors
             </h1>
 
-            <!-- Multilingual Typewriter Text Feature for Vendors -->
-            <div class="w-full bg-slate-50/80 border border-slate-200/90 rounded-2xl p-4 shadow-2xs">
-              <div class="flex items-center justify-between mb-1.5">
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[10px] font-bold border" :class="currentVendorPhrase.badgeClass">
-                  <span>{{ currentVendorPhrase.flag }}</span>
-                  <span class="uppercase tracking-wider font-mono">{{ currentVendorPhrase.lang }}</span>
-                </span>
-                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Campus Vendor Hustle</span>
-              </div>
-              <p class="text-base sm:text-lg font-bold text-slate-800 tracking-tight min-h-[3rem] flex items-center">
-                <span>{{ typedVendorText }}</span>
-                <span class="inline-block w-0.5 h-5 bg-[#FF5C1A] ml-1 animate-pulse"></span>
-              </p>
-            </div>
-            
-            <p class="text-base sm:text-lg text-slate-600 font-medium leading-relaxed max-w-xl">
-              Put your restaurant, grocery shop, salon, or bakery right inside every student's pocket. You cook & pack — our Errand Ninjas deliver straight to their hostel rooms. Zero delivery stress, instant bank cashouts!
-            </p>
-
-            <!-- Feature Pills Strip -->
-            <div class="flex flex-wrap items-center gap-2 text-xs font-bold text-slate-600">
-              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200/80">
-                <span>🛵</span> Ninjas Handle Delivery
-              </span>
-              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200/80">
-                <span>🍱</span> Meal Desk Pre-Orders
-              </span>
-              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200/80">
-                <span>👥</span> Hostel Group Orders
-              </span>
-              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200/80">
-                <span>💸</span> Instant Bank Payouts
-              </span>
-            </div>
-            
-            <div class="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto pt-2">
-              <NuxtLink to="/auth/register" class="w-full sm:w-auto px-7 py-3.5 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-xl font-black text-sm transition-all flex items-center justify-center gap-2 shadow-md shadow-[#FF5C1A]/25 active:scale-95 cursor-pointer">
-                Launch My Campus Store
-                <Rocket class="w-4 h-4 text-white" />
-              </NuxtLink>
-              <a href="#vendors-section" class="w-full sm:w-auto px-5 py-3.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 active:scale-95 cursor-pointer">
-                <Store class="w-4 h-4 text-slate-500" />
-                See Active Vendors
-              </a>
+            <!-- Rotating Headline Micro-Carousel -->
+            <div class="relative h-10 sm:h-12 overflow-hidden flex items-center justify-center">
+              <TransitionGroup name="hero-slide" tag="div" class="w-full">
+                <p
+                  :key="currentHeadingIndex"
+                  class="absolute inset-0 flex items-center justify-center text-lg sm:text-2xl font-black tracking-tight text-[#FF5C1A]"
+                >
+                  <span>{{ heroHeadings[currentHeadingIndex] }}</span>
+                </p>
+              </TransitionGroup>
             </div>
           </div>
 
-          <!-- Right Column: Interactive Live Store Console -->
-          <div class="lg:col-span-5 relative w-full flex justify-center lg:justify-end">
-            <!-- The Main Glass Console -->
-            <div class="w-full max-w-[390px] bg-white border border-slate-200/90 rounded-[2rem] p-5 shadow-xl shadow-slate-200/40 relative overflow-hidden">
-              <!-- Mockup Header -->
-              <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
-                <div class="flex items-center gap-3">
-                  <!-- Live Profile Avatar -->
-                  <div class="w-11 h-11 rounded-xl overflow-hidden border border-slate-200 relative bg-slate-50">
-                    <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=150" class="w-full h-full object-cover" alt="Student Vendor" />
-                  </div>
-                  <div>
-                    <h3 class="text-sm font-bold text-slate-900">Mavis Kitchen & Grills</h3>
-                    <p class="text-[11px] text-emerald-600 font-bold flex items-center gap-1 mt-0.5">
-                      <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Receiving Campus Orders
-                    </p>
-                  </div>
-                </div>
-                <div class="w-8 h-8 rounded-xl bg-orange-50 text-[#FF5C1A] flex items-center justify-center border border-orange-100">
-                  <Store class="w-4 h-4" />
-                </div>
-              </div>
+          <!-- Subtitle -->
+          <p class="text-sm sm:text-base text-slate-600 font-medium max-w-xl mx-auto leading-relaxed">
+            Sell to 30,000+ students on campus. You cook and pack — our verified student Errand Ninjas deliver straight to hostel rooms with instant bank payouts.
+          </p>
 
-              <!-- Total Sales Widget -->
-              <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-4 space-y-1 mb-4 shadow-sm">
-                <div class="flex justify-between items-center text-slate-400 text-[10px] font-bold uppercase tracking-wider">
-                  <span>Today's Settled Revenue</span>
-                  <span class="text-emerald-400 font-bold flex items-center gap-0.5 text-[11px]">
-                    <TrendingUp class="w-3 h-3" /> +34.2%
-                  </span>
-                </div>
-                <h4 class="text-2xl font-black text-white tracking-tight font-mono">₦164,500</h4>
-                <div class="flex items-center justify-between text-[10px] text-slate-300 pt-1 border-t border-slate-700/60">
-                  <span>38 Orders Completed</span>
-                  <span class="text-amber-300 font-semibold">Instant Escrow Settled ⚡</span>
-                </div>
-              </div>
+          <!-- Cute Pill Action Buttons (DevFest style with arrow badge circles) -->
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-2">
+            <NuxtLink
+              to="/auth/register"
+              class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-7 py-3.5 rounded-full bg-[#FF5C1A] text-white text-sm font-bold shadow-md shadow-[#FF5C1A]/25 hover:bg-[#E54D12] active:scale-[0.98] transition-all group"
+            >
+              <span>Launch Free Campus Store</span>
+              <span class="w-6 h-6 rounded-full bg-white/20 group-hover:bg-white/30 flex items-center justify-center transition-colors">
+                <ArrowUpRight class="w-4 h-4 text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </span>
+            </NuxtLink>
 
-              <!-- Live Order Queue (Clean Light rows) -->
-              <div class="space-y-2.5">
-                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex items-center justify-between">
-                  <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-xs">🥘</div>
-                    <div>
-                      <p class="text-xs font-bold text-slate-900">Jollof & Turkey (Jaja Hall)</p>
-                      <p class="text-[10px] text-slate-500 font-medium">Group Order • 3 Portions</p>
-                    </div>
-                  </div>
-                  <span class="px-2 py-0.5 bg-[#FF5C1A]/10 text-[#FF5C1A] border border-[#FF5C1A]/20 rounded-md text-[9px] font-black uppercase">PACKED</span>
-                </div>
+            <a
+              href="#vendors-section"
+              class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-7 py-3.5 rounded-full bg-slate-950 text-white text-sm font-bold shadow-md shadow-slate-950/20 hover:bg-slate-800 active:scale-[0.98] transition-all group"
+            >
+              <span>Explore Active Vendors</span>
+              <span class="w-6 h-6 rounded-full bg-white/15 group-hover:bg-white/25 flex items-center justify-center transition-colors">
+                <ArrowUpRight class="w-4 h-4 text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </span>
+            </a>
+          </div>
 
-                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex items-center justify-between">
-                  <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-xs">🍱</div>
-                    <div>
-                      <p class="text-xs font-bold text-slate-900">Meal Desk Pre-Order</p>
-                      <p class="text-[10px] text-slate-500 font-medium">Fried Rice & Chicken • 12:30 PM</p>
-                    </div>
-                  </div>
-                  <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-md text-[9px] font-black uppercase">PRE-PAID</span>
-                </div>
+          <!-- Trust points -->
+          <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs font-semibold text-slate-500 pt-2">
+            <span class="flex items-center gap-1.5"><CheckCircle2 class="w-3.5 h-3.5 text-emerald-600" /> Ninjas handle all deliveries</span>
+            <span class="flex items-center gap-1.5"><CheckCircle2 class="w-3.5 h-3.5 text-emerald-600" /> Meal Desk & schedule bulk orders</span>
+            <span class="flex items-center gap-1.5"><CheckCircle2 class="w-3.5 h-3.5 text-emerald-600" /> Instant escrow bank payouts</span>
+          </div>
+        </div>
 
-                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/80 flex items-center justify-between">
-                  <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-xs">🛵</div>
-                    <div>
-                      <p class="text-xs font-bold text-slate-900">Ninja Assigned: Tobi</p>
-                      <p class="text-[10px] text-slate-500 font-medium">Heading to Moremi Hall</p>
-                    </div>
-                  </div>
-                  <span class="px-2 py-0.5 bg-indigo-50 text-indigo-700 border border-indigo-200 rounded-md text-[9px] font-black uppercase">TRANSIT</span>
-                </div>
-              </div>
+        <!-- ═══ DESKTOP-ONLY FLOATING ORGANIC HERO IMAGES (Strictly hidden on Mobile) ═══ -->
+        <!-- Card 1: Top Right (Chef Photo with Verified Kitchen Pill) -->
+        <div class="hidden lg:block absolute top-4 right-4 xl:right-12 z-10 group cursor-pointer transition-all duration-500 hover:scale-105">
+          <div class="relative w-44 h-44 xl:w-52 xl:h-52 drop-shadow-xl">
+            <div class="w-full h-full overflow-hidden rounded-[2.5rem] border-4 border-white shadow-xl bg-slate-100">
+              <img
+                src="/img/hero_vendor_chef.jpg"
+                alt="Campus food vendor chef"
+                class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-115"
+              />
+            </div>
+            <!-- Micro Caption Pill -->
+            <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap px-3.5 py-1.5 bg-white/95 backdrop-blur-md rounded-full border border-slate-200/90 shadow-md text-xs font-black text-slate-800 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-[#FF5C1A] animate-pulse"></span>
+              <span>🍲 Campus Chef Kitchen</span>
+            </div>
+          </div>
+        </div>
 
-              <!-- Floating Rating Badge -->
-              <div class="absolute -top-3 -right-3 bg-white border border-slate-200 rounded-xl p-2 shadow-md flex items-center gap-1.5">
-                <span class="text-amber-500 text-xs">⭐</span>
-                <span class="text-xs font-black text-slate-900">4.9</span>
-                <span class="text-[10px] text-slate-400 font-medium">(240+ reviews)</span>
-              </div>
+        <!-- Card 2: Bottom Left (Instant Settlement Badge) -->
+        <div class="hidden lg:block absolute bottom-4 left-4 xl:left-12 z-10 group cursor-pointer transition-all duration-500 hover:scale-105">
+          <div class="bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl p-4 shadow-xl space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+              <span class="text-xs font-black text-slate-900">Live Campus Orders</span>
+            </div>
+            <p class="text-[11px] text-slate-500 font-medium">30,000+ Students Reached</p>
+            <div class="pt-1 flex items-center gap-1.5 text-xs font-black text-emerald-600">
+              <CheckCircle2 class="w-3.5 h-3.5" /> Instant Bank Alert
             </div>
           </div>
         </div>
@@ -453,7 +369,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { 
-  ArrowRight, Twitter, Instagram, Facebook,
+  ArrowRight, ArrowUpRight, CheckCircle2, Twitter, Instagram, Facebook,
   LogIn, Store, TrendingUp, Zap, Rocket, Activity, ClipboardList, PieChart, Star,
   PlayCircle, Quote, Utensils, Bike, Sparkles, MapPin
 } from 'lucide-vue-next'
@@ -481,134 +397,15 @@ const allVendors = ref<any[]>([])
 const loadingAllVendors = ref(false)
 const mapCategory = ref('all')
 
-// Vendor Hero Multilingual Typewriter
-interface VendorPhrase {
-  text: string;
-  lang: 'Pidgin' | 'Yorùbá' | 'Igbo' | 'Hausa';
-  flag: string;
-  badgeClass: string;
-}
-
-const vendorLanguageOptions = [
-  { id: 'all', label: 'All Vibes', flag: '🔥' },
-  { id: 'Pidgin', label: 'Pidgin', flag: '🇳🇬' },
-  { id: 'Yorùbá', label: 'Yorùbá', flag: '🟢' },
-  { id: 'Igbo', label: 'Igbo', flag: '🟡' },
-  { id: 'Hausa', label: 'Hausa', flag: '🔵' },
-];
-
-const activeVendorLangFilter = ref<'all' | 'Pidgin' | 'Yorùbá' | 'Igbo' | 'Hausa'>('all');
-
-const vendorPhrases: VendorPhrase[] = [
-  // Pidgin
-  {
-    text: "No dey wait for customers to trek come your shop! Put your kitchen for 30,000+ students phone, sharp sharp! 💰",
-    lang: "Pidgin",
-    flag: "🇳🇬",
-    badgeClass: "bg-emerald-50 text-emerald-800 border-emerald-200/80",
-  },
-  {
-    text: "You cook & pack your jollof, our Errand Ninjas go do all the hostel running around for you! 🛵💨",
-    lang: "Pidgin",
-    flag: "🇳🇬",
-    badgeClass: "bg-emerald-50 text-emerald-800 border-emerald-200/80",
-  },
-  {
-    text: "Meal Desk dey bring 50+ bulk pre-orders every morning before classes start! Steady cashflow! 🍱",
-    lang: "Pidgin",
-    flag: "🇳🇬",
-    badgeClass: "bg-emerald-50 text-emerald-800 border-emerald-200/80",
-  },
-  // Yorùbá
-  {
-    text: "Ojà rẹ kò ní kù mọ́! Tà fún gbogbo students ní campus láìsí wàhálà delivery rárá! ✨",
-    lang: "Yorùbá",
-    flag: "🟢",
-    badgeClass: "bg-amber-50 text-amber-800 border-amber-200/80",
-  },
-  {
-    text: "Gbà ọ̀pọ̀lọpọ̀ Group Orders lojoojúmọ́ láti ọwọ́ àwọn akẹ́kọ̀ọ́ tó wà ní Moremi, Jaja àti Kuti! 🍲",
-    lang: "Yorùbá",
-    flag: "🟢",
-    badgeClass: "bg-amber-50 text-amber-800 border-amber-200/80",
-  },
-  // Igbo
-  {
-    text: "Mee ka ahịa gị gbasaa na campus niile! Errand Ninjas ga-ebuga nri gị na hostel ozugbo! 🚀",
-    lang: "Igbo",
-    flag: "🟡",
-    badgeClass: "bg-purple-50 text-purple-800 border-purple-200/80",
-  },
-  {
-    text: "Nweta ego kwa ụbọchị site na Meal Desk pre-orders! Ego gị na-abata na bank direct! 💰",
-    lang: "Igbo",
-    flag: "🟡",
-    badgeClass: "bg-purple-50 text-purple-800 border-purple-200/80",
-  },
-  // Hausa
-  {
-    text: "Bude shagonka a kan wayar kowane dalibi! Samu oda ba tsayawa, babu damuwa ko kadan! 🤝",
-    lang: "Hausa",
-    flag: "🔵",
-    badgeClass: "bg-blue-50 text-blue-800 border-blue-200/80",
-  },
-  {
-    text: "Sayar da abinci da kayan masarufi ga dalibai ba tare da wahalar aikawa ba! 📈",
-    lang: "Hausa",
-    flag: "🔵",
-    badgeClass: "bg-blue-50 text-blue-800 border-blue-200/80",
-  },
-];
-
-const activeVendorPhrases = computed(() => {
-  if (activeVendorLangFilter.value === 'all') return vendorPhrases;
-  return vendorPhrases.filter(p => p.lang === activeVendorLangFilter.value);
-});
-
-const currentVendorPhraseIndex = ref(0);
-const typedVendorText = ref('');
-const isVendorDeleting = ref(false);
-let vendorTypewriterTimeout: any = null;
-
-const currentVendorPhrase = computed<VendorPhrase>(() => {
-  const list = activeVendorPhrases.value;
-  return list[currentVendorPhraseIndex.value % list.length] || vendorPhrases[0];
-});
-
-const selectVendorLanguage = (langId: any) => {
-  activeVendorLangFilter.value = langId;
-  currentVendorPhraseIndex.value = 0;
-  typedVendorText.value = '';
-  isVendorDeleting.value = false;
-  if (vendorTypewriterTimeout) clearTimeout(vendorTypewriterTimeout);
-  runVendorTypewriter();
-};
-
-const runVendorTypewriter = () => {
-  const phrase = currentVendorPhrase.value.text;
-  const currentLen = typedVendorText.value.length;
-
-  if (!isVendorDeleting.value) {
-    if (currentLen < phrase.length) {
-      typedVendorText.value = phrase.slice(0, currentLen + 1);
-      vendorTypewriterTimeout = setTimeout(runVendorTypewriter, 32);
-    } else {
-      vendorTypewriterTimeout = setTimeout(() => {
-        isVendorDeleting.value = true;
-        runVendorTypewriter();
-      }, 2600);
-    }
-  } else {
-    if (currentLen > 0) {
-      typedVendorText.value = phrase.slice(0, currentLen - 1);
-      vendorTypewriterTimeout = setTimeout(runVendorTypewriter, 18);
-    } else {
-      isVendorDeleting.value = false;
-      currentVendorPhraseIndex.value = (currentVendorPhraseIndex.value + 1) % activeVendorPhrases.value.length;
-      vendorTypewriterTimeout = setTimeout(runVendorTypewriter, 350);
-    }
-  }
-};
+// Vendor Hero Rotating Headline Micro-Carousel (Matching Erranders for Business)
+const heroHeadings = [
+  'Sell to 30,000+ students on campus, sharp sharp.',
+  'Ninjas deliver orders straight to hostel rooms.',
+  'Meal Desk brings 50+ bulk pre-orders before classes start.',
+  'Zero delivery stress — instant escrow bank payouts.',
+]
+const currentHeadingIndex = ref(0)
+let headingTimer: any = null
 
 // Dynamic Category Generator
 const getCategoryIcon = (category: string) => {
@@ -658,12 +455,14 @@ const fetchAllVendorsForMap = async () => {
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
   fetchAllVendorsForMap()
-  runVendorTypewriter()
+  headingTimer = setInterval(() => {
+    currentHeadingIndex.value = (currentHeadingIndex.value + 1) % heroHeadings.length
+  }, 3500)
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
-  if (vendorTypewriterTimeout) clearTimeout(vendorTypewriterTimeout)
+  if (headingTimer) clearInterval(headingTimer)
 })
 
 // Data for Features Grid
@@ -712,5 +511,18 @@ const successStories = [
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.hero-slide-enter-active,
+.hero-slide-leave-active {
+  transition: all 0.5s ease;
+}
+.hero-slide-enter-from {
+  opacity: 0;
+  transform: translateY(100%);
+}
+.hero-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-100%);
 }
 </style>
