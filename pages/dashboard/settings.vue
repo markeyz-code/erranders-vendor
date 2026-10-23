@@ -245,6 +245,45 @@
  </p>
  </div>
  </div>
+
+ <!-- Payout account summary: the bank details belong on the profile, not only
+      behind a tab the owner has to know about. -->
+ <div class="bg-white rounded-[14px] border border-[#f0f0f0] px-4 py-4 md:p-6">
+ <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+ <div>
+ <h4 class="text-base font-bold text-gray-900 flex items-center gap-2">
+ <CreditCard class="w-4 h-4 text-emerald-500" /> Payout account
+ </h4>
+ <p class="text-sm text-gray-500 mt-0.5">Where your earnings are sent.</p>
+ </div>
+ <button @click="activeTab = 'financials'" class="px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 rounded-xl font-bold text-sm transition-colors self-start sm:self-auto">
+ Manage
+ </button>
+ </div>
+
+ <div v-if="payoutLoading" class="mt-4 flex items-center gap-2 text-sm text-gray-400">
+ <span class="w-3 h-3 rounded-full border-2 border-gray-200 border-t-emerald-500 animate-spin"></span>
+ Loading your bank details…
+ </div>
+
+ <div v-else-if="payoutLoadError" class="mt-4 rounded-xl bg-amber-50 border border-amber-200 px-4 py-3 flex items-center justify-between gap-4">
+ <p class="text-sm font-semibold text-amber-800">{{ payoutLoadError }}</p>
+ <button @click="retryPayoutLoad" class="text-sm font-bold text-amber-900 underline whitespace-nowrap">Retry</button>
+ </div>
+
+ <div v-else-if="activePayoutAccount" class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2">
+ <div>
+ <p class="text-sm font-bold text-gray-500 uppercase tracking-wider">{{ activePayoutAccount.bankName }}</p>
+ <p class="text-lg font-bold text-gray-900 font-mono tracking-tight">{{ maskAccountNumber(activePayoutAccount.accountNumber) }}</p>
+ <p class="text-sm text-gray-600 font-medium">{{ activePayoutAccount.accountName }}</p>
+ </div>
+ <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-full text-sm font-bold">Active</span>
+ </div>
+
+ <p v-else class="mt-4 text-sm text-gray-500">
+ No payout account yet. <button @click="activeTab = 'financials'" class="font-bold text-[#FF5C1A] hover:underline">Link a bank account</button> so your earnings can be paid out.
+ </p>
+ </div>
  </section>
 
  <!-- SECTION: OPERATIONS -->
@@ -787,6 +826,10 @@ interface PayoutAccount {
  purpose?: string;
 }
 const payoutAccounts = ref<PayoutAccount[]>([]);
+// A failed request used to render the empty state, which tells a vendor their bank details
+// are gone. Track the failure separately so we can say what actually happened.
+const payoutLoading = ref(true);
+const payoutLoadError = ref('');
 
 const isAccountDrawerOpen = ref(false);
 const newAccount = reactive({ bankCode: '', bankName: '', accountNumber: '', accountName: '', purpose: 'default' });
@@ -891,8 +934,16 @@ const dynamicAccountPurposes = computed(() => {
  return categoryOptions;
  });
 
+const activePayoutAccount = computed(
+ () => payoutAccounts.value.find((a) => a.isActive) || payoutAccounts.value[0] || null,
+);
+
+const retryPayoutLoad = () => { void loadInitialData(); };
+
 const loadInitialData = async () => {
  loading.value = true;
+ payoutLoading.value = true;
+ payoutLoadError.value = '';
  try {
  const [profRes, walletRes] = await Promise.all([
  vendors_api.getProfile(),
@@ -949,6 +1000,14 @@ const loadInitialData = async () => {
  payoutAccounts.value = wData.metadata.payoutAccounts;
  } else if (wData.bankDetails?.accountNumber) {
  payoutAccounts.value = [{ ...wData.bankDetails, isActive: true }];
+ } else if ((data as any)?.bankDetails?.accountNumber) {
+ // The vendor profile can carry the payout account even when the wallet has not been
+ // provisioned yet — without this fallback those vendors saw an empty payout section.
+ payoutAccounts.value = [{ ...(data as any).bankDetails, isActive: true }];
+ }
+
+ if (payoutAccounts.value.length === 0 && !wData) {
+ payoutLoadError.value = 'We could not load your bank details.';
  }
 
  // Fetch banks lookup
@@ -957,7 +1016,11 @@ const loadInitialData = async () => {
  const banks = bRes?.data?.data || bRes?.data || [];
  bankOptions.value = banks.map((b: any) => ({ label: b.name || b.bank_name, value: b.code || b.bank_code }));
  banksLoading.value = false;
+ } catch (err: any) {
+ payoutLoadError.value =
+ err?.response?.data?.message || 'We could not load your bank details. Check your connection and retry.';
  } finally {
+ payoutLoading.value = false;
  loading.value = false;
  }
 };

@@ -123,7 +123,7 @@
  {{ item.quantity }}x
  </span>
  <div>
- <p class="text-base font-bold text-gray-900">{{ item.name }}</p>
+ <p class="text-base font-bold text-gray-900">{{ getItemDisplayName(item) }}</p>
  <p class="text-sm text-gray-500 font-medium mt-0.5">Base Price: ₦{{ getOriginalPrice(item.price, selectedOrder)?.toLocaleString() }}</p>
  </div>
  </div>
@@ -370,25 +370,74 @@ const getVendorEarnings = (orderItem: any) => {
  return vendorSubtotal + vendorPackaging;
 };
 
+const getItemDisplayName = (item: any): string => {
+  if (!item?.name) return '';
+  const rawName = item.name.trim();
+  if (!item.customizations?.length) return rawName;
+
+  const isBread = /bread/i.test(rawName);
+  const colorCust = item.customizations.find((c: any) => 
+    /color/i.test(c.selected || '') || 
+    /^(brown|white|wheat)$/i.test(c.name?.trim() || '')
+  );
+  const sizeCust = item.customizations.find((c: any) => 
+    /size|price|portion/i.test(c.selected || '') ||
+    (/^\d+$/.test(c.name?.trim() || '') && Number(c.name) >= 100)
+  );
+
+  if (isBread && (colorCust || sizeCust)) {
+    const details: string[] = [];
+    if (colorCust) details.push(colorCust.name.trim());
+    if (sizeCust) {
+      const val = sizeCust.name.trim();
+      details.push(/^\d+$/.test(val) ? `₦${Number(val).toLocaleString()} Loaf` : val);
+    }
+    return `${rawName} (${details.join(' · ')})`;
+  }
+
+  return rawName;
+};
+
 const getGroupedCustomizations = (customizations: any[]) => {
- if (!customizations) return [];
- const grouped: Record<string, any> = {};
- customizations.forEach(c => {
- if (grouped[c.name]) {
- grouped[c.name].quantity += 1;
- grouped[c.name].price += c.price;
- } else {
- grouped[c.name] = { ...c, quantity: 1 };
- }
- });
- return Object.values(grouped);
+  if (!customizations) return [];
+  const grouped: Record<string, any> = {};
+  customizations.forEach(c => {
+    const key = `${c.selected || ''}_${c.name}`;
+    if (grouped[key]) {
+      grouped[key].quantity += 1;
+      grouped[key].price += c.price;
+    } else {
+      grouped[key] = { ...c, quantity: 1 };
+    }
+  });
+  return Object.values(grouped);
 };
 
 const getCustomizationLabel = (c: any) => {
- if (c.selected && c.selected !== c.name && !['add-on', 'add-ons', 'extra', 'extras', 'customization', 'customizations'].includes(c.selected.toLowerCase())) {
- return `${c.selected}: ${c.name}`;
- }
- return c.name;
+  if (!c) return '';
+  const name = String(c.name || '').trim();
+  const selected = String(c.selected || '').trim();
+
+  if (/size/i.test(selected) && /^\d+$/.test(name)) {
+    return `${selected}: ₦${Number(name).toLocaleString()} Loaf`;
+  }
+
+  if (/^\d+$/.test(name) && Number(name) >= 50) {
+    if (selected) {
+      return `${selected}: ₦${Number(name).toLocaleString()}`;
+    }
+    return `Size: ₦${Number(name).toLocaleString()}`;
+  }
+
+  if (/color|type|flavor|protein|variant/i.test(selected)) {
+    return `${selected}: ${name}`;
+  }
+
+  if (selected && selected !== name && !['add-on', 'add-ons', 'extra', 'extras', 'customization', 'customizations'].includes(selected.toLowerCase())) {
+    return `${selected}: ${name}`;
+  }
+
+  return name;
 };
 
 const chatState = ref({
