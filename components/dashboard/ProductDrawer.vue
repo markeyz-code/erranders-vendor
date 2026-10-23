@@ -284,10 +284,24 @@
         </div>
         
         <div v-if="group.options && group.options.length" class="space-y-2 pl-7">
-          <div v-for="(opt, idx) in group.options" :key="idx" class="flex items-center justify-between text-sm">
+          <div v-for="(opt, idx) in group.options" :key="idx" class="flex items-center justify-between gap-3 text-sm">
             <span class="font-medium text-gray-700">{{ opt.name }}</span>
-            <span v-if="(opt.price || opt.priceDelta) > 0" class="text-gray-500 font-bold">+₦{{ (opt.price || opt.priceDelta).toLocaleString() }}</span>
-            <span v-else class="text-gray-400 font-medium">Free</span>
+            <div class="flex items-center gap-3 shrink-0">
+              <span v-if="(opt.price || opt.priceDelta) > 0" class="text-gray-500 font-bold">+₦{{ (opt.price || opt.priceDelta).toLocaleString() }}</span>
+              <span v-else class="text-gray-400 font-medium">Free</span>
+              <!-- Lets a vendor say: included with this item, paid if ordered on its own. -->
+              <button
+                v-if="form.addOnGroupIds.includes(group._id)"
+                type="button"
+                class="rounded-full border px-2 py-0.5 text-[11px] font-bold transition-colors"
+                :class="isFreeAddOn(group._id, opt.name)
+                  ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
+                  : 'border-gray-200 text-gray-400 hover:border-gray-300 hover:text-gray-600'"
+                @click.prevent.stop="toggleFreeAddOn(group._id, opt.name)"
+              >
+                {{ isFreeAddOn(group._id, opt.name) ? 'Included free' : 'Make free' }}
+              </button>
+            </div>
           </div>
         </div>
       </label>
@@ -391,6 +405,18 @@ const tagsDropdownRef = ref<HTMLElement | null>(null);
 
 const availableTags = ['African', 'Breakfast', 'Snacks', 'Meat', 'Lunch', 'Fries', 'Vegetables', 'Rice', 'Soup', 'Pasta', 'Drinks', 'Desserts', 'Grills', 'Seafood', 'Vegan', 'Spicy'];
 
+const isFreeAddOn = (groupId: string, optionName: string) =>
+  form.freeAddOns.some((f) => f.groupId === groupId && f.optionName === optionName);
+
+const toggleFreeAddOn = (groupId: string, optionName: string) => {
+  const at = form.freeAddOns.findIndex((f) => f.groupId === groupId && f.optionName === optionName);
+  if (at === -1) {
+    form.freeAddOns.push({ groupId, optionName, maxFree: 1 });
+  } else {
+    form.freeAddOns.splice(at, 1);
+  }
+};
+
 const form = reactive({
  name: '',
  description: '',
@@ -406,6 +432,7 @@ const form = reactive({
  variations: [] as any[],
  modifiers: [] as any[],
  addOnGroupIds: [] as string[],
+ freeAddOns: [] as { groupId: string; optionName: string; maxFree: number }[],
  tags: [] as string[],
  isAvailable: true,
  isFeatured: false,
@@ -441,7 +468,7 @@ const defaultForm = () => ({
   prepTimeMinutes: 15, trackStock: false, stockQuantity: null, maxPortionsPerOrder: 0,
   hasPackFee: false, packOptions: [{ name: 'Standard Pack', price: 150 }],
   isAvailable: true, isFeatured: false,
-  image: '', images: [], videos: [], modifiers: [], addOnGroupIds: [],
+  image: '', images: [], videos: [], modifiers: [], addOnGroupIds: [], freeAddOns: [],
   tags: [], isPackagingFeeIncluded: false,
  });
 
@@ -470,6 +497,12 @@ watch(() => props.isOpen, (isOpen) => {
     }
     
     Object.assign(form, { ...defaultForm(), ...p, hasPackFee, packOptions });
+    // Normalise saved waivers back to plain ids for the toggle comparison.
+    form.freeAddOns = (p.freeAddOns || []).map((f: any) => ({
+      groupId: typeof f.groupId === 'object' ? f.groupId._id : f.groupId,
+      optionName: f.optionName,
+      maxFree: f.maxFree || 1,
+    }));
     allImages.value = p.images?.length ? [...p.images] : (p.image ? [p.image] : []);
     allVideos.value = p.videos?.length ? [...p.videos] : [];
    } else {
@@ -617,6 +650,15 @@ const confirmDeleteAddOn = async (group: any) => {
   if (payload.addOnGroupIds) {
     payload.addOnGroupIds = payload.addOnGroupIds.map((g: any) => typeof g === 'object' ? g._id : g);
   }
+  // Only keep waivers for groups that are still attached to this item, so removing a
+  // group cannot leave a stale rule that silently frees something.
+  if (payload.freeAddOns) {
+    payload.freeAddOns = payload.freeAddOns.filter((f: any) =>
+      (payload.addOnGroupIds || []).includes(typeof f.groupId === 'object' ? f.groupId._id : f.groupId),
+    );
+  }
+  // The product API has no such field; only the menu-item API accepts it.
+  if (!props.usesMenuApi) delete payload.freeAddOns;
   // Strip read-only fields
   delete payload._id;
   delete payload.__v;
