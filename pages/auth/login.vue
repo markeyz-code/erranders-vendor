@@ -5,7 +5,7 @@
       <div class="mb-6 text-center flex flex-col items-center">
         <NuxtLink to="/" class="flex items-center gap-2 mb-4 inline-block group">
           <div class="flex items-center justify-center group-hover:scale-110 transition-transform">
-            <img src="@/assets/img/logo.png" class="h-9 w-auto" />
+            <img src="@/assets/img/logo-light.png" class="h-9 w-auto" />
           </div>
         </NuxtLink>
         <h1 class="text-lg font-bold text-gray-900 mb-3 tracking-tight">Welcome Back</h1>
