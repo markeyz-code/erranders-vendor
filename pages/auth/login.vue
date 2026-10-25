@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen w-full flex flex-col items-center justify-center bg-white overflow-hidden py-8 px-4 sm:px-6 lg:px-8">
     <!-- Form Card -->
-    <div class="w-full max-w-sm flex flex-col justify-center px-0 sm:px-6 py-8 bg-white sm:rounded-[2rem] relative z-10 my-8">
+    <div class="w-full max-w-lg flex flex-col justify-center px-0 sm:px-6 py-8 bg-white sm:rounded-[2rem] relative z-10 my-8">
       <div class="mb-6 text-center flex flex-col items-center">
         <NuxtLink to="/" class="flex items-center gap-2 mb-4 inline-block group">
           <div class="flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -11,7 +11,7 @@
         <h1 class="text-lg font-bold text-gray-900 mb-3 tracking-tight">Welcome Back</h1>
         <p class="text-gray-500 text-sm">Sign in to your vendor dashboard</p>
       </div>
-      <form @submit.prevent="handleLogin" class="space-y-6 max-w-sm">
+      <form @submit.prevent="handleLogin" class="space-y-6 max-w-lg">
         <UiAnimatedInput 
           v-model="email" 
           type="email" 
@@ -53,7 +53,7 @@
         </button>
       </form>
 
-      <div class="max-w-sm w-full mt-6">
+      <div class="max-w-lg w-full mt-6">
         <button type="button" @click="firebaseLogin()" :disabled="firebaseLoading" class="w-full py-3 border border-gray-50 rounded-xl flex items-center justify-center gap-3 font-bold text-gray-700 hover:bg-gray-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
           <Loader2 v-if="firebaseLoading" class="animate-spin w-4 h-4" />
           <svg v-else class="w-4 h-4" viewBox="0 0 24 24">

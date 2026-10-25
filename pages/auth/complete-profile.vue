@@ -805,7 +805,7 @@
       >
         <div v-if="activeInfoModal && infoModalContent" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" @click="activeInfoModal = null"></div>
-          <div class="relative bg-white rounded-xl p-6 w-full max-w-sm shadow-xl flex flex-col items-center text-center">
+          <div class="relative bg-white rounded-xl p-6 w-full max-w-lg shadow-xl flex flex-col items-center text-center">
             <div class="w-12 h-9 bg-[#FF5C1A]/10 rounded-full flex items-center justify-center text-[#FF5C1A] mb-4">
               <Info class="w-6 h-6" />
             </div>
@@ -844,7 +844,7 @@
       >
         <div v-if="showResumeModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" @click="ignoreResume"></div>
-          <div class="relative bg-white rounded-xl p-6 w-full max-w-sm shadow-xl flex flex-col items-center text-center">
+          <div class="relative bg-white rounded-xl p-6 w-full max-w-lg shadow-xl flex flex-col items-center text-center">
             <div class="w-12 h-9 bg-[#FF5C1A]/10 rounded-full flex items-center justify-center text-[#FF5C1A] mb-4">
               <Store class="w-6 h-6" />
             </div>

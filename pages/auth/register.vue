@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen w-full flex flex-col items-center justify-center bg-white overflow-hidden py-8 px-4 sm:px-6 lg:px-8">
-    <div class="w-full max-w-sm flex flex-col justify-center px-0 sm:px-6 py-8 bg-white sm:rounded-[2rem] relative z-10 my-8">
+    <div class="w-full max-w-lg flex flex-col justify-center px-0 sm:px-6 py-8 bg-white sm:rounded-[2rem] relative z-10 my-8">
       <div class="mb-6 text-center flex flex-col items-center">
         <NuxtLink to="/" class="flex items-center gap-2 mb-4 inline-block group">
           <div class="flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -11,7 +11,7 @@
         <p class="text-gray-500 text-sm">Join the campus delivery network</p>
       </div>
 
-      <div class="max-w-sm w-full">
+      <div class="max-w-lg w-full">
         <transition name="fade">
           <div v-if="error" class="flex items-center gap-2 p-4 mb-4 bg-red-50 border border-red-100 rounded-xl text-[13px] font-bold text-red-600">
             <AlertCircle class="w-5 h-5 shrink-0" />
