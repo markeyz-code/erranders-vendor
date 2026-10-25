@@ -1,7 +1,7 @@
 <template>
   <header 
     class="fixed w-full top-0 z-[100] transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
-    :class="[scrolled ? 'py-4' : 'py-6']"
+    :class="[scrolled ? 'py-2 sm:py-3' : 'py-3 sm:py-4.5']"
   >
     <div 
       class="mx-auto transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
@@ -14,7 +14,7 @@
         <!-- Logo -->
         <NuxtLink to="/" class="flex items-center gap-3 group relative z-10">
           <div class="relative overflow-hidden rounded-md bg-white/10 p-1 backdrop-blur-sm">
-             <img src="@/assets/img/erranders.png" alt="Erranders Logo" class="h-10 w-auto object-contain transition-transform duration-500 group-hover:scale-110" />
+             <img src="@/assets/img/logo-light.png" alt="Erranders Logo" class="h-10 w-auto object-contain transition-transform duration-500 group-hover:scale-110" />
           </div>
 
           <!-- <span class="text-xl font-medium tracking-tight transition-colors" :class="[scrolled ? 'text-gray-900' : 'text-gray-900']">
@@ -52,7 +52,7 @@
         <!-- Mobile Menu Toggle -->
         <button 
           @click="isMobileMenuOpen = !isMobileMenuOpen" 
-          class="lg:hidden relative z-50 w-12 h-12 flex items-center justify-center rounded-md border focus:outline-none transition-colors"
+          class="lg:hidden relative z-50 w-12 h-12 flex items-center justify-center rounded-full border focus:outline-none transition-colors"
           :class="[scrolled ? 'bg-white border-gray-100 text-gray-900' : 'border-black text-black backdrop-blur-md']"
         >
           <Menu v-if="!isMobileMenuOpen" class="w-5 h-5" />

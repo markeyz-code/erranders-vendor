@@ -6,7 +6,7 @@
 
     <!-- Hero Section with Background Carousel & Continuous Marquee -->
     <!-- Hero Section: Clean, Centered Simplicity (Matching Erranders for Business) -->
-    <section class="relative  border-b border-slate-100 min-h-[calc(100dvh-5rem)] flex flex-col justify-center items-center py-12 lg:py-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-orange-50/30 via-white to-white">
+    <section class="relative min-h-screen min-h-[100dvh] border-b border-slate-100 flex flex-col justify-center items-center pt-32 sm:pt-40 lg:pt-44 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-orange-50/30 via-white to-white">
       <!-- Soft dot background grid (seeding pattern) -->
       <div class="absolute inset-0 bg-[radial-gradient(#e2e8f0_1.5px,transparent_1.5px)] [background-size:24px_24px] opacity-70 pointer-events-none"></div>
       <div class="absolute -top-32 -left-32 w-96 h-96 bg-[#FF5C1A]/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -15,9 +15,9 @@
       <!-- Max Width Stage -->
       <div class="max-w-7xl mx-auto relative w-full my-auto">
         <!-- Center Column Content -->
-        <div class="max-w-3xl mx-auto text-center relative z-20 space-y-6">
-          <!-- Launch Pill -->
-          <div>
+        <div class="max-w-3xl mx-auto text-center relative z-20 space-y-6 sm:space-y-8">
+          <!-- Launch Pill with plenty of breathing room from navbar -->
+          <div class="pt-2 sm:pt-0">
             <NuxtLink
               to="/auth/register"
               class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-50 border border-orange-200/70 text-[#FF5C1A] text-xs font-bold hover:bg-orange-100/70 transition-colors shadow-2xs group"
@@ -47,12 +47,12 @@
             </div>
           </div>
 
-          <!-- Subtitle -->
+          <!-- Subtitle: Inclusive of food, provisions & student services -->
           <p class="text-sm sm:text-base text-slate-600 font-medium max-w-xl mx-auto leading-relaxed">
-            Sell to 30,000+ students on campus. You cook and pack — our verified student Errand Ninjas deliver straight to hostel rooms with instant bank payouts.
+            Sell to 30,000+ students on campus. Whether you cook hot meals, sell essentials, or offer services (nail tech, laundry, repairs) — verified student Errand Ninjas deliver straight to hostel rooms with instant bank payouts.
           </p>
 
-          <!-- Cute Pill Action Buttons (DevFest style with arrow badge circles) -->
+          <!-- Action Buttons -->
           <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-2">
             <NuxtLink
               to="/auth/register"
@@ -65,10 +65,10 @@
             </NuxtLink>
 
             <a
-              href="#vendors-section"
+              href="#calculator"
               class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-7 py-3.5 rounded-full bg-slate-950 text-white text-sm font-bold shadow-md shadow-slate-950/20 hover:bg-slate-800 active:scale-[0.98] transition-all group"
             >
-              <span>Explore Active Vendors</span>
+              <span>Calculate Your Earnings</span>
               <span class="w-6 h-6 rounded-full bg-white/15 group-hover:bg-white/25 flex items-center justify-center transition-colors">
                 <ArrowUpRight class="w-4 h-4 text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </span>
@@ -78,14 +78,14 @@
           <!-- Trust points -->
           <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs font-semibold text-slate-500 pt-2">
             <span class="flex items-center gap-1.5"><CheckCircle2 class="w-3.5 h-3.5 text-emerald-600" /> Ninjas handle all deliveries</span>
-            <span class="flex items-center gap-1.5"><CheckCircle2 class="w-3.5 h-3.5 text-emerald-600" /> Meal Desk & schedule bulk orders</span>
+            <span class="flex items-center gap-1.5"><CheckCircle2 class="w-3.5 h-3.5 text-emerald-600" /> Food, retail & student services</span>
             <span class="flex items-center gap-1.5"><CheckCircle2 class="w-3.5 h-3.5 text-emerald-600" /> Instant escrow bank payouts</span>
           </div>
         </div>
 
         <!-- ═══ DESKTOP-ONLY FLOATING ORGANIC HERO IMAGES (Strictly hidden on Mobile) ═══ -->
         <!-- Card 1: Top Right (Chef Photo with Verified Kitchen Pill) -->
-        <div class="hidden lg:block absolute top-4 right-4 xl:right-12 z-10 group cursor-pointer transition-all duration-500 hover:scale-105">
+        <!-- <div class="hidden lg:block absolute top-4 right-4 xl:right-12 z-10 group cursor-pointer transition-all duration-500 hover:scale-105">
           <div class="relative w-44 h-44 xl:w-52 xl:h-52 drop-shadow-xl">
             <div class="w-full h-full overflow-hidden rounded-[2.5rem] border-4 border-white shadow-xl bg-slate-100">
               <img
@@ -94,16 +94,15 @@
                 class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-115"
               />
             </div>
-            <!-- Micro Caption Pill -->
             <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap px-3.5 py-1.5 bg-white/95 backdrop-blur-md rounded-full border border-slate-200/90 shadow-md text-xs font-black text-slate-800 flex items-center gap-1.5">
               <span class="w-2 h-2 rounded-full bg-[#FF5C1A] animate-pulse"></span>
               <span>🍲 Campus Chef Kitchen</span>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- Card 2: Bottom Left (Instant Settlement Badge) -->
-        <div class="hidden lg:block absolute bottom-4 left-4 xl:left-12 z-10 group cursor-pointer transition-all duration-500 hover:scale-105">
+        <!-- <div class="hidden lg:block absolute bottom-4 left-4 xl:left-12 z-10 group cursor-pointer transition-all duration-500 hover:scale-105">
           <div class="bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl p-4 shadow-xl space-y-1">
             <div class="flex items-center gap-2">
               <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
@@ -114,7 +113,7 @@
               <CheckCircle2 class="w-3.5 h-3.5" /> Instant Bank Alert
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </section>
 
@@ -173,128 +172,163 @@
       </div>
     </section>
 
-    <!-- Vendor Showcase Directory -->
-    <section id="directory" class="py-24 bg-white border-y border-slate-100 relative overflow-hidden">
-      <!-- Subtle Background Pattern -->
-      <div class="absolute inset-0 bg-[radial-gradient(#f1f5f9_1.5px,transparent_1.5px)] [background-size:28px_28px] opacity-50 pointer-events-none"></div>
+    <!-- Built for Every Campus Hustle: Food, Services & Retail -->
+    <section id="models" class="py-24 bg-white border-y border-slate-100 relative overflow-hidden">
+      <div class="absolute inset-0 bg-[radial-gradient(#f1f5f9_1.5px,transparent_1.5px)] [background-size:28px_28px] opacity-60 pointer-events-none"></div>
 
       <div class="max-w-7xl mx-auto px-6 sm:px-10 relative z-10">
-        <!-- Section Header -->
-        <div class="text-center mb-12 max-w-2xl mx-auto">
-          <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#FF5C1A]/10 border border-[#FF5C1A]/20 text-[#FF5C1A] text-sm font-bold mb-5 tracking-wide uppercase">
-            <Store class="w-4 h-4" /> Trusted by Campus Businesses
+        <div class="text-center mb-16 max-w-2xl mx-auto space-y-3">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FF5C1A]/10 border border-[#FF5C1A]/20 text-[#FF5C1A] text-xs font-bold uppercase tracking-wider">
+            <Sparkles class="w-3.5 h-3.5" /> Built for Every Campus Hustle
           </div>
-          <h2 class="text-3xl lg:text-4xl font-medium text-slate-900 tracking-tighter mb-4">
-            Meet the vendors already thriving on Errander
+          <h2 class="text-3xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+            Not just food. Built for all campus businesses.
           </h2>
-          <p class="text-slate-500 font-medium text-lg leading-relaxed">
-            From delicious meals to premium accessories — these campus businesses chose Errander to grow. You should too.
+          <p class="text-slate-500 font-medium text-base sm:text-lg leading-relaxed">
+            Whether you cook from your hostel, style hair, clean rooms, or sell sneakers — Errander gives you a branded digital storefront with automated dispatch and payments.
           </p>
         </div>
 
-        <!-- Category Filter Pills -->
-        <div class="flex items-center justify-center gap-2 flex-wrap mb-12">
-          <button 
-            @click="mapCategory = 'all'"
-            class="px-5 py-2.5 rounded-full text-sm font-extrabold transition-all border flex items-center gap-2"
-            :class="mapCategory === 'all' ? 'bg-slate-900 text-white border-slate-900 shadow-lg shadow-slate-900/20' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50 hover:shadow-sm'"
-          >
-            All 
-            <span class="text-[10px] py-0.5 px-2 rounded-full font-bold" :class="mapCategory === 'all' ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500'">{{ allVendors.length }}</span>
-          </button>
-          
-          <button 
-            v-for="cat in dynamicCategories" :key="'pill-'+cat.key"
-            @click="mapCategory = cat.key"
-            class="px-5 py-2.5 rounded-full text-sm font-extrabold transition-all border flex items-center gap-2"
-            :class="mapCategory === cat.key ? 'bg-slate-900 text-white border-slate-900 shadow-lg shadow-slate-900/20' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50 hover:shadow-sm'"
-          >
-            <span>{{ cat.icon }}</span> {{ cat.label }}
-            <span class="text-[10px] py-0.5 px-2 rounded-full font-bold" :class="mapCategory === cat.key ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500'">{{ cat.count }}</span>
-          </button>
-        </div>
-
-        <!-- Vendor Cards Grid -->
-        <div v-if="loadingAllVendors" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div v-for="i in 6" :key="i" class="animate-pulse bg-slate-50 rounded-2xl h-80 border border-slate-100"></div>
-        </div>
-
-        <div v-else-if="filteredMapVendors.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- 4 Model Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
           <div 
-            v-for="(vendor, idx) in filteredMapVendors" :key="vendor._id"
-            class="group bg-white border border-slate-200 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-slate-200/60 hover:border-slate-300 hover:-translate-y-1 cursor-pointer"
-            :style="{ animationDelay: `${idx * 80}ms` }"
+            v-for="(model, idx) in businessModels" 
+            :key="idx"
+            class="bg-white border border-slate-200/80 rounded-2xl p-6 hover:shadow-xl hover:shadow-orange-500/5 hover:border-[#FF5C1A]/30 transition-all duration-300 flex flex-col justify-between group"
           >
-            <!-- Card Banner / Image -->
-            <div class="relative h-44 bg-gradient-to-br from-slate-100 to-slate-50 overflow-hidden">
-              <img 
-                :src="vendor.banner || vendor.logo || vendor.image || 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80'" 
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" 
-              />
-              <!-- Gradient Overlay -->
-              <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-              
-              <!-- Status Badge -->
-              <div v-if="vendor.isOnline" class="absolute top-3 left-3 bg-emerald-500 text-white text-[9px] font-extrabold px-2.5 py-1 rounded-full shadow-lg shadow-emerald-500/30 flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
-                OPEN
-              </div>
-
-              <!-- Category Chip on Image -->
-              <div class="absolute bottom-3 left-3">
-                <span class="px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-[10px] font-bold uppercase tracking-wider text-slate-700 shadow-sm">
-                  {{ getCategoryIcon(vendor.category) }} {{ vendor.category?.replace(/_/g, ' ') || 'Store' }}
+            <div>
+              <div class="flex items-center justify-between mb-5">
+                <div class="w-12 h-12 rounded-xl bg-orange-50 text-[#FF5C1A] flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-[#FF5C1A] group-hover:text-white transition-all duration-300">
+                  <component :is="model.icon" class="w-6 h-6" />
+                </div>
+                <span class="text-[10px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider" :class="model.badgeColor">
+                  {{ model.badge }}
                 </span>
               </div>
+              <h3 class="text-lg font-black text-slate-900 tracking-tight mb-2">{{ model.title }}</h3>
+              <p class="text-xs text-slate-500 font-medium mb-5 leading-relaxed">{{ model.description }}</p>
 
-              <!-- Logo Avatar -->
-              <div v-if="vendor.logo" class="absolute bottom-3 right-3 w-11 h-11 rounded-xl border border-white shadow-lg overflow-hidden bg-white">
-                <img :src="vendor.logo" class="w-full h-full object-cover" />
-              </div>
-            </div>
-            
-            <!-- Card Body -->
-            <div class="p-5">
-              <div class="flex justify-between items-start mb-2">
-                <h4 class="font-extrabold text-slate-900 text-lg tracking-tight leading-tight line-clamp-1 flex-1 mr-2">{{ vendor.storeName }}</h4>
-                <div class="flex items-center gap-1 shrink-0 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-100">
-                  <Star class="w-3 h-3 text-amber-500 fill-amber-500" />
-                  <span class="text-sm font-bold text-amber-700">{{ vendor.rating?.toFixed(1) || '5.0' }}</span>
+              <div class="space-y-2 border-t border-slate-100 pt-4 mb-6">
+                <div v-for="(feat, fIdx) in model.features" :key="fIdx" class="flex items-center gap-2 text-xs font-semibold text-slate-600">
+                  <CheckCircle2 class="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                  <span>{{ feat }}</span>
                 </div>
               </div>
-              
-              <p class="text-sm text-slate-500 line-clamp-2 font-medium mb-4 leading-relaxed">
-                {{ vendor.description || 'Premium campus business available on Errander.' }}
-              </p>
-              
-              <div class="flex items-center justify-between pt-3 border-t border-slate-100">
-                <div class="flex items-center gap-1.5 text-sm font-semibold text-slate-400">
-                  <MapPin class="w-3.5 h-3.5" />
-                  <span class="truncate max-w-[180px]">{{ vendor.address || 'Campus Location' }}</span>
-                </div>
-                <ArrowRight class="w-4 h-4 text-slate-300 group-hover:text-[#FF5C1A] group-hover:translate-x-1 transition-all" />
-              </div>
             </div>
+
+            <NuxtLink to="/auth/register" class="w-full py-2.5 rounded-xl bg-slate-50 hover:bg-[#FF5C1A] hover:text-white text-slate-700 font-bold text-xs text-center transition-all duration-200 border border-slate-100">
+              Start Free {{ model.title.split(' ')[0] }} Store &rarr;
+            </NuxtLink>
           </div>
         </div>
 
-        <!-- Empty State -->
-        <div v-else class="flex flex-col items-center justify-center py-20 text-center">
-          <div class="w-20 h-20 bg-slate-100 rounded-2xl flex items-center justify-center text-3xl mb-6 border border-slate-200">
-            🏪
-          </div>
-          <h4 class="text-xl font-bold text-slate-900 mb-2">No vendors in this category yet</h4>
-          <p class="text-sm text-slate-500 font-medium max-w-sm">
-            We're growing fast! This category will fill up soon as more campus businesses join Errander.
-          </p>
-        </div>
+        <!-- Interactive Campus Earnings Calculator -->
+        <div id="calculator" class="relative overflow-hidden rounded-3xl bg-slate-950 text-white p-6 sm:p-10 lg:p-12 shadow-2xl border border-slate-800">
+          <div class="absolute -right-24 -top-24 w-80 h-80 bg-[#FF5C1A]/20 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="absolute -left-24 -bottom-24 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
-        <!-- Bottom CTA -->
-        <div class="text-center mt-16">
-          <p class="text-slate-500 text-sm font-medium mb-4">Ready to join these successful vendors?</p>
-          <NuxtLink to="/auth/register" class="inline-flex items-center gap-2 px-8 py-3.5 bg-[#FF5C1A] text-white rounded-xl font-bold text-base hover:bg-[#e54d12] transition-all shadow-lg shadow-[#FF5C1A]/20 hover:shadow-xl hover:shadow-[#FF5C1A]/30 active:scale-95">
-            <Rocket class="w-4.5 h-4.5" /> Start Selling Today
-          </NuxtLink>
+          <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <!-- Left: Sliders -->
+            <div class="lg:col-span-7 space-y-8">
+              <div class="space-y-2">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-orange-400 text-xs font-bold uppercase tracking-wider">
+                  <Calculator class="w-3.5 h-3.5" /> Campus Profit Calculator
+                </div>
+                <h3 class="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-white">
+                  Estimate your monthly campus revenue
+                </h3>
+                <p class="text-slate-400 text-sm font-medium">
+                  Adjust your expected daily orders and average price to see your earning potential on Errander.
+                </p>
+              </div>
+
+              <!-- Slider 1: Daily Orders -->
+              <div class="space-y-3 bg-white/5 p-5 rounded-2xl border border-white/10">
+                <div class="flex items-center justify-between">
+                  <label class="text-xs sm:text-sm font-bold text-slate-200 uppercase tracking-wider">Daily Orders or Appointments</label>
+                  <span class="text-lg font-black text-[#FF5C1A] bg-[#FF5C1A]/10 px-3 py-1 rounded-lg border border-[#FF5C1A]/20">
+                    {{ calcDailyOrders }} / day
+                  </span>
+                </div>
+                <input 
+                  type="range" 
+                  min="3" 
+                  max="60" 
+                  step="1"
+                  v-model.number="calcDailyOrders" 
+                  class="w-full accent-[#FF5C1A] h-2 bg-slate-800 rounded-lg cursor-pointer"
+                />
+                <div class="flex justify-between text-[10px] font-bold text-slate-500">
+                  <span>3 orders</span>
+                  <span>20 orders (average)</span>
+                  <span>60+ orders (peak)</span>
+                </div>
+              </div>
+
+              <!-- Slider 2: Average Order Value -->
+              <div class="space-y-3 bg-white/5 p-5 rounded-2xl border border-white/10">
+                <div class="flex items-center justify-between">
+                  <label class="text-xs sm:text-sm font-bold text-slate-200 uppercase tracking-wider">Average Price Per Order or Service</label>
+                  <span class="text-lg font-black text-[#FF5C1A] bg-[#FF5C1A]/10 px-3 py-1 rounded-lg border border-[#FF5C1A]/20">
+                    ₦{{ calcAvgValue.toLocaleString() }}
+                  </span>
+                </div>
+                <input 
+                  type="range" 
+                  min="800" 
+                  max="15000" 
+                  step="200"
+                  v-model.number="calcAvgValue" 
+                  class="w-full accent-[#FF5C1A] h-2 bg-slate-800 rounded-lg cursor-pointer"
+                />
+                <div class="flex justify-between text-[10px] font-bold text-slate-500">
+                  <span>₦800 (quick bite/snack)</span>
+                  <span>₦2,500 (standard meal)</span>
+                  <span>₦15,000 (services/merch)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Revenue Readout Card -->
+            <div class="lg:col-span-5 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/15 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6">
+              <div class="space-y-1">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Projected Monthly Gross</p>
+                <div class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
+                  ₦{{ calcMonthlyRevenue.toLocaleString() }}
+                </div>
+                <p class="text-xs text-slate-400 font-medium">Estimated ~{{ (calcDailyOrders * 30).toLocaleString() }} monthly transactions</p>
+              </div>
+
+              <div class="space-y-3 py-4 border-y border-white/10">
+                <div class="flex items-center justify-between text-xs">
+                  <span class="text-slate-300 font-medium flex items-center gap-1.5">
+                    <CheckCircle2 class="w-3.5 h-3.5 text-emerald-400" /> Estimated Net Earnings:
+                  </span>
+                  <span class="font-bold text-emerald-400 text-sm">~₦{{ calcEstimatedProfit.toLocaleString() }}</span>
+                </div>
+                <div class="flex items-center justify-between text-xs">
+                  <span class="text-slate-300 font-medium flex items-center gap-1.5">
+                    <CheckCircle2 class="w-3.5 h-3.5 text-emerald-400" /> Delivery Hassles:
+                  </span>
+                  <span class="font-bold text-white">0% (Handled by Ninjas)</span>
+                </div>
+                <div class="flex items-center justify-between text-xs">
+                  <span class="text-slate-300 font-medium flex items-center gap-1.5">
+                    <CheckCircle2 class="w-3.5 h-3.5 text-emerald-400" /> Bank Payouts:
+                  </span>
+                  <span class="font-bold text-white">Instant Escrow Settlement</span>
+                </div>
+              </div>
+
+              <NuxtLink 
+                to="/auth/register" 
+                class="w-full py-4 rounded-xl bg-[#FF5C1A] hover:bg-[#e54d12] text-white font-black text-sm text-center shadow-lg shadow-[#FF5C1A]/30 active:scale-95 transition-all flex items-center justify-center gap-2"
+              >
+                <span>Start Selling on Campus</span>
+                <ArrowRight class="w-4 h-4" />
+              </NuxtLink>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -371,7 +405,7 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { 
   ArrowRight, ArrowUpRight, CheckCircle2, Twitter, Instagram, Facebook,
   LogIn, Store, TrendingUp, Zap, Rocket, Activity, ClipboardList, PieChart, Star,
-  PlayCircle, Quote, Utensils, Bike, Sparkles, MapPin
+  PlayCircle, Quote, Utensils, Bike, Sparkles, MapPin, Calculator, Scissors, ShoppingCart, ShoppingBag
 } from 'lucide-vue-next'
 import { vendors_api } from '@/api_factory/modules/vendors'
 
@@ -385,13 +419,55 @@ definePageMeta({
 useHead({
   title: 'Errander for Vendors | Grow Your Campus Business',
   meta: [
-    { name: 'description', content: 'Turn campus cravings into profit. Setup your digital store, reach students, and manage orders with Errander.' }
+    { name: 'description', content: 'Turn campus cravings and student skills into profit. Setup your digital store, reach students, and manage orders with Errander.' }
   ]
 })
 
 const handleScroll = () => {
   scrolled.value = window.scrollY > 50
 }
+
+// ── Campus Earnings Calculator ──
+const calcDailyOrders = ref(18)
+const calcAvgValue = ref(2500)
+const calcMonthlyRevenue = computed(() => calcDailyOrders.value * calcAvgValue.value * 30)
+const calcEstimatedProfit = computed(() => Math.round(calcMonthlyRevenue.value * 0.92))
+
+// ── Built for Every Campus Hustle Models ──
+const businessModels = [
+  {
+    icon: Utensils,
+    title: 'Food, Kitchens & Buka',
+    badge: 'Food & Snacks',
+    badgeColor: 'bg-orange-50 text-orange-600 border-orange-200',
+    description: 'Perfect for hostel cooks, pack sellers, canteens, bakeries, and drink vendors.',
+    features: ['Takeaway pack add-ons', 'Prep-time paced ordering', 'Meal Desk recurring batch orders', 'Direct hostel room dispatch']
+  },
+  {
+    icon: Scissors,
+    title: 'Campus Services & Skills',
+    badge: 'Services & Appointments',
+    badgeColor: 'bg-purple-50 text-purple-600 border-purple-200',
+    description: 'For student nail techs, barbers, hair braiders, fumigation, laundry & gadget repair.',
+    features: ['Interactive booking calendar', 'Custom service price menus', 'Direct WhatsApp & student chat', 'Zero delivery friction']
+  },
+  {
+    icon: ShoppingCart,
+    title: 'Mini-Marts & Groceries',
+    badge: 'Provisions & Marts',
+    badgeColor: 'bg-emerald-50 text-emerald-600 border-emerald-200',
+    description: 'For grocery shops, provision marts, toiletries, and hostel everyday essentials.',
+    features: ['Fast bulk inventory upload', 'Instant out-of-stock toggling', 'Late-night hostel drops', 'Bulk cart bundling']
+  },
+  {
+    icon: ShoppingBag,
+    title: 'Fashion, Merch & Retail',
+    badge: 'Boutiques & Tech',
+    badgeColor: 'bg-blue-50 text-blue-600 border-blue-200',
+    description: 'For student boutiques, thrift wear, shoes, cosmetics, and electronics repair.',
+    features: ['Size & color variants', 'High-res gallery displays', 'Direct student pickup or delivery', 'Instant escrow payout']
+  }
+]
 
 const allVendors = ref<any[]>([])
 const loadingAllVendors = ref(false)

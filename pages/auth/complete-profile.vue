@@ -71,111 +71,158 @@
 
               <UiAnimatedInput v-model="vendor.storeName" type="text" label="Store Name" :hasError="!!valErrors.storeName" :errorMessage="valErrors.storeName" @input="valErrors.storeName=''; if (useStoreNameAsUrl) syncSubdomainFromStore()" />
               
-              <!-- Use Store Name as URL toggle -->
-              <div 
-                @click="useStoreNameAsUrl = !useStoreNameAsUrl; if (useStoreNameAsUrl) syncSubdomainFromStore()"
-                class="flex items-center gap-3 px-4 py-2 rounded-md border cursor-pointer transition-all duration-300"
-                :class="useStoreNameAsUrl ? 'bg-[#FF5C1A]/5 border-[#FF5C1A]/30' : 'bg-gray-50/80 border-gray-100 hover:border-gray-200'"
-              >
-                <div 
-                  class="w-10 h-5 rounded-md relative transition-all duration-300 shrink-0"
-                  :class="useStoreNameAsUrl ? 'bg-[#FF5C1A]' : 'bg-gray-200'"
-                >
-                  <div 
-                    class="w-4 h-4 bg-white rounded-md absolute top-0.5 transition-all duration-300"
-                    :class="useStoreNameAsUrl ? 'left-[22px]' : 'left-0.5'"
-                  ></div>
-                </div>
-                <div class="flex-1 min-w-0">
-                  <p class="text-sm font-bold text-gray-900">Use store name as my unique domain</p>
-                  <p class="text-sm text-gray-400 font-medium">Auto-generate your custom [business-name].erranders.org domain</p>
-                </div>
-              </div>
-
-              <!-- Subdomain Field -->
-              <div class="space-y-2">
-                <div class="flex items-center justify-between">
-                  <label class="text-sm font-bold text-gray-900">Unique Store Domain</label>
-                  <span class="text-[11px] font-bold text-[#FF5C1A] bg-[#FF5C1A]/10 px-2 py-0.5 rounded-full">Your Public Website</span>
-                </div>
-                <div class="relative">
-                  <div class="flex items-center border rounded-md overflow-hidden transition-all duration-300"
-                    :class="valErrors.subdomain ? 'border-red-300 bg-red-50/30' : subdomainAvailable === true ? 'border-emerald-300 bg-emerald-50/30' : subdomainAvailable === false && vendor.subdomain.length >= 3 ? 'border-red-300 bg-red-50/30' : 'border-gray-200 bg-white focus-within:border-[#FF5C1A]/40 focus-within:ring-2 focus-within:ring-[#FF5C1A]/10'"
-                  >
-                    <div class="pl-3.5 pr-1.5 py-2.5 bg-gray-50/80 border-r border-gray-100 shrink-0 select-none">
-                      <span class="text-xs font-semibold text-gray-400 tracking-wide">https://</span>
+              <!-- Store Web Link / Domain Card (Redesigned & Crystal Clear) -->
+              <div class="rounded-xl border border-gray-200 bg-gray-50/60 p-3.5 space-y-2.5 transition-all">
+                <div class="flex items-center justify-between gap-2">
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-sm">🌐</span>
+                    <div>
+                      <p class="text-xs font-bold text-gray-900 leading-tight">Your Direct Store Link</p>
+                      <p class="text-[11px] text-gray-400 font-medium">Students order from this link in your Instagram & WhatsApp bio</p>
                     </div>
+                  </div>
+                  <span class="text-[10px] font-bold text-[#FF5C1A] bg-[#FF5C1A]/10 px-2 py-0.5 rounded-full shrink-0">
+                    Live Web Store
+                  </span>
+                </div>
+
+                <!-- Live Preview Pill & Customize Toggle -->
+                <div class="flex items-center justify-between bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs shadow-2xs">
+                  <div class="flex items-center gap-1 min-w-0 font-mono text-gray-400 truncate">
+                    <span class="text-gray-400">https://</span>
+                    <span class="text-[#FF5C1A] font-bold truncate">{{ vendor.subdomain || 'yourstore' }}</span>
+                    <span class="text-gray-600 font-semibold">.erranders.org</span>
+                  </div>
+                  <button 
+                    type="button" 
+                    @click="useStoreNameAsUrl = !useStoreNameAsUrl; if (useStoreNameAsUrl) syncSubdomainFromStore()"
+                    class="text-[11px] font-bold text-[#FF5C1A] hover:underline shrink-0 ml-2"
+                  >
+                    {{ useStoreNameAsUrl ? 'Edit URL handle' : 'Auto-match store' }}
+                  </button>
+                </div>
+
+                <!-- Custom Handle Input (Only expanded when editing custom handle) -->
+                <div v-if="!useStoreNameAsUrl" class="space-y-1 pt-1 animate-fade-in">
+                  <div class="flex items-center border rounded-lg overflow-hidden bg-white"
+                    :class="valErrors.subdomain ? 'border-red-300' : subdomainAvailable === true ? 'border-emerald-300' : 'border-gray-200 focus-within:border-[#FF5C1A]'"
+                  >
+                    <span class="px-2.5 py-1.5 text-xs text-gray-400 bg-gray-50 border-r border-gray-100 select-none">https://</span>
                     <input 
                       v-model="vendor.subdomain" 
-                      :disabled="useStoreNameAsUrl"
                       type="text" 
-                      placeholder="businessname"
-                      class="flex-1 px-3 py-2 text-sm font-bold text-gray-900 bg-transparent outline-none placeholder:text-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
+                      placeholder="customname"
+                      class="flex-1 px-2.5 py-1.5 text-xs font-bold text-gray-900 outline-none placeholder:text-gray-300"
                       @input="valErrors.subdomain = ''; vendor.subdomain = vendor.subdomain.toLowerCase().replace(/[^a-z0-9-]/g, ''); debouncedCheckSubdomain()"
                     />
-                    <div class="px-3.5 py-2.5 bg-gray-50/80 border-l border-gray-100 shrink-0 select-none">
-                      <span class="text-xs font-bold text-gray-700 tracking-wide">.erranders.org</span>
-                    </div>
+                    <span class="px-2.5 py-1.5 text-xs font-semibold text-gray-500 bg-gray-50 border-l border-gray-100 select-none">.erranders.org</span>
                   </div>
-                  <!-- Availability Status -->
-                  <div class="flex items-center gap-2 mt-2 min-h-[20px]">
-                    <template v-if="checkingSubdomain">
-                      <div class="w-3.5 h-3.5 border border-gray-200 border-t-[#FF5C1A] rounded-md animate-spin"></div>
-                      <span class="text-sm font-bold text-gray-400">Checking availability...</span>
-                    </template>
-                    <template v-else-if="subdomainAvailable === true && vendor.subdomain.length >= 3">
-                      <CheckCircle class="w-3.5 h-3.5 text-emerald-500" />
-                      <span class="text-sm font-bold text-emerald-600">https://{{ vendor.subdomain }}.erranders.org is available! 🎉</span>
-                    </template>
-                    <template v-else-if="subdomainAvailable === false && vendor.subdomain.length >= 3">
-                      <AlertCircle class="w-3.5 h-3.5 text-red-500" />
-                      <span class="text-sm font-bold text-red-500">https://{{ vendor.subdomain }}.erranders.org is taken. Try another domain.</span>
-                    </template>
-                    <template v-else-if="vendor.subdomain.length > 0 && vendor.subdomain.length < 3">
-                      <AlertCircle class="w-3.5 h-3.5 text-amber-500" />
-                      <span class="text-sm font-bold text-amber-500">Minimum 3 characters required</span>
-                    </template>
-                    <template v-else-if="valErrors.subdomain">
-                      <AlertCircle class="w-3.5 h-3.5 text-red-500" />
-                      <span class="text-sm font-bold text-red-500">{{ valErrors.subdomain }}</span>
-                    </template>
-                  </div>
+                </div>
+
+                <!-- Availability Feedback -->
+                <div class="flex items-center gap-1.5 min-h-[16px]">
+                  <template v-if="checkingSubdomain">
+                    <div class="w-3 h-3 border border-gray-300 border-t-[#FF5C1A] rounded-full animate-spin"></div>
+                    <span class="text-[11px] font-medium text-gray-400">Checking domain availability...</span>
+                  </template>
+                  <template v-else-if="subdomainAvailable === true && vendor.subdomain.length >= 3">
+                    <CheckCircle class="w-3.5 h-3.5 text-emerald-500" />
+                    <span class="text-[11px] font-bold text-emerald-600">https://{{ vendor.subdomain }}.erranders.org is available! 🎉</span>
+                  </template>
+                  <template v-else-if="subdomainAvailable === false && vendor.subdomain.length >= 3">
+                    <AlertCircle class="w-3.5 h-3.5 text-red-500" />
+                    <span class="text-[11px] font-bold text-red-500">Domain is taken. Try another name.</span>
+                  </template>
+                  <template v-else-if="vendor.subdomain.length > 0 && vendor.subdomain.length < 3">
+                    <span class="text-[11px] text-amber-500 font-medium">Minimum 3 characters required</span>
+                  </template>
+                  <template v-else-if="valErrors.subdomain">
+                    <span class="text-[11px] text-red-500 font-medium">{{ valErrors.subdomain }}</span>
+                  </template>
                 </div>
               </div>
 
               <UiAnimatedInput v-model="vendor.description" type="textarea" label="Store Description" :rows="2" />
 
-              <div class="grid gap-3 mb-2">
-                <label class="block text-sm font-bold text-gray-900">Store Platform Type</label>
-                
-                <!-- Restaurant -->
-                <div @click="vendor.vendorType = 'restaurant'" class="flex items-start gap-4 p-4 border rounded-md cursor-pointer transition-all duration-300" :class="vendor.vendorType === 'restaurant' ? 'bg-[#FF5C1A]/5 border-[#FF5C1A] ring-1 ring-[#FF5C1A]/10' : 'bg-white border-gray-200 hover:border-[#FF5C1A]/50'">
-                  <div class="w-10 h-9 rounded-md bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">🍽️</div>
-                  <div>
-                    <h3 class="text-sm font-bold text-gray-900 mb-1">Restaurant / Eatery</h3>
-                    <p class="text-sm text-gray-500 leading-relaxed">Perfect for food vendors. Includes advanced menu features, takeaway packs, modifiers, and prep time management.</p>
-                  </div>
-                  <div class="ml-auto w-5 h-5 rounded-md border flex items-center justify-center" :class="vendor.vendorType === 'restaurant' ? 'border-[#FF5C1A] bg-[#FF5C1A]' : 'border-gray-300'"><Check v-if="vendor.vendorType === 'restaurant'" class="w-3 h-3 text-white" /></div>
+              <!-- Store Platform Type (Compact 2x2 Grid with Campus Services Included) -->
+              <div class="space-y-2 mb-2">
+                <div class="flex items-center justify-between">
+                  <label class="block text-xs sm:text-sm font-bold text-gray-900">Store Platform Type</label>
+                  <span class="text-[11px] text-gray-400 font-medium">Select your model</span>
                 </div>
                 
-                <!-- Mini-Mart -->
-                <div @click="vendor.vendorType = 'mini-mart'" class="flex items-start gap-4 p-4 border rounded-md cursor-pointer transition-all duration-300" :class="vendor.vendorType === 'mini-mart' ? 'bg-[#FF5C1A]/5 border-[#FF5C1A] ring-1 ring-[#FF5C1A]/10' : 'bg-white border-gray-200 hover:border-[#FF5C1A]/50'">
-                  <div class="w-10 h-9 rounded-md bg-green-50 text-green-600 flex items-center justify-center shrink-0">🛒</div>
-                  <div>
-                    <h3 class="text-sm font-bold text-gray-900 mb-1">Mini-Mart / Provisions</h3>
-                    <p class="text-sm text-gray-500 leading-relaxed">Ideal for grocers and marts. Manage hundreds of items with a simplified interface optimized for fast bulk additions.</p>
+                <div class="grid grid-cols-2 gap-2 sm:gap-2.5">
+                  <!-- Restaurant -->
+                  <div 
+                    @click="setPlatformType('restaurant')" 
+                    class="relative p-3 rounded-xl border cursor-pointer transition-all duration-200 flex flex-col justify-between"
+                    :class="vendor.vendorType === 'restaurant' ? 'bg-[#FF5C1A]/5 border-[#FF5C1A] ring-1 ring-[#FF5C1A]/20' : 'bg-white border-gray-200 hover:border-gray-300'"
+                  >
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center text-sm">🍽️</div>
+                      <div class="w-4 h-4 rounded-full border flex items-center justify-center" :class="vendor.vendorType === 'restaurant' ? 'border-[#FF5C1A] bg-[#FF5C1A]' : 'border-gray-300'">
+                        <Check v-if="vendor.vendorType === 'restaurant'" class="w-2.5 h-2.5 text-white" />
+                      </div>
+                    </div>
+                    <div>
+                      <h4 class="text-xs font-bold text-gray-900 leading-tight">Restaurant / Eatery</h4>
+                      <p class="text-[10px] text-gray-500 mt-0.5 leading-snug">Cooked food, pastries, takeaway packs</p>
+                    </div>
                   </div>
-                  <div class="ml-auto w-5 h-5 rounded-md border flex items-center justify-center" :class="vendor.vendorType === 'mini-mart' ? 'border-[#FF5C1A] bg-[#FF5C1A]' : 'border-gray-300'"><Check v-if="vendor.vendorType === 'mini-mart'" class="w-3 h-3 text-white" /></div>
-                </div>
 
-                <!-- Single Category -->
-                <div @click="vendor.vendorType = 'single-category'" class="flex items-start gap-4 p-4 border rounded-md cursor-pointer transition-all duration-300" :class="vendor.vendorType === 'single-category' ? 'bg-[#FF5C1A]/5 border-[#FF5C1A] ring-1 ring-[#FF5C1A]/10' : 'bg-white border-gray-200 hover:border-[#FF5C1A]/50'">
-                  <div class="w-10 h-9 rounded-md bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">🛍️</div>
-                  <div>
-                    <h3 class="text-sm font-bold text-gray-900 mb-1">Single Category Retail</h3>
-                    <p class="text-sm text-gray-500 leading-relaxed">Best for boutiques, fashion, or electronics. Offers standard product variations (sizes, colors) and precise stock tracking.</p>
+                  <!-- Campus Services (NEW: Nails, Hair, Fumigation, Laundry, Repairs) -->
+                  <div 
+                    @click="setPlatformType('service_provider')" 
+                    class="relative p-3 rounded-xl border cursor-pointer transition-all duration-200 flex flex-col justify-between"
+                    :class="vendor.vendorType === 'service_provider' ? 'bg-[#FF5C1A]/5 border-[#FF5C1A] ring-1 ring-[#FF5C1A]/20' : 'bg-white border-gray-200 hover:border-gray-300'"
+                  >
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-sm">💅</div>
+                      <div class="w-4 h-4 rounded-full border flex items-center justify-center" :class="vendor.vendorType === 'service_provider' ? 'border-[#FF5C1A] bg-[#FF5C1A]' : 'border-gray-300'">
+                        <Check v-if="vendor.vendorType === 'service_provider'" class="w-2.5 h-2.5 text-white" />
+                      </div>
+                    </div>
+                    <div>
+                      <h4 class="text-xs font-bold text-gray-900 leading-tight">Campus Services</h4>
+                      <p class="text-[10px] text-gray-500 mt-0.5 leading-snug">Nails, hair, laundry, fumigation, repairs</p>
+                    </div>
                   </div>
-                  <div class="ml-auto w-5 h-5 rounded-md border flex items-center justify-center" :class="vendor.vendorType === 'single-category' ? 'border-[#FF5C1A] bg-[#FF5C1A]' : 'border-gray-300'"><Check v-if="vendor.vendorType === 'single-category'" class="w-3 h-3 text-white" /></div>
+
+                  <!-- Mini-Mart -->
+                  <div 
+                    @click="setPlatformType('mini-mart')" 
+                    class="relative p-3 rounded-xl border cursor-pointer transition-all duration-200 flex flex-col justify-between"
+                    :class="vendor.vendorType === 'mini-mart' ? 'bg-[#FF5C1A]/5 border-[#FF5C1A] ring-1 ring-[#FF5C1A]/20' : 'bg-white border-gray-200 hover:border-gray-300'"
+                  >
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm">🛒</div>
+                      <div class="w-4 h-4 rounded-full border flex items-center justify-center" :class="vendor.vendorType === 'mini-mart' ? 'border-[#FF5C1A] bg-[#FF5C1A]' : 'border-gray-300'">
+                        <Check v-if="vendor.vendorType === 'mini-mart'" class="w-2.5 h-2.5 text-white" />
+                      </div>
+                    </div>
+                    <div>
+                      <h4 class="text-xs font-bold text-gray-900 leading-tight">Mini-Mart & Groceries</h4>
+                      <p class="text-[10px] text-gray-500 mt-0.5 leading-snug">Provisions, drinks, hostel supplies</p>
+                    </div>
+                  </div>
+
+                  <!-- Single Category Retail -->
+                  <div 
+                    @click="setPlatformType('single-category')" 
+                    class="relative p-3 rounded-xl border cursor-pointer transition-all duration-200 flex flex-col justify-between"
+                    :class="vendor.vendorType === 'single-category' ? 'bg-[#FF5C1A]/5 border-[#FF5C1A] ring-1 ring-[#FF5C1A]/20' : 'bg-white border-gray-200 hover:border-gray-300'"
+                  >
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-sm">🛍️</div>
+                      <div class="w-4 h-4 rounded-full border flex items-center justify-center" :class="vendor.vendorType === 'single-category' ? 'border-[#FF5C1A] bg-[#FF5C1A]' : 'border-gray-300'">
+                        <Check v-if="vendor.vendorType === 'single-category'" class="w-2.5 h-2.5 text-white" />
+                      </div>
+                    </div>
+                    <div>
+                      <h4 class="text-xs font-bold text-gray-900 leading-tight">Boutique & Retail</h4>
+                      <p class="text-[10px] text-gray-500 mt-0.5 leading-snug">Fashion, cosmetics, shoes, gadgets</p>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -994,7 +1041,7 @@ const formatReferralCode = () => {
 const vendor = reactive({
   storeName: '', description: '', address: '', subdomain: '',
   businessType: 'physical_product' as 'physical_product' | 'service_provider' | 'hybrid',
-  vendorType: 'restaurant' as 'restaurant' | 'mini-mart' | 'single-category',
+  vendorType: 'restaurant' as 'restaurant' | 'mini-mart' | 'single-category' | 'service_provider',
   category: '',
   teamSize: '1',
   serviceLocation: 'physical_location' as 'physical_location' | 'delivery_only' | 'software',
@@ -1009,6 +1056,17 @@ const vendor = reactive({
   location: { type: 'Point', coordinates: [0, 0] } as { type: string, coordinates: number[] },
   bankDetails: { bankCode: '', bankName: '', accountNumber: '', accountName: '' },
 })
+
+const setPlatformType = (type: 'restaurant' | 'service_provider' | 'mini-mart' | 'single-category') => {
+  vendor.vendorType = type
+  if (type === 'service_provider') {
+    vendor.businessType = 'service_provider'
+    vendor.requiresPrepTime = false
+    vendor.requiresTakeawayPack = false
+  } else {
+    vendor.businessType = 'physical_product'
+  }
+}
 
 const handleAddressSelect = (data: { address: string, coordinates: [number, number] }) => {
   vendor.address = data.address;
@@ -1063,14 +1121,17 @@ const categoryOptions = [
   { label: 'Groceries', value: 'groceries', icon: '🛒', desc: 'Raw food items, cooking ingredients' },
   { label: 'Mini-Mart / Provisions', value: 'mini-mart', icon: '🏪', desc: 'Packaged goods, toiletries, everyday essentials' },
   { label: 'Bakery & Pastries', value: 'bakery', icon: '🥐', desc: 'Bread, cakes, baked confectioneries' },
-  { label: 'Pharmacy', value: 'pharmacy', icon: '💊', desc: 'Medicines, health supplements, first aid' },
-  { label: 'Laundry & Cleaning', value: 'laundry', icon: '🧺', desc: 'Washing, dry cleaning, ironing services' },
-  { label: 'Hair & Beauty', value: 'hair-beauty', icon: '💇🏽‍♀️', desc: 'Salons, barbers, cosmetics, skincare' },
-  { label: 'Printing & Stationery', value: 'printing', icon: '🖨️', desc: 'Photocopies, books, writing materials' },
-  { label: 'Electronics & Gadgets', value: 'electronics', icon: '📱', desc: 'Phones, laptops, accessories, repairs' },
-  { label: 'Fashion & Clothing', value: 'fashion', icon: '👗', desc: 'Apparel, shoes, bags, tailoring' },
-  { label: 'Tutoring & Academic', value: 'tutoring', icon: '📚', desc: 'Private lessons, project assistance, typing' },
-  { label: 'Other', value: 'other', icon: '✨', desc: 'Any other business category not listed here' },
+  { label: 'Nail Tech & Lashes', value: 'nail-tech', icon: '💅', desc: 'Pedicure, manicure, gel polish, lash extensions' },
+  { label: 'Hair & Barbing', value: 'hair-barbing', icon: '💈', desc: 'Hostel barbing, braids, wig revamping, hair styling' },
+  { label: 'Fumigation & Pest Control', value: 'fumigation', icon: '🪲', desc: 'Hostel room bedbug treatment, fumigation, disinfecting' },
+  { label: 'Hostel Cleaning & Laundry', value: 'laundry-cleaning', icon: '🧺', desc: 'Room deep cleaning, clothes washing, ironing' },
+  { label: 'Phone & Gadget Repairs', value: 'gadget-repair', icon: '🔧', desc: 'Screen replacement, laptop troubleshooting, charging port' },
+  { label: 'Tutoring & Academic Writing', value: 'tutoring', icon: '📚', desc: 'Course tutorials, assignments, project data analysis' },
+  { label: 'Photography & Media', value: 'photography', icon: '📸', desc: 'Event coverage, campus shoots, video editing' },
+  { label: 'Fashion, Tailoring & Thrift', value: 'fashion', icon: '👗', desc: 'Apparel, thrift clothing, alterations, accessories' },
+  { label: 'Printing & Stationery', value: 'printing', icon: '🖨️', desc: 'Photocopies, project binding, stationery' },
+  { label: 'Pharmacy & Health', value: 'pharmacy', icon: '💊', desc: 'Medicines, supplements, first aid' },
+  { label: 'Other Campus Service', value: 'other', icon: '✨', desc: 'Any other campus product or service offering' },
 ]
 
 const filteredCategoryOptions = computed(() => {
