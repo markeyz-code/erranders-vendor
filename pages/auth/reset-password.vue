@@ -128,11 +128,11 @@
       </div>
       
       <!-- Copy info -->
-      <div class="mt-5 text-center flex items-center justify-center gap-4 text-sm font-bold text-gray-400">
+      <!-- <div class="mt-5 text-center flex items-center justify-center gap-4 text-sm font-bold text-gray-400">
         <p>&copy; {{ new Date().getFullYear() }} Erranders</p>
         <span class="w-1 h-1 bg-gray-300 rounded-md"></span>
         <NuxtLink to="/terms" class="hover:text-gray-600 transition-colors">Terms & Privacy</NuxtLink>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

@@ -65,11 +65,11 @@
         </p>
       </div>
 
-      <div class="mt-auto pt-12 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-gray-400 font-medium">
+      <!-- <div class="mt-auto pt-12 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-gray-400 font-medium">
         <p>&copy; {{ new Date().getFullYear() }} Erranders</p>
         <NuxtLink to="/terms" class="hover:text-gray-600">Terms</NuxtLink>
         <NuxtLink to="/terms" class="hover:text-gray-600">Privacy</NuxtLink>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

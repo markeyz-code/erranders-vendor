@@ -40,4 +40,8 @@ export const auth_api = {
   updateProfile: (payload: any) => {
     return GATEWAY_ENDPOINT_WITH_AUTH.put('/users/me', payload);
   },
+
+  refreshToken: (refreshToken: string) => {
+    return GATEWAY_ENDPOINT.post('/auth/refresh', { refreshToken });
+  },
 };

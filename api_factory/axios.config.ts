@@ -107,7 +107,11 @@ instanceArray.forEach((instance) => {
     let currentToken = null;
     if (typeof window !== 'undefined') {
       const match = document.cookie.match(new RegExp('(^| )errandr_vendor_token=([^;]+)'));
-      if (match) currentToken = match[2];
+      if (match) {
+        currentToken = match[2];
+      } else if (typeof localStorage !== 'undefined') {
+        currentToken = localStorage.getItem('token') || localStorage.getItem('errandr_vendor_token') || null;
+      }
     } else {
       try {
         const { useCookie } = require('#app');
@@ -139,9 +143,7 @@ instanceArray.forEach((instance) => {
     (response: CustomAxiosResponse) => {
       return response;
     },
-    (err: any) => {
-      const { logOut } = useUser();
-      
+    async (err: any) => {
       // Check for timeout or network connection error
       if (err.code === 'ECONNABORTED' || err.message?.includes('timeout') || err.message?.includes('Network Error') || typeof err.response === "undefined") {
         try {
@@ -168,14 +170,61 @@ instanceArray.forEach((instance) => {
         };
       }
       if (err.response.status === 401) {
-        console.log(err.response.data.error)
-        logOut();
-        useCustomToast().showToast({
-          title: "Error",
-          message: err?.response?.data?.message || err?.response?.data?.error || "An error occured",
-          toastType: "error",
-          duration: 3000
-        });
+        const originalRequest = err.config;
+
+        if (originalRequest && !originalRequest._retry && typeof window !== 'undefined') {
+          originalRequest._retry = true;
+          let refreshToken = '';
+          const match = document.cookie.match(new RegExp('(^| )errandr_vendor_refresh_token=([^;]+)'));
+          if (match) {
+            refreshToken = match[2];
+          } else if (typeof localStorage !== 'undefined') {
+            refreshToken = localStorage.getItem('refreshToken') || localStorage.getItem('errandr_vendor_refresh_token') || '';
+          }
+
+          if (refreshToken) {
+            try {
+              const res = await axios.post(`${$GATEWAY_ENDPOINT}/auth/refresh`, { refreshToken });
+              const resData = res.data?.data || res.data;
+              const newToken = resData?.token;
+              const newRefresh = resData?.refreshToken;
+              const newUser = resData?.user;
+
+              if (newToken) {
+                const { setToken, setRefreshToken, setUser } = useUser();
+                setToken(newToken);
+                if (newRefresh) setRefreshToken(newRefresh);
+                if (newUser) setUser(newUser);
+
+                originalRequest.headers = originalRequest.headers || {};
+                originalRequest.headers.Authorization = `Bearer ${newToken}`;
+                return instance(originalRequest);
+              }
+            } catch (refreshErr) {
+              console.warn('Vendor token refresh failed:', refreshErr);
+            }
+          }
+        }
+
+        // Only log out if on a protected route requiring auth
+        const isOnAuthPage = typeof window !== 'undefined' && window.location.pathname.startsWith('/auth');
+        const isProtectedRoute = typeof window !== 'undefined' && (
+          window.location.pathname.startsWith('/dashboard') || 
+          window.location.pathname.startsWith('/orders') || 
+          window.location.pathname.startsWith('/menu') || 
+          window.location.pathname.startsWith('/settings')
+        );
+
+        if (!isOnAuthPage && isProtectedRoute && typeof window !== 'undefined') {
+          const { logOut } = useUser();
+          logOut();
+          useCustomToast().showToast({
+            title: "Session Expired",
+            message: "Please login to continue",
+            toastType: "error",
+            duration: 3000
+          });
+        }
         return {
           type: "ERROR",
           ...err.response,

@@ -7,7 +7,7 @@ import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, getRedirectResult, signInWithRedirect } from 'firebase/auth';
 
 export const useAuth = () => {
-  const { setUser, setToken, logOut } = useUser();
+  const { setUser, setToken, setRefreshToken, logOut } = useUser();
   const { showToast } = useCustomToast();
   const loading = ref(false);
   const firebaseLoading = ref(false);
@@ -51,6 +51,7 @@ export const useAuth = () => {
         if (userData && tokenValue) {
           setUser(userData);
           setToken(tokenValue);
+          if (responseData?.refreshToken) setRefreshToken(responseData.refreshToken);
           showToast({
             title: "Welcome!",
             message: "You've successfully signed in with Google.",
@@ -113,6 +114,7 @@ export const useAuth = () => {
 
       setUser(userData);
       setToken(tokenValue);
+      if (responseData?.refreshToken) setRefreshToken(responseData.refreshToken);
 
       showToast({
         title: "Welcome!",
@@ -158,6 +160,7 @@ export const useAuth = () => {
       if (res?.type === 'ERROR') throw res;
       setUser(res.data.user);
       setToken(res.data.token);
+      if (res.data?.refreshToken) setRefreshToken(res.data.refreshToken);
       showToast({
         title: "Welcome Back!",
         message: "You've successfully logged in.",
@@ -184,6 +187,7 @@ export const useAuth = () => {
       if (res?.type === 'ERROR') throw res;
       setUser(res.data.user);
       setToken(res.data.token);
+      if (res.data?.refreshToken) setRefreshToken(res.data.refreshToken);
       showToast({
         title: "Account Created!",
         message: "Welcome to Errandr.",
@@ -207,8 +211,7 @@ export const useAuth = () => {
       if (res?.type === 'ERROR') throw res;
       setUser(res.data.user || res.data);
     } catch (e: any) {
-      console.error('Fetch profile error:', e);
-      logOut();
+      console.warn('Could not fetch vendor profile:', e);
     }
   };
 
@@ -219,6 +222,7 @@ export const useAuth = () => {
       if (res?.type === 'ERROR') throw res;
       setUser(res.data.user);
       setToken(res.data.token);
+      if (res.data?.refreshToken) setRefreshToken(res.data.refreshToken);
       showToast({
         title: "Verified!",
         message: "Email successfully verified.",
@@ -262,7 +266,7 @@ export const useAuth = () => {
         message: res.data?.message || "Check your inbox for the reset code.",
         toastType: "success",
       });
-      navigateTo(`/auth/verify-reset-otp?email=${encodeURIComponent(email)}`);
+      navigateTo(`/auth/reset-password?email=${encodeURIComponent(email)}`);
       return res.data;
     } catch (e: any) {
       console.error('Forgot password error:', e);
@@ -272,17 +276,18 @@ export const useAuth = () => {
     }
   };
 
-  const verifyResetOTP = async (email: string, otp: string) => {
+  const verifyResetOTP = async (emailOrPayload: any, otp?: string) => {
     loading.value = true;
     try {
-      const res = await auth_api.verifyResetOtp({ email, otp });
+      const email = typeof emailOrPayload === 'object' ? emailOrPayload.email : emailOrPayload;
+      const code = typeof emailOrPayload === 'object' ? emailOrPayload.otp : otp;
+      const res = await auth_api.verifyResetOtp({ email, otp: code });
       if (res?.type === 'ERROR') throw res;
       showToast({
         title: "Code Verified!",
         message: res.data?.message || "Perfect! Now set your new password.",
         toastType: "success",
       });
-      navigateTo(`/auth/reset-password?email=${encodeURIComponent(email)}&otp=${encodeURIComponent(otp)}`);
       return res.data;
     } catch (e: any) {
       console.error('Verify reset OTP error:', e);
@@ -321,6 +326,7 @@ export const useAuth = () => {
     fetchProfile,
     forgotPassword,
     verifyResetOTP,
+    verifyResetOtp: verifyResetOTP,
     verifyOTP,
     resendOTP,
     resetPassword,

@@ -49,7 +49,7 @@
 
               <div class="mt-auto pt-6">
                 <button type="submit" :disabled="loading || validatingReferral" 
-                  class="w-full py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-xl font-bold text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md shadow-[#FF5C1A]/20">
+                  class="w-full py-2.5 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-xl font-bold text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md shadow-[#FF5C1A]/20">
                   <Loader2 v-if="loading || validatingReferral" class="animate-spin w-6 h-6" />
                   <span>{{ loading || validatingReferral ? 'Processing...' : 'Continue' }}</span>
                   <ArrowRight v-if="!loading && !validatingReferral" class="w-5 h-5 ml-2" />
@@ -87,7 +87,7 @@
                 </div>
 
                 <!-- Live Preview Pill & Customize Toggle -->
-                <div class="flex items-center justify-between bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs shadow-2xs">
+                <div class="flex items-center justify-between bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-xs shadow-2xs">
                   <div class="flex items-center gap-1 min-w-0 font-mono text-gray-400 truncate">
                     <span class="text-gray-400">https://</span>
                     <span class="text-[#FF5C1A] font-bold truncate">{{ vendor.subdomain || 'yourstore' }}</span>
@@ -228,7 +228,7 @@
 
               <div class="flex gap-3 pt-4 mt-auto">
                 <button type="button" @click="currentStep = 'otp'" class="w-14 h-14 shrink-0 flex items-center justify-center bg-gray-50 hover:bg-gray-100 border border-gray-50 text-gray-600 rounded-md font-bold transition-all"><ArrowLeft class="w-4 h-4" /></button>
-                <button type="submit" class="flex-1 py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">
+                <button type="submit" class="flex-1 py-2.5 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">
                   Continue <ArrowRight class="w-4 h-4" />
                 </button>
               </div>
@@ -274,7 +274,7 @@
 
               <div class="flex gap-3 pt-4 mt-auto">
                 <button type="button" @click="currentStep = 'business'" class="w-14 h-14 shrink-0 flex items-center justify-center bg-gray-50 hover:bg-gray-100 border border-gray-50 text-gray-600 rounded-md font-bold transition-all"><ArrowLeft class="w-4 h-4" /></button>
-                <button type="submit" class="flex-1 py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">Continue <ArrowRight class="w-4 h-4" /></button>
+                <button type="submit" class="flex-1 py-2.5 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">Continue <ArrowRight class="w-4 h-4" /></button>
               </div>
             </form>
           </transition>
@@ -293,7 +293,7 @@
                 <div class="relative" ref="categoryDropdownRef">
                   <div 
                     @click="showCategoryDropdown = !showCategoryDropdown"
-                    class="flex items-center flex-wrap gap-2 min-h-[48px] px-4 py-2 border rounded-md cursor-pointer transition-all duration-200 bg-white"
+                    class="flex items-center flex-wrap gap-2 min-h-[48px] px-4 py-2.5 border rounded-md cursor-pointer transition-all duration-200 bg-white"
                     :class="showCategoryDropdown ? 'border-[#FF5C1A]/40 ring-1 ring-[#FF5C1A]/5' : 'border-gray-200 hover:border-gray-300'"
                   >
                     <div v-for="cat in selectedCategories" :key="cat" class="flex items-center gap-1.5 px-2.5 py-1 bg-[#FF5C1A]/10 border border-[#FF5C1A]/20 text-[#FF5C1A] text-sm font-medium rounded-lg">
@@ -325,7 +325,7 @@
                   >
                     <div v-if="showCategoryDropdown" class="absolute z-50 w-full mt-2 bg-white rounded-xl border border-gray-25 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.1)] max-h-[300px] overflow-y-auto scrollbar-hide">
                       <div v-if="filteredCategoryOptions.length === 0 && categorySearch.trim()" class="p-2">
-                        <button type="button" @click="addCustomCategory" class="w-full flex items-center gap-3 px-4 py-2 rounded-lg bg-gray-50 hover:bg-[#FF5C1A]/5 transition-all text-left group">
+                        <button type="button" @click="addCustomCategory" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg bg-gray-50 hover:bg-[#FF5C1A]/5 transition-all text-left group">
                           <div class="w-10 h-9 rounded-lg bg-[#FF5C1A]/10 text-[#FF5C1A] flex items-center justify-center group-hover:scale-105 transition-transform"><span class="text-lg font-bold">+</span></div>
                           <div>
                             <p class="text-sm font-bold text-gray-900">Add "<span class="text-[#FF5C1A]">{{ categorySearch.trim() }}</span>"</p>
@@ -357,7 +357,7 @@
                       </div>
                       
                       <div v-if="categorySearch.trim() && filteredCategoryOptions.length > 0" class="border-t border-gray-100 p-2">
-                        <button type="button" @click="addCustomCategory" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-50 transition-all text-left">
+                        <button type="button" @click="addCustomCategory" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-50 transition-all text-left">
                           <div class="w-8 h-8 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center"><span class="text-sm font-bold">+</span></div>
                           <div>
                             <span class="text-sm font-bold text-gray-700">Custom Category</span>
@@ -456,7 +456,7 @@
                       v-model="vendor.matricNumber" 
                       type="text" 
                       placeholder="e.g. 1902040..."
-                      class="w-full px-3 py-2 bg-gray-50 border border-gray-25 rounded-md text-sm outline-none focus:border-[#FF5C1A] focus:bg-white transition-all text-gray-900"
+                      class="w-full px-3 py-2.5 bg-gray-50 border border-gray-25 rounded-md text-sm outline-none focus:border-[#FF5C1A] focus:bg-white transition-all text-gray-900"
                     />
                   </div>
                 </div>
@@ -464,7 +464,7 @@
 
               <div class="flex gap-3 pt-4 mt-auto">
                 <button type="button" @click="currentStep = 'businessType'" class="w-14 h-14 shrink-0 flex items-center justify-center bg-gray-50 hover:bg-gray-100 border border-gray-50 text-gray-600 rounded-md font-bold transition-all"><ArrowLeft class="w-4 h-4" /></button>
-                <button type="submit" class="flex-1 py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">Continue <ArrowRight class="w-4 h-4" /></button>
+                <button type="submit" class="flex-1 py-2.5 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">Continue <ArrowRight class="w-4 h-4" /></button>
               </div>
             </form>
           </transition>
@@ -506,7 +506,7 @@
 
               <div class="flex gap-3 pt-4 mt-auto">
                 <button type="button" @click="currentStep = 'categories'" class="w-14 h-14 shrink-0 flex items-center justify-center bg-gray-50 hover:bg-gray-100 border border-gray-50 text-gray-600 rounded-md font-bold transition-all"><ArrowLeft class="w-4 h-4" /></button>
-                <button type="submit" class="flex-1 py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">Continue <ArrowRight class="w-4 h-4" /></button>
+                <button type="submit" class="flex-1 py-2.5 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">Continue <ArrowRight class="w-4 h-4" /></button>
               </div>
             </form>
           </transition>
@@ -550,7 +550,7 @@
 
               <div class="flex gap-3 pt-4 mt-auto">
                 <button type="button" @click="currentStep = 'teamSize'" class="w-14 h-14 shrink-0 flex items-center justify-center bg-gray-50 hover:bg-gray-100 border border-gray-50 text-gray-600 rounded-md font-bold transition-all"><ArrowLeft class="w-4 h-4" /></button>
-                <button type="submit" class="flex-1 py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">Continue <ArrowRight class="w-4 h-4" /></button>
+                <button type="submit" class="flex-1 py-2.5 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">Continue <ArrowRight class="w-4 h-4" /></button>
               </div>
             </form>
           </transition>
@@ -641,7 +641,7 @@
 
               <div class="flex gap-3 pt-4 mt-auto">
                 <button type="button" @click="currentStep = 'locationType'" class="w-14 h-14 shrink-0 flex items-center justify-center bg-gray-50 hover:bg-gray-100 border border-gray-50 text-gray-600 rounded-md font-bold transition-all"><ArrowLeft class="w-4 h-4" /></button>
-                <button type="submit" class="flex-1 py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">Continue <ArrowRight class="w-4 h-4" /></button>
+                <button type="submit" class="flex-1 py-2.5 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98]">Continue <ArrowRight class="w-4 h-4" /></button>
               </div>
             </form>
           </transition>
@@ -793,7 +793,7 @@
                   <div v-if="newAccount.accountName" class="flex items-center gap-2 p-2 bg-emerald-50 text-emerald-700 text-sm font-bold rounded-md border border-emerald-100"><CheckCircle class="w-4 h-4 shrink-0" /> {{ newAccount.accountName }}</div>
                   <div v-if="resolveError" class="flex items-center gap-2 p-2 bg-red-50 text-red-600 text-sm font-bold rounded-md border border-red-100"><AlertCircle class="w-4 h-4 shrink-0" /> {{ resolveError }}</div>
                   
-                  <button type="button" @click="addPayoutAccount" :disabled="!newAccount.accountName || resolvingAccount" class="w-full py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-md font-medium text-sm transition-all disabled:opacity-50">
+                  <button type="button" @click="addPayoutAccount" :disabled="!newAccount.accountName || resolvingAccount" class="w-full py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-md font-medium text-sm transition-all disabled:opacity-50">
                     Add Account
                   </button>
                 </div>
@@ -803,7 +803,7 @@
 
               <div class="flex gap-3 pt-4 mt-auto">
                 <button type="button" @click="currentStep = 'business'" class="w-14 h-14 shrink-0 flex items-center justify-center bg-gray-50 hover:bg-gray-100 border border-gray-50 text-gray-600 rounded-md font-bold transition-all"><ArrowLeft class="w-4 h-4" /></button>
-                <button type="submit" :disabled="submitting || logoUploading" class="flex-1 py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50 active:scale-[0.98]">
+                <button type="submit" :disabled="submitting || logoUploading" class="flex-1 py-2.5 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50 active:scale-[0.98]">
                   <Loader2 v-if="submitting" class="animate-spin w-4 h-4" />
                   <span>{{ submitting ? 'Launching...' : 'Launch Store 🚀' }}</span>
                 </button>
@@ -832,7 +832,7 @@
               </div>
 
               <div class="w-full pt-8 mt-auto">
-                <button @click="proceedToDashboard" class="w-full py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-[17px] transition-all flex items-center justify-center gap-2 active:scale-[0.98] group">
+                <button @click="proceedToDashboard" class="w-full py-2.5 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-md font-medium text-[17px] transition-all flex items-center justify-center gap-2 active:scale-[0.98] group">
                   Proceed to Dashboard <ArrowRight class="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
@@ -864,7 +864,7 @@
               <p class="text-sm text-gray-700 font-medium">{{ infoModalContent.importance }}</p>
             </div>
             
-            <button type="button" @click="activeInfoModal = null" class="w-full py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-xl font-bold text-sm transition-all active:scale-95">
+            <button type="button" @click="activeInfoModal = null" class="w-full py-2.5 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-xl font-bold text-sm transition-all active:scale-95">
               Got it!
             </button>
           </div>
@@ -872,11 +872,11 @@
       </transition>
 
       <!-- Footer Info -->
-      <div class="mt-5 text-center flex items-center justify-center gap-4 text-sm font-bold text-gray-400">
+      <!-- <div class="mt-5 text-center flex items-center justify-center gap-4 text-sm font-bold text-gray-400">
         <p>&copy; {{ new Date().getFullYear() }} Erranders</p>
         <span class="w-1 h-1 bg-gray-300 rounded-md"></span>
         <NuxtLink to="/terms" class="hover:text-gray-600 transition-colors">Terms & Privacy</NuxtLink>
-      </div>
+      </div> -->
 
     </div>
 
@@ -899,10 +899,10 @@
             <p class="text-sm text-gray-500 font-medium leading-relaxed mb-6">We noticed that you did not complete your onboarding process. Please proceed to complete your onboarding here.</p>
             
             <div class="flex gap-3 w-full">
-              <button type="button" @click="ignoreResume" class="flex-1 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-bold text-sm transition-all active:scale-95">
+              <button type="button" @click="ignoreResume" class="flex-1 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-bold text-sm transition-all active:scale-95">
                 Start Over
               </button>
-              <button type="button" @click="resumeSession" class="flex-[2] py-2 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-xl font-bold text-sm transition-all active:scale-95">
+              <button type="button" @click="resumeSession" class="flex-[2] py-2.5 bg-[#FF5C1A] hover:bg-[#E54D12] text-white rounded-xl font-bold text-sm transition-all active:scale-95">
                 Continue
               </button>
             </div>
