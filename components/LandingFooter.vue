@@ -94,9 +94,14 @@
       
       <!-- Bottom Bar -->
       <div class="pt-8 border-t border-slate-200/80 flex flex-col md:flex-row items-center justify-between gap-6">
-        <p class="text-sm font-medium text-slate-400">
-          &copy; {{ new Date().getFullYear() }} Erranders Inc. All rights reserved.
-        </p>
+        <div class="space-y-1">
+          <p class="text-sm font-semibold text-slate-500">
+            &copy; {{ new Date().getFullYear() }} ERRANDERS COMPANY LIMITED. All rights reserved.
+          </p>
+          <p class="text-xs text-slate-400 font-medium">
+            Erranders Vendor Hub is operated by ERRANDERS COMPANY LIMITED.
+          </p>
+        </div>
       </div>
     </div>
   </footer>
