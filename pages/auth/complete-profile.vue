@@ -174,12 +174,12 @@
                   <div 
                     @click="setPlatformType('service_provider')" 
                     class="relative p-3 rounded-xl border cursor-pointer transition-all duration-200 flex flex-col justify-between"
-                    :class="vendor.vendorType === 'service_provider' ? 'bg-[#FF5C1A]/5 border-[#FF5C1A] ring-1 ring-[#FF5C1A]/20' : 'bg-white border-gray-200 hover:border-gray-300'"
+                    :class="vendor.businessType === 'service_provider' ? 'bg-[#FF5C1A]/5 border-[#FF5C1A] ring-1 ring-[#FF5C1A]/20' : 'bg-white border-gray-200 hover:border-gray-300'"
                   >
                     <div class="flex items-center justify-between mb-2">
                       <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-sm">💅</div>
-                      <div class="w-4 h-4 rounded-full border flex items-center justify-center" :class="vendor.vendorType === 'service_provider' ? 'border-[#FF5C1A] bg-[#FF5C1A]' : 'border-gray-300'">
-                        <Check v-if="vendor.vendorType === 'service_provider'" class="w-2.5 h-2.5 text-white" />
+                      <div class="w-4 h-4 rounded-full border flex items-center justify-center" :class="vendor.businessType === 'service_provider' ? 'border-[#FF5C1A] bg-[#FF5C1A]' : 'border-gray-300'">
+                        <Check v-if="vendor.businessType === 'service_provider'" class="w-2.5 h-2.5 text-white" />
                       </div>
                     </div>
                     <div>
@@ -1058,14 +1058,20 @@ const vendor = reactive({
 })
 
 const setPlatformType = (type: 'restaurant' | 'service_provider' | 'mini-mart' | 'single-category') => {
-  vendor.vendorType = type
+  // 'service_provider' is a BusinessType, not a VendorType. Writing it into vendorType was
+  // an invalid enum value that the API could only reinterpret — which is how a fumigation
+  // business ended up stored as a restaurant.
   if (type === 'service_provider') {
+    vendor.vendorType = 'single-category'
     vendor.businessType = 'service_provider'
     vendor.requiresPrepTime = false
     vendor.requiresTakeawayPack = false
-  } else {
-    vendor.businessType = 'physical_product'
+    if (!vendor.serviceLocation) vendor.serviceLocation = 'mobile_operator'
+    return
   }
+
+  vendor.vendorType = type
+  vendor.businessType = 'physical_product'
 }
 
 const handleAddressSelect = (data: { address: string, coordinates: [number, number] }) => {
