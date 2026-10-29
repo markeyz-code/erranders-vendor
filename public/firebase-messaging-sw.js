@@ -27,7 +27,11 @@ messaging.onBackgroundMessage((payload) => {
       requireInteraction: true, // This ensures the notification stays until clicked
       vibrate: [500, 250, 500, 250, 500, 250, 500, 250, 500, 250, 500, 250, 500, 250, 500], // Heavy "ringing" vibration
       data: payload?.data || {},
-      tag: 'order-alert-' + Date.now()
+      data: { ...(payload?.data || {}), url: '/dashboard/orders' },
+      // One card per order, replaced rather than stacked. A fresh timestamp per message
+      // meant every alert piled up and none of them replaced the last.
+      tag: 'order-' + ((payload?.data || {}).orderId || Date.now()),
+      renotify: true,
     };
 
     self.registration.showNotification(title, notificationOptions);
@@ -38,6 +42,7 @@ messaging.onBackgroundMessage((payload) => {
 
 self.addEventListener('notificationclick', function(event) {
   event.notification.close();
+  var target = (event.notification.data && event.notification.data.url) || '/';
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function(clientList) {
       if (clientList.length > 0) {
@@ -47,9 +52,10 @@ self.addEventListener('notificationclick', function(event) {
             client = clientList[i];
           }
         }
+        if ('navigate' in client) return client.navigate(target).then(function(c) { return c && c.focus(); });
         return client.focus();
       }
-      return clients.openWindow('/');
+      return clients.openWindow(target);
     })
   );
 });
