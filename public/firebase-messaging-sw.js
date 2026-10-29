@@ -27,7 +27,9 @@ messaging.onBackgroundMessage((payload) => {
       requireInteraction: true, // This ensures the notification stays until clicked
       vibrate: [500, 250, 500, 250, 500, 250, 500, 250, 500, 250, 500, 250, 500, 250, 500], // Heavy "ringing" vibration
       data: payload?.data || {},
-      data: { ...(payload?.data || {}), url: '/dashboard/orders' },
+      // The ringing screen, not the list: the list has no audio, so tapping the
+      // card would open the app silently.
+      data: { ...(payload?.data || {}), url: (payload?.data?.orderId ? `/incoming/${payload.data.orderId}` : '/dashboard/orders') },
       // One card per order, replaced rather than stacked. A fresh timestamp per message
       // meant every alert piled up and none of them replaced the last.
       tag: 'order-' + ((payload?.data || {}).orderId || Date.now()),
