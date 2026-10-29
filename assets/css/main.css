@@ -1,3 +1,8 @@
+:root {
+  /* Consumed by tailwind's font-sans. Undefined it fell back to Arial. */
+  --font-family: 'Onest', sans-serif;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,15 +10,15 @@
 
 html,
 body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Onest', sans-serif;
 }
 
 * {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Onest', sans-serif;
 }
 
 h1 {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Onest', sans-serif;
   font-weight: bold;
 }
 /* You can also create utility classes for different weights */
