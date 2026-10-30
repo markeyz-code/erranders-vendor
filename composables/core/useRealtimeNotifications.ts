@@ -55,8 +55,6 @@ export const useRealtimeNotifications = () => {
   const handleAudit = (payload: any) => {
     if (!payload) return
 
-    playNotificationSound()
-
     showToast({
       title: payload.action ? `Audit: ${payload.action}` : 'Audit Update',
       message: payload.description || 'A new audit log was recorded',
