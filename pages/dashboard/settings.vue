@@ -124,7 +124,14 @@
  <p class="text-xs text-gray-500 font-medium">Your branded storefront domain for direct student visits & marketing</p>
  </div>
  </div>
- <div v-if="profile.subdomain" class="flex items-center gap-2">
+ <div v-if="profile.subdomain" class="flex flex-wrap items-center gap-2">
+ <NuxtLink
+   to="/dashboard/page-builder"
+   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-[#FF5C1A] text-white hover:bg-[#E54D12] transition-colors shadow-sm"
+ >
+   <Palette class="w-3.5 h-3.5" />
+   <span>Customize Page Design</span>
+ </NuxtLink>
  <a 
  :href="'https://' + profile.subdomain + '.erranders.org'" 
  target="_blank" 
@@ -700,7 +707,7 @@ import {
  Store as StoreIcon, ImageIcon, Upload, Clock, 
  CreditCard, Power, Loader2, CheckCircle, 
  AlertCircle, Building, Plus, Trash2, X, MapPin,
- Globe, ExternalLink, Copy, Check
+ Globe, ExternalLink, Copy, Check, Palette
 } from 'lucide-vue-next';
 import { vendors_api } from '@/api_factory/modules/vendors';
 import { payments_api } from '@/api_factory/modules/payments';

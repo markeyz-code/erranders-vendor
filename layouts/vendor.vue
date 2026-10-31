@@ -274,7 +274,8 @@ import {
   MessageSquare,
   ChevronLeft,
   ChevronRight,
-  MapPin
+  MapPin,
+  Palette
 } from 'lucide-vue-next'
 import { useRealtimeNotifications } from '@/composables/core/useRealtimeNotifications'
 import { useVendorNotifications } from '@/composables/useVendorNotifications'
@@ -352,6 +353,7 @@ const navItems = computed(() => {
   more.push(
     { path: '/dashboard/promotions', label: 'Promotions', icon: Megaphone },
     { path: '/dashboard/chats', label: 'Chats', icon: MessageSquare },
+    { path: '/dashboard/page-builder', label: 'Storefront Designer', icon: Palette },
     { path: '/dashboard/wallet', label: 'Wallet', icon: Wallet },
     { path: '/dashboard/notifications', label: 'Notifications', icon: Bell },
     { path: '/dashboard/settings', label: 'Settings', icon: Settings }
