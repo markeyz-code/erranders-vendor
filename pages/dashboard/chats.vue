@@ -358,15 +358,14 @@ onMounted(() => {
   fetchDirectConversations()
   connect()
   
-  on('newMessageNotification', (msg: any) => {
+  const handleNotif = (msg: any) => {
     const orderId = msg.order?._id || msg.order || msg.orderId;
     
     // Handle direct message notification
     if (msg.roomType === 'direct' && !msg.appointment && !msg.appointmentId) {
       const senderId = String(msg.senderId || msg.sender?._id || msg.sender || '');
-      // If we don't have the direct chat open for this sender, increment unread
+      // If we don't have the direct chat open for this sender, refresh direct conversation list
       if (!activeChat.value || activeChat.value.receiverId !== senderId) {
-        // Refresh direct conversations to pick up the new message
         fetchDirectConversations();
       }
       return;
@@ -378,7 +377,10 @@ onMounted(() => {
         unreadCounts.value[orderId] = (unreadCounts.value[orderId] || 0) + 1;
       }
     }
-  })
+  };
+
+  on('newMessageNotification', handleNotif);
+  on('newMessage', handleNotif);
 })
 </script>
 

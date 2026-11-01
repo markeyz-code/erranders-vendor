@@ -90,7 +90,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, nextTick, computed, onMounted } from 'vue';
+import { ref, watch, nextTick, computed, shallowRef } from 'vue';
 import { ArrowLeft, Send, User, CheckCheck } from 'lucide-vue-next';
 import { useDirectChat } from '@/composables/useDirectChat';
 import { useUser } from '@/composables/modules/auth/user';
@@ -113,10 +113,10 @@ const newMessage = ref('');
 const inputRef = ref<HTMLTextAreaElement | null>(null);
 const messageContainer = ref<HTMLElement | null>(null);
 
-let chatTracker: ReturnType<typeof useDirectChat> | null = null;
-const messages = ref<any[]>([]);
-const loading = ref(false);
-const isTyping = ref(false);
+const chatTracker = shallowRef<ReturnType<typeof useDirectChat> | null>(null);
+const messages = computed(() => chatTracker.value?.messages.value || []);
+const loading = computed(() => chatTracker.value?.loading.value ?? false);
+const isTyping = computed(() => chatTracker.value?.isTyping.value ?? false);
 
 const isMine = (msg: any) => {
   const senderId = String(msg.senderId || msg.sender?._id || msg.sender || '');
@@ -144,10 +144,10 @@ const adjustHeight = () => {
 };
 
 const submitMessage = () => {
-  if (!newMessage.value.trim() || !chatTracker) return;
+  if (!newMessage.value.trim() || !chatTracker.value) return;
   const text = newMessage.value.trim();
   
-  chatTracker.sendMessage(text);
+  chatTracker.value.sendMessage(text);
   newMessage.value = '';
   if (inputRef.value) inputRef.value.style.height = 'auto';
   scrollToBottom();
@@ -155,31 +155,18 @@ const submitMessage = () => {
 
 const initChat = async () => {
   if (!currentUserId.value || !props.receiverId) return;
-  loading.value = true;
-  chatTracker = useDirectChat(currentUserId.value, props.receiverId, props.serviceId);
-  chatTracker.setupListeners();
-  await chatTracker.fetchMessages();
-  messages.value = chatTracker.messages.value;
-  loading.value = false;
+  const tracker = useDirectChat(currentUserId.value, props.receiverId, props.serviceId);
+  chatTracker.value = tracker;
+  tracker.setupListeners();
+  await tracker.fetchMessages();
   scrollToBottom();
   await nextTick();
   inputRef.value?.focus();
 };
 
-watch(() => chatTracker?.messages?.value, (newVal) => {
-  if (newVal) {
-    messages.value = newVal;
-    scrollToBottom();
-  }
-}, { deep: true });
-
-watch(() => chatTracker?.isTyping?.value, (val) => {
-  isTyping.value = !!val;
-});
-
 watch(() => messages.value.length, () => scrollToBottom());
 
-watch(() => props.isOpen, async (val) => {
-  if (val) await initChat();
+watch(() => [props.isOpen, props.receiverId, props.serviceId], async ([open]) => {
+  if (open) await initChat();
 }, { immediate: true });
 </script>

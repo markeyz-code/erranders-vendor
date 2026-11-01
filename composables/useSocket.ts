@@ -22,12 +22,17 @@ export const useSocket = (namespace: string) => {
 
     const wsBaseUrl = config.public.wsBase || import.meta.env.VITE_WS_URL || import.meta.env.VITE_API_BASE_URL || "http://localhost:3005";
 
-    // The /chat gateway now verifies a JWT, so the handshake must carry it.
-    // The token lives in the `errandr_token` cookie (see api_factory/axios.config.ts).
-    const authToken =
-      typeof document !== 'undefined'
-        ? (document.cookie.match(/(^| )errandr_token=([^;]+)/) || [])[2] || ''
-        : '';
+    // The /chat gateway verifies a JWT, so the handshake must carry it.
+    // In the vendor web app, the token lives in `errandr_vendor_token` cookie or localStorage.
+    let authToken = '';
+    if (typeof document !== 'undefined') {
+      const match = document.cookie.match(/(^| )errandr_vendor_token=([^;]+)/) || document.cookie.match(/(^| )errandr_token=([^;]+)/);
+      if (match) {
+        authToken = match[2];
+      } else if (typeof localStorage !== 'undefined') {
+        authToken = localStorage.getItem('errandr_vendor_token') || localStorage.getItem('token') || '';
+      }
+    }
 
     const s = io(`${wsBaseUrl}/${namespace}`, {
       query: {
