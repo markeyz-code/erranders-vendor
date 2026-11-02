@@ -25,6 +25,11 @@ export interface Message {
   createdAt: string;
 }
 
+
+/** Compared loosely: casing and spacing vary between the optimistic copy and the echo. */
+const normaliseText = (value: any): string =>
+  String(value ?? '').trim().replace(/\s+/g, ' ').toLowerCase();
+
 export const useOrderChat = (
   orderIdArg: MaybeRefOrGetter<string>,
   currentUserIdArg?: MaybeRefOrGetter<string | undefined>,
@@ -184,17 +189,43 @@ export const useOrderChat = (
           const cIds = String(currentUserId).split(',').map(id => id.trim());
 
           if (cIds.includes(sId)) {
-            // It's our own message, check for pending optimistic update
-            const pendingIdx = messages.value.findIndex(m => m.status === 'pending' && m.message === message.message && (m.messageType || 'text') === (message.messageType || 'text'));
+            // Our own message coming back. Match the optimistic bubble loosely.
+            //
+            // The old check compared the text exactly, so a server that trimmed or
+            // normalised it never matched — the pending bubble stayed and the real message
+            // was appended beside it, which is the duplicate people were seeing.
+            const incomingText = normaliseText(message.message);
+            const pendingIdx = messages.value.findIndex(
+              (m: any) =>
+                m.status === 'pending' &&
+                normaliseText(m.message) === incomingText &&
+                (m.messageType || 'text') === (message.messageType || 'text'),
+            );
             if (pendingIdx !== -1) {
-              messages.value[pendingIdx] = message;
+              messages.value[pendingIdx] = { ...message, status: 'sent' };
               return;
             }
           }
         }
 
-        // Strict deduplication by _id
-        if (!message._id || !messages.value.some(m => m._id === message._id)) {
+        if (message._id) {
+          if (!messages.value.some((m: any) => m._id === message._id)) {
+            // A pending bubble for the same words is the same message we already show.
+            const orphanIdx = messages.value.findIndex(
+              (m: any) =>
+                m.status === 'pending' && normaliseText(m.message) === normaliseText(message.message),
+            );
+            if (orphanIdx !== -1) messages.value.splice(orphanIdx, 1);
+            messages.value.push(message);
+          }
+        } else if (
+          !messages.value.some(
+            (m: any) =>
+              normaliseText(m.message) === normaliseText(message.message) &&
+              String((m as any).senderId || '') === String(message.senderId || ''),
+          )
+        ) {
+          // No id to compare: fall back to sender plus words, so an echo cannot double up.
           messages.value.push(message);
         }
 

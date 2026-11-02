@@ -193,6 +193,7 @@
 </template>
 
 <script setup lang="ts">
+import { useUnreadChat } from '@/composables/core/useRealtimeNotifications'
 import { ref, computed, onMounted } from 'vue'
 import { Search, ArrowLeft, MessageSquare, MoreVertical, CheckCheck, Lock } from 'lucide-vue-next'
 import EmbeddedOrderChat from '@/components/core/EmbeddedOrderChat.vue'
@@ -352,6 +353,8 @@ const formatTime = (dateStr: string) => {
   const d = new Date(dateStr)
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
 }
+
+onMounted(() => { useUnreadChat().clear() })
 
 onMounted(() => {
   fetchOrders()

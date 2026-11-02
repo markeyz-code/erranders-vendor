@@ -132,8 +132,21 @@
         >
           <span class="pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow transition duration-200" :class="profile?.isOnline ? 'translate-x-4' : 'translate-x-0'" />
         </button>
-        <NuxtLink to="/dashboard/notifications" class="w-9 h-9 flex items-center justify-center rounded-lg text-gray-400 hover:text-parentPrimary hover:bg-gray-50 transition-colors">
+        <NuxtLink
+          to="/dashboard/chats"
+          class="relative w-9 h-9 flex items-center justify-center rounded-lg text-gray-400 hover:text-parentPrimary hover:bg-gray-50 transition-colors"
+          :aria-label="unreadChatCount > 0 ? `${unreadChatCount} unread messages` : 'Messages'"
+          title="Messages"
+        >
           <Bell class="w-5 h-5" />
+          <!-- A dot, not a toast: messages wait quietly until opened. -->
+          <span
+            v-if="unreadChatCount > 0"
+            class="absolute right-1.5 top-1.5 flex items-center justify-center rounded-full bg-[#FF5C1A] text-[9px] font-black text-white ring-2 ring-white"
+            :class="unreadChatCount > 9 ? 'h-4 min-w-4 px-1' : 'h-2.5 w-2.5'"
+          >
+            <span v-if="unreadChatCount > 9">{{ unreadChatCount > 99 ? '99+' : unreadChatCount }}</span>
+          </span>
         </NuxtLink>
         <button @click="showMobileMenu = !showMobileMenu" class="w-9 h-9 flex items-center justify-center rounded-lg text-gray-600 hover:bg-gray-50 transition-colors">
           <Menu class="w-5 h-5" />
@@ -277,10 +290,11 @@ import {
   MapPin,
   Palette
 } from 'lucide-vue-next'
-import { useRealtimeNotifications } from '@/composables/core/useRealtimeNotifications'
+import { useRealtimeNotifications, useUnreadChat } from '@/composables/core/useRealtimeNotifications'
 import { useVendorNotifications } from '@/composables/useVendorNotifications'
 
 useRealtimeNotifications()
+const { unreadChatCount } = useUnreadChat()
 
 const route = useRoute()
 const router = useRouter()

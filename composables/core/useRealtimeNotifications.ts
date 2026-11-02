@@ -1,4 +1,4 @@
-import { onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCustomToast } from '@/composables/core/useCustomToast'
 import { useRealtimeSocket } from '@/composables/core/useRealtimeSocket'
@@ -7,6 +7,20 @@ import { useNotifications } from '@/composables/modules/notifications/useNotific
 import { refreshNuxtData } from '#app'
 
 const LISTENERS_KEY = 'realtime_notification_listeners'
+
+/**
+ * Unread chat messages, shared across the app.
+ *
+ * A toast for every incoming message stacked up on busy chats, and a toast is the wrong
+ * shape for "there are messages waiting" anyway — it disappears. A dot on the bell stays
+ * until the messages are read.
+ */
+const unreadChatCount = ref(0)
+
+export const useUnreadChat = () => {
+  const clear = () => { unreadChatCount.value = 0 }
+  return { unreadChatCount, clear }
+}
 
 const playNotificationSound = () => {
   try {
@@ -96,23 +110,17 @@ export const useRealtimeNotifications = () => {
     // Add global chat listener
     const chatSocket = connectChat()
     onChat('newMessageNotification', (payload: any) => {
-      // Don't toast if we're already on the chat page with this user open,
-      // but a global toast is usually fine and helpful.
+      // A dot on the bell instead of a toast.
+      //
+      // The toast fired for every message, so an active chat produced a stack of them and
+      // they covered the screen. The counter survives until the chat is opened.
       playNotificationSound()
-      showToast({
-        title: `New Message from ${payload.sender?.firstName || 'Customer'}`,
-        message: payload.content || payload.message || 'You received a message',
-        toastType: 'info',
-        duration: 5000,
-        action: () => {
-          const router = useRouter()
-          if (router) {
-            router.push('/dashboard/chats')
-          } else {
-            window.location.href = '/dashboard/chats'
-          }
-        }
-      })
+
+      // Sitting in the chat already means they are reading it, not that they missed it.
+      if (typeof window !== 'undefined' && window.location.pathname.startsWith('/dashboard/chats')) {
+        return
+      }
+      unreadChatCount.value += 1
     })
   })
 
