@@ -295,6 +295,37 @@
 
  <!-- SECTION: OPERATIONS -->
  <section v-if="activeTab === 'operations'" id="operations" class="animate-fade-in space-y-5 md:space-y-8 relative">
+
+ <!-- How you get paid for a booking -->
+ <div v-if="isServiceProvider" class="bg-white lg:rounded-xl border border-gray-100 p-4 md:p-6 lg:p-4 md:p-8">
+ <h3 class="text-lg font-bold text-gray-900">How clients pay you</h3>
+ <p class="text-sm text-gray-500 mt-1">This changes what every new booking asks the client for.</p>
+
+ <div class="mt-4 grid gap-3 sm:grid-cols-2">
+ <button
+ type="button"
+ class="rounded-xl border p-4 text-left transition-all"
+ :class="profile.bookingPaymentMode === 'commitment' ? 'border-[#FF5C1A] bg-orange-50/50' : 'border-gray-200 hover:border-gray-300'"
+ @click="profile.bookingPaymentMode = 'commitment'"
+ >
+ <p class="text-sm font-bold text-gray-900">Commitment deposit</p>
+ <p class="text-xs text-gray-500 mt-1">The client pays a deposit online now and the balance to you on the day.</p>
+ </button>
+
+ <button
+ type="button"
+ class="rounded-xl border p-4 text-left transition-all"
+ :class="profile.bookingPaymentMode === 'full' ? 'border-[#FF5C1A] bg-orange-50/50' : 'border-gray-200 hover:border-gray-300'"
+ @click="profile.bookingPaymentMode = 'full'"
+ >
+ <p class="text-sm font-bold text-gray-900">Full amount upfront</p>
+ <p class="text-xs text-gray-500 mt-1">The client pays the whole booking online. Nothing is collected in person.</p>
+ </button>
+ </div>
+
+ <p class="text-[11px] text-gray-400 mt-3">Applies to new bookings only. Bookings already placed keep the terms they were made under.</p>
+ </div>
+
  
  <div class="space-y-1 px-4 lg:px-0 pt-8 lg:pt-0">
  <h3 class="text-xl font-bold text-gray-900 flex items-center gap-3">
@@ -805,7 +836,11 @@ const profile = reactive({
  { day: 'saturday', open: '08:00', close: '21:00', isClosed: false, breaks: [] as {start: string, end: string, title?: string}[] },
  { day: 'sunday', open: '08:00', close: '21:00', isClosed: true, breaks: [] as {start: string, end: string, title?: string}[] },
  ],
- accountPurposes: ['Default / General'] as string[]
+ accountPurposes: ['Default / General'] as string[],
+ // How this provider is paid for a booking. 'commitment' takes a deposit online and the
+ // balance on the day; 'full' takes the whole amount online so nothing is collected in
+ // person. Only service providers see this.
+ bookingPaymentMode: 'commitment' as 'commitment' | 'full'
 });
 
 const addBreak = (dayIndex: number) => {
@@ -962,6 +997,7 @@ const loadInitialData = async () => {
  profile.businessType = data.businessType || '';
  profile.vendorType = data.vendorType || '';
  profile.storeName = data.storeName || '';
+ profile.bookingPaymentMode = data.bookingPaymentMode === 'full' ? 'full' : 'commitment';
  profile.subdomain = data.subdomain || '';
  initialSubdomain.value = data.subdomain || '';
  profile.description = data.description || '';
