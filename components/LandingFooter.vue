@@ -96,10 +96,10 @@
       <div class="pt-8 border-t border-slate-200/80 flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="space-y-1">
           <p class="text-sm font-semibold text-slate-500">
-            &copy; {{ new Date().getFullYear() }} ERRANDERS COMPANY LIMITED. All rights reserved.
+            Erranders is a product of Erranders Company Limited.
           </p>
-          <p class="text-xs text-slate-400 font-medium">
-            Erranders Vendor Hub is operated by ERRANDERS COMPANY LIMITED.
+          <p class="text-xs font-medium text-slate-400">
+            &copy; {{ new Date().getFullYear() }} Erranders Company Limited. All rights reserved.
           </p>
         </div>
       </div>
