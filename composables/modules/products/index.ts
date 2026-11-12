@@ -166,6 +166,11 @@ export const useVendorAddOnGroups = () => {
   const loading = ref(false);
 
   const fetchAddOnGroups = async () => {
+    // Add-ons are a menu concept too — 403 for a pharmacy, and the toast is meaningless there.
+    if (!isFoodVendor.value) {
+      addOnGroups.value = [];
+      return;
+    }
     loading.value = true;
     try {
       const res = await menu_items_api.getAddOns();
@@ -218,6 +223,13 @@ export const useVendorPacks = () => {
   const loading = ref(false);
 
   const fetchPacks = async () => {
+    // Combo packs are a menu concept. Asking for them from a pharmacy — or any non-food store —
+    // returns 403 and the interceptor turns that into a red toast about menu features, which is
+    // noise on a page that never offered packs.
+    if (!isFoodVendor.value) {
+      packs.value = [];
+      return;
+    }
     loading.value = true;
     try {
       const res = await menu_items_api.getPacks();
