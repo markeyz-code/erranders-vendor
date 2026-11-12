@@ -355,6 +355,7 @@ const navItems = computed(() => {
   if (!isServiceProvider || isHybrid) {
     items.push({ path: '/dashboard/orders', label: 'Orders', icon: ClipboardList });
     items.push({ path: '/dashboard/inventory', label: 'Inventory', icon: Package });
+    items.push({ path: '/dashboard/pharmacy', label: 'Pharmacy', icon: Package });
   }
 
   const more = [];
