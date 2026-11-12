@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-5 pb-24">
+  <div class="mx-auto w-full max-w-6xl space-y-5 px-4 pb-24 pt-2 sm:px-6">
     <div class="flex flex-wrap items-end justify-between gap-3">
       <div>
         <h1 class="text-xl font-black tracking-tight text-gray-900">Pharmacy</h1>
@@ -123,6 +123,8 @@
 
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue';
+
+definePageMeta({ layout: 'vendor' });
 import { ChevronDown } from 'lucide-vue-next';
 import { GATEWAY_ENDPOINT_WITH_AUTH as api } from '@/api_factory/axios.config';
 import { useCustomToast } from '@/composables/core/useCustomToast';
