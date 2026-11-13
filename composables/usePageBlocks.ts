@@ -366,6 +366,7 @@ export type StorefrontTemplate = {
   badge?: string;
   description: string;
   previewGradient: string;
+  previewImage: string;
   appliesTo: string[];
   sections: Array<{ type: string; props?: Record<string, any> } | string>;
 };
@@ -380,6 +381,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
     badge: 'Popular',
     description: 'High-energy layout with daily specials, live menu, express delivery badge, and opening hours.',
     previewGradient: 'from-amber-600 via-orange-600 to-red-600',
+    previewImage: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80',
     appliesTo: ['restaurant', 'kitchen', 'food', 'eatery', 'chef', 'hot food'],
     sections: [
       {
@@ -387,6 +389,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
         props: {
           headline: 'Hot, Fresh & Delicious Campus Meals',
           subheadline: 'Crafted with authentic ingredients. Cooked fresh daily and delivered hot to your hostel room.',
+          image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1200&q=80',
           ctaLabel: 'Order Hot Food',
           ctaHref: '#offerings',
         },
@@ -427,6 +430,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
     badge: 'Traditional',
     description: 'Traditional home-style buka layout featuring pounded yam, amala, rich soups, and assorted meats.',
     previewGradient: 'from-yellow-700 via-amber-800 to-red-900',
+    previewImage: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80',
     appliesTo: ['soup', 'swallow', 'amala', 'egusi', 'buka', 'local', 'kitchen', 'mama put'],
     sections: [
       {
@@ -434,6 +438,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
         props: {
           headline: 'Authentic Campus Buka & Hot Soups',
           subheadline: 'Pounded yam, piping hot amala, egusi, and rich seafood okra served with succulent assorted meats.',
+          image: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=1200&q=80',
           ctaLabel: 'Browse Buka Menu',
           ctaHref: '#offerings',
         },
@@ -464,6 +469,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
     badge: 'Late Night',
     description: 'Dark, vibrant theme built for barbecue, burgers, suya, shawarma, and late-night campus cravings.',
     previewGradient: 'from-zinc-900 via-red-900 to-amber-700',
+    previewImage: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80',
     appliesTo: ['grill', 'bbq', 'shawarma', 'burger', 'suya', 'night', 'fastfood'],
     sections: [
       {
@@ -471,6 +477,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
         props: {
           headline: 'Late-Night Grills, Shawarma & Burgers',
           subheadline: 'Smoky barbecue, crispy loaded fries, and juicy double shawarma delivered late to your doorstep.',
+          image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1200&q=80',
           ctaLabel: 'Order Night Grills',
           ctaHref: '#offerings',
         },
@@ -500,6 +507,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
     badge: 'Bulk Food',
     description: 'Specialized for kitchens selling soups, stews, and sauces by the litre for hostel students.',
     previewGradient: 'from-orange-700 via-amber-700 to-emerald-800',
+    previewImage: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80',
     appliesTo: ['soup', 'stew', 'pot', 'sauce', 'bulk', 'litre', 'kitchen'],
     sections: [
       {
@@ -507,6 +515,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
         props: {
           headline: 'Fresh Soups & Stews by the Litre',
           subheadline: 'Stock your hostel with rich, authentic soups and pepper stews. Order 1L, 2L, or 5L tubs.',
+          image: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=1200&q=80',
           ctaLabel: 'View Soup Sizes',
           ctaHref: '#offerings',
         },
@@ -541,6 +550,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
     badge: 'Campus Favorite',
     description: 'Designed for students who stock their hostel fridge: weekly meal boxes, shelf life guidelines, reheat steps.',
     previewGradient: 'from-teal-700 via-cyan-800 to-blue-900',
+    previewImage: 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=80',
     appliesTo: ['meal prep', 'prep', 'storage', 'freeze', 'healthy', 'bulk meal', 'weekly', 'hostel food'],
     sections: [
       {
@@ -548,6 +558,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
         props: {
           headline: 'Hostel Meal Prep & Weekly Food Storage',
           subheadline: 'Pre-portioned, nutrient-dense meals in microwave-safe freezer containers. Save money and eat healthy all week long.',
+          image: 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=80',
           ctaLabel: 'Build Your Weekly Pack',
           ctaHref: '#offerings',
         },
@@ -600,6 +611,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
     badge: 'Cold Chain',
     description: 'For merchants selling raw frozen chicken, turkey, fish, and seafood with cold-chain guarantee and thawing instructions.',
     previewGradient: 'from-blue-700 via-indigo-800 to-slate-900',
+    previewImage: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=800&q=80',
     appliesTo: ['frozen', 'cold storage', 'chicken', 'turkey', 'fish', 'seafood', 'raw food', 'meat'],
     sections: [
       {
@@ -607,6 +619,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
         props: {
           headline: 'Campus Cold Storage & Frozen Foods',
           subheadline: 'Grade-A frozen chicken parts, turkey cuts, fish, prawns, and beef delivered in thermal cooler bags directly to your hall.',
+          image: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=1200&q=80',
           ctaLabel: 'Shop Frozen Cuts',
           ctaHref: '#offerings',
         },
@@ -647,6 +660,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
     badge: 'Freezer Tubs',
     description: 'Ready-to-freeze cooked soups (Egusi, Ogbono, Oha, Banga) packaged in 1L to 5L containers for long-term storage.',
     previewGradient: 'from-emerald-800 via-teal-900 to-slate-900',
+    previewImage: 'https://images.unsplash.com/photo-1541832676-9b763b0239ab?auto=format&fit=crop&w=800&q=80',
     appliesTo: ['soup tub', 'freezer soup', 'frozen soup', 'stew tub', 'hostel freezer', 'cooked food'],
     sections: [
       {
@@ -654,6 +668,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
         props: {
           headline: 'Pre-Cooked Soup Tubs for Your Freezer',
           subheadline: 'Rich, thick, authentic Nigerian soups packed in 1L-5L airtight tubs. Just warm up and pair with your favorite swallow.',
+          image: 'https://images.unsplash.com/photo-1541832676-9b763b0239ab?auto=format&fit=crop&w=1200&q=80',
           ctaLabel: 'Browse Soup Tubs',
           ctaHref: '#offerings',
         },
@@ -684,6 +699,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
     badge: 'Bulk Pantry',
     description: 'Bulk rice bags, garri, beans, noodles cartons, and dry provisions with pest-proof hostel storage guidance.',
     previewGradient: 'from-amber-800 via-yellow-900 to-stone-900',
+    previewImage: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80',
     appliesTo: ['pantry', 'garri', 'rice', 'beans', 'dry food', 'provisions', 'groceries', 'bulk'],
     sections: [
       {
@@ -691,6 +707,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
         props: {
           headline: 'Campus Pantry Essentials & Bulk Food Bags',
           subheadline: 'High-grade rice, ijebu garri, brown beans, vegetable oils, and instant noodles delivered in bulk at wholesale campus rates.',
+          image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=1200&q=80',
           ctaLabel: 'Stock Your Pantry',
           ctaHref: '#offerings',
         },
@@ -720,6 +737,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
     badge: 'Farm Fresh',
     description: 'Fresh tubers of yam, plantain bunches, pepper baskets, and produce storage tips to prevent spoilage in hostel rooms.',
     previewGradient: 'from-lime-800 via-green-800 to-emerald-950',
+    previewImage: 'https://images.unsplash.com/photo-1610348725531-843dff563e2c?auto=format&fit=crop&w=800&q=80',
     appliesTo: ['produce', 'farm', 'yam', 'plantain', 'pepper', 'tomatoes', 'raw food', 'fruits'],
     sections: [
       {
@@ -727,6 +745,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
         props: {
           headline: 'Farm-Fresh Produce Delivered to Campus',
           subheadline: 'Handpicked yams, ripe plantains, sweet potatoes, and fresh pepper blends straight from the market to your hostel.',
+          image: 'https://images.unsplash.com/photo-1610348725531-843dff563e2c?auto=format&fit=crop&w=1200&q=80',
           ctaLabel: 'Shop Fresh Produce',
           ctaHref: '#offerings',
         },
@@ -753,6 +772,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
     badge: 'Chilled',
     description: 'Vibrant layout for Greek yogurt parfaits, overnight oats, layered fruit cups, and smoothies with cooler-bag dispatch.',
     previewGradient: 'from-pink-600 via-rose-500 to-amber-500',
+    previewImage: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=800&q=80',
     appliesTo: ['smoothie', 'juice', 'parfait', 'yogurt', 'milkshake', 'drinks', 'chilled'],
     sections: [
       {
@@ -760,6 +780,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
         props: {
           headline: 'Fresh Fruit Smoothies & Layered Parfaits',
           subheadline: 'Thick Greek yogurt, crunchy honey granola, fresh berries, and 100% natural fruit juices made to order.',
+          image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=1200&q=80',
           ctaLabel: 'Order Chilled Parfait',
           ctaHref: '#offerings',
         },
@@ -789,6 +810,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
     badge: '100% Natural',
     description: 'Cold-pressed immune boosters, tiger nut milk, zobo, and fresh citrus juices.',
     previewGradient: 'from-emerald-600 via-teal-600 to-lime-600',
+    previewImage: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=800&q=80',
     appliesTo: ['juice', 'detox', 'wellness', 'cleanse', 'drinks', 'tiger nut', 'zobo'],
     sections: [
       {
@@ -796,6 +818,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
         props: {
           headline: 'Cold-Pressed Juices & Wellness Blends',
           subheadline: 'Zero added sugar, zero preservatives. Pure wholesome fuel for lectures and exam season.',
+          image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=1200&q=80',
           ctaLabel: 'Browse Juice Menu',
           ctaHref: '#offerings',
         },
@@ -817,6 +840,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
     badge: 'Fresh Bakes',
     description: 'Warm, inviting design for custom celebration cakes, meat pies, banana bread, and fresh pastry boxes.',
     previewGradient: 'from-amber-700 via-yellow-700 to-orange-800',
+    previewImage: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80',
     appliesTo: ['bakery', 'cake', 'bread', 'pastry', 'meat pie', 'bake'],
     sections: [
       {
@@ -824,6 +848,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
         props: {
           headline: 'Oven-Fresh Bakes & Custom Cakes',
           subheadline: 'Flaky meat pies, soft banana loaves, cinnamon rolls, and handcrafted birthday cakes for campus celebrations.',
+          image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80',
           ctaLabel: 'Order Fresh Bakes',
           ctaHref: '#offerings',
         },
@@ -845,6 +870,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
     categoryLabel: 'Campus Mart & Retail',
     description: 'Shelves-first storefront for mini-marts, snacks, stationery, and hostel essentials.',
     previewGradient: 'from-blue-600 via-indigo-600 to-purple-700',
+    previewImage: 'https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=800&q=80',
     appliesTo: ['mart', 'mini-mart', 'retail', 'provisions', 'supermarket', 'store'],
     sections: ['hero', 'products', 'about', 'hours', 'contact'],
   },
@@ -855,6 +881,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
     categoryLabel: 'Campus Mart & Retail',
     description: 'Lookbook gallery first, trending drops, product showcase, and reviews.',
     previewGradient: 'from-purple-800 via-violet-900 to-slate-900',
+    previewImage: 'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?auto=format&fit=crop&w=800&q=80',
     appliesTo: ['fashion', 'thrift', 'clothing', 'boutique', 'wears', 'shoes'],
     sections: ['hero', 'gallery', 'products', 'about', 'testimonials', 'contact'],
   },
@@ -867,6 +894,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
     categoryLabel: 'Services & Care',
     description: 'Services and cuts with pricing, haircut showcase gallery, hours, and appointment booking.',
     previewGradient: 'from-zinc-800 via-neutral-900 to-amber-900',
+    previewImage: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=80',
     appliesTo: ['barber', 'salon', 'haircut', 'barbing', 'hair'],
     sections: ['hero', 'services', 'gallery', 'hours', 'testimonials', 'contact'],
   },
@@ -877,6 +905,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
     categoryLabel: 'Services & Care',
     description: 'Glamour portfolio showcase, price list, student reviews, and booking button.',
     previewGradient: 'from-rose-600 via-pink-700 to-purple-800',
+    previewImage: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80',
     appliesTo: ['beauty', 'makeup', 'lashes', 'nails', 'spa'],
     sections: ['hero', 'services', 'gallery', 'testimonials', 'hours', 'cta', 'contact'],
   },
@@ -887,6 +916,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
     categoryLabel: 'Services & Care',
     description: 'Fix list, screen replacement prices, before/after work, warranty questions, and shop location.',
     previewGradient: 'from-cyan-700 via-blue-800 to-slate-900',
+    previewImage: 'https://images.unsplash.com/photo-1597740985671-2a8a3b80532e?auto=format&fit=crop&w=800&q=80',
     appliesTo: ['repair', 'technician', 'screen', 'laptop', 'phone', 'gadget'],
     sections: ['hero', 'services', 'gallery', 'faq', 'hours', 'contact'],
   },
@@ -897,6 +927,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
     categoryLabel: 'Services & Care',
     description: 'Health essentials, pharmacy hours, prescription queries, and discreet hostel delivery.',
     previewGradient: 'from-emerald-700 via-teal-800 to-cyan-900',
+    previewImage: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80',
     appliesTo: ['pharmacy', 'chemist', 'medicine', 'health', 'drugs'],
     sections: ['hero', 'services', 'about', 'hours', 'faq', 'contact'],
   },
@@ -907,6 +938,7 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
     categoryLabel: 'Services & Care',
     description: 'Bag pricing, wash & fold turnarounds, pickup & drop schedule, and student testimonials.',
     previewGradient: 'from-sky-600 via-blue-700 to-indigo-800',
+    previewImage: 'https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&w=800&q=80',
     appliesTo: ['laundry', 'cleaning', 'wash', 'ironing', 'dry clean'],
     sections: ['hero', 'services', 'delivery_schedule', 'faq', 'hours', 'cta', 'contact'],
   },

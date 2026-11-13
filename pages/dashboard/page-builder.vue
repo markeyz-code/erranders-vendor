@@ -184,41 +184,78 @@
             :key="tpl.id"
             class="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-white transition-all hover:-translate-y-1 hover:border-[#FF5C1A] hover:shadow-xl shadow-xs"
           >
-            <!-- Card Header Banner with Gradient & Badges -->
+            <!-- Card Header: Realistic Visual Storefront Preview Frame -->
             <div
-              class="relative h-32 w-full bg-gradient-to-br p-4 text-white flex flex-col justify-between"
-              :class="tpl.previewGradient || 'from-slate-800 to-slate-900'"
+              class="relative h-48 w-full overflow-hidden bg-slate-900 text-white cursor-pointer"
+              @click="openTemplatePreview(tpl)"
             >
-              <div class="flex items-center justify-between gap-2">
-                <span class="rounded-full bg-black/30 backdrop-blur-md px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-white border border-white/20">
-                  {{ tpl.categoryLabel }}
-                </span>
+              <!-- Themed Background Image -->
+              <img
+                :src="tpl.previewImage || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80'"
+                :alt="tpl.name"
+                class="absolute inset-0 h-full w-full object-cover opacity-60 transition-transform duration-500 group-hover:scale-105"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/40" />
+
+              <!-- Mini Browser Header Bar -->
+              <div class="relative z-10 flex items-center justify-between gap-2 px-3.5 py-2 border-b border-white/10 bg-black/40 backdrop-blur-xs">
+                <div class="flex items-center gap-1.5">
+                  <span class="h-2 w-2 rounded-full bg-red-500/80" />
+                  <span class="h-2 w-2 rounded-full bg-amber-500/80" />
+                  <span class="h-2 w-2 rounded-full bg-emerald-500/80" />
+                  <span class="ml-1.5 text-[10px] font-mono text-slate-300 truncate max-w-[130px]">
+                    {{ storeUrl }}
+                  </span>
+                </div>
 
                 <span
                   v-if="tpl.badge || isSuggested(tpl)"
-                  class="rounded-full bg-white px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wide text-slate-900 shadow-sm"
+                  class="rounded-full bg-white/95 px-2 py-0.5 text-[9px] font-black uppercase tracking-wide text-slate-900 shadow-sm shrink-0"
                 >
-                  {{ isSuggested(tpl) ? 'Recommended for you' : tpl.badge }}
+                  {{ isSuggested(tpl) ? '★ Suggested' : tpl.badge }}
                 </span>
               </div>
 
-              <div>
-                <h3 class="text-lg font-black text-white leading-tight drop-shadow-sm">
+              <!-- Mini Hero Preview Mockup -->
+              <div class="relative z-10 p-4 flex flex-col justify-end h-[calc(100%-33px)] space-y-1.5">
+                <span class="inline-block self-start rounded-full bg-black/40 backdrop-blur-md px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-orange-300 border border-white/10">
+                  {{ tpl.categoryLabel }}
+                </span>
+
+                <h3 class="text-base font-black text-white leading-tight drop-shadow-sm line-clamp-1">
                   {{ tpl.name }}
                 </h3>
+
+                <!-- Mini CTA & Wireframe Pills -->
+                <div class="flex items-center gap-2 pt-1">
+                  <span class="rounded-lg bg-[#FF5C1A] px-2.5 py-1 text-[10px] font-black text-white shadow-xs">
+                    {{ getTemplateCta(tpl) }}
+                  </span>
+                  <span class="text-[10px] font-medium text-slate-300">
+                    {{ tpl.sections.length }} sections
+                  </span>
+                </div>
+              </div>
+
+              <!-- Hover Quick Preview Pill Overlay -->
+              <div class="absolute inset-0 z-20 flex items-center justify-center bg-slate-950/40 opacity-0 backdrop-blur-[2px] transition-opacity group-hover:opacity-100">
+                <span class="inline-flex items-center gap-1.5 rounded-xl bg-white px-3.5 py-2 text-xs font-black text-slate-900 shadow-xl transition-transform group-hover:scale-105">
+                  <Eye class="h-3.5 w-3.5 text-[#FF5C1A]" />
+                  <span>Preview Storefront</span>
+                </span>
               </div>
             </div>
 
             <!-- Card Content Body -->
             <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-              <p class="text-xs leading-relaxed text-slate-600 font-medium">
+              <p class="text-xs leading-relaxed text-slate-600 font-medium line-clamp-2">
                 {{ tpl.description }}
               </p>
 
               <!-- Included Sections Tags -->
               <div>
                 <p class="text-[10px] font-black uppercase tracking-wider text-slate-400 mb-2">
-                  Includes {{ tpl.sections.length }} Sections:
+                  Sections Flow:
                 </p>
                 <div class="flex flex-wrap gap-1.5">
                   <span
@@ -233,6 +270,15 @@
 
               <!-- Card Action Buttons -->
               <div class="pt-4 border-t border-slate-100 flex items-center gap-2">
+                <button
+                  type="button"
+                  class="rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs font-bold text-slate-700 hover:bg-slate-50 transition shadow-2xs cursor-pointer flex items-center justify-center gap-1.5"
+                  @click="openTemplatePreview(tpl)"
+                >
+                  <Eye class="h-3.5 w-3.5 text-slate-500" />
+                  <span>Preview</span>
+                </button>
+
                 <button
                   type="button"
                   class="flex-1 rounded-xl bg-slate-900 px-4 py-2.5 text-xs font-black text-white transition-all hover:bg-[#FF5C1A] shadow-xs cursor-pointer flex items-center justify-center gap-1.5"
@@ -828,6 +874,92 @@
         </div>
       </div>
     </Teleport>
+
+    <!-- Dedicated Storefront Style Interactive Preview Modal (Teleported) -->
+    <Teleport to="body">
+      <div
+        v-if="previewingTemplate"
+        class="fixed inset-0 z-[320] flex flex-col bg-slate-950/80 p-3 backdrop-blur-md sm:p-6 animate-fade-in"
+      >
+        <div class="mx-auto flex w-full max-w-6xl flex-1 flex-col overflow-hidden rounded-3xl bg-white shadow-2xl border border-slate-100">
+          <!-- Top bar -->
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 bg-white px-6 py-4">
+            <div class="flex items-center gap-3">
+              <button
+                type="button"
+                class="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-slate-50 transition flex items-center gap-1.5 cursor-pointer"
+                @click="previewingTemplate = null"
+              >
+                <ArrowLeft class="w-3.5 h-3.5" /> Back to Styles
+              </button>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-sm sm:text-base font-black text-slate-900">{{ previewingTemplate.name }}</h3>
+                  <span class="rounded-full bg-orange-50 px-2 py-0.5 text-[10px] font-black uppercase text-[#FF5C1A] border border-orange-200">
+                    {{ previewingTemplate.categoryLabel }}
+                  </span>
+                </div>
+                <p class="text-[11px] text-slate-400">Interactive live mockup of this storefront layout</p>
+              </div>
+            </div>
+
+            <!-- Middle: Device Simulator Toggle -->
+            <div class="flex items-center gap-1 rounded-xl bg-slate-100 p-1 border border-slate-200 text-xs font-bold">
+              <button
+                type="button"
+                class="rounded-lg px-3 py-1.5 transition cursor-pointer"
+                :class="templatePreviewDevice === 'mobile' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500'"
+                @click="templatePreviewDevice = 'mobile'"
+              >
+                <Smartphone class="mr-1 inline h-3.5 w-3.5" /> Mobile View (390px)
+              </button>
+              <button
+                type="button"
+                class="rounded-lg px-3 py-1.5 transition cursor-pointer"
+                :class="templatePreviewDevice === 'desktop' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500'"
+                @click="templatePreviewDevice = 'desktop'"
+              >
+                <Monitor class="mr-1 inline h-3.5 w-3.5" /> Desktop View
+              </button>
+            </div>
+
+            <!-- Right: Actions -->
+            <div class="flex items-center gap-2">
+              <button
+                type="button"
+                class="rounded-xl bg-[#FF5C1A] px-4 py-2 text-xs font-black text-white hover:bg-[#E54D12] transition shadow-xs flex items-center gap-1.5 cursor-pointer"
+                @click="promptApplyTemplate(previewingTemplate); previewingTemplate = null"
+              >
+                <Sparkles class="w-3.5 h-3.5" />
+                <span>Use This Style</span>
+              </button>
+              <button
+                type="button"
+                class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 cursor-pointer"
+                @click="previewingTemplate = null"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+
+          <!-- Preview Frame Canvas -->
+          <div class="flex flex-1 justify-center overflow-auto bg-slate-100/80 p-4 sm:p-6">
+            <div
+              class="h-full overflow-y-auto rounded-2xl border border-slate-300 bg-white shadow-lg transition-all duration-300"
+              :class="templatePreviewDevice === 'mobile' ? 'w-[390px] max-w-full' : 'w-full max-w-5xl'"
+            >
+              <StorefrontPreview
+                :blocks="templatePreviewBlocks"
+                :vendor="profile"
+                :products="previewProducts"
+                class="h-full overflow-y-auto"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </Teleport>
   </div>
 </template>
 
@@ -896,6 +1028,26 @@ const selectedTemplateCategory = ref<string>('all');
 const templateSearchQuery = ref('');
 const sectionPaletteSearch = ref('');
 const pendingTemplate = ref<StorefrontTemplate | null>(null);
+
+const previewingTemplate = ref<StorefrontTemplate | null>(null);
+const templatePreviewDevice = ref<'mobile' | 'desktop'>('desktop');
+
+const openTemplatePreview = (tpl: StorefrontTemplate) => {
+  previewingTemplate.value = tpl;
+  templatePreviewDevice.value = 'desktop';
+};
+
+const templatePreviewBlocks = computed(() => {
+  if (!previewingTemplate.value) return [];
+  return blocksFromTemplate(previewingTemplate.value);
+});
+
+const getTemplateCta = (tpl: StorefrontTemplate) => {
+  const heroSec: any = (tpl.sections || []).find(
+    (s: any) => typeof s === 'object' && s?.type === 'hero'
+  );
+  return heroSec?.props?.ctaLabel || 'Order Now';
+};
 
 // High quality food & store banner presets
 const FOOD_IMAGE_PRESETS = [
