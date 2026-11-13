@@ -822,7 +822,7 @@
               class="h-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all"
               :class="previewDevice === 'mobile' ? 'w-[390px] max-w-full' : 'w-full'"
             >
-              <StorefrontPreview :blocks="blocks" :vendor="profile" class="h-full overflow-y-auto" />
+              <StorefrontPreview :blocks="blocks" :vendor="profile" :products="previewProducts" class="h-full overflow-y-auto" />
             </div>
           </div>
         </div>
