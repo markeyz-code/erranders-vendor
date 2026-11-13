@@ -2,12 +2,22 @@
   <div class="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-6 animate-fade-in">
     <!-- Header -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-      <div>
+      <div class="flex items-start gap-3">
+        <button
+          type="button"
+          class="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 hover:bg-slate-50"
+          title="Back to templates"
+          @click="showTemplateList = true"
+        >
+          <ArrowLeft class="w-4 h-4" />
+        </button>
+        <div>
         <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Storefront Page Designer</h1>
         <p class="text-sm text-slate-500 font-medium mt-0.5">
           Design your custom branded storefront. Drag sections to reorder. Live on
           <span class="font-mono text-[#FF5C1A] font-bold">{{ storeUrl }}</span>.
         </p>
+        </div>
       </div>
 
       <div class="flex items-center gap-2.5 shrink-0">
@@ -309,6 +319,43 @@
       </aside>
     </div>
   </div>
+  <!-- Template library: every style, reachable at any time. -->
+  <Teleport to="body">
+    <div v-if="showTemplateList" class="fixed inset-0 z-[290] flex items-end justify-center bg-slate-900/60 p-0 backdrop-blur-sm sm:items-center sm:p-6">
+      <div class="flex max-h-[85vh] w-full max-w-3xl flex-col overflow-hidden rounded-t-2xl bg-white shadow-2xl sm:rounded-2xl">
+        <div class="flex items-center justify-between border-b border-slate-100 px-4 py-3">
+          <div>
+            <p class="text-[10px] font-black uppercase tracking-wider text-slate-400">Storefront styles</p>
+            <h3 class="text-base font-black tracking-tight text-slate-900">Pick a starting point</h3>
+          </div>
+          <button type="button" class="rounded-lg bg-slate-900 px-3 py-1.5 text-[11px] font-bold text-white" @click="showTemplateList = false">
+            Back to designer
+          </button>
+        </div>
+
+        <div class="grid flex-1 gap-2 overflow-y-auto p-4 sm:grid-cols-2">
+          <button
+            v-for="tpl in templates"
+            :key="'lib-' + tpl.id"
+            type="button"
+            class="rounded-xl border border-slate-200 bg-white p-3 text-left transition-colors hover:border-[#FF5C1A]"
+            @click="applyTemplate(tpl); showTemplateList = false"
+          >
+            <p class="text-xs font-black text-slate-900">
+              {{ tpl.name }}
+              <span v-if="isSuggested(tpl)" class="ml-1 rounded bg-[#FFF1E8] px-1.5 py-0.5 text-[9px] font-bold uppercase text-[#FF5C1A]">for you</span>
+            </p>
+            <p class="mt-0.5 text-[11px] leading-snug text-slate-500">{{ tpl.description }}</p>
+          </button>
+        </div>
+
+        <p class="border-t border-slate-100 px-4 py-2 text-center text-[10px] text-slate-400">
+          Choosing a style replaces your current sections. You can reorder them afterwards.
+        </p>
+      </div>
+    </div>
+  </Teleport>
+
   <!-- Storefront preview: the same page at phone and laptop widths. -->
   <Teleport to="body">
     <div v-if="previewOpen" class="fixed inset-0 z-[300] flex flex-col bg-slate-900/70 p-3 backdrop-blur-sm sm:p-6">
@@ -368,7 +415,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import {
-  Plus, Trash2, Save, Eye, GripVertical, MousePointerClick, Loader2, Smartphone, Monitor
+  Plus, Trash2, Save, Eye, GripVertical, MousePointerClick, Loader2, Smartphone, Monitor, ArrowLeft
 } from 'lucide-vue-next';
 import { useVendorProfile } from '@/composables/modules/vendors';
 import { BLOCK_DEFINITIONS, definitionFor, makeBlock, templatesForVendor, blocksFromTemplate } from '@/composables/usePageBlocks';
@@ -417,6 +464,9 @@ onMounted(async () => {
     loading.value = false;
   }
 });
+
+// The template list is reachable at any time, not only from an empty canvas.
+const showTemplateList = ref(false);
 
 const previewOpen = ref(false);
 const previewDevice = ref<'mobile' | 'desktop'>('desktop');
