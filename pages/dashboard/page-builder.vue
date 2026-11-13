@@ -1166,12 +1166,28 @@ const filteredPaletteGroups = computed(() => {
   return groups.filter((g) => g.items.length > 0);
 });
 
+// The preview must render the vendor's real catalogue, or a layout is judged with empty shelves.
+const previewProducts = ref<any[]>([]);
+
+const loadPreviewProducts = async () => {
+  try {
+    const { products_api } = await import('@/api_factory/modules/products');
+    const id = profile.value?._id || profile.value?.id || profile.value?.data?._id;
+    if (!id) return;
+    const res = await products_api.getByVendor(id);
+    previewProducts.value = (res?.data || []).slice(0, 24);
+  } catch {
+    previewProducts.value = [];
+  }
+};
+
 onMounted(async () => {
   loading.value = true;
   try {
     if (!profile.value) {
       await fetchProfile();
     }
+    await loadPreviewProducts();
     const current = profile.value?.pageBlocks || [];
     blocks.value = JSON.parse(JSON.stringify(current));
     if (blocks.value.length > 0) {
