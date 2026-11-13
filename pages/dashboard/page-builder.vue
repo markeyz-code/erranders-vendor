@@ -82,7 +82,7 @@
           <!-- Templates: nobody should have to build a storefront from a blank canvas. -->
           <div class="mt-4 w-full max-w-lg space-y-2 text-left">
             <p class="text-[10px] font-black uppercase tracking-wider text-slate-400">Start from a template</p>
-            <div class="grid gap-2 sm:grid-cols-2">
+            <div class="grid max-h-[300px] gap-2 overflow-y-auto pr-1 sm:grid-cols-2">
               <button
                 v-for="tpl in templates"
                 :key="tpl.id"
@@ -90,7 +90,10 @@
                 class="rounded-xl border border-slate-200 bg-white p-3 text-left transition-colors hover:border-[#FF5C1A]"
                 @click="applyTemplate(tpl)"
               >
-                <p class="text-xs font-black text-slate-900">{{ tpl.name }}</p>
+                <p class="text-xs font-black text-slate-900">
+                  {{ tpl.name }}
+                  <span v-if="isSuggested(tpl)" class="ml-1 rounded bg-[#FFF1E8] px-1.5 py-0.5 text-[9px] font-bold uppercase text-[#FF5C1A]">for you</span>
+                </p>
                 <p class="mt-0.5 text-[11px] leading-snug text-slate-500">{{ tpl.description }}</p>
                 <p class="mt-1 text-[10px] font-bold text-[#FF5C1A]">{{ tpl.sections.length }} sections</p>
               </button>
@@ -428,6 +431,15 @@ const templates = computed(() =>
 );
 
 const pendingTemplate = ref<any>(null);
+
+// Whether this template was matched to the store rather than merely offered.
+const isSuggested = (template: any) =>
+  (template.appliesTo || []).some((key: string) =>
+    [profile.value?.vendorType, profile.value?.category, profile.value?.storeName]
+      .map((v) => String(v || '').toLowerCase())
+      .filter(Boolean)
+      .some((h) => h.includes(key)),
+  );
 
 const applyTemplate = (template: any) => {
   // Nothing to lose on an empty canvas; ask first when it would discard work.

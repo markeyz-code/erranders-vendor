@@ -356,12 +356,18 @@ export const templatesForVendor = (
     .map((v) => String(v || '').toLowerCase())
     .filter(Boolean);
 
-  const matching = STOREFRONT_TEMPLATES.filter((t) =>
-    t.appliesTo.some((key) => haystack.some((h) => h.includes(key))),
-  );
+  const matches = (t: StorefrontTemplate) =>
+    t.appliesTo.some((key) => haystack.some((h) => h.includes(key)));
 
-  // Never leave the vendor with an empty picker: a shop template is a sane fallback.
-  return matching.length > 0 ? matching : [STOREFRONT_TEMPLATES[4]];
+  // Matched templates first, then the rest of the catalogue.
+  //
+  // Filtering to matches only meant a kitchen saw exactly one card and nothing else — no way to
+  // see what else existed, and no sense that the picker had anything in it. A vendor should be
+  // able to browse every shape and choose, whether or not we guessed their trade correctly.
+  const matched = STOREFRONT_TEMPLATES.filter(matches);
+  const others = STOREFRONT_TEMPLATES.filter((t) => !matches(t));
+
+  return [...matched, ...others];
 };
 
 /** Builds the blocks a template describes, using each section's own defaults. */
