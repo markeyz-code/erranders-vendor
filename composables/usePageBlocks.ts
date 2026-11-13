@@ -221,42 +221,147 @@ export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
     id: 'food-classic',
     name: 'Kitchen & food',
     description: 'Hero, your story, the menu, opening hours.',
-    appliesTo: ['restaurant', 'food'],
+    appliesTo: ['restaurant', 'food', 'kitchen', 'eatery'],
     sections: ['hero', 'about', 'products', 'hours', 'contact'],
+  },
+  {
+    id: 'smoothie-bar',
+    name: 'Smoothie & juice bar',
+    description: 'Bright hero, best sellers, reviews, hours.',
+    appliesTo: ['smoothie', 'juice', 'drinks', 'milkshake', 'parfait'],
+    sections: ['hero', 'products', 'testimonials', 'hours', 'contact'],
+  },
+  {
+    id: 'bakery',
+    name: 'Bakery & pastry',
+    description: 'Hero, today’s bakes, gallery, delivery questions.',
+    appliesTo: ['bakery', 'cakes', 'pastry', 'bread'],
+    sections: ['hero', 'products', 'gallery', 'hours', 'faq', 'contact'],
+  },
+  {
+    id: 'grills-fastfood',
+    name: 'Grills & fast food',
+    description: 'Bold hero, full menu, reviews, order call to action.',
+    appliesTo: ['grill', 'fastfood', 'sharwarma', 'burger', 'chicken'],
+    sections: ['hero', 'products', 'services', 'testimonials', 'hours', 'cta', 'contact'],
   },
   {
     id: 'shop-classic',
     name: 'Retail shop',
     description: 'Hero, shop shelves, story, location.',
-    appliesTo: ['mini-mart', 'single-category', 'physical_product'],
+    appliesTo: ['mini-mart', 'single-category', 'physical_product', 'provisions', 'grocery'],
     sections: ['hero', 'products', 'about', 'hours', 'contact'],
+  },
+  {
+    id: 'fashion',
+    name: 'Fashion & thrift',
+    description: 'Lookbook gallery first, then the range and reviews.',
+    appliesTo: ['fashion', 'thrift', 'clothing', 'boutique', 'wears'],
+    sections: ['hero', 'gallery', 'products', 'about', 'testimonials', 'contact'],
+  },
+  {
+    id: 'electronics',
+    name: 'Electronics & gadgets',
+    description: 'Products, what you service, warranty questions.',
+    appliesTo: ['electronics', 'gadget', 'phones', 'accessories'],
+    sections: ['hero', 'products', 'services', 'faq', 'contact'],
+  },
+  {
+    id: 'phone-repair',
+    name: 'Phone & device repair',
+    description: 'What you fix, before/after work, common questions.',
+    appliesTo: ['repair', 'technician', 'screen', 'laptop'],
+    sections: ['hero', 'services', 'gallery', 'faq', 'hours', 'contact'],
+  },
+  {
+    id: 'salon',
+    name: 'Beauty & salon',
+    description: 'Services and prices, your work, reviews, booking.',
+    appliesTo: ['salon', 'beauty', 'makeup', 'nails', 'spa'],
+    sections: ['hero', 'services', 'gallery', 'testimonials', 'hours', 'cta', 'contact'],
+  },
+  {
+    id: 'barber',
+    name: 'Barbershop',
+    description: 'Cuts and prices, gallery, hours, book a slot.',
+    appliesTo: ['barber', 'barbing', 'haircut', 'hair'],
+    sections: ['hero', 'services', 'gallery', 'hours', 'testimonials', 'contact'],
+  },
+  {
+    id: 'laundry',
+    name: 'Laundry & cleaning',
+    description: 'How it works, pricing, turnaround questions.',
+    appliesTo: ['laundry', 'cleaning', 'wash'],
+    sections: ['hero', 'services', 'faq', 'hours', 'cta', 'contact'],
+  },
+  {
+    id: 'printing',
+    name: 'Printing & stationery',
+    description: 'Services, samples of past work, file questions.',
+    appliesTo: ['printing', 'stationery', 'cyber', 'design'],
+    sections: ['hero', 'services', 'gallery', 'faq', 'contact'],
+  },
+  {
+    id: 'gym',
+    name: 'Gym & fitness',
+    description: 'Programmes, timings, member reviews, join now.',
+    appliesTo: ['gym', 'fitness', 'training', 'coach'],
+    sections: ['hero', 'services', 'hours', 'testimonials', 'cta', 'contact'],
+  },
+  {
+    id: 'photography',
+    name: 'Photography & media',
+    description: 'Portfolio-first, packages, reviews, enquiry form.',
+    appliesTo: ['photography', 'photo', 'video', 'media', 'content'],
+    sections: ['hero', 'gallery', 'services', 'testimonials', 'cta', 'contact'],
+  },
+  {
+    id: 'catering',
+    name: 'Catering & events',
+    description: 'Packages, past events, planning questions.',
+    appliesTo: ['catering', 'events', 'party', 'cook'],
+    sections: ['hero', 'services', 'gallery', 'testimonials', 'faq', 'contact'],
   },
   {
     id: 'pharmacy-safe',
     name: 'Pharmacy',
     description: 'Hero, your services, how to order, hours, questions, location.',
-    appliesTo: ['pharmacy'],
+    appliesTo: ['pharmacy', 'chemist', 'medicine'],
     sections: ['hero', 'services', 'about', 'hours', 'faq', 'contact'],
   },
   {
     id: 'service-pro',
     name: 'Service provider',
     description: 'Hero, what you do, your work, reviews, booking and contact.',
-    appliesTo: ['service_provider'],
+    appliesTo: ['service_provider', 'service', 'repair', 'tutorial', 'lesson'],
     sections: ['hero', 'services', 'gallery', 'testimonials', 'hours', 'cta', 'contact'],
+  },
+  {
+    id: 'hostel',
+    name: 'Hostel & housing',
+    description: 'Photos, what is included, house rules, contact.',
+    appliesTo: ['hostel', 'housing', 'lodge', 'accommodation', 'apartment'],
+    sections: ['hero', 'gallery', 'about', 'faq', 'contact'],
   },
 ];
 
-export const templatesForVendor = (vendorType?: string, category?: string): StorefrontTemplate[] => {
-  const type = String(vendorType || '').toLowerCase();
-  const cat = String(category || '').toLowerCase();
+export const templatesForVendor = (
+  vendorType?: string,
+  category?: string,
+  storeName?: string,
+): StorefrontTemplate[] => {
+  // Match on all three: shops often leave the category vague but put the trade in the name
+  // ("Smoothiedaddi", "Waris Kitchen"), and the name is the signal that carries.
+  const haystack = [vendorType, category, storeName]
+    .map((v) => String(v || '').toLowerCase())
+    .filter(Boolean);
 
-  const matching = STOREFRONT_TEMPLATES.filter(
-    (t) => t.appliesTo.includes(type) || t.appliesTo.includes(cat),
+  const matching = STOREFRONT_TEMPLATES.filter((t) =>
+    t.appliesTo.some((key) => haystack.some((h) => h.includes(key))),
   );
 
   // Never leave the vendor with an empty picker: a shop template is a sane fallback.
-  return matching.length > 0 ? matching : [STOREFRONT_TEMPLATES[1]];
+  return matching.length > 0 ? matching : [STOREFRONT_TEMPLATES[4]];
 };
 
 /** Builds the blocks a template describes, using each section's own defaults. */

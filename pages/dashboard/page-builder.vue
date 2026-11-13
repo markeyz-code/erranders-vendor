@@ -363,7 +363,7 @@ onMounted(async () => {
 });
 
 const templates = computed(() =>
-  templatesForVendor(profile.value?.vendorType, profile.value?.category),
+  templatesForVendor(profile.value?.vendorType, profile.value?.category, profile.value?.storeName),
 );
 
 const pendingTemplate = ref<any>(null);
