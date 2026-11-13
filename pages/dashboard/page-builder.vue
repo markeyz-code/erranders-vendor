@@ -822,7 +822,7 @@
               class="h-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all"
               :class="previewDevice === 'mobile' ? 'w-[390px] max-w-full' : 'w-full'"
             >
-              <iframe :src="previewUrl" class="h-full w-full" :title="`${storeUrl} preview`" loading="lazy" />
+              <StorefrontPreview :blocks="blocks" :vendor="profile" class="h-full overflow-y-auto" />
             </div>
           </div>
         </div>
@@ -858,6 +858,7 @@ import {
   AlertCircle,
 } from 'lucide-vue-next';
 import { useVendorProfile } from '@/composables/modules/vendors';
+import StorefrontPreview from '@/components/dashboard/StorefrontPreview.vue';
 import {
   BLOCK_DEFINITIONS,
   definitionFor,
