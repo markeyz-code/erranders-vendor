@@ -330,6 +330,37 @@
             </div>
           </div>
         </div>
+
+        <!-- Look & feel: skins the shop without touching the products inside it. -->
+        <div class="rounded-3xl border border-slate-200 bg-white p-5 sm:p-6">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="text-sm font-black tracking-tight text-slate-900">Look &amp; feel</h3>
+              <p class="mt-0.5 text-[11px] text-slate-500">
+                Changes colours and spacing across your shop. Products, categories and checkout stay exactly as they are.
+              </p>
+            </div>
+            <span v-if="activeThemeName" class="rounded-full bg-orange-50 px-2.5 py-1 text-[10px] font-black uppercase text-[#FF5C1A]">
+              {{ activeThemeName }}
+            </span>
+          </div>
+
+          <div class="mt-4 flex flex-wrap gap-2">
+            <button
+              v-for="theme in themes"
+              :key="theme.preset"
+              type="button"
+              class="flex items-center gap-2 rounded-xl border px-2.5 py-2 transition"
+              :class="activePreset === theme.preset ? 'border-[#FF5C1A] bg-[#FFF8F4]' : 'border-slate-200 bg-white hover:border-slate-300'"
+              @click="chooseTheme(theme)"
+            >
+              <span class="flex gap-0.5">
+                <span v-for="c in theme.swatch" :key="c" class="h-4 w-2.5 rounded-sm" :style="{ background: c }" />
+              </span>
+              <span class="text-[11px] font-bold text-slate-800">{{ theme.name }}</span>
+            </button>
+          </div>
+        </div>
       </section>
 
       <!-- ════════════════════════════════════════════════════════════════════ -->
@@ -992,6 +1023,8 @@ import {
 import { useVendorProfile } from '@/composables/modules/vendors';
 import { vendors_api } from '@/api_factory/modules/vendors';
 import StorefrontPreview from '@/components/dashboard/StorefrontPreview.vue';
+import { themesForVendor } from '@/composables/useStorefrontThemes';
+import { vendors_api as vendorsApiForTheme } from '@/api_factory/modules/vendors';
 import {
   BLOCK_DEFINITIONS,
   definitionFor,
