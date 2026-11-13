@@ -80,9 +80,41 @@
           <p class="text-xs text-slate-500 max-w-sm mx-auto leading-relaxed">
             Add modular sections from the left (Hero, About, Services, Products, Gallery, FAQ) to craft your custom storefront page!
           </p>
+          <!-- Templates: nobody should have to build a storefront from a blank canvas. -->
+          <div class="mt-4 w-full max-w-lg space-y-2 text-left">
+            <p class="text-[10px] font-black uppercase tracking-wider text-slate-400">Start from a template</p>
+            <div class="grid gap-2 sm:grid-cols-2">
+              <button
+                v-for="tpl in templates"
+                :key="tpl.id"
+                type="button"
+                class="rounded-xl border border-slate-200 bg-white p-3 text-left transition-colors hover:border-[#FF5C1A]"
+                @click="applyTemplate(tpl)"
+              >
+                <p class="text-xs font-black text-slate-900">{{ tpl.name }}</p>
+                <p class="mt-0.5 text-[11px] leading-snug text-slate-500">{{ tpl.description }}</p>
+                <p class="mt-1 text-[10px] font-bold text-[#FF5C1A]">{{ tpl.sections.length }} sections</p>
+              </button>
+            </div>
+
+            <div v-if="pendingTemplate" class="flex items-center justify-between gap-3 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2">
+              <p class="text-[11px] font-bold text-amber-900">
+                Replace your {{ blocks.length }} section{{ blocks.length === 1 ? '' : 's' }} with "{{ pendingTemplate.name }}"?
+              </p>
+              <div class="flex gap-2">
+                <button type="button" class="rounded-lg bg-amber-900 px-3 py-1.5 text-[11px] font-bold text-white" @click="useTemplate(pendingTemplate)">
+                  Replace
+                </button>
+                <button type="button" class="rounded-lg border border-amber-200 bg-white px-3 py-1.5 text-[11px] font-bold text-amber-800" @click="pendingTemplate = null">
+                  Keep mine
+                </button>
+              </div>
+            </div>
+          </div>
+
           <button
             type="button"
-            class="mt-2 px-5 py-2.5 rounded-xl bg-[#FF5C1A] text-white text-xs font-black shadow-sm hover:bg-[#E54D12] transition-colors inline-flex items-center gap-1.5 cursor-pointer"
+            class="mt-4 px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-600 text-xs font-black hover:bg-slate-50 transition-colors inline-flex items-center gap-1.5 cursor-pointer"
             @click="addBlock('hero')"
           >
             <Plus class="w-4 h-4" /> Start with Hero Section
@@ -283,7 +315,7 @@ import {
   Plus, Trash2, Save, Eye, GripVertical, MousePointerClick, Loader2
 } from 'lucide-vue-next';
 import { useVendorProfile } from '@/composables/modules/vendors';
-import { BLOCK_DEFINITIONS, definitionFor, makeBlock } from '@/composables/usePageBlocks';
+import { BLOCK_DEFINITIONS, definitionFor, makeBlock, templatesForVendor, blocksFromTemplate } from '@/composables/usePageBlocks';
 
 definePageMeta({ layout: 'vendor' });
 useHead({ title: 'Storefront Designer - Errander Vendor' });
@@ -329,6 +361,27 @@ onMounted(async () => {
     loading.value = false;
   }
 });
+
+const templates = computed(() =>
+  templatesForVendor(profile.value?.vendorType, profile.value?.category),
+);
+
+const pendingTemplate = ref<any>(null);
+
+const applyTemplate = (template: any) => {
+  // Nothing to lose on an empty canvas; ask first when it would discard work.
+  if (blocks.value.length > 0) {
+    pendingTemplate.value = template;
+    return;
+  }
+  useTemplate(template);
+};
+
+const useTemplate = (template: any) => {
+  blocks.value = blocksFromTemplate(template);
+  selectedId.value = blocks.value[0]?.id || '';
+  pendingTemplate.value = null;
+};
 
 const addBlock = (type: string) => {
   const fresh = makeBlock(type);

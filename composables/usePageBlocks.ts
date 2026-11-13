@@ -197,3 +197,68 @@ export const makeBlock = (type: string) => {
     props: JSON.parse(JSON.stringify(definition.defaults)),
   };
 };
+
+/**
+ * Ready-made storefronts, by the kind of store.
+ *
+ * Asking a barber and a pharmacy to assemble sections from an empty canvas produces either
+ * nothing or the same page twice. A template gives each one a sensible shape on day one, which
+ * they can then reorder or delete.
+ *
+ * Section order matters more than the copy: products first for a shop, services first for a
+ * service provider, an hours block early for anything with a counter.
+ */
+export type StorefrontTemplate = {
+  id: string;
+  name: string;
+  description: string;
+  appliesTo: string[];
+  sections: string[];
+};
+
+export const STOREFRONT_TEMPLATES: StorefrontTemplate[] = [
+  {
+    id: 'food-classic',
+    name: 'Kitchen & food',
+    description: 'Hero, your story, the menu, opening hours.',
+    appliesTo: ['restaurant', 'food'],
+    sections: ['hero', 'about', 'products', 'hours', 'contact'],
+  },
+  {
+    id: 'shop-classic',
+    name: 'Retail shop',
+    description: 'Hero, shop shelves, story, location.',
+    appliesTo: ['mini-mart', 'single-category', 'physical_product'],
+    sections: ['hero', 'products', 'about', 'hours', 'contact'],
+  },
+  {
+    id: 'pharmacy-safe',
+    name: 'Pharmacy',
+    description: 'Hero, your services, how to order, hours, questions, location.',
+    appliesTo: ['pharmacy'],
+    sections: ['hero', 'services', 'about', 'hours', 'faq', 'contact'],
+  },
+  {
+    id: 'service-pro',
+    name: 'Service provider',
+    description: 'Hero, what you do, your work, reviews, booking and contact.',
+    appliesTo: ['service_provider'],
+    sections: ['hero', 'services', 'gallery', 'testimonials', 'hours', 'cta', 'contact'],
+  },
+];
+
+export const templatesForVendor = (vendorType?: string, category?: string): StorefrontTemplate[] => {
+  const type = String(vendorType || '').toLowerCase();
+  const cat = String(category || '').toLowerCase();
+
+  const matching = STOREFRONT_TEMPLATES.filter(
+    (t) => t.appliesTo.includes(type) || t.appliesTo.includes(cat),
+  );
+
+  // Never leave the vendor with an empty picker: a shop template is a sane fallback.
+  return matching.length > 0 ? matching : [STOREFRONT_TEMPLATES[1]];
+};
+
+/** Builds the blocks a template describes, using each section's own defaults. */
+export const blocksFromTemplate = (template: StorefrontTemplate) =>
+  template.sections.map((type) => makeBlock(type));
