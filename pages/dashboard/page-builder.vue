@@ -858,6 +858,7 @@ import {
   AlertCircle,
 } from 'lucide-vue-next';
 import { useVendorProfile } from '@/composables/modules/vendors';
+import { vendors_api } from '@/api_factory/modules/vendors';
 import StorefrontPreview from '@/components/dashboard/StorefrontPreview.vue';
 import {
   BLOCK_DEFINITIONS,
@@ -873,7 +874,7 @@ definePageMeta({ layout: 'vendor' });
 useHead({ title: 'Storefront Page Designer - Errander Vendor' });
 
 const router = useRouter();
-const { profile, fetchProfile, updateProfile } = useVendorProfile();
+const { profile, fetchProfile } = useVendorProfile();
 
 // Active view modes: 'editor' | 'templates' | 'preview'
 const activeView = ref<'editor' | 'templates' | 'preview'>('editor');
@@ -1154,10 +1155,10 @@ const save = async () => {
   noticeError.value = false;
 
   try {
-    const vendorId = profile.value?.data?._id || profile.value?._id;
-    if (!vendorId) throw new Error('Vendor ID not found');
-
-    await updateProfile(vendorId, { pageBlocks: blocks.value });
+    // updateProfile(payload) PUTs to /vendors/profile and takes ONE argument. It was being called
+    // with two — so the request body was the vendor id string and pageBlocks was never sent.
+    // The call resolved, the success notice appeared, and nothing was saved.
+    await vendors_api.updateProfile({ pageBlocks: blocks.value });
     notice.value = 'Storefront design published successfully! Students can now see your updated page.';
     await fetchProfile();
   } catch (err: any) {
