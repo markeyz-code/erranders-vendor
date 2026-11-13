@@ -1,5 +1,29 @@
 <template>
   <div class="min-h-full w-full bg-white">
+    <!-- Store chrome, so the preview reads as the vendor's own shop rather than a wireframe. -->
+    <div class="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-slate-100 bg-white/95 px-4 py-3 backdrop-blur">
+      <div class="flex min-w-0 items-center gap-2.5">
+        <div class="h-9 w-9 shrink-0 overflow-hidden rounded-lg bg-slate-100">
+          <img v-if="vendor?.logo" :src="vendor.logo" class="h-full w-full object-cover" />
+          <span v-else class="flex h-full w-full items-center justify-center text-[10px] font-black text-slate-400">
+            {{ (vendor?.storeName || 'S').slice(0, 2).toUpperCase() }}
+          </span>
+        </div>
+        <div class="min-w-0">
+          <p class="truncate text-sm font-black leading-tight text-slate-900">{{ vendor?.storeName || 'Your store' }}</p>
+          <p class="text-[10px] text-slate-500">
+            <span v-if="vendor?.averageRating">★ {{ Number(vendor.averageRating).toFixed(1) }}</span>
+            <span v-if="vendor?.estimatedDeliveryTime"> · {{ vendor.estimatedDeliveryTime }} min</span>
+            <span v-if="vendor?.deliveryFee"> · ₦{{ Number(vendor.deliveryFee).toLocaleString() }} delivery</span>
+          </p>
+        </div>
+      </div>
+      <div class="flex items-center gap-1.5">
+        <span class="rounded-lg bg-slate-100 px-2 py-1.5 text-[10px] font-bold text-slate-600">♡</span>
+        <span class="rounded-lg bg-slate-100 px-2 py-1.5 text-[10px] font-bold text-slate-600">🛒</span>
+      </div>
+    </div>
+
     <!-- Hero -->
     <div v-if="blockOf('hero')" class="relative overflow-hidden bg-slate-900 px-6 py-12 text-white">
       <img v-if="hero.image" :src="hero.image" class="absolute inset-0 h-full w-full object-cover opacity-50" />
@@ -163,6 +187,19 @@
     <p v-if="!visible.length" class="p-10 text-center text-sm text-slate-400">
       No sections yet — pick a template to see it here.
     </p>
+
+    <!-- Checkout bar, so the preview shows the last step a customer takes. -->
+    <div v-if="productList.length" class="sticky bottom-0 border-t border-slate-100 bg-white px-4 py-3">
+      <div class="flex items-center justify-between gap-3">
+        <div>
+          <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Subtotal</p>
+          <p class="text-sm font-black text-slate-900">₦{{ previewSubtotal.toLocaleString() }}</p>
+        </div>
+        <span class="rounded-xl px-4 py-2.5 text-xs font-bold text-white" :style="{ background: accent }">
+          Continue to checkout
+        </span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -196,4 +233,11 @@ const trustBadgesList = computed(() => (trustBadges.value?.items || []).length ?
 const serviceList = computed(() => (services.value?.items || []).length ? services.value.items : []);
 const productList = computed(() => (props.products || []).slice(0, 6));
 const galleryImages = computed(() => (gallery.value?.images || []).slice(0, 6));
+
+// Use the vendor's own brand colour if a theme has set one.
+const accent = computed(() => props.vendor?.storefrontTheme?.accent || props.vendor?.brandColor || '#FF5C1A');
+
+const previewSubtotal = computed(() =>
+  productList.value.slice(0, 2).reduce((s: number, p: any) => s + (Number(p.price) || 0), 0),
+);
 </script>
