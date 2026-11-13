@@ -11,14 +11,13 @@
       </div>
 
       <div class="flex items-center gap-2.5 shrink-0">
-        <a
-          :href="previewUrl"
-          target="_blank"
-          rel="noopener"
+        <button
+          type="button"
           class="px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors inline-flex items-center gap-1.5 shadow-2xs"
+          @click="openPreview('desktop')"
         >
           <Eye class="w-3.5 h-3.5" /> Preview Storefront
-        </a>
+        </button>
         <button
           type="button"
           class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-[#FF5C1A] text-white text-xs font-bold transition-all disabled:opacity-40 inline-flex items-center gap-2 shadow-sm cursor-pointer"
@@ -307,12 +306,66 @@
       </aside>
     </div>
   </div>
+  <!-- Storefront preview: the same page at phone and laptop widths. -->
+  <Teleport to="body">
+    <div v-if="previewOpen" class="fixed inset-0 z-[300] flex flex-col bg-slate-900/70 p-3 backdrop-blur-sm sm:p-6">
+      <div class="mx-auto flex w-full max-w-6xl flex-1 flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 px-4 py-3">
+          <div>
+            <p class="text-[10px] font-black uppercase tracking-wider text-slate-400">Preview</p>
+            <p class="text-sm font-bold text-slate-900">{{ storeUrl }}</p>
+          </div>
+
+          <div class="flex items-center gap-1 rounded-xl bg-slate-100 p-1">
+            <button
+              type="button"
+              class="rounded-lg px-3 py-1.5 text-[11px] font-bold transition"
+              :class="previewDevice === 'mobile' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'"
+              @click="previewDevice = 'mobile'"
+            >
+              <Smartphone class="mr-1 inline h-3.5 w-3.5" /> Mobile
+            </button>
+            <button
+              type="button"
+              class="rounded-lg px-3 py-1.5 text-[11px] font-bold transition"
+              :class="previewDevice === 'desktop' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'"
+              @click="previewDevice = 'desktop'"
+            >
+              <Monitor class="mr-1 inline h-3.5 w-3.5" /> Desktop
+            </button>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <a :href="previewUrl" target="_blank" rel="noopener" class="rounded-lg border border-slate-200 px-3 py-1.5 text-[11px] font-bold text-slate-600 hover:bg-slate-50">
+              Open in tab
+            </a>
+            <button type="button" class="rounded-lg bg-slate-900 px-3 py-1.5 text-[11px] font-bold text-white" @click="previewOpen = false">
+              Close
+            </button>
+          </div>
+        </div>
+
+        <div class="flex flex-1 justify-center overflow-auto bg-slate-50 p-3 sm:p-5">
+          <div
+            class="h-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-all"
+            :class="previewDevice === 'mobile' ? 'w-[390px] max-w-full' : 'w-full'"
+          >
+            <iframe :src="previewUrl" class="h-full w-full" :title="`${storeUrl} preview`" loading="lazy" />
+          </div>
+        </div>
+
+        <p class="border-t border-slate-100 px-4 py-2 text-center text-[10px] font-medium text-slate-400">
+          This shows your published storefront. Publish to see unpublished changes.
+        </p>
+      </div>
+    </div>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import {
-  Plus, Trash2, Save, Eye, GripVertical, MousePointerClick, Loader2
+  Plus, Trash2, Save, Eye, GripVertical, MousePointerClick, Loader2, Smartphone, Monitor
 } from 'lucide-vue-next';
 import { useVendorProfile } from '@/composables/modules/vendors';
 import { BLOCK_DEFINITIONS, definitionFor, makeBlock, templatesForVendor, blocksFromTemplate } from '@/composables/usePageBlocks';
@@ -361,6 +414,14 @@ onMounted(async () => {
     loading.value = false;
   }
 });
+
+const previewOpen = ref(false);
+const previewDevice = ref<'mobile' | 'desktop'>('desktop');
+
+const openPreview = (device: 'mobile' | 'desktop' = 'desktop') => {
+  previewDevice.value = device;
+  previewOpen.value = true;
+};
 
 const templates = computed(() =>
   templatesForVendor(profile.value?.vendorType, profile.value?.category, profile.value?.storeName),
