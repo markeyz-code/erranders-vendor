@@ -1172,10 +1172,12 @@ const previewProducts = ref<any[]>([]);
 const loadPreviewProducts = async () => {
   try {
     const { products_api } = await import('@/api_factory/modules/products');
-    const id = profile.value?._id || profile.value?.id || profile.value?.data?._id;
-    if (!id) return;
-    const res = await products_api.getByVendor(id);
-    previewProducts.value = (res?.data || []).slice(0, 24);
+    // getByVendor does not exist in the vendor app — only getProducts(), which returns the
+    // signed-in store's own catalogue. Calling the missing method threw, the catch emptied the
+    // list, and the preview showed an empty products section for every vendor.
+    const res = await products_api.getProducts();
+    const list = Array.isArray(res?.data) ? res.data : (res?.data?.data || []);
+    previewProducts.value = list.slice(0, 24);
   } catch {
     previewProducts.value = [];
   }
