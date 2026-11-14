@@ -199,9 +199,31 @@ const pendingDelete = ref<any>(null);
 
 const norm = (s: string) => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
 
-/** Answers arrive keyed by field key; look up by a few likely names. */
+/**
+ * Answers are keyed by generated field keys (field_f1bf), and the question the vendor wrote lives
+ * on the form's field list. Matching on the key alone found nothing, which is why every reminder
+ * said "you joined our waitlist recently" instead of naming the package.
+ */
+const fieldKeyFor = (pattern: RegExp) => {
+  const f = (form.value?.fields || []).find((x: any) => pattern.test(String(x.label || '')));
+  return f?.key || '';
+};
+
+const answerOf = (r: any, pattern: RegExp) => {
+  const a = r?.answers || {};
+  const key = fieldKeyFor(pattern);
+  if (key && a[key] !== undefined) return a[key];
+  const byKey = Object.keys(a).find((k) => pattern.test(k));
+  return byKey ? a[byKey] : '';
+};
+
 const pick = (r: any, names: string[]) => {
   const a = r?.answers || {};
+  // Labels first — that is what the vendor actually wrote.
+  for (const n of names) {
+    const key = fieldKeyFor(new RegExp(n, 'i'));
+    if (key && a[key]) return a[key];
+  }
   for (const n of names) {
     if (a[n]) return a[n];
   }
@@ -209,10 +231,21 @@ const pick = (r: any, names: string[]) => {
   return key ? a[key] : '';
 };
 
-const packageOf = (r: any) => {
-  const a = r?.answers || {};
-  const key = Object.keys(a).find((k) => /package|treatment|service|plan|option/i.test(k));
-  return key ? String(a[key] || '') : '';
+const packageOf = (r: any) =>
+  String(answerOf(r, /package|treatment|service|plan|option|want/i) || '');
+
+/** The details worth repeating back, so the message reads like it knows them. */
+const theirDetails = (r: any) => {
+  const wanted = /hostel|block|room|level|department|gender|address|area/i;
+  return (form.value?.fields || [])
+    .filter((f: any) => wanted.test(String(f.label || '')))
+    .map((f: any) => {
+      const v = (r?.answers || {})[f.key];
+      if (v === undefined || v === '' || (Array.isArray(v) && !v.length)) return null;
+      return `${f.label}: ${Array.isArray(v) ? v.join(', ') : v}`;
+    })
+    .filter(Boolean)
+    .slice(0, 4) as string[];
 };
 
 const display = (f: any, r: any) => {
@@ -277,6 +310,7 @@ const saveDetail = async () => {
 const buildMessage = (r: any) => {
   const name = pick(r, ['name', 'fullName', 'yourName']) || 'there';
   const pkg = packageOf(r);
+  const details = theirDetails(r);
   const store = profile.value?.storeName || 'us';
   const link = profile.value?.subdomain
     ? `https://${profile.value.subdomain}.erranders.org`
@@ -285,11 +319,10 @@ const buildMessage = (r: any) => {
   return [
     `Hi ${name}, this is ${store} on Erranders.`,
     '',
-    pkg
-      ? `You joined our waitlist for: ${pkg}.`
-      : 'You joined our waitlist recently.',
-    'Slots are open now and we would like to get you booked in.',
+    pkg ? `You joined our waitlist for ${pkg}.` : 'You joined our waitlist recently.',
+    ...details,
     '',
+    'Slots are open now and we would like to get you booked in.',
     `Book here: ${link}`,
     '',
     'Reply to this message if you need a different time.',
