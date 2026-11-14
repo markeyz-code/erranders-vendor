@@ -80,7 +80,7 @@
                   </div>
                   <div v-if="menuFor === r._id" class="absolute right-4 top-full z-30 mt-1 w-40 overflow-hidden rounded-lg border border-slate-200 bg-white py-1 shadow-xl">
                     <button class="flex w-full items-center gap-2 px-3 py-2 text-left text-[11px] font-semibold text-slate-700 hover:bg-slate-50" @click="closeMenu(); openDetail(r)">View answers</button>
-                    <button class="flex w-full items-center gap-2 px-3 py-2 text-left text-[11px] font-semibold text-[#B3400B] hover:bg-orange-50" @click="closeMenu(); openRemind(r)">Send reminder</button>
+                    <button v-if="canRemind(r)" class="flex w-full items-center gap-2 px-3 py-2 text-left text-[11px] font-semibold text-[#B3400B] hover:bg-orange-50" @click="closeMenu(); openRemind(r)">Send reminder</button>
                     <button class="flex w-full items-center gap-2 px-3 py-2 text-left text-[11px] font-semibold text-rose-600 hover:bg-rose-50" @click="closeMenu(); askDelete(r)">Delete</button>
                   </div>
                 </td>
@@ -106,7 +106,7 @@
               <button class="rounded-md border border-slate-200 px-2 py-1 text-[13px] leading-none text-slate-600" @click.stop="menuFor = menuFor === r._id ? '' : r._id">⋯</button>
               <div v-if="menuFor === r._id" class="absolute right-0 top-full z-30 mt-1 w-40 overflow-hidden rounded-lg border border-slate-200 bg-white py-1 shadow-xl">
                 <button class="flex w-full px-3 py-2 text-left text-[11px] font-semibold text-slate-700 hover:bg-slate-50" @click="closeMenu(); openDetail(r)">View answers</button>
-                <button class="flex w-full px-3 py-2 text-left text-[11px] font-semibold text-[#B3400B] hover:bg-orange-50" @click="closeMenu(); openRemind(r)">Send reminder</button>
+                <button v-if="canRemind(r)" class="flex w-full px-3 py-2 text-left text-[11px] font-semibold text-[#B3400B] hover:bg-orange-50" @click="closeMenu(); openRemind(r)">Send reminder</button>
                 <button class="flex w-full px-3 py-2 text-left text-[11px] font-semibold text-rose-600 hover:bg-rose-50" @click="closeMenu(); askDelete(r)">Delete</button>
               </div>
             </div>
@@ -255,6 +255,9 @@ const remindError = ref('');
 const pendingDelete = ref<any>(null);
 const menuFor = ref('');
 const closeMenu = () => { menuFor.value = ''; };
+
+// Only while they are still unreached. Afterwards the menu offers View and Delete.
+const canRemind = (r: any) => String(r?.status || 'new') === 'new';
 
 const norm = (s: string) => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
 
