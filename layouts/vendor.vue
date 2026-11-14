@@ -348,7 +348,8 @@ const navItems = computed(() => {
   ];
 
   if (isServiceProvider || isHybrid) {
-    items.push({ path: '/dashboard/appointments', label: 'Appointments', icon: Clock }); 
+    items.push({ path: '/dashboard/appointments', label: 'Appointments', icon: Clock });
+    items.push({ path: '/dashboard/waitlist', label: 'Waitlist', icon: Clock }); 
     items.push({ path: '/dashboard/services', label: 'Services', icon: ClipboardList }); 
   }
 
