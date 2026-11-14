@@ -76,6 +76,13 @@
               <input v-model="draftTitle" class="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold outline-none focus:border-[#FF5C1A] focus:bg-white" />
             </div>
             <div>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Banner image URL</label>
+              <input v-model="draftBanner" placeholder="https://…" class="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-[#FF5C1A] focus:bg-white" />
+              <div v-if="draftBanner" class="mt-2 h-20 overflow-hidden rounded-xl border border-slate-100">
+                <img :src="draftBanner" class="h-full w-full object-cover" />
+              </div>
+            </div>
+            <div>
               <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Description</label>
               <textarea v-model="draftDescription" rows="2" class="mt-1 w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-[#FF5C1A] focus:bg-white" />
             </div>
@@ -94,12 +101,25 @@
                   <option value="textarea">Long text</option>
                   <option value="date">Date</option>
                   <option value="select">Choose one</option>
+                  <option value="multiselect">Choose many</option>
+                  <option value="number">Number</option>
+                  <option value="image">Photo upload</option>
                 </select>
                 <label class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-600">
                   <input type="checkbox" v-model="f.required" class="rounded" /> required
                 </label>
               </div>
-              <input v-if="f.type === 'select'" v-model="f.optionsText" placeholder="Option A, Option B" class="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs outline-none focus:border-[#FF5C1A]" />
+              <div v-if="f.type === 'select' || f.type === 'multiselect'" class="mt-2 space-y-1.5 rounded-lg bg-slate-50 p-2">
+                <div v-for="(opt, oi) in f.options" :key="oi" class="flex items-center gap-1.5">
+                  <input v-model="f.options[oi]" :placeholder="'Option ' + (oi + 1)"
+                    class="flex-1 rounded-md border border-slate-200 bg-white px-2 py-1 text-xs outline-none focus:border-[#FF5C1A]" />
+                  <button class="text-[11px] font-bold text-rose-500" @click="f.options.splice(oi, 1)">✕</button>
+                </div>
+                <button class="text-[11px] font-bold text-[#FF5C1A]" @click="f.options.push('')">+ Add option</button>
+                <label class="mt-1 flex items-center gap-1.5 text-[11px] font-semibold text-slate-600">
+                  <input type="checkbox" v-model="f.allowOther" class="rounded" /> add an "Other" box
+                </label>
+              </div>
             </div>
 
             <button class="w-full rounded-xl border border-dashed border-slate-300 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50" @click="addField">
@@ -171,6 +191,7 @@ const editing = ref<any>(null);
 const draftTitle = ref('');
 const draftDescription = ref('');
 const draftFields = ref<any[]>([]);
+const draftBanner = ref('');
 const savingFields = ref(false);
 
 const subdomain = computed(() => profile.value?.subdomain || '');
@@ -234,17 +255,19 @@ const openEditor = (f: any) => {
   editing.value = f;
   draftTitle.value = f.title || '';
   draftDescription.value = f.description || '';
+  draftBanner.value = f.bannerImage || '';
   draftFields.value = (f.fields || []).map((x: any) => ({
     key: x.key,
     label: x.label,
     type: x.type || 'text',
     required: Boolean(x.required),
-    optionsText: (x.options || []).join(', '),
+    options: [...(x.options || [])],
+    allowOther: Boolean(x.allowOther),
   }));
 };
 
 const addField = () => {
-  draftFields.value.push({ key: `field_${Date.now().toString(36).slice(-4)}`, label: '', type: 'text', required: false, optionsText: '' });
+  draftFields.value.push({ key: `field_${Date.now().toString(36).slice(-4)}`, label: '', type: 'text', required: false, options: [], allowOther: false });
 };
 
 const saveFields = async () => {
@@ -256,7 +279,10 @@ const saveFields = async () => {
       label: f.label.trim(),
       type: f.type,
       required: Boolean(f.required),
-      options: f.type === 'select' ? String(f.optionsText || '').split(',').map((o: string) => o.trim()).filter(Boolean) : [],
+      options: (f.type === 'select' || f.type === 'multiselect')
+        ? (f.options || []).map((o: string) => String(o).trim()).filter(Boolean)
+        : [],
+      allowOther: Boolean(f.allowOther),
     }));
 
   if (!cleaned.length) {
@@ -269,6 +295,7 @@ const saveFields = async () => {
     const res = await api.patch(`/waitlist/${editing.value._id}`, {
       title: draftTitle.value,
       description: draftDescription.value,
+      bannerImage: draftBanner.value,
       fields: cleaned,
     });
     Object.assign(editing.value, res.data);
