@@ -28,38 +28,62 @@
         <p class="mt-1 text-xs text-slate-500">Share the link and they will appear here.</p>
       </div>
 
-      <!-- Table -->
-      <div v-else-if="view === 'table'" class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
-        <table class="w-full min-w-[900px] text-left text-xs">
-          <thead class="border-b border-slate-100 bg-slate-50/80">
-            <tr class="text-[10px] font-black uppercase tracking-wider text-slate-500">
-              <th class="px-3 py-2.5">Name</th>
-              <th v-for="col in columns" :key="col.key" class="px-3 py-2.5">{{ col.label }}</th>
-              <th class="px-3 py-2.5">Status</th>
-              <th class="px-3 py-2.5">When</th>
-              <th class="px-3 py-2.5 text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="r in responses" :key="r._id" class="border-b border-slate-50 last:border-0 hover:bg-slate-50/60">
-              <td class="px-3 py-2.5 font-bold text-slate-900">{{ pick(r, ['name','fullName','yourName']) || '—' }}</td>
-              <td v-for="col in columns" :key="col.key" class="max-w-[200px] truncate px-3 py-2.5 text-slate-700">
-                {{ cell(r, col) }}
-              </td>
-              <td class="px-3 py-2.5">
-                <span class="rounded-full px-2 py-0.5 text-[10px] font-bold uppercase" :class="statusClass(r.status)">{{ r.status }}</span>
-              </td>
-              <td class="px-3 py-2.5 text-slate-500">{{ timeAgo(r.createdAt) }}</td>
-              <td class="px-3 py-2.5">
-                <div class="flex justify-end gap-1.5">
-                  <button class="rounded-md border border-slate-200 px-2 py-1 text-[10px] font-bold text-slate-700 hover:bg-slate-100" @click="openDetail(r)">View</button>
-                  <button class="rounded-md border border-slate-200 px-2 py-1 text-[10px] font-bold text-[#FF5C1A] hover:bg-orange-50" @click="openRemind(r)">Remind</button>
-                  <button class="rounded-md border border-rose-200 px-2 py-1 text-[10px] font-bold text-rose-600 hover:bg-rose-50" @click="askDelete(r)">Delete</button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- Table: fixed layout, so one long question cannot elbow the rest off the row. -->
+      <div v-else-if="view === 'table'" class="overflow-hidden rounded-xl border border-slate-200 bg-white">
+        <div class="overflow-x-auto">
+          <table class="w-full table-fixed text-left text-xs">
+            <colgroup>
+              <col class="w-[16%]" />
+              <col v-for="col in columns" :key="'c-' + col.key" class="w-[13%]" />
+              <col class="w-[9%]" />
+              <col class="w-[8%]" />
+              <col class="w-[16%]" />
+            </colgroup>
+            <thead class="border-b border-slate-100 bg-slate-50">
+              <tr>
+                <th class="px-4 py-3 text-[10px] font-black uppercase tracking-wider text-slate-500">Name</th>
+                <th v-for="col in columns" :key="'h-' + col.key"
+                  class="truncate px-3 py-3 text-[10px] font-black uppercase tracking-wider text-slate-500"
+                  :title="col.label">
+                  {{ col.label }}
+                </th>
+                <th class="px-3 py-3 text-[10px] font-black uppercase tracking-wider text-slate-500">Status</th>
+                <th class="px-3 py-3 text-[10px] font-black uppercase tracking-wider text-slate-500">When</th>
+                <th class="px-4 py-3 text-right text-[10px] font-black uppercase tracking-wider text-slate-500">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="r in responses" :key="r._id" class="border-b border-slate-50 last:border-0 hover:bg-slate-50/70">
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2.5">
+                    <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#FFF1E8] text-[11px] font-black text-[#B3400B]">
+                      {{ initials(r) }}
+                    </span>
+                    <span class="truncate font-bold text-slate-900" :title="pick(r, ['name','fullName','yourName'])">
+                      {{ pick(r, ['name','fullName','yourName']) || '—' }}
+                    </span>
+                  </div>
+                </td>
+                <td v-for="col in columns" :key="'v-' + col.key" class="truncate px-3 py-3 text-slate-700" :title="cell(r, col)">
+                  {{ cell(r, col) }}
+                </td>
+                <td class="px-3 py-3">
+                  <button class="rounded-full px-2 py-0.5 text-[10px] font-bold uppercase" :class="statusClass(r.status)" @click="openDetail(r)">
+                    {{ r.status }}
+                  </button>
+                </td>
+                <td class="whitespace-nowrap px-3 py-3 text-slate-500">{{ timeAgo(r.createdAt) }}</td>
+                <td class="px-4 py-3">
+                  <div class="flex justify-end gap-1">
+                    <button class="rounded-md border border-slate-200 px-2 py-1 text-[10px] font-bold text-slate-700 hover:bg-slate-100" @click="openDetail(r)">View</button>
+                    <button class="rounded-md border border-[#FFD9C2] bg-[#FFF8F4] px-2 py-1 text-[10px] font-bold text-[#B3400B] hover:bg-[#FFEFE4]" @click="openRemind(r)">Remind</button>
+                    <button class="rounded-md border border-rose-200 px-2 py-1 text-[10px] font-bold text-rose-600 hover:bg-rose-50" @click="askDelete(r)">Delete</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <!-- Grid -->
@@ -240,6 +264,13 @@ const columns = computed(() => {
     .slice(0, 5)
     .map((f: any) => ({ key: f.key, label: f.label, type: f.type }));
 });
+
+const initials = (r: any) => {
+  const n = String(pick(r, ['name', 'fullName', 'yourName']) || '').trim();
+  if (!n) return '?';
+  const parts = n.split(/\s+/);
+  return ((parts[0]?.[0] || '') + (parts[1]?.[0] || '')).toUpperCase();
+};
 
 const cell = (r: any, col: any) => {
   const v = (r?.answers || {})[col.key];
