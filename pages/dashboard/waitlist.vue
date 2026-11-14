@@ -90,6 +90,14 @@
               </label>
             </div>
             <div>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Slot limit</label>
+              <input v-model.number="draftMax" type="number" min="0" placeholder="0 — unlimited"
+                class="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-[#FF5C1A] focus:bg-white" />
+              <p class="mt-1 text-[10px] text-slate-400">
+                Closes the form automatically when the last slot is taken, and messages you on WhatsApp.
+              </p>
+            </div>
+            <div>
               <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Description</label>
               <textarea v-model="draftDescription" rows="5" class="mt-1 min-h-[120px] w-full resize-y rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm leading-relaxed outline-none focus:border-[#FF5C1A] focus:bg-white" />
             </div>
@@ -222,6 +230,7 @@ const draftBanner = ref('');
 const uploadingBanner = ref(false);
 const openType = ref(-1);
 const dragIndex = ref(-1);
+const draftMax = ref(0);
 
 const onDragOver = (i: number) => {
   if (dragIndex.value === -1 || dragIndex.value === i) return;
@@ -322,6 +331,7 @@ const openEditor = (f: any) => {
   draftTitle.value = f.title || '';
   draftDescription.value = f.description || '';
   draftBanner.value = f.bannerImage || '';
+  draftMax.value = Number(f.maxResponses || 0);
   draftFields.value = (f.fields || []).map((x: any) => ({
     key: x.key,
     label: x.label,
@@ -366,6 +376,7 @@ const saveFields = async () => {
       title: draftTitle.value,
       description: draftDescription.value,
       bannerImage: draftBanner.value,
+      maxResponses: Number(draftMax.value) || 0,
       fields: cleaned,
     });
     Object.assign(editing.value, res.data);
