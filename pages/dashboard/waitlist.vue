@@ -76,11 +76,18 @@
               <input v-model="draftTitle" class="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold outline-none focus:border-[#FF5C1A] focus:bg-white" />
             </div>
             <div>
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Banner image URL</label>
-              <input v-model="draftBanner" placeholder="https://…" class="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-[#FF5C1A] focus:bg-white" />
-              <div v-if="draftBanner" class="mt-2 h-20 overflow-hidden rounded-xl border border-slate-100">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Banner image</label>
+              <div v-if="draftBanner" class="relative mt-1 h-28 overflow-hidden rounded-xl border border-slate-100">
                 <img :src="draftBanner" class="h-full w-full object-cover" />
+                <button class="absolute right-2 top-2 rounded-lg bg-black/60 px-2 py-1 text-[10px] font-bold text-white" @click="draftBanner = ''">
+                  Remove
+                </button>
               </div>
+              <label v-else class="mt-1 flex cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-slate-300 bg-slate-50 px-3 py-6 text-center hover:bg-slate-100">
+                <span class="text-xs font-bold text-slate-700">{{ uploadingBanner ? 'Uploading…' : 'Upload a banner' }}</span>
+                <span class="mt-0.5 text-[10px] text-slate-400">Wide image works best · JPG or PNG</span>
+                <input type="file" accept="image/*" class="hidden" :disabled="uploadingBanner" @change="uploadBanner" />
+              </label>
             </div>
             <div>
               <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Description</label>
@@ -94,17 +101,21 @@
               </div>
               <input v-model="f.label" placeholder="What do you need?" class="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-[#FF5C1A]" />
               <div class="mt-2 flex gap-2">
-                <select v-model="f.type" class="flex-1 rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-xs font-semibold">
-                  <option value="text">Short text</option>
-                  <option value="phone">Phone</option>
-                  <option value="email">Email</option>
-                  <option value="textarea">Long text</option>
-                  <option value="date">Date</option>
-                  <option value="select">Choose one</option>
-                  <option value="multiselect">Choose many</option>
-                  <option value="number">Number</option>
-                  <option value="image">Photo upload</option>
-                </select>
+                <div class="relative flex-1">
+                  <button type="button" class="flex w-full items-center justify-between rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-800" @click="openType = openType === i ? -1 : i">
+                    {{ FIELD_TYPES.find((t) => t.value === f.type)?.label || 'Short text' }}
+                    <span class="text-[9px] text-slate-400">▼</span>
+                  </button>
+                  <div v-if="openType === i" class="absolute z-20 mt-1 w-full overflow-hidden rounded-lg border border-slate-200 bg-white shadow-lg">
+                    <button v-for="t in FIELD_TYPES" :key="t.value" type="button"
+                      class="flex w-full items-center justify-between px-2.5 py-2 text-left text-xs font-semibold hover:bg-slate-50"
+                      :class="f.type === t.value ? 'bg-orange-50 text-[#FF5C1A]' : 'text-slate-700'"
+                      @click="f.type = t.value; openType = -1">
+                      {{ t.label }}
+                      <span v-if="f.type === t.value" class="text-[10px]">✓</span>
+                    </button>
+                  </div>
+                </div>
                 <label class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-600">
                   <input type="checkbox" v-model="f.required" class="rounded" /> required
                 </label>
@@ -192,6 +203,37 @@ const draftTitle = ref('');
 const draftDescription = ref('');
 const draftFields = ref<any[]>([]);
 const draftBanner = ref('');
+const uploadingBanner = ref(false);
+const openType = ref(-1);
+
+const FIELD_TYPES = [
+  { value: 'text', label: 'Short text' },
+  { value: 'textarea', label: 'Long text' },
+  { value: 'phone', label: 'Phone' },
+  { value: 'email', label: 'Email' },
+  { value: 'number', label: 'Number' },
+  { value: 'date', label: 'Date' },
+  { value: 'select', label: 'Choose one' },
+  { value: 'multiselect', label: 'Choose many' },
+  { value: 'image', label: 'Photo upload' },
+];
+
+const uploadBanner = async (e: Event) => {
+  const file = (e.target as HTMLInputElement).files?.[0];
+  if (!file) return;
+  uploadingBanner.value = true;
+  try {
+    const fd = new FormData();
+    fd.append('file', file);
+    const res = await api.post('/uploads/image', fd, { headers: { 'Content-Type': 'multipart/form-data' } });
+    draftBanner.value = res?.data?.url || res?.data?.secure_url || '';
+    if (!draftBanner.value) throw new Error('no url');
+  } catch {
+    showToast({ title: 'Upload failed', message: 'Try a smaller image, or a JPG.', toastType: 'error' } as any);
+  } finally {
+    uploadingBanner.value = false;
+  }
+};
 const savingFields = ref(false);
 
 const subdomain = computed(() => profile.value?.subdomain || '');
