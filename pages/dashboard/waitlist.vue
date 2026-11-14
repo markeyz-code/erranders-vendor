@@ -42,6 +42,9 @@
             <button class="rounded-lg border border-slate-200 px-2.5 py-1.5 text-[11px] font-bold text-slate-700 hover:bg-slate-50" @click="togglePublish(f)">
               {{ f.isPublished ? 'Unpublish' : 'Publish' }}
             </button>
+            <button class="rounded-lg border border-slate-200 px-2.5 py-1.5 text-[11px] font-bold text-slate-700 hover:bg-slate-50" @click="openEditor(f)">
+              Edit questions
+            </button>
             <button class="rounded-lg bg-slate-900 px-2.5 py-1.5 text-[11px] font-bold text-white" @click="openResponses(f)">
               Responses
             </button>
@@ -53,6 +56,65 @@
         </p>
       </div>
     </div>
+
+    <!-- Question builder -->
+    <Teleport to="body">
+      <div v-if="editing" class="fixed inset-0 z-[210] flex justify-end">
+        <div class="absolute inset-0 bg-slate-900/40" @click="editing = null" />
+        <aside class="relative flex h-full w-full max-w-lg flex-col bg-white shadow-2xl">
+          <header class="flex items-start justify-between border-b border-slate-100 px-5 py-4">
+            <div>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Questions</p>
+              <h2 class="text-base font-black text-slate-900">{{ editing.title }}</h2>
+            </div>
+            <button class="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100" @click="editing = null">✕</button>
+          </header>
+
+          <div class="flex-1 space-y-3 overflow-y-auto p-4">
+            <div>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Form title</label>
+              <input v-model="draftTitle" class="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold outline-none focus:border-[#FF5C1A] focus:bg-white" />
+            </div>
+            <div>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Description</label>
+              <textarea v-model="draftDescription" rows="2" class="mt-1 w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-[#FF5C1A] focus:bg-white" />
+            </div>
+
+            <div v-for="(f, i) in draftFields" :key="i" class="rounded-xl border border-slate-100 p-3">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Question {{ i + 1 }}</span>
+                <button class="text-[11px] font-bold text-rose-500" @click="draftFields.splice(i, 1)">Remove</button>
+              </div>
+              <input v-model="f.label" placeholder="What do you need?" class="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-[#FF5C1A]" />
+              <div class="mt-2 flex gap-2">
+                <select v-model="f.type" class="flex-1 rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-xs font-semibold">
+                  <option value="text">Short text</option>
+                  <option value="phone">Phone</option>
+                  <option value="email">Email</option>
+                  <option value="textarea">Long text</option>
+                  <option value="date">Date</option>
+                  <option value="select">Choose one</option>
+                </select>
+                <label class="flex items-center gap-1.5 text-[11px] font-semibold text-slate-600">
+                  <input type="checkbox" v-model="f.required" class="rounded" /> required
+                </label>
+              </div>
+              <input v-if="f.type === 'select'" v-model="f.optionsText" placeholder="Option A, Option B" class="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs outline-none focus:border-[#FF5C1A]" />
+            </div>
+
+            <button class="w-full rounded-xl border border-dashed border-slate-300 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50" @click="addField">
+              + Add question
+            </button>
+          </div>
+
+          <footer class="border-t border-slate-100 p-4">
+            <button class="w-full rounded-xl bg-[#FF5C1A] py-3 text-sm font-bold text-white disabled:opacity-50" :disabled="savingFields" @click="saveFields">
+              {{ savingFields ? 'Saving…' : 'Save questions' }}
+            </button>
+          </footer>
+        </aside>
+      </div>
+    </Teleport>
 
     <!-- Responses drawer -->
     <Teleport to="body">
@@ -105,6 +167,11 @@ const loading = ref(true);
 const creating = ref(false);
 const activeForm = ref<any>(null);
 const responses = ref<any[]>([]);
+const editing = ref<any>(null);
+const draftTitle = ref('');
+const draftDescription = ref('');
+const draftFields = ref<any[]>([]);
+const savingFields = ref(false);
 
 const subdomain = computed(() => profile.value?.subdomain || '');
 
@@ -160,6 +227,57 @@ const copyLink = async (f: any) => {
     showToast({ title: 'Copied', message: 'Share it with your customers.', toastType: 'success' } as any);
   } catch {
     showToast({ title: 'Link', message: link, toastType: 'info' } as any);
+  }
+};
+
+const openEditor = (f: any) => {
+  editing.value = f;
+  draftTitle.value = f.title || '';
+  draftDescription.value = f.description || '';
+  draftFields.value = (f.fields || []).map((x: any) => ({
+    key: x.key,
+    label: x.label,
+    type: x.type || 'text',
+    required: Boolean(x.required),
+    optionsText: (x.options || []).join(', '),
+  }));
+};
+
+const addField = () => {
+  draftFields.value.push({ key: `field_${Date.now().toString(36).slice(-4)}`, label: '', type: 'text', required: false, optionsText: '' });
+};
+
+const saveFields = async () => {
+  if (!editing.value) return;
+  const cleaned = draftFields.value
+    .filter((f) => String(f.label || '').trim())
+    .map((f, i) => ({
+      key: f.key || `field_${i + 1}`,
+      label: f.label.trim(),
+      type: f.type,
+      required: Boolean(f.required),
+      options: f.type === 'select' ? String(f.optionsText || '').split(',').map((o: string) => o.trim()).filter(Boolean) : [],
+    }));
+
+  if (!cleaned.length) {
+    showToast({ title: 'Add a question', message: 'A form needs at least one.', toastType: 'info' } as any);
+    return;
+  }
+
+  savingFields.value = true;
+  try {
+    const res = await api.patch(`/waitlist/${editing.value._id}`, {
+      title: draftTitle.value,
+      description: draftDescription.value,
+      fields: cleaned,
+    });
+    Object.assign(editing.value, res.data);
+    showToast({ title: 'Saved', message: 'Questions updated.', toastType: 'success' } as any);
+    editing.value = null;
+  } catch (e: any) {
+    showToast({ title: 'Could not save', message: e?.response?.data?.message || 'Try again', toastType: 'error' } as any);
+  } finally {
+    savingFields.value = false;
   }
 };
 
