@@ -34,9 +34,7 @@
           <thead class="border-b border-slate-100 bg-slate-50/80">
             <tr class="text-[10px] font-black uppercase tracking-wider text-slate-500">
               <th class="px-3 py-2.5">Name</th>
-              <th class="px-3 py-2.5">Phone</th>
-              <th class="px-3 py-2.5">Email</th>
-              <th class="px-3 py-2.5">Package</th>
+              <th v-for="col in columns" :key="col.key" class="px-3 py-2.5">{{ col.label }}</th>
               <th class="px-3 py-2.5">Status</th>
               <th class="px-3 py-2.5">When</th>
               <th class="px-3 py-2.5 text-right">Actions</th>
@@ -45,9 +43,9 @@
           <tbody>
             <tr v-for="r in responses" :key="r._id" class="border-b border-slate-50 last:border-0 hover:bg-slate-50/60">
               <td class="px-3 py-2.5 font-bold text-slate-900">{{ pick(r, ['name','fullName','yourName']) || '—' }}</td>
-              <td class="px-3 py-2.5 text-slate-700">{{ pick(r, ['phone','phoneNumber','whatsapp']) || '—' }}</td>
-              <td class="px-3 py-2.5 text-slate-700">{{ pick(r, ['email']) || '—' }}</td>
-              <td class="max-w-[220px] truncate px-3 py-2.5 text-slate-700">{{ packageOf(r) || '—' }}</td>
+              <td v-for="col in columns" :key="col.key" class="max-w-[200px] truncate px-3 py-2.5 text-slate-700">
+                {{ cell(r, col) }}
+              </td>
               <td class="px-3 py-2.5">
                 <span class="rounded-full px-2 py-0.5 text-[10px] font-bold uppercase" :class="statusClass(r.status)">{{ r.status }}</span>
               </td>
@@ -229,6 +227,24 @@ const pick = (r: any, names: string[]) => {
   }
   const key = Object.keys(a).find((k) => names.some((n) => norm(k).includes(norm(n))));
   return key ? a[key] : '';
+};
+
+/**
+ * Table columns taken from the form's own questions — name and status are fixed, the rest is
+ * whatever the vendor asked. Long text is left out; it never fits in a cell.
+ */
+const columns = computed(() => {
+  const skip = /name|phone|whatsapp/i;
+  return (form.value?.fields || [])
+    .filter((f: any) => f.type !== 'textarea' && !skip.test(String(f.label || '')))
+    .slice(0, 5)
+    .map((f: any) => ({ key: f.key, label: f.label, type: f.type }));
+});
+
+const cell = (r: any, col: any) => {
+  const v = (r?.answers || {})[col.key];
+  if (v === undefined || v === '' || (Array.isArray(v) && !v.length)) return '—';
+  return Array.isArray(v) ? v.join(', ') : String(v);
 };
 
 const packageOf = (r: any) =>
