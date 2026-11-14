@@ -225,8 +225,8 @@ const uploadBanner = async (e: Event) => {
   try {
     const fd = new FormData();
     fd.append('file', file);
-    const res = await api.post('/uploads/image', fd, { headers: { 'Content-Type': 'multipart/form-data' } });
-    draftBanner.value = res?.data?.url || res?.data?.secure_url || '';
+    const res = await api.post('/upload/image', fd, { headers: { 'Content-Type': 'multipart/form-data' } });
+    draftBanner.value = res?.data?.url || res?.data?.data?.url || res?.data?.secure_url || '';
     if (!draftBanner.value) throw new Error('no url');
   } catch {
     showToast({ title: 'Upload failed', message: 'Try a smaller image, or a JPG.', toastType: 'error' } as any);
