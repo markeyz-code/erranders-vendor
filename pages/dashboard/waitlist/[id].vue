@@ -29,7 +29,7 @@
       </div>
 
       <!-- Table: fixed layout, so one long question cannot elbow the rest off the row. -->
-      <div v-else-if="view === 'table'" class="overflow-hidden rounded-xl border border-slate-200 bg-white">
+      <div v-else-if="view === 'table'" class="hidden overflow-hidden rounded-xl border border-slate-200 bg-white md:block">
         <div class="overflow-x-auto">
           <table class="w-full table-fixed text-left text-xs">
             <colgroup>
@@ -73,16 +73,51 @@
                   </button>
                 </td>
                 <td class="whitespace-nowrap px-3 py-3 text-slate-500">{{ timeAgo(r.createdAt) }}</td>
-                <td class="px-4 py-3">
-                  <div class="flex justify-end gap-1">
-                    <button class="rounded-md border border-slate-200 px-2 py-1 text-[10px] font-bold text-slate-700 hover:bg-slate-100" @click="openDetail(r)">View</button>
-                    <button class="rounded-md border border-[#FFD9C2] bg-[#FFF8F4] px-2 py-1 text-[10px] font-bold text-[#B3400B] hover:bg-[#FFEFE4]" @click="openRemind(r)">Remind</button>
-                    <button class="rounded-md border border-rose-200 px-2 py-1 text-[10px] font-bold text-rose-600 hover:bg-rose-50" @click="askDelete(r)">Delete</button>
+                <td class="relative px-4 py-3">
+                  <div class="flex justify-end">
+                    <button class="rounded-md border border-slate-200 px-2 py-1 text-[13px] font-bold leading-none text-slate-600 hover:bg-slate-100"
+                      :aria-expanded="menuFor === r._id" @click.stop="menuFor = menuFor === r._id ? '' : r._id">⋯</button>
+                  </div>
+                  <div v-if="menuFor === r._id" class="absolute right-4 top-full z-30 mt-1 w-40 overflow-hidden rounded-lg border border-slate-200 bg-white py-1 shadow-xl">
+                    <button class="flex w-full items-center gap-2 px-3 py-2 text-left text-[11px] font-semibold text-slate-700 hover:bg-slate-50" @click="closeMenu(); openDetail(r)">View answers</button>
+                    <button class="flex w-full items-center gap-2 px-3 py-2 text-left text-[11px] font-semibold text-[#B3400B] hover:bg-orange-50" @click="closeMenu(); openRemind(r)">Send reminder</button>
+                    <button class="flex w-full items-center gap-2 px-3 py-2 text-left text-[11px] font-semibold text-rose-600 hover:bg-rose-50" @click="closeMenu(); askDelete(r)">Delete</button>
                   </div>
                 </td>
               </tr>
             </tbody>
           </table>
+        </div>
+      </div>
+
+      <!-- Phones: the same records as cards, since a nine-column table cannot work here. -->
+      <div v-if="!loading && responses.length && view === 'table'" class="space-y-3 md:hidden">
+        <div v-for="r in responses" :key="'m-' + r._id" class="rounded-xl border border-slate-200 bg-white p-3">
+          <div class="flex items-start justify-between gap-2">
+            <div class="flex min-w-0 items-center gap-2.5">
+              <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#FFF1E8] text-[11px] font-black text-[#B3400B]">{{ initials(r) }}</span>
+              <div class="min-w-0">
+                <p class="truncate text-sm font-black text-slate-900">{{ pick(r, ['name','fullName','yourName']) || '—' }}</p>
+                <p class="truncate text-[11px] text-slate-500">{{ pick(r, ['phone','phoneNumber','whatsapp']) || pick(r, ['email']) || '—' }}</p>
+              </div>
+            </div>
+            <div class="relative flex shrink-0 items-center gap-1.5">
+              <span class="rounded-full px-2 py-0.5 text-[9px] font-bold uppercase" :class="statusClass(r.status)">{{ r.status }}</span>
+              <button class="rounded-md border border-slate-200 px-2 py-1 text-[13px] leading-none text-slate-600" @click.stop="menuFor = menuFor === r._id ? '' : r._id">⋯</button>
+              <div v-if="menuFor === r._id" class="absolute right-0 top-full z-30 mt-1 w-40 overflow-hidden rounded-lg border border-slate-200 bg-white py-1 shadow-xl">
+                <button class="flex w-full px-3 py-2 text-left text-[11px] font-semibold text-slate-700 hover:bg-slate-50" @click="closeMenu(); openDetail(r)">View answers</button>
+                <button class="flex w-full px-3 py-2 text-left text-[11px] font-semibold text-[#B3400B] hover:bg-orange-50" @click="closeMenu(); openRemind(r)">Send reminder</button>
+                <button class="flex w-full px-3 py-2 text-left text-[11px] font-semibold text-rose-600 hover:bg-rose-50" @click="closeMenu(); askDelete(r)">Delete</button>
+              </div>
+            </div>
+          </div>
+          <div class="mt-2 grid grid-cols-2 gap-x-3 gap-y-1">
+            <div v-for="col in columns.slice(0, 4)" :key="'mc-' + col.key" class="min-w-0">
+              <p class="truncate text-[9px] font-bold uppercase tracking-wider text-slate-400">{{ col.label }}</p>
+              <p class="truncate text-[11px] font-semibold text-slate-800">{{ cell(r, col) }}</p>
+            </div>
+          </div>
+          <p class="mt-2 text-[10px] text-slate-400">{{ timeAgo(r.createdAt) }}</p>
         </div>
       </div>
 
@@ -218,6 +253,8 @@ const message = ref('');
 const sendingRemind = ref(false);
 const remindError = ref('');
 const pendingDelete = ref<any>(null);
+const menuFor = ref('');
+const closeMenu = () => { menuFor.value = ''; };
 
 const norm = (s: string) => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
 
@@ -332,6 +369,7 @@ const load = async () => {
 };
 
 const openDetail = (r: any) => {
+  closeMenu();
   detail.value = r;
   noteDraft.value = r.note || '';
   statusDraft.value = r.status || 'new';
@@ -377,6 +415,7 @@ const buildMessage = (r: any) => {
 };
 
 const openRemind = (r: any) => {
+  closeMenu();
   remind.value = r;
   remindError.value = '';
   subject.value = `Your ${profile.value?.storeName || ''} booking`;
