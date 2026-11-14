@@ -91,7 +91,7 @@
             </div>
             <div>
               <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Description</label>
-              <textarea v-model="draftDescription" rows="2" class="mt-1 w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-[#FF5C1A] focus:bg-white" />
+              <textarea v-model="draftDescription" rows="5" class="mt-1 min-h-[120px] w-full resize-y rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm leading-relaxed outline-none focus:border-[#FF5C1A] focus:bg-white" />
             </div>
 
             <div v-for="(f, i) in draftFields" :key="i" class="rounded-xl border border-slate-100 p-3">
