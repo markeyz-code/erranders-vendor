@@ -94,9 +94,21 @@
               <textarea v-model="draftDescription" rows="5" class="mt-1 min-h-[120px] w-full resize-y rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm leading-relaxed outline-none focus:border-[#FF5C1A] focus:bg-white" />
             </div>
 
-            <div v-for="(f, i) in draftFields" :key="i" class="rounded-xl border border-slate-100 p-3">
+            <div
+              v-for="(f, i) in draftFields"
+              :key="f.key"
+              draggable="true"
+              class="rounded-xl border p-3 transition-all"
+              :class="dragIndex === i ? 'border-[#FF5C1A] bg-orange-50/40 opacity-60' : 'border-slate-100 bg-white'"
+              @dragstart="dragIndex = i"
+              @dragover.prevent="onDragOver(i)"
+              @dragend="dragIndex = -1"
+            >
               <div class="flex items-center justify-between">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Question {{ i + 1 }}</span>
+                <span class="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                  <span class="cursor-grab select-none text-slate-300" title="Drag to reorder">⠿</span>
+                  Question {{ i + 1 }}
+                </span>
                 <button class="text-[11px] font-bold text-rose-500" @click="draftFields.splice(i, 1)">Remove</button>
               </div>
               <input v-model="f.label" placeholder="What do you need?" class="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-[#FF5C1A]" />
@@ -121,10 +133,14 @@
                 </label>
               </div>
               <div v-if="f.type === 'select' || f.type === 'multiselect'" class="mt-2 space-y-1.5 rounded-lg bg-slate-50 p-2">
-                <div v-for="(opt, oi) in f.options" :key="oi" class="flex items-center gap-1.5">
-                  <input v-model="f.options[oi]" :placeholder="'Option ' + (oi + 1)"
-                    class="flex-1 rounded-md border border-slate-200 bg-white px-2 py-1 text-xs outline-none focus:border-[#FF5C1A]" />
-                  <button class="text-[11px] font-bold text-rose-500" @click="f.options.splice(oi, 1)">✕</button>
+                <div v-for="(opt, oi) in f.options" :key="oi" class="space-y-1">
+                  <div class="flex items-center gap-1.5">
+                    <input v-model="f.options[oi]" :placeholder="'Option ' + (oi + 1)"
+                      class="flex-1 rounded-md border border-slate-200 bg-white px-2 py-1 text-xs outline-none focus:border-[#FF5C1A]" />
+                    <button class="text-[11px] font-bold text-rose-500" @click="f.options.splice(oi, 1)">✕</button>
+                  </div>
+                  <input v-model="f.followUps[opt]" :placeholder="'If they pick this, ask… (optional)'"
+                    class="w-full rounded-md border border-dashed border-slate-200 bg-white px-2 py-1 text-[11px] text-slate-600 outline-none focus:border-[#FF5C1A]" />
                 </div>
                 <button class="text-[11px] font-bold text-[#FF5C1A]" @click="f.options.push('')">+ Add option</button>
                 <label class="mt-1 flex items-center gap-1.5 text-[11px] font-semibold text-slate-600">
@@ -205,6 +221,14 @@ const draftFields = ref<any[]>([]);
 const draftBanner = ref('');
 const uploadingBanner = ref(false);
 const openType = ref(-1);
+const dragIndex = ref(-1);
+
+const onDragOver = (i: number) => {
+  if (dragIndex.value === -1 || dragIndex.value === i) return;
+  const moved = draftFields.value.splice(dragIndex.value, 1)[0];
+  draftFields.value.splice(i, 0, moved);
+  dragIndex.value = i;
+};
 
 const FIELD_TYPES = [
   { value: 'text', label: 'Short text' },
@@ -305,11 +329,12 @@ const openEditor = (f: any) => {
     required: Boolean(x.required),
     options: [...(x.options || [])],
     allowOther: Boolean(x.allowOther),
+    followUps: { ...(x.followUps || {}) },
   }));
 };
 
 const addField = () => {
-  draftFields.value.push({ key: `field_${Date.now().toString(36).slice(-4)}`, label: '', type: 'text', required: false, options: [], allowOther: false });
+  draftFields.value.push({ key: `field_${Date.now().toString(36).slice(-4)}`, label: '', type: 'text', required: false, options: [], allowOther: false, followUps: {} });
 };
 
 const saveFields = async () => {
@@ -325,6 +350,9 @@ const saveFields = async () => {
         ? (f.options || []).map((o: string) => String(o).trim()).filter(Boolean)
         : [],
       allowOther: Boolean(f.allowOther),
+      followUps: Object.fromEntries(
+        Object.entries(f.followUps || {}).filter(([k, v]) => f.options.includes(k) && String(v || '').trim()),
+      ),
     }));
 
   if (!cleaned.length) {
