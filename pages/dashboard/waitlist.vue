@@ -45,7 +45,7 @@
             <button class="rounded-lg border border-slate-200 px-2.5 py-1.5 text-[11px] font-bold text-slate-700 hover:bg-slate-50" @click="openEditor(f)">
               Edit questions
             </button>
-            <button class="rounded-lg bg-slate-900 px-2.5 py-1.5 text-[11px] font-bold text-white" @click="openResponses(f)">
+            <button class="rounded-lg bg-slate-900 px-2.5 py-1.5 text-[11px] font-bold text-white" @click="$router.push(`/dashboard/waitlist/${f._id}`)">
               Responses
             </button>
           </div>
