@@ -288,7 +288,8 @@ import {
   ChevronLeft,
   ChevronRight,
   MapPin,
-  Palette
+  Palette,
+  Users
 } from 'lucide-vue-next'
 import { useRealtimeNotifications, useUnreadChat } from '@/composables/core/useRealtimeNotifications'
 import { useVendorNotifications } from '@/composables/useVendorNotifications'
@@ -350,7 +351,8 @@ const navItems = computed(() => {
   if (isServiceProvider || isHybrid) {
     items.push({ path: '/dashboard/appointments', label: 'Appointments', icon: Clock });
     items.push({ path: '/dashboard/waitlist', label: 'Waitlist', icon: Clock }); 
-    items.push({ path: '/dashboard/services', label: 'Services', icon: ClipboardList }); 
+    items.push({ path: '/dashboard/services', label: 'Services', icon: ClipboardList });
+    items.push({ path: '/dashboard/team', label: 'Team', icon: Users });
   }
 
   if (!isServiceProvider || isHybrid) {
