@@ -40,7 +40,7 @@
           </label>
 
           <label class="field">
-            <span class="label">Phone (optional)</span>
+            <span class="label">Phone for WhatsApp</span>
             <input v-model="form.phone" type="tel" placeholder="0803 000 0000" />
           </label>
 
@@ -93,6 +93,19 @@
         <p class="code-label">Invite code for {{ lastInvite.email }}</p>
         <p class="code">{{ lastInvite.inviteCode }}</p>
         <p class="code-hint">They accept it from their own account. It expires in 14 days.</p>
+
+        <!-- What actually reached them, so nobody assumes an invite was delivered when it was not. -->
+        <div class="sent">
+          <span class="sent-pill" :class="lastInvite.inviteDelivery?.email ? 'ok' : 'bad'">
+            {{ lastInvite.inviteDelivery?.email ? 'Email sent' : 'Email failed' }}
+          </span>
+          <span class="sent-pill" :class="lastInvite.inviteDelivery?.whatsapp ? 'ok' : 'bad'">
+            {{ lastInvite.inviteDelivery?.whatsapp ? 'WhatsApp sent' : 'WhatsApp not sent' }}
+          </span>
+          <span v-if="lastInvite.inviteDelivery?.whatsappReason" class="sent-note">
+            {{ lastInvite.inviteDelivery.whatsappReason }}
+          </span>
+        </div>
       </div>
 
       <!-- Members -->
@@ -492,6 +505,36 @@ select:focus {
   font-weight: 800;
   letter-spacing: 0.12em;
   color: #ff5c1a;
+}
+
+.sent {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.sent-pill {
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.sent-pill.ok {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.sent-pill.bad {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.sent-note {
+  font-size: 12.5px;
+  color: #9a3412;
 }
 
 .code-hint {
