@@ -44,13 +44,14 @@
             <input v-model="form.phone" type="tel" placeholder="0803 000 0000" />
           </label>
 
-          <label class="field">
-            <span class="label">Role</span>
-            <select v-model="form.role">
-              <option value="member">Member</option>
-              <option value="manager">Manager</option>
-            </select>
-          </label>
+          <div class="field">
+            <UiSelectInput
+              v-model="form.role"
+              label="Role"
+              :options="roleOptions"
+              class="w-full"
+            />
+          </div>
 
           <div class="field field-wide">
             <span class="label">How they are paid</span>
@@ -151,6 +152,15 @@
         </li>
       </ul>
     </template>
+    <UiConfirmModal
+      :is-open="confirmOpen"
+      title="Remove from your team?"
+      :message="pendingRemove ? `${pendingRemove.name} will no longer be offered jobs. Their earnings stay in their wallet.` : ''"
+      confirm-text="Remove"
+      variant="danger"
+      @cancel="confirmOpen = false; pendingRemove = null"
+      @confirm="confirmRemove"
+    />
   </div>
 </template>
 
@@ -241,8 +251,24 @@ const submitInvite = async () => {
   }
 };
 
-const remove = async (m: any) => {
-  if (!confirm(`Remove ${m.name} from your team?`)) return;
+const confirmOpen = ref(false);
+const pendingRemove = ref<any>(null);
+
+const roleOptions = [
+  { label: 'Member', value: 'member' },
+  { label: 'Manager', value: 'manager' },
+];
+
+const remove = (m: any) => {
+  pendingRemove.value = m;
+  confirmOpen.value = true;
+};
+
+const confirmRemove = async () => {
+  const m = pendingRemove.value;
+  confirmOpen.value = false;
+  pendingRemove.value = null;
+  if (!m) return;
   try {
     await team_api.remove(m._id);
     await load();

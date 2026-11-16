@@ -159,17 +159,14 @@
                     <!-- Who actually does the job. Their pay is released when it is marked complete. -->
           <div v-if="canAssign" class="mb-3">
             <label class="mb-1.5 block text-xs font-bold text-gray-700">Assign to a team member</label>
-            <select
-              :value="appointment.staffMember || ''"
-              :disabled="assigning"
-              class="w-full rounded-md border border-gray-200 bg-white px-3 py-2.5 text-sm font-medium text-gray-900 outline-none focus:border-parentPrimary disabled:opacity-60"
-              @change="assign(($event.target as HTMLSelectElement).value)"
-            >
-              <option value="">Nobody, the shop keeps it</option>
-              <option v-for="m in team" :key="m._id" :value="m.user?._id || m.user">
-                {{ m.name }} · {{ m.payoutType === 'fixed' ? '₦' + Number(m.payoutFixedAmount || 0).toLocaleString() + ' a job' : m.payoutSharePercent + '%' }}
-              </option>
-            </select>
+            <UiSelectInput
+                :model-value="appointment.staffMember || ''"
+                :options="assignOptions"
+                :disabled="assigning"
+                label=""
+                class="w-full"
+                @update:model-value="assign"
+              />
             <p v-if="assignError" class="mt-1 text-xs font-semibold text-red-600">{{ assignError }}</p>
           </div>
 
@@ -256,6 +253,18 @@ const loadTeam = async () => {
     team.value = [];
   }
 };
+
+const assignOptions = computed(() => [
+  { label: 'Nobody, the shop keeps it', value: '' },
+  ...team.value.map((m) => ({
+    value: String(m.user?._id || m.user),
+    label: `${m.name} · ${
+      m.payoutType === 'fixed'
+        ? '₦' + Number(m.payoutFixedAmount || 0).toLocaleString() + ' a job'
+        : m.payoutSharePercent + '%'
+    }`,
+  })),
+]);
 
 const assign = async (userId: string) => {
   assigning.value = true;
