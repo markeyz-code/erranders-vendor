@@ -52,16 +52,30 @@
             </select>
           </label>
 
-          <label class="field">
-            <span class="label">Their share of each job</span>
-            <div class="share-row">
+          <div class="field field-wide">
+            <span class="label">How they are paid</span>
+
+            <div class="pay-mode">
+              <button type="button" :class="{ on: form.payoutType === 'percent' }" @click="form.payoutType = 'percent'">
+                Share of each job
+              </button>
+              <button type="button" :class="{ on: form.payoutType === 'fixed' }" @click="form.payoutType = 'fixed'">
+                Fixed fee per job
+              </button>
+            </div>
+
+            <div v-if="form.payoutType === 'percent'" class="share-row">
               <input v-model.number="form.payoutSharePercent" type="range" min="0" max="100" step="5" />
               <span class="share-value">{{ form.payoutSharePercent }}%</span>
             </div>
-            <span class="hint">
-              Of ₦20,000 they get ₦{{ ((20000 * form.payoutSharePercent) / 100).toLocaleString() }}.
-            </span>
-          </label>
+
+            <div v-else class="naira-input">
+              <span>₦</span>
+              <input v-model.number="form.payoutFixedAmount" type="number" min="0" step="500" placeholder="3000" />
+            </div>
+
+            <span class="hint">{{ payPreview }}</span>
+          </div>
         </div>
 
         <p v-if="error" class="error">{{ error }}</p>
@@ -103,9 +117,11 @@
           </div>
 
           <div class="member-side">
-            <div class="share">
-              <span class="share-label">Share</span>
-              <span class="share-value">{{ m.payoutSharePercent }}%</span>
+            <div class="pay">
+              <span class="pay-label">{{ m.payoutType === 'fixed' ? 'Per job' : 'Share' }}</span>
+              <span class="pay-value">
+                {{ m.payoutType === 'fixed' ? '₦' + Number(m.payoutFixedAmount || 0).toLocaleString() : m.payoutSharePercent + '%' }}
+              </span>
             </div>
 
             <span class="status" :class="m.status">{{ m.status }}</span>
@@ -121,7 +137,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { UserPlus, Users, Trash2 } from 'lucide-vue-next';
 import { team_api } from '@/api_factory/modules/team';
 import { useVendorProfile } from '@/composables/modules/vendors';
@@ -144,7 +160,24 @@ const form = ref({
   email: '',
   phone: '',
   role: 'member' as 'member' | 'manager',
+  payoutType: 'percent' as 'percent' | 'fixed',
   payoutSharePercent: 60,
+  payoutFixedAmount: 3000,
+});
+
+/**
+ * What the arrangement means on a real job, in naira.
+ *
+ * ₦20,000 is used as the sample because it is close to a deep clean or a move, the jobs a shop would
+ * hand to someone else.
+ */
+const payPreview = computed(() => {
+  const sample = 20000;
+  if (form.value.payoutType === 'fixed') {
+    const fee = Math.min(Number(form.value.payoutFixedAmount) || 0, sample);
+    return `₦${fee.toLocaleString()} for every job, whatever it sells for.`;
+  }
+  return `Of ₦${sample.toLocaleString()} they get ₦${((sample * form.value.payoutSharePercent) / 100).toLocaleString()}.`;
 });
 
 const initials = (name: string) =>
@@ -181,7 +214,7 @@ const submitInvite = async () => {
     const res = await team_api.invite({ ...form.value });
     lastInvite.value = res?.data;
     inviteOpen.value = false;
-    form.value = { name: '', email: '', phone: '', role: 'member', payoutSharePercent: 60 };
+    form.value = { name: '', email: '', phone: '', role: 'member', payoutType: 'percent', payoutSharePercent: 60, payoutFixedAmount: 3000 };
     await load();
   } catch (e: any) {
     error.value = e?.response?.data?.message || 'Could not add that person';
@@ -212,11 +245,15 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+/*
+ * Explicit colours: this app has Tailwind's parentPrimary palette, not the student app's theme tokens,
+ * so var(--accent) and var(--line) resolved to nothing and every border and button disappeared.
+ */
 .team-page {
-  max-width: 880px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 28px 20px 64px;
-  color: var(--ink);
+  padding: 28px 20px 72px;
+  color: #14110d;
 }
 
 .page-head {
@@ -230,24 +267,26 @@ onMounted(async () => {
 
 h1 {
   margin: 0;
-  font-size: 26px;
+  font-size: 27px;
   font-weight: 800;
   letter-spacing: -0.02em;
+  color: #14110d;
 }
 
 .lede {
-  margin: 6px 0 0;
-  max-width: 52ch;
+  margin: 7px 0 0;
+  max-width: 54ch;
   font-size: 15px;
   line-height: 1.5;
-  color: var(--mute);
+  color: #6d675f;
 }
 
 .card {
-  border: 1px solid var(--line);
+  border: 1px solid #e7e2da;
   border-radius: 16px;
-  background: var(--card);
-  padding: 18px;
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0 1px 2px rgba(20, 17, 13, 0.04);
 }
 
 .invite {
@@ -255,15 +294,16 @@ h1 {
 }
 
 .card-title {
-  margin: 0 0 14px;
-  font-size: 16px;
+  margin: 0 0 16px;
+  font-size: 16.5px;
   font-weight: 750;
+  color: #14110d;
 }
 
 .grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 14px;
+  gap: 16px;
 }
 
 @media (min-width: 620px) {
@@ -278,29 +318,64 @@ h1 {
   gap: 6px;
 }
 
+.field-wide {
+  grid-column: 1 / -1;
+}
+
 .label {
   font-size: 13.5px;
   font-weight: 700;
-  color: var(--mute);
+  color: #14110d;
 }
 
 input[type='text'],
 input[type='email'],
 input[type='tel'],
+input[type='number'],
 select {
   width: 100%;
   padding: 11px 12px;
   border-radius: 11px;
-  border: 1px solid var(--line);
-  background: var(--page);
-  color: var(--ink);
+  border: 1px solid #d9d3c9;
+  background: #fff;
+  color: #14110d;
   font-size: 15px;
   outline: none;
 }
 
+input::placeholder {
+  color: #948d84;
+}
+
 input:focus,
 select:focus {
-  border-color: var(--accent);
+  border-color: #ff5c1a;
+  box-shadow: 0 0 0 3px rgba(255, 92, 26, 0.14);
+}
+
+/* How they are paid: a share, or a flat fee. */
+.pay-mode {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.pay-mode button {
+  flex: 1;
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: 1px solid #d9d3c9;
+  background: #fff;
+  color: #14110d;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pay-mode button.on {
+  background: #ff5c1a;
+  border-color: #ff5c1a;
+  color: #fff;
 }
 
 .share-row {
@@ -311,40 +386,70 @@ select:focus {
 
 .share-row input[type='range'] {
   flex: 1;
-  accent-color: var(--accent);
+  accent-color: #ff5c1a;
 }
 
 .share-value {
   font-size: 15px;
   font-weight: 800;
-  color: var(--accent);
+  color: #ff5c1a;
   min-width: 46px;
+}
+
+.naira-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  border-radius: 11px;
+  border: 1px solid #d9d3c9;
+  background: #fff;
+}
+
+.naira-input span {
+  font-size: 15px;
+  font-weight: 700;
+  color: #6d675f;
+}
+
+.naira-input input {
+  border: 0;
+  padding: 11px 0;
+}
+
+.naira-input:focus-within {
+  border-color: #ff5c1a;
+  box-shadow: 0 0 0 3px rgba(255, 92, 26, 0.14);
 }
 
 .hint {
   font-size: 13px;
-  color: var(--mute);
+  color: #6d675f;
 }
 
 .actions {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  margin-top: 16px;
+  margin-top: 18px;
 }
 
 .btn-primary {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 11px 16px;
+  padding: 12px 18px;
   border: 0;
   border-radius: 11px;
-  background: var(--accent);
+  background: #ff5c1a;
   color: #fff;
   font-size: 15px;
   font-weight: 750;
   cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: #ea580c;
 }
 
 .btn-primary:disabled {
@@ -353,11 +458,11 @@ select:focus {
 }
 
 .btn-quiet {
-  padding: 11px 16px;
+  padding: 12px 18px;
   border-radius: 11px;
-  border: 1px solid var(--line);
-  background: transparent;
-  color: var(--ink);
+  border: 1px solid #d9d3c9;
+  background: #fff;
+  color: #14110d;
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
@@ -365,28 +470,29 @@ select:focus {
 
 .code-card {
   margin-bottom: 18px;
-  border-color: var(--accent);
+  border-color: #ff5c1a;
+  background: #fff7ed;
 }
 
 .code-label {
   margin: 0;
   font-size: 13.5px;
   font-weight: 700;
-  color: var(--mute);
+  color: #9a3412;
 }
 
 .code {
   margin: 6px 0 4px;
-  font-size: 26px;
+  font-size: 27px;
   font-weight: 800;
   letter-spacing: 0.12em;
-  color: var(--accent);
+  color: #ff5c1a;
 }
 
 .code-hint {
   margin: 0;
   font-size: 13.5px;
-  color: var(--mute);
+  color: #9a3412;
 }
 
 .empty {
@@ -394,12 +500,13 @@ select:focus {
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  padding: 44px 20px;
-  border: 1px dashed var(--line);
+  padding: 46px 20px;
+  border: 1px dashed #d9d3c9;
   border-radius: 16px;
-  color: var(--mute);
+  color: #6d675f;
   text-align: center;
   font-size: 15px;
+  background: #fff;
 }
 
 .list {
@@ -427,13 +534,13 @@ select:focus {
 }
 
 .avatar {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 12px;
   display: grid;
   place-items: center;
-  background: var(--orsoft);
-  color: var(--accent);
+  background: #fff7ed;
+  color: #ff5c1a;
   font-size: 15px;
   font-weight: 800;
   flex: none;
@@ -446,6 +553,7 @@ select:focus {
   display: flex;
   align-items: center;
   gap: 8px;
+  color: #14110d;
 }
 
 .role {
@@ -453,39 +561,45 @@ select:focus {
   border-radius: 999px;
   font-size: 12px;
   font-weight: 750;
-  background: var(--page);
-  color: var(--mute);
-  border: 1px solid var(--line);
+  background: #f6f3ee;
+  color: #6d675f;
+  border: 1px solid #e7e2da;
 }
 
 .role.manager {
-  background: var(--orsoft);
-  color: var(--accent);
-  border-color: transparent;
+  background: #fff7ed;
+  color: #ea580c;
+  border-color: #fed7aa;
 }
 
 .member-meta {
-  margin: 2px 0 0;
+  margin: 3px 0 0;
   font-size: 13.5px;
-  color: var(--mute);
+  color: #6d675f;
 }
 
 .member-side {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
-.share {
+.pay {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 }
 
-.share-label {
-  font-size: 12px;
+.pay-label {
+  font-size: 11.5px;
   font-weight: 700;
-  color: var(--mute);
+  color: #948d84;
+}
+
+.pay-value {
+  font-size: 15px;
+  font-weight: 800;
+  color: #14110d;
 }
 
 .status {
@@ -494,37 +608,37 @@ select:focus {
   font-size: 12.5px;
   font-weight: 750;
   text-transform: capitalize;
-  background: var(--page);
-  border: 1px solid var(--line);
-  color: var(--mute);
+  background: #f6f3ee;
+  border: 1px solid #e7e2da;
+  color: #6d675f;
 }
 
 .status.active {
-  background: var(--green-soft);
-  color: #0f6b3d;
-  border-color: transparent;
+  background: #dcfce7;
+  color: #166534;
+  border-color: #bbf7d0;
 }
 
 .status.invited {
-  background: var(--orsoft);
-  color: #b3400b;
-  border-color: transparent;
+  background: #fff7ed;
+  color: #9a3412;
+  border-color: #fed7aa;
 }
 
 .icon-btn {
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: 10px;
-  border: 1px solid var(--line);
-  background: transparent;
-  color: var(--mute);
+  border: 1px solid #e7e2da;
+  background: #fff;
+  color: #6d675f;
   cursor: pointer;
 }
 
 .icon-btn:hover {
-  border-color: #b91c1c;
+  border-color: #fca5a5;
   color: #b91c1c;
 }
 
@@ -537,21 +651,22 @@ select:focus {
 
 .notice {
   padding: 20px;
-  border: 1px solid var(--line);
+  border: 1px solid #e7e2da;
   border-radius: 16px;
-  background: var(--card);
+  background: #fff;
 }
 
 .notice-title {
   margin: 0;
-  font-size: 16px;
+  font-size: 16.5px;
   font-weight: 750;
+  color: #14110d;
 }
 
 .notice-body {
   margin: 6px 0 0;
   font-size: 15px;
   line-height: 1.5;
-  color: var(--mute);
+  color: #6d675f;
 }
 </style>

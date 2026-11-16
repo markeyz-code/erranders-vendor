@@ -156,7 +156,24 @@
             Confirm Booking
           </button>
           
-          <button 
+                    <!-- Who actually does the job. Their pay is released when it is marked complete. -->
+          <div v-if="canAssign" class="mb-3">
+            <label class="mb-1.5 block text-xs font-bold text-gray-700">Assign to a team member</label>
+            <select
+              :value="appointment.staffMember || ''"
+              :disabled="assigning"
+              class="w-full rounded-md border border-gray-200 bg-white px-3 py-2.5 text-sm font-medium text-gray-900 outline-none focus:border-parentPrimary disabled:opacity-60"
+              @change="assign(($event.target as HTMLSelectElement).value)"
+            >
+              <option value="">Nobody, the shop keeps it</option>
+              <option v-for="m in team" :key="m._id" :value="m.user?._id || m.user">
+                {{ m.name }} · {{ m.payoutType === 'fixed' ? '₦' + Number(m.payoutFixedAmount || 0).toLocaleString() + ' a job' : m.payoutSharePercent + '%' }}
+              </option>
+            </select>
+            <p v-if="assignError" class="mt-1 text-xs font-semibold text-red-600">{{ assignError }}</p>
+          </div>
+
+<button 
             v-if="appointment.status === 'confirmed'"
             @click="promptAction('status', 'completed')"
             :disabled="loading"
@@ -204,7 +221,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { Calendar, MessageCircle, User, Info, Phone, Paperclip } from 'lucide-vue-next';
 import UiSideDrawer from '@/components/ui/SideDrawer.vue';
 import UiConfirmModal from '@/components/ui/ConfirmModal.vue';
@@ -219,6 +236,42 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits(['close', 'updateStatus', 'verifyPayment']);
+
+import { team_api } from '@/api_factory/modules/team';
+
+const team = ref<any[]>([]);
+const assigning = ref(false);
+const assignError = ref('');
+
+// Assignment is for a service job that has not finished, and only when the shop has a team.
+const canAssign = computed(
+  () => ['pending', 'confirmed'].includes(props.appointment?.status) && team.value.length > 0,
+);
+
+const loadTeam = async () => {
+  try {
+    const res = await team_api.list();
+    team.value = (res?.data || []).filter((m: any) => m.status === 'active' && m.user);
+  } catch {
+    team.value = [];
+  }
+};
+
+const assign = async (userId: string) => {
+  assigning.value = true;
+  assignError.value = '';
+  try {
+    const member = team.value.find((m) => String(m.user?._id || m.user) === String(userId));
+    await team_api.assign(props.appointment._id, member?._id || '');
+    props.appointment.staffMember = userId ? (member?.user?._id || member?.user) : undefined;
+  } catch (e: any) {
+    assignError.value = e?.response?.data?.message || 'Could not assign that person';
+  } finally {
+    assigning.value = false;
+  }
+};
+
+onMounted(loadTeam);
 
 // Confirmation Modal State
 const confirmModal = ref({
