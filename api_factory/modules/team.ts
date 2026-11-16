@@ -34,6 +34,9 @@ export const team_api = {
 
   remove: (id: string) => GATEWAY_ENDPOINT_WITH_AUTH.delete(`/team/${id}`),
 
+  /** Ask a member to add the account their pay goes to. */
+  remindBank: (id: string) => GATEWAY_ENDPOINT_WITH_AUTH.post(`/team/${id}/remind-bank`),
+
   mine: () => GATEWAY_ENDPOINT_WITH_AUTH.get('/team/me'),
 
   /** Give a job to a team member, or clear it with an empty id. */

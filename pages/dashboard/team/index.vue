@@ -141,9 +141,16 @@
             <span class="status" :class="m.status">{{ m.status }}</span>
 
             <!-- Whether their pay has somewhere to land. -->
-            <span v-if="m.status === 'active'" class="payout" :class="{ ready: m.payoutReady }">
-              {{ m.payoutReady ? 'Bank added' : 'Needs bank details' }}
-            </span>
+            <button
+              v-if="m.status === 'active' && !m.payoutReady"
+              type="button"
+              class="payout remind"
+              :disabled="reminding === m._id"
+              @click="remind(m)"
+            >
+              {{ reminding === m._id ? 'Sending…' : 'Needs bank details. Remind' }}
+            </button>
+            <span v-else-if="m.status === 'active'" class="payout ready">Bank added</span>
 
             <button type="button" class="icon-btn" :aria-label="`Remove ${m.name}`" @click="remove(m)">
               <Trash2 class="w-4 h-4" aria-hidden="true" />
@@ -151,6 +158,8 @@
           </div>
         </li>
       </ul>
+
+      <p v-if="reminderResult" class="reminder-note">{{ reminderResult }}</p>
     </template>
     <UiConfirmModal
       :is-open="confirmOpen"
@@ -248,6 +257,26 @@ const submitInvite = async () => {
     error.value = e?.response?.data?.message || 'Could not add that person';
   } finally {
     saving.value = false;
+  }
+};
+
+const reminding = ref('');
+const reminderResult = ref('');
+
+/** Ask them to add a payout account, rather than leaving the shop to chase it. */
+const remind = async (m: any) => {
+  reminding.value = m._id;
+  reminderResult.value = '';
+  try {
+    const res: any = await team_api.remindBank(m._id);
+    const d = res?.data || {};
+    reminderResult.value = d.emailed
+      ? `Reminder sent to ${m.name}.`
+      : `We could not email ${m.name}. Send them this page: erranders.org/dashboard/my-jobs`;
+  } catch (e: any) {
+    reminderResult.value = e?.response?.data?.message || 'Could not send the reminder';
+  } finally {
+    reminding.value = '';
   }
 };
 
@@ -701,6 +730,22 @@ select:focus {
   background: #fef2f2;
   border: 1px solid #fecaca;
   color: #b91c1c;
+}
+
+.payout.remind {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.payout.remind:hover {
+  background: #fecaca;
+}
+
+.reminder-note {
+  margin: 14px 0 0;
+  font-size: 14px;
+  font-weight: 650;
+  color: #9a3412;
 }
 
 .payout.ready {
