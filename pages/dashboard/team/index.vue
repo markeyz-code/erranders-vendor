@@ -126,6 +126,11 @@
 
             <span class="status" :class="m.status">{{ m.status }}</span>
 
+            <!-- Whether their pay has somewhere to land. -->
+            <span v-if="m.status === 'active'" class="payout" :class="{ ready: m.payoutReady }">
+              {{ m.payoutReady ? 'Bank added' : 'Needs bank details' }}
+            </span>
+
             <button type="button" class="icon-btn" :aria-label="`Remove ${m.name}`" @click="remove(m)">
               <Trash2 class="w-4 h-4" aria-hidden="true" />
             </button>
@@ -617,6 +622,22 @@ select:focus {
   background: #dcfce7;
   color: #166534;
   border-color: #bbf7d0;
+}
+
+.payout {
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+}
+
+.payout.ready {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #15803d;
 }
 
 .status.invited {
